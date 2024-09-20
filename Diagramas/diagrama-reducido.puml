@@ -1,0 +1,68 @@
+' TODO:
+' - clase Mapa
+' - caparazón de la tortuga
+' - estados de Mario
+' - intefaace ModoDeJuego (método inicializarSprites)
+' - clase Ranking
+' - menu
+
+' # JUEGO #
+'
+Juego "1" -l-> "3" Nivel
+' TODO: Preguntar personaje o mario?
+Juego "1" -d-> "1" Personaje
+Juego "1" -d-> "1" Engine
+
+' # GRAFICA #
+'
+interface ElementoGrafico
+class Sprite
+ElementoGrafico "1" -l-> "*" Sprite
+
+' # NIVEL #
+'
+interface AlteradorPuntaje
+interface Plataforma implements ElementoGrafico
+' TODO: Preguntar 0 o 1 a muchos?
+Nivel "1" <-down- "*" Plataforma
+Nivel "1" <-down- "*" AlteradorPuntaje
+interface Enemigo implements AlteradorPuntaje, ElementoGrafico
+class Moneda implements AlteradorPuntaje, ElementoGrafico
+interface PowerUp implements AlteradorPuntaje, ElementoGrafico
+
+' # ENEMIGOS #
+'
+class Goomba implements Enemigo
+class KoopaTroopa implements Enemigo
+class PiranhaPlant implements Enemigo
+class Lakitu implements Enemigo
+class Spiny implements Enemigo
+class BuzzyBeattle implements Enemigo
+
+' # PLATAFORMAS #
+'
+class Vacio implements AlteradorPuntaje, Plataforma
+class BloqueSolido implements Plataforma
+class LadrilloSolido implements Plataforma
+class BloquePregunta implements Plataforma
+class Tuberia implements Plataforma
+
+' # POWERUPS #
+'
+class SuperChampinion implements PowerUp
+class FlorFuego implements PowerUp
+class Estrella implements PowerUp
+class ChampinionVerde implements PowerUp
+
+' # PROYECTIL #
+'
+interface Proyectil implements ElementoGrafico
+class BolaFuego implements Proyectil
+
+' # FORMATTING #
+'
+Plataforma -l[hidden]- AlteradorPuntaje
+Nivel -l[hidden]- ElementoGrafico
+Enemigo -u[hidden]- FlorFuego
+Plataforma -u[hidden]- Engine
+
