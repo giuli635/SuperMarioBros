@@ -1,31 +1,35 @@
-' TODO:
-' - clase Mapa
-' - caparazón de la tortuga
-' - estados de Mario
-' - intefaace ModoDeJuego (método inicializarSprites)
-' - clase Ranking
-' - menu
-
 ' # JUEGO #
 '
-Juego "1" -l-> "3" Nivel
+Juego "1" --> "1" Menu
+Juego "1" *-l- "3" Nivel
 ' TODO: Preguntar personaje o mario?
-Juego "1" -d-> "1" Personaje
-Juego "1" -d-> "1" Engine
+Juego "1" --> "1" Personaje
+Juego "1" *-d- "1" Engine
+Juego "1" -r-> "1" Ranking
+
+' # PERSONAJE #
+'
+interface Estado
+class Personaje implements ElementoGrafico
+Personaje -d-> "0..*" Estado
+class Normal implements Estado
+class Super implements Estado
+class Fuego implements Estado
+class Invulnerable implements Estado
 
 ' # GRAFICA #
 '
 interface ElementoGrafico
 class Sprite
-ElementoGrafico "1" -l-> "*" Sprite
+ElementoGrafico o-l- "0..*" Sprite
 
 ' # NIVEL #
 '
 interface AlteradorPuntaje
 interface Plataforma implements ElementoGrafico
 ' TODO: Preguntar 0 o 1 a muchos?
-Nivel "1" <-down- "*" Plataforma
-Nivel "1" <-down- "*" AlteradorPuntaje
+Nivel "1" -d- "0..*" Plataforma
+Nivel "1" -d- "0..*" AlteradorPuntaje
 interface Enemigo implements AlteradorPuntaje, ElementoGrafico
 class Moneda implements AlteradorPuntaje, ElementoGrafico
 interface PowerUp implements AlteradorPuntaje, ElementoGrafico
@@ -38,13 +42,14 @@ class PiranhaPlant implements Enemigo
 class Lakitu implements Enemigo
 class Spiny implements Enemigo
 class BuzzyBeattle implements Enemigo
+Tuberia --> "0..1" PiranhaPlant
 
 ' # PLATAFORMAS #
 '
 class Vacio implements AlteradorPuntaje, Plataforma
 class BloqueSolido implements Plataforma
-class LadrilloSolido implements Plataforma
-class BloquePregunta implements Plataforma
+class LadrilloSolido extends BloqueSolido
+class BloquePregunta extends BloqueSolido
 class Tuberia implements Plataforma
 
 ' # POWERUPS #
@@ -59,10 +64,14 @@ class ChampinionVerde implements PowerUp
 interface Proyectil implements ElementoGrafico
 class BolaFuego implements Proyectil
 
+' # DESLIZABLE #
+'
+interface Deslizable implements ElementoGrafico
+class Caparazon implements Deslizable
+KoopaTroopa "1" o-- "1" Caparazon
+
 ' # FORMATTING #
 '
-Plataforma -l[hidden]- AlteradorPuntaje
 Nivel -l[hidden]- ElementoGrafico
 Enemigo -u[hidden]- FlorFuego
-Plataforma -u[hidden]- Engine
 
