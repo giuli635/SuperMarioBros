@@ -2,10 +2,10 @@
 '
 Juego "1" --> "1" Menu
 Juego "1" *-l- "3" Nivel
-' TODO: Preguntar personaje o mario?
 Juego "1" --> "1" Personaje
 Juego "1" *-d- "1" Engine
 Juego "1" -r-> "1" Ranking
+Juego "1" -- LectorNiveles
 
 ' # PERSONAJE #
 '
@@ -23,13 +23,12 @@ interface ElementoGrafico
 class Sprite
 ElementoGrafico o-l- "0..*" Sprite
 ElementoGrafico "1" -l-> "1" Posicion
-ElementoGrafico -- Engine
+ElementoGrafico "1..*" -- "1" Engine
 
 ' # NIVEL #
 '
 interface AlteradorPuntaje
 interface Plataforma implements ElementoGrafico
-' TODO: Preguntar 0 o 1 a muchos?
 Nivel "1" -d- "0..*" Plataforma
 Nivel "1" -d- "0..*" AlteradorPuntaje
 interface Enemigo implements AlteradorPuntaje, ElementoGrafico
@@ -65,12 +64,15 @@ class ChampinionVerde implements PowerUp
 '
 interface Proyectil implements ElementoGrafico
 class BolaFuego implements Proyectil
+class Estrella implements Proyectil
 
 ' # DESLIZABLE #
 '
 interface Deslizable implements ElementoGrafico
 class Caparazon implements Deslizable
 KoopaTroopa "1" o-- "1" Caparazon
+class ChampinionVerde implements Deslizable
+class SuperChampinion implements Deslizable
 
 ' # FORMATTING #
 '

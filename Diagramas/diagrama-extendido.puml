@@ -2,83 +2,93 @@
 
 class Personaje{
     #estado : Estado
-    +mover(direccion : String)
+    +mover()
     +saltar()
-    ' vacio
     +lanzarProyectil()
-    +setEstado(estado : Estado)
+    +setEstado(estado: Estado)
     +getEstado() : Estado
 }
 
-class Sprite{
-    #imagen : Image
-    +draw(int x, int y)
-    +setImagen(image : Image)
-    +getImagen() : Image
+together {
+    class Juego <<Singleton>> {
+        #{static} uniqueInstance: Juego
+        #currNivel: Nivel
+        #personaje: Personaje
+        +{static} instance()
+        +cargarNivel()
+    }
+
+    class Nivel{
+        #tiempo: Duration
+        #puntaje: int
+        +getPuntaje(): int
+        +setPuntaje(puntaje: int)
+    }
+    note left of Nivel::tiempo
+        Duration es la clase de Java
+    end note
+
+    class Menu <<Singleton>> {
+        #{static} uniqueInstance: Menu
+        +{static} instance()
+        +seleccionarModo(modo: int)
+        +mostrarModos()
+        +mostrarRanking()
+        ' TODO: implementar la UI del menu
+    }
+
+    class Ranking <<Singleton>> {
+        #rank: Map<String, Integer>
+        #{static} uniqueInstance: Ranking
+        +{static} instance()
+        +agregarEntrada(jugador: String, puntaje: int)
+        +getRanking(): Iterable<Entrada<String, Integer>>
+    }
 }
 
-class Nivel{
-    #plataformas : List<Plataforma>
-    #enemigos : List<Enemigo>
-    #powerUps : List<PowerUp>
-    #monedas : List<Moneda>
-    #puntaje : int
-    +cargarNivel()
-    +getPuntaje() : int
-    +setPuntaje(puntaje : int)
+together {
+    class Engine <<Singleton>> {
+        #{static} uniqueInstance: Engine
+        #chunks: [][]Collection<ElementoGrafico>
+        +{static} instance()
+        +checkCollision(e1: ElementoGrafico, e2: ElementoGrafico)
+        +notifyCollision(e1: ElementoGrafico, d1: Direccion, e2: ElementoGrafico, d2: Direccion)
+        +load()
+    }
+    note left of Engine::notifyCollision
+        e1.recognize(e2, d2);
+        e2.recognize(e1, d1);
+    end note
+
+    interface ElementoGrafico {
+        +draw()
+        +recognize(e: ElementoGrafico, d: Direccion)
+        +collide(e: ElementoGrafico)
+        +load()
+    }
+    note left of ElementoGrafico::recognize
+        e.collide(this, d)
+    end note
+
+    class Sprite{
+        #imagen : Image
+        +draw(int x, int y)
+        +setImagen(image : Image)
+        +getImagen() : Image
+    }
+
+    class LectorNiveles <<Singleton>> {
+        +crearNivel(file: String)
+    }
+
+    Engine -d[hidden]- ElementoGrafico
+    ElementoGrafico -d[hidden]- Sprite
 }
 
-class Proyectil{
-    +mover()
+enum Direccion {
+    IZQUIERDA
+    DERECHA
+    ARRIBA
+    ABAJO
 }
-
-class PowerUp{
-    +aplicarEfecto(p : Personaje)
-}
-
-class Enemigo{
-    +mover(direccion : String)
-}
-
-class Tuberia{
-    #piranhaPlant : PiranhaPlant
-}
-
-class BloquePregunta{
-    #contenido : AlteradorPuntaje
-}
-
-class Menu{
-    +mostrarModos()
-    +seleccionarModo()
-    mostrarRanking()
-}
-
-' # Podemos agregar una clase Jugador donde se guarda el nombre y puntaje (para el ranking) #
-
-class Jugador{
-    #nombre : String
-    #puntaje : int
-}
-
-class Juego{
-    #niveles : List<Nivel>
-    #personaje : Personaje
-    #engine : Engine
-    #ranking : Jugador[]
-    #modo : ??
-}
-
-class Engine {
-    #chunks: [][]ElementoGrafico
-    +notify()
-    +load()
-}
-
-interface ElementoGrafico {
-    +draw()
-    +handleCollision(ElementoGrafico)
-    +load()
-}
-
 @enduml
