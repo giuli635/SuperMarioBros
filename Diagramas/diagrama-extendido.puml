@@ -1,27 +1,28 @@
 @startuml
 
 class Personaje{
-    -estado : Estado
+    #estado : Estado
     +mover(direccion : String)
     +saltar()
+    ' vacio
     +lanzarProyectil()
     +setEstado(estado : Estado)
     +getEstado() : Estado
 }
 
 class Sprite{
-    -imagen : Image
-    +draw()
+    #imagen : Image
+    +draw(int x, int y)
     +setImagen(image : Image)
-    +getEstado() : Image
+    +getImagen() : Image
 }
 
 class Nivel{
-    -plataformas : List<Plataforma>
-    -enemigos : List<Enemigo>
-    -powerUps : List<PowerUp>
-    -monedas : List<Moneda>
-    -puntaje : int
+    #plataformas : List<Plataforma>
+    #enemigos : List<Enemigo>
+    #powerUps : List<PowerUp>
+    #monedas : List<Moneda>
+    #puntaje : int
     +cargarNivel()
     +getPuntaje() : int
     +setPuntaje(puntaje : int)
@@ -40,11 +41,11 @@ class Enemigo{
 }
 
 class Tuberia{
-    -piranhaPlant : PiranhaPlant
+    #piranhaPlant : PiranhaPlant
 }
 
 class BloquePregunta{
-    -contenido : AlteradorPuntaje
+    #contenido : AlteradorPuntaje
 }
 
 class Menu{
@@ -56,16 +57,28 @@ class Menu{
 ' # Podemos agregar una clase Jugador donde se guarda el nombre y puntaje (para el ranking) #
 
 class Jugador{
-    -nombre : String
-    -puntaje : int
+    #nombre : String
+    #puntaje : int
 }
 
 class Juego{
-    -niveles : List<Nivel>
-    -personaje : Personaje
-    -engine : Engine
-    -ranking : Jugador[]
-    -modo : ??
+    #niveles : List<Nivel>
+    #personaje : Personaje
+    #engine : Engine
+    #ranking : Jugador[]
+    #modo : ??
+}
+
+class Engine {
+    #chunks: [][]ElementoGrafico
+    +notify()
+    +load()
+}
+
+interface ElementoGrafico {
+    +draw()
+    +handleCollision(ElementoGrafico)
+    +load()
 }
 
 @enduml

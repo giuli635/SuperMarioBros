@@ -22,6 +22,8 @@ class Invulnerable implements Estado
 interface ElementoGrafico
 class Sprite
 ElementoGrafico o-l- "0..*" Sprite
+ElementoGrafico "1" -l-> "1" Posicion
+ElementoGrafico -- Engine
 
 ' # NIVEL #
 '
