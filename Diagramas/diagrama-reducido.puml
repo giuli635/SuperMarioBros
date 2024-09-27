@@ -1,81 +1,112 @@
+@startuml
 ' # JUEGO #
 '
+class Juego <<Singleton>>
+class Menu <<Singleton>>
+class CollisionsEngine <<Singleton>>
+class GraphicEngine <<Singleton>>
+class LectorNiveles <<Singleton>>
 Juego "1" --> "1" Menu
-Juego "1" *-l- "3" Nivel
+Juego "1" *-l- "1" Nivel
 Juego "1" --> "1" Personaje
-Juego "1" *-d- "1" Engine
+Juego "1" *-u- "1" GraphicEngine
+Juego "1" *-u- "1" CollisionsEngine
 Juego "1" -r-> "1" Ranking
-Juego "1" -- LectorNiveles
+Juego "1" -- "1" LectorNiveles
+Juego "1" --> "0..*" Entidad
 
-' # PERSONAJE #
+' # ENTIDAD #
 '
-interface Estado
-class Personaje implements ElementoGrafico
-Personaje -d-> "0..*" Estado
-class Normal implements Estado
-class Super implements Estado
-class Fuego implements Estado
-class Invulnerable implements Estado
+interface Entidad
+Entidad "1" ---u-> "0..*" ElementoGrafico
+Entidad "1" ---u- "0..*" Collider
 
 ' # GRAFICA #
 '
 interface ElementoGrafico
-class Sprite
+class SpriteFactory <<Singleton>>
+class Sprite <<Flyweight>>
+Sprite "0..*" --o "1" SpriteFactory
 ElementoGrafico o-l- "0..*" Sprite
-ElementoGrafico "1" -l-> "1" Posicion
-ElementoGrafico "1..*" -- "1" Engine
+ElementoGrafico "1..*" -- "1" GraphicEngine
+ElementoGrafico "1" --> "1" Posicion
+
+' # COLLISIONS #
+'
+interface Collider
+Collider "0..1" -- "0..1" ElementoGrafico
+Collider "1" --> "0..1" Posicion
+Collider "1..*" -- "1" CollisionsEngine
+
+' # PERSONAJE #
+'
+interface Estado
+class Personaje
+Personaje .....|> Entidad
+Personaje -u-> "0..*" Estado
+Normal .u.|> Estado
+Super .u.|> Estado
+Fuego .u.|> Estado
+Invulnerable .u.|> Estado
 
 ' # NIVEL #
 '
 interface AlteradorPuntaje
-interface Plataforma implements ElementoGrafico
-Nivel "1" -d- "0..*" Plataforma
-Nivel "1" -d- "0..*" AlteradorPuntaje
-interface Enemigo implements AlteradorPuntaje, ElementoGrafico
-class Moneda implements AlteradorPuntaje, ElementoGrafico
-interface PowerUp implements AlteradorPuntaje, ElementoGrafico
+interface Plataforma
+interface Enemigo
+interface PowerUp
+class Moneda
+Nivel "1" <-d- "0..*" AlteradorPuntaje
+Plataforma ...u.|> Entidad
+Enemigo ..u.|> AlteradorPuntaje
+Enemigo ..u.|> Entidad
+PowerUp ..u.|> Entidad
+PowerUp ..u.|> AlteradorPuntaje
+Moneda .u.|> Entidad
+Moneda .u.|> AlteradorPuntaje
 
 ' # ENEMIGOS #
 '
-class Goomba implements Enemigo
-class KoopaTroopa implements Enemigo
-class PiranhaPlant implements Enemigo
-class Lakitu implements Enemigo
-class Spiny implements Enemigo
-class BuzzyBeattle implements Enemigo
+Goomba .u.|> Enemigo
+KoopaTroopa .u.|> Enemigo
+PiranhaPlant .u.|> Enemigo
+Lakitu .u.|> Enemigo
+Spiny .u.|> Enemigo
+BuzzyBeattle .u.|> Enemigo
 Tuberia --> "0..1" PiranhaPlant
 
 ' # PLATAFORMAS #
 '
-class Vacio implements AlteradorPuntaje, Plataforma
-class BloqueSolido implements Plataforma
-class LadrilloSolido extends BloqueSolido
-class BloquePregunta extends BloqueSolido
-class Tuberia implements Plataforma
+Vacio .u.|> AlteradorPuntaje
+Vacio .u.|> Plataforma
+BloqueSolido .u.|> Plataforma
+LadrilloSolido -u-|> BloqueSolido
+BloquePregunta -u-|> BloqueSolido
+Tuberia .u.|> Plataforma
 
 ' # POWERUPS #
 '
-class SuperChampinion implements PowerUp
-class FlorFuego implements PowerUp
-class Estrella implements PowerUp
-class ChampinionVerde implements PowerUp
+SuperChampinion .u.|> PowerUp
+FlorFuego .u.|> PowerUp
+Estrella .u.|> PowerUp
+ChampinionVerde .u.|> PowerUp
 
 ' # PROYECTIL #
 '
-interface Proyectil implements ElementoGrafico
-class BolaFuego implements Proyectil
-class Estrella implements Proyectil
+interface Proyectil
+Proyectil .u.|> Entidad
+BolaFuego .u.|> Proyectil
+Estrella .u.|> Proyectil
 
 ' # DESLIZABLE #
 '
-interface Deslizable implements ElementoGrafico
-class Caparazon implements Deslizable
+interface Deslizable
+Deslizable .u.|> Entidad
+Caparazon .u.|> Deslizable
 KoopaTroopa "1" o-- "1" Caparazon
-class ChampinionVerde implements Deslizable
-class SuperChampinion implements Deslizable
+ChampinionVerde .u.|> Deslizable
+SuperChampinion .u.|> Deslizable
 
 ' # FORMATTING #
 '
-Nivel -l[hidden]- ElementoGrafico
-Enemigo -u[hidden]- FlorFuego
-
+@enduml
