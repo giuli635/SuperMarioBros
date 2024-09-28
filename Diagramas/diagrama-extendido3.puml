@@ -16,6 +16,8 @@ together {
     }
 
     class Personaje {
+        #List<PowerUp>: activePowerUps
+        
         +caminar(direccion: String)
         +mover()
         +saltar()
@@ -23,8 +25,26 @@ together {
         +lanzarProyectil()
         +setEstado(estado : Estado)
         +getEstado() : Estado
+        +agregarPowerUp(pw: powerUp)
+        +aplicarEfecto(pw: powerUp)
+        +removerPowerUp(pw: powerUp)
+        +aplicarPowerUps()
     }
+    note left of Personaje::aplicarEfecto
+    cambia el estado de mario controlando prioridades 
+    end note
+    note left of Personaje::removerPowerUp
+    cuando se remueve el power up tambien se remueve el estado de mario
+    end note
+    note left of Personaje::aplicarPowerUps
+    se aplica cada power up en cada frame del juego segun sea necesario
+    end note
 
+    class Estado{
+        +manejarEstado(mario: Personaje)
+        +recibirGolpe(mario: Personaje)
+        +recogerPowerUp(mario: Personaje, pw: PowerUp)
+    }
     class AlteradorPuntaje{
         +actualizarPuntaje()
     }
@@ -36,6 +56,7 @@ together {
     class enemigo { 
         +recibirDano() 
         +morir()
+        +moverse()
         +actualizarPuntaje() 
     }
 
@@ -79,9 +100,22 @@ together {
         +actualizarPuntaje()
     }
 
-    class PowerUp {
+    abstract class PowerUp {
+        #prioridad: int
+
         +actualizarPuntaje()
+        +obtenerPrioridad(): int
+        +activar(mario: Personaje) //método activar en cada clase concreta de PowerUp contiene la lógica específica de ese power-up
+        +desactivar(mario: Personaje)
+        +aplicar(mario: Personaje)
     }
+    note left of PowerUp::activar
+      método activar en cada clase concreta de PowerUp contiene la lógica específica de ese power-up
+    end note
+
+    note left of PowerUp::aplicar
+    ej: Cambiar el estado de Mario a Super Mario o darle invulnerabilidad.
+    end note
 
     class FlorFuego{
         +actualizarPuntaje()
