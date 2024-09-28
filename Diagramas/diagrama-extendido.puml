@@ -15,6 +15,128 @@ together {
         +{static} main()
     }
 
+    class Personaje {
+        +caminar(direccion: String)
+        +mover()
+        +saltar()
+        +morir()
+        +lanzarProyectil()
+        +setEstado(estado : Estado)
+        +getEstado() : Estado
+    }
+
+    class AlteradorPuntaje{
+        +actualizarPuntaje()
+    }
+
+    class Movible{
+        +cambiarDireccion()
+    }
+
+    class enemigo { 
+        +recibirDano() 
+        +morir()
+        +actualizarPuntaje() 
+    }
+
+    class KoopaTroopa {
+        #caparazon: caparazon
+        +recibirDano()
+        +morir()
+    } 
+
+    class Goomba{
+        +recibirDano() 
+        +morir()
+        +actualizarPuntaje() 
+    }
+
+    class Spiny { 
+        +recibirDano() 
+        +morir()
+        +actualizarPuntaje() 
+    }
+
+    class Lakitu {
+        +recibirDano() 
+        +morir()
+        +actualizarPuntaje() 
+    }
+
+    class BuzzyBeattle {
+        +recibirDano() 
+        +morir()
+        +actualizarPuntaje() 
+    }
+
+    class PiranhaPlant {  
+        +recibirDano() 
+        +morir()
+        +actualizarPuntaje() 
+    }
+
+    class Moneda {
+        +actualizarPuntaje()
+    }
+
+    class PowerUp {
+        +actualizarPuntaje()
+    }
+
+    class FlorFuego{
+        +actualizarPuntaje()
+    }
+
+    class ChampinionVerde{
+        +actualizarPuntaje()
+        +IncremetarVida()
+    }
+
+    class SuperChampinion{
+        +actualizarPuntaje()
+    }
+
+    class Estrella{
+        +actualizarPuntaje()
+    }
+    
+    class Plataforma {
+
+    }
+
+    class Vacio {
+        +actualizarPuntaje()
+    }
+
+    class Tuberia {
+        #pirania: PiranhaPlant
+    }
+
+    class BloqueSolido {
+
+    }
+
+    class BloquePregunta {
+        #moneda: Moneda
+        #powerUp: PowerUp
+    }
+
+    class LadrilloSolido {
+        +destruir()
+    }
+    
+    class deslizable{
+
+    }
+
+    class Proyectil{
+
+    }
+
+    class BolaFuego {
+
+    }
+
     class Nivel{
         #tiempo: Duration
         #puntaje: int
