@@ -1,0 +1,252 @@
+@startuml
+' TODO: crear los colisionadores de carga
+' TODO: vincular los colisionadores de carga con el engine gráfico
+
+together {
+    class Juego <<Singleton>> {
+        #{static} uniqueInstance: Juego
+        #toUpdateRegistry: Set<Entidad>
+        #currNivel: Nivel
+        #personaje: Personaje
+        +{static} instance()
+        #cargarNivel()
+        +registerToUpdate(e: Entidad)
+        +unregisterToUpdate(e: Entidad)
+        +{static} main()
+    }
+
+    class Personaje {
+        +caminar(direccion: String)
+        +mover()
+        +saltar()
+        +morir()
+        +lanzarProyectil()
+        +setEstado(estado : Estado)
+        +getEstado() : Estado
+    }
+
+    class AlteradorPuntaje{
+        +actualizarPuntaje()
+    }
+
+    class Movible{
+        +cambiarDireccion()
+    }
+
+    class enemigo { 
+        +recibirDano() 
+        +morir()
+        +actualizarPuntaje() 
+    }
+
+    class KoopaTroopa {
+        #caparazon: caparazon
+        +recibirDano()
+        +morir()
+    } 
+
+    class Goomba{
+        +recibirDano() 
+        +morir()
+        +actualizarPuntaje() 
+    }
+
+    class Spiny { 
+        +recibirDano() 
+        +morir()
+        +actualizarPuntaje() 
+    }
+
+    class Lakitu {
+        +recibirDano() 
+        +morir()
+        +actualizarPuntaje() 
+    }
+
+    class BuzzyBeattle {
+        +recibirDano() 
+        +morir()
+        +actualizarPuntaje() 
+    }
+
+    class PiranhaPlant {  
+        +recibirDano() 
+        +morir()
+        +actualizarPuntaje() 
+    }
+
+    class Moneda {
+        +actualizarPuntaje()
+    }
+
+    class PowerUp {
+        +actualizarPuntaje()
+    }
+
+    class FlorFuego{
+        +actualizarPuntaje()
+    }
+
+    class ChampinionVerde{
+        +actualizarPuntaje()
+        +IncremetarVida()
+    }
+
+    class SuperChampinion{
+        +actualizarPuntaje()
+    }
+
+    class Estrella{
+        +actualizarPuntaje()
+    }
+    
+    class Plataforma {
+
+    }
+
+    class Vacio {
+        +actualizarPuntaje()
+    }
+
+    class Tuberia {
+        #pirania: PiranhaPlant
+    }
+
+    class BloqueSolido {
+
+    }
+
+    class BloquePregunta {
+        #moneda: Moneda
+        #powerUp: PowerUp
+    }
+
+    class LadrilloSolido {
+        +destruir()
+    }
+    
+    class deslizable{
+
+    }
+
+    class Proyectil{
+
+    }
+
+    class BolaFuego {
+
+    }
+
+    class Nivel{
+        #tiempo: Duration
+        #puntaje: int
+        +getPuntaje(): int
+        +setPuntaje(puntaje: int)
+    }
+    note left of Nivel::tiempo
+        Duration es la clase de Java
+    end note
+
+    class Menu <<Singleton>> {
+        #{static} uniqueInstance: Menu
+        +{static} instance()
+        +seleccionarModo(modo: int)
+        +mostrarModos()
+        +mostrarRanking()
+        ' TODO: implementar la UI del menu
+    }
+
+    class Ranking <<Singleton>> {
+        #rank: Map<String, Integer>
+        #{static} uniqueInstance: Ranking
+        +{static} instance()
+        +agregarEntrada(jugador: String, puntaje: int)
+        +getRanking(): Iterable<Entrada<String, Integer>>
+    }
+}
+
+together {
+    class CollisionsEngine <<Singleton>> {
+        #{static} uniqueInstance: CollisionsEngine
+        #nextCollidersToCheck: Collection<Collider>
+        #chunks: [][]Collection<Collider>
+        +{static} instance()
+        #checkCollision(e1: Collider, e2: Collider)
+        +registerToCheck(c: Collider)
+        +setChunk(c: Collider, x: int, y: int)
+    }
+    note left of CollisionsEngine::checkCollision
+        if (hayColision) {
+            c2.collide(c1, d1);
+            c1.collide(c2, d2);
+        }
+    end note
+
+    interface Entidad {
+        +update()
+        +loaded(): boolean
+        +load()
+    }
+
+    interface Collider {
+        +getEntidad(): Entidad
+        +collide(c: Collider, d: Direction)
+        +handleCollision(c: Collider, d: Direction)
+        +getPosition(p: Position)
+        +setPosition(): Position
+        +switch(b: boolean)
+        +activated(): boolean
+    }
+    note left of Collider::collide
+        c.handleCollision(this, d)
+    end note
+
+    interface ElementoGrafico {
+        +draw()
+        +getPosition(): Position
+        +setPosition(p: Position)
+        +getSprite(): Sprite
+        +setSprite(s: Sprite)
+    }
+
+    class SpriteFactory {
+        #possibleSprites: Collection<String>
+        #loadedSprites: Map<String, Sprite>
+        +getSprite(key: String)
+        +getPossibleSprites(): Iterable<String>
+    }
+
+    class Sprite {
+        #imagen : Image
+        +draw(int x, int y)
+        +setImagen(image : Image)
+        +getImagen() : Image
+    }
+
+    class GraphicEngine {
+        #ElementosGraficos: Collection<ElementoGrafico>
+        +addElementoGrafico(e: ElementoGrafico)
+        +drawFrame()
+    }
+
+    class LectorNiveles <<Singleton>> {
+        +crearNivel(file: String): Nivel
+    }
+
+    class Posicion {
+        #x: int
+        #y: int
+        +alterX(diff: int)
+        +alterY(diff: int)
+        +getX(): int
+        +getY(): int
+    }
+}
+
+enum Direccion {
+    IZQUIERDA
+    DERECHA
+    ARRIBA
+    ABAJO
+}
+@enduml
