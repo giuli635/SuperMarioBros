@@ -16,35 +16,38 @@ together {
     }
 
     class Personaje {
-        #List<PowerUp>: activePowerUps
-        
+        #estado: EstadoPersonaje     
+        #invulnerable: boolean   
+        +setInvulnerabilidad(bool: boolean)
+        +getInvulnerabilidad() :boolean
         +caminar(direccion: String)
         +mover()
         +saltar()
-        +morir()
+        +morir(entidad: Entidad)
         +lanzarProyectil()
-        +setEstado(estado : Estado)
-        +getEstado() : Estado
-        +agregarPowerUp(pw: powerUp)
+        +setEstado(estado: EstadoPersonaje)
+        +getEstado(): EstadoPersonaje
         +aplicarEfecto(pw: powerUp)
-        +removerPowerUp(pw: powerUp)
-        +aplicarPowerUps()
+        +superSalto()
+        +romperBloque(plataforma: Plataforma);   
     }
-    note left of Personaje::aplicarEfecto
-    cambia el estado de mario controlando prioridades 
-    end note
-    note left of Personaje::removerPowerUp
-    cuando se remueve el power up tambien se remueve el estado de mario
-    end note
-    note left of Personaje::aplicarPowerUps
-    se aplica cada power up en cada frame del juego segun sea necesario
-    end note
 
-    class Estado{
-        +manejarEstado(mario: Personaje)
-        +recibirGolpe(mario: Personaje)
-        +recogerPowerUp(mario: Personaje, pw: PowerUp)
+    interface EstadoPersonaje{
+        +recibirDaño(personaje: Personaje)
     }
+
+    class EstadoNormal{
+
+    }
+
+    class EstadoSuper{
+        +romperBloque(plataforma: Plataforma);
+    }
+
+    class EstadoFlorDeFuego{
+        +lanzarBolaDeFuego()
+    }
+
     class AlteradorPuntaje{
         +actualizarPuntaje()
     }
@@ -53,93 +56,72 @@ together {
         +cambiarDireccion()
     }
 
-    class enemigo { 
+    interface enemigo { 
         +recibirDano() 
         +morir()
-        +moverse()
-        +actualizarPuntaje() 
+        +moverse() 
+        +getPuntajeAlMatar(): int
     }
 
     class KoopaTroopa {
-        #caparazon: caparazon
-        +recibirDano()
-        +morir()
+        #caparazon: Caparazon
+        #escondido: Caparazon
+        +setEscondio(bool: boolean)
+        +getEscondido(): boolean
+
     } 
 
     class Goomba{
-        +recibirDano() 
-        +morir()
-        +actualizarPuntaje() 
+
     }
 
     class Spiny { 
-        +recibirDano() 
-        +morir()
-        +actualizarPuntaje() 
+
     }
 
     class Lakitu {
-        +recibirDano() 
-        +morir()
-        +actualizarPuntaje() 
+        //No puede morir
     }
 
     class BuzzyBeattle {
-        +recibirDano() 
-        +morir()
-        +actualizarPuntaje() 
+
     }
 
     class PiranhaPlant {  
-        +recibirDano() 
-        +morir()
-        +actualizarPuntaje() 
+ 
     }
 
     class Moneda {
-        +actualizarPuntaje()
+
     }
 
     abstract class PowerUp {
-        #prioridad: int
-
-        +actualizarPuntaje()
-        +obtenerPrioridad(): int
-        +activar(mario: Personaje) //método activar en cada clase concreta de PowerUp contiene la lógica específica de ese power-up
-        +desactivar(mario: Personaje)
-        +aplicar(mario: Personaje)
+        +aplicar(mario: Personaje) //método aplicar en cada clase concreta de PowerUp contiene la lógica específica de ese power-up, setear estado a mario
+        +actualizarPuntaje(personaje: Personaje)
     }
-    note left of PowerUp::activar
-      método activar en cada clase concreta de PowerUp contiene la lógica específica de ese power-up
-    end note
-
-    note left of PowerUp::aplicar
-    ej: Cambiar el estado de Mario a Super Mario o darle invulnerabilidad.
-    end note
 
     class FlorFuego{
-        +actualizarPuntaje()
+
     }
 
     class ChampinionVerde{
-        +actualizarPuntaje()
         +IncremetarVida()
     }
 
     class SuperChampinion{
-        +actualizarPuntaje()
+        
     }
 
     class Estrella{
-        +actualizarPuntaje()
+        
     }
     
     class Plataforma {
-
+        
     }
 
     class Vacio {
-        +actualizarPuntaje()
+        +getPuntajeAlMatar()
     }
 
     class Tuberia {
@@ -160,6 +142,10 @@ together {
     }
     
     class deslizable{
+        +cambiarDireccion()
+    }
+
+    class Caparazon{
 
     }
 
