@@ -51,19 +51,14 @@ Personaje .u.|> AlteradorPuntaje
 
 ' # NIVEL #
 '
-interface AlteradorPuntaje
 interface Plataforma
 interface Enemigo
 interface PowerUp
 class Moneda
-Nivel "1" <-d- "0..*" AlteradorPuntaje
 Plataforma ...u.|> Entidad
-Enemigo ..u.|> AlteradorPuntaje
 Enemigo ..u.|> Entidad
 PowerUp ..u.|> Entidad
-PowerUp ..u.|> AlteradorPuntaje
 Moneda .u.|> Entidad
-Moneda .u.|> AlteradorPuntaje
 
 ' # ENEMIGOS #
 '
@@ -79,7 +74,6 @@ Tuberia --> "0..1" PiranhaPlant
 
 ' # PLATAFORMAS #
 '
-Vacio .u.|> AlteradorPuntaje
 Vacio .u.|> Plataforma
 BloqueSolido .u.|> Plataforma
 LadrilloSolido -u-|> BloqueSolido
