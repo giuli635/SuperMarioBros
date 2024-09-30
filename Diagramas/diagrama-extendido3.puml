@@ -16,13 +16,36 @@ together {
     }
 
     class Personaje {
+        #estado: EstadoPersonaje     
+        #invulnerable: boolean   
+        +setInvulnerabilidad(bool: boolean)
+        +getInvulnerabilidad() :boolean
         +caminar(direccion: String)
         +mover()
         +saltar()
-        +morir()
+        +morir(entidad: Entidad)
         +lanzarProyectil()
-        +setEstado(estado : Estado)
-        +getEstado() : Estado
+        +setEstado(estado: EstadoPersonaje)
+        +getEstado(): EstadoPersonaje
+        +aplicarEfecto(pw: powerUp)
+        +superSalto()
+        +romperBloque(plataforma: Plataforma);   
+    }
+
+    interface EstadoPersonaje{
+        +recibirDaño(personaje: Personaje)
+    }
+
+    class EstadoNormal{
+
+    }
+
+    class EstadoSuper{
+        +romperBloque(plataforma: Plataforma);
+    }
+
+    class EstadoFlorDeFuego{
+        +lanzarBolaDeFuego()
     }
 
     class AlteradorPuntaje{
@@ -33,79 +56,72 @@ together {
         +cambiarDireccion()
     }
 
-    class enemigo { 
+    interface enemigo { 
         +recibirDano() 
         +morir()
-        +actualizarPuntaje() 
+        +moverse() 
+        +getPuntajeAlMatar(): int
     }
 
     class KoopaTroopa {
-        #caparazon: caparazon
-        +recibirDano()
-        +morir()
+        #caparazon: Caparazon
+        #escondido: Caparazon
+        +setEscondio(bool: boolean)
+        +getEscondido(): boolean
+
     } 
 
     class Goomba{
-        +recibirDano() 
-        +morir()
-        +actualizarPuntaje() 
+
     }
 
     class Spiny { 
-        +recibirDano() 
-        +morir()
-        +actualizarPuntaje() 
+
     }
 
     class Lakitu {
-        +recibirDano() 
-        +morir()
-        +actualizarPuntaje() 
+        //No puede morir
     }
 
     class BuzzyBeattle {
-        +recibirDano() 
-        +morir()
-        +actualizarPuntaje() 
+
     }
 
     class PiranhaPlant {  
-        +recibirDano() 
-        +morir()
-        +actualizarPuntaje() 
+ 
     }
 
     class Moneda {
-        +actualizarPuntaje()
+
     }
 
-    class PowerUp {
-        +actualizarPuntaje()
+    abstract class PowerUp {
+        +aplicar(mario: Personaje) //método aplicar en cada clase concreta de PowerUp contiene la lógica específica de ese power-up, setear estado a mario
+        +actualizarPuntaje(personaje: Personaje)
     }
 
     class FlorFuego{
-        +actualizarPuntaje()
+
     }
 
     class ChampinionVerde{
-        +actualizarPuntaje()
         +IncremetarVida()
     }
 
     class SuperChampinion{
-        +actualizarPuntaje()
+        
     }
 
     class Estrella{
-        +actualizarPuntaje()
+        
     }
     
     class Plataforma {
-
+        
     }
 
     class Vacio {
-        +actualizarPuntaje()
+        +getPuntajeAlMatar()
     }
 
     class Tuberia {
@@ -126,6 +142,10 @@ together {
     }
     
     class deslizable{
+        +cambiarDireccion()
+    }
+
+    class Caparazon{
 
     }
 
