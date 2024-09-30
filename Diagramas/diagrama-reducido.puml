@@ -40,14 +40,14 @@ Collider "1..*" -- "1" CollisionsEngine
 
 ' # PERSONAJE #
 '
-interface Estado
+interface EstadoPersonaje
 class Personaje
 Personaje .....|> Entidad
-Personaje -u-> "0..*" Estado
-Normal .u.|> Estado
-Super .u.|> Estado
-Fuego .u.|> Estado
-Invulnerable .u.|> Estado
+Personaje -u-> "0..*" EstadoPersonaje
+EstadoNormal .u.|> EstadoPersonaje
+EstadoSuper .u.|> EstadoNormal
+EstadoFlorDeFuego .u.|> EstadoSuper
+Personaje .u.|> AlteradorPuntaje
 
 ' # NIVEL #
 '
@@ -67,6 +67,8 @@ Moneda .u.|> AlteradorPuntaje
 
 ' # ENEMIGOS #
 '
+
+Enemigo .u.|> Movible
 Goomba .u.|> Enemigo
 KoopaTroopa .u.|> Enemigo
 PiranhaPlant .u.|> Enemigo
@@ -100,7 +102,10 @@ Estrella .u.|> Proyectil
 
 ' # DESLIZABLE #
 '
+
+interface Movible
 interface Deslizable
+Deslizable .u.|> Movible
 Deslizable .u.|> Entidad
 Caparazon .u.|> Deslizable
 KoopaTroopa "1" o-- "1" Caparazon
