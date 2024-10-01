@@ -45,21 +45,45 @@ together {
 
 together {
     class Personaje {
-        #estado: EstadoPersonaje     
-        #invulnerable: boolean   
-        +setInvulnerabilidad(bool: boolean)
-        +getInvulnerabilidad() :boolean
+        #List<PowerUp>: activePowerUps
+        #StrategyState: state
         +caminar(d: Direccion)
         +mover()
+        +agacharse()
         +saltar()
+        +superSalto()
         +morir()
         +lanzarProyectil()
-        +setEstado(estado: EstadoPersonaje)
-        +getEstado(): EstadoPersonaje
-        +aplicarEfecto(pw: powerUp)
-        +superSalto()
-        +romperBloque(plataforma: Plataforma);   
+        +setEstado(estado : Estado)
+        +agregarPowerUp(pw: powerUp)
+        +aplicarPowerUps()
+        +removerPowerUp(pw: powerUp)
+        +recibirDaño(e: Enemigo)
+        +aplicarPowerUps()
     }
+
+   abstract StrategyState{
+        +recibirDaño(pw: powerUp)
+        +recibirDaño(pw: powerUp, pw: powerUp)
+        +colisionarConBloque(pw: powerUp)
+    }
+    note left of Personaje::aplicarEfecto
+    cambia el estado de mario 
+    end note
+    note left of Personaje::removerPowerUp
+    cuando se remueve el power up tambien se remueve el estado de mario
+    end note
+    note left of Personaje::aplicarPowerUps
+    se aplica cada power up en cada frame del juego segun sea necesario
+    end note
+
+    interface PowerUp {
+        +activar(mario: Personaje)
+        +desactivar(mario: Personaje)
+    }
+    note left of PowerUp::activar
+      método activar en cada clase concreta de PowerUp contiene la lógica específica de ese power-up
+    end note
 
     interface EstadoPersonaje{
         +recibirDano(personaje: Personaje)

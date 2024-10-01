@@ -40,15 +40,16 @@ Collider "1..*" -- "1" CollisionsEngine
 
 ' # PERSONAJE #
 '
-interface EstadoPersonaje
+interface StrategyState
 class Personaje
 Personaje .....|> Entidad
-Personaje -u-> "0..*" EstadoPersonaje
-EstadoNormal .u.|> EstadoPersonaje
-EstadoSuper .u.|> EstadoNormal
-EstadoFlorDeFuego .u.|> EstadoSuper
-Personaje .u.|> AlteradorPuntaje
-
+Personaje -u-> "0..*" StrategyState
+EstadoDefault .u.|> StrategyState
+EstadoSuper .u.|> StrategyState
+EstadoFlorDeFuego .u.|> StrategyState
+SuperConFlor .u.|> StrategyState
+ConInvencible .u.|> StrategyState
+Invencible .u.|> StrategyState
 ' # NIVEL #
 '
 interface Plataforma
