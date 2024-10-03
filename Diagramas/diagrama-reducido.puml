@@ -1,111 +1,111 @@
 @startuml
 ' # JUEGO #
 '
-class Juego <<Singleton>>
+class Game <<Singleton>>
 class Menu <<Singleton>>
 class CollisionsEngine <<Singleton>>
 class GraphicEngine <<Singleton>>
-class LectorNiveles <<Singleton>>
-Juego "1" --> "1" Menu
-Juego "1" *-l- "1" Nivel
-Juego "1" --> "1" Personaje
-Juego "1" *-u- "1" GraphicEngine
-Juego "1" *-u- "1" CollisionsEngine
-Juego "1" -r-> "1" Ranking
-Juego "1" -- "1" LectorNiveles
-Juego "1" --> "0..*" Entidad
+class LevelReader <<Singleton>>
+Game "1" --> "1" Menu
+Game "1" *-l- "1" Level
+Game "1" --> "1" Character
+Game "1" *-u- "1" GraphicEngine
+Game "1" *-u- "1" CollisionsEngine
+Game "1" -r-> "1" Ranking
+Game "1" -- "1" LevelReader
+Game "1" --> "0..*" Entity
 
 ' # ENTIDAD #
 '
-interface Entidad
-Entidad "1" ---u-> "0..*" ElementoGrafico
-Entidad "1" ---u- "0..*" Collider
+interface Entity
+Entity "1" ---u-> "0..*" GraphicElement
+Entity "1" ---u- "0..*" Collider
 
 ' # GRAFICA #
 '
-interface ElementoGrafico
+interface GraphicElement
 class SpriteFactory <<Singleton>>
 class Sprite <<Flyweight>>
 Sprite "0..*" --o "1" SpriteFactory
-ElementoGrafico o-l- "0..*" Sprite
-ElementoGrafico "1..*" -- "1" GraphicEngine
-ElementoGrafico "1" --> "1" Posicion
+GraphicElement o-l- "0..*" Sprite
+GraphicElement "1..*" -- "1" GraphicEngine
+GraphicElement "1" --> "1" Position
 
 ' # COLLISIONS #
 '
 interface Collider
-Collider "0..1" -- "0..1" ElementoGrafico
-Collider "1" --> "0..1" Posicion
+Collider "0..1" -- "0..1" GraphicElement
+Collider "1" --> "0..1" Position
 Collider "1..*" -- "1" CollisionsEngine
 
 ' # PERSONAJE #
 '
 interface StrategyState
-class Personaje
-Personaje .....|> Entidad
-Personaje -u-> "0..*" StrategyState
-EstadoDefault .u.|> StrategyState
-EstadoSuper .u.|> StrategyState
-EstadoFlorDeFuego .u.|> StrategyState
-SuperConFlor .u.|> StrategyState
-ConInvencible .u.|> StrategyState
-Invencible .u.|> StrategyState
+class Character
+Character .....|> Entity
+Character -u-> "0..*" StrategyState
+DefaultState .u.|> StrategyState
+SuperState .u.|> StrategyState
+FireFlowerState .u.|> StrategyState
+FlowerWithSuper .u.|> StrategyState
+WithInvincible .u.|> StrategyState
+Invincible .u.|> StrategyState
 ' # NIVEL #
 '
-interface Plataforma
-interface Enemigo
+interface Plataform
+interface Enemy
 interface PowerUp
-class Moneda
-Plataforma ...u.|> Entidad
-Enemigo ..u.|> Entidad
-PowerUp ..u.|> Entidad
-Moneda .u.|> Entidad
+class Coin
+Plataform ...u.|> Entity
+Enemy ..u.|> Entity
+PowerUp ..u.|> Entity
+Coin .u.|> Entity
 
 ' # ENEMIGOS #
 '
 
-Enemigo .u.|> Movible
-Goomba .u.|> Enemigo
-KoopaTroopa .u.|> Enemigo
-PiranhaPlant .u.|> Enemigo
-Lakitu .u.|> Enemigo
-Spiny .u.|> Enemigo
-BuzzyBeattle .u.|> Enemigo
-Tuberia --> "0..1" PiranhaPlant
+Enemy .u.|> Movable
+Goomba .u.|> Enemy
+KoopaTroopa .u.|> Enemy
+PiranhaPlant .u.|> Enemy
+Lakitu .u.|> Enemy
+Spiny .u.|> Enemy
+BuzzyBeattle .u.|> Enemy
+Pipe --> "0..1" PiranhaPlant
 
 ' # PLATAFORMAS #
 '
-Vacio .u.|> Plataforma
-BloqueSolido .u.|> Plataforma
-LadrilloSolido -u-|> BloqueSolido
-BloquePregunta -u-|> BloqueSolido
-Tuberia .u.|> Plataforma
+Void .u.|> Plataform
+SolidBlock .u.|> Plataform
+SolidBrick -u-|> SolidBlock
+QuestionBlock -u-|> SolidBlock
+Pipe .u.|> Plataform
 
 ' # POWERUPS #
 '
-SuperChampinion .u.|> PowerUp
-FlorFuego .u.|> PowerUp
-Estrella .u.|> PowerUp
-ChampinionVerde .u.|> PowerUp
+SuperMushroom .u.|> PowerUp
+FireFlower .u.|> PowerUp
+Star .u.|> PowerUp
+GreenMushroom .u.|> PowerUp
 
 ' # PROYECTIL #
 '
-interface Proyectil
-Proyectil .u.|> Entidad
-BolaFuego .u.|> Proyectil
-Estrella .u.|> Proyectil
+interface Proyectile
+Proyectile .u.|> Entity
+FireBall .u.|> Proyectile
+Star .u.|> Proyectile
 
 ' # DESLIZABLE #
 '
 
-interface Movible
-interface Deslizable
-Deslizable .u.|> Movible
-Deslizable .u.|> Entidad
-Caparazon .u.|> Deslizable
-KoopaTroopa "1" o-- "1" Caparazon
-ChampinionVerde .u.|> Deslizable
-SuperChampinion .u.|> Deslizable
+interface Movable
+interface Slider
+Slider .u.|> Movable
+Slider .u.|> Entity
+Shell .u.|> Slider
+KoopaTroopa "1" o-- "1" Shell
+GreenMushroom .u.|> Slider
+SuperMushroom .u.|> Slider
 
 ' # FORMATTING #
 '

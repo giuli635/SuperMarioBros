@@ -3,34 +3,34 @@
 ' TODO: vincular los colisionadores de carga con el engine gráfico
 
 together {
-    class Juego <<Singleton>> {
-        #{static} uniqueInstance: Juego
-        #toUpdateRegistry: Set<Entidad>
-        #currNivel: Nivel
-        #personaje: Personaje
+    class Game <<Singleton>> {
+        #{static} uniqueInstance: Game
+        #toUpdateRegistry: Set<Entity>
+        #currNivel: Level
+        #character: Character
         +{static} instance()
-        #cargarNivel()
-        +registerToUpdate(e: Entidad)
-        +unregisterToUpdate(e: Entidad)
+        #loadLevel()
+        +registerToUpdate(e: Entity)
+        +unregisterToUpdate(e: Entity)
         +{static} main()
     }
 
-    class Nivel{
-        #tiempo: Duration
-        #puntaje: int
-        +getPuntaje(): int
-        +setPuntaje(puntaje: int)
+    class Level{
+        #time: Duration
+        #points: int
+        +getPoints(): int
+        +setPoints(points: int)
     }
-    note left of Nivel::tiempo
+    note left of Level::time
         Duration es la clase de Java
     end note
 
     class Menu <<Singleton>> {
         #{static} uniqueInstance: Menu
         +{static} instance()
-        +seleccionarModo(modo: int)
-        +mostrarModos()
-        +mostrarRanking()
+        +selectMode(modo: int)
+        +showModes()
+        +showRanking()
         ' TODO: implementar la UI del menu
     }
 
@@ -38,84 +38,84 @@ together {
         #rank: Map<String, Integer>
         #{static} uniqueInstance: Ranking
         +{static} instance()
-        +agregarEntrada(jugador: String, puntaje: int)
-        +getRanking(): Iterable<Entrada<String, Integer>>
+        +addEntry(player: String, points: int)
+        +getRanking(): Iterable<Entry<String, Integer>>
     }
 }
 
 together {
-    class Personaje {
+    class Character {
         #List<PowerUp>: activePowerUps
         #StrategyState: state
-        +caminar(d: Direccion)
-        +mover()
-        +agacharse()
-        +saltar()
-        +superSalto()
-        +morir()
-        +lanzarProyectil()
-        +setEstado(estado : Estado)
-        +agregarPowerUp(pw: powerUp)
-        +aplicarPowerUps()
-        +removerPowerUp(pw: powerUp)
-        +recibirDaño(e: Enemigo)
-        +aplicarPowerUps()
+        +walk(d: Direction)
+        +move()
+        +crouch()
+        +jump()
+        +superJump()
+        +die()
+        +throwProyectile()
+        +setState(state : State)
+        +addPowerUp(pw: PowerUp)
+        +applyPowerUp()
+        +removePowerUp(pw: PowerUp)
+        +receive(e: Enemy)
+        +applyPowerUp()
     }
+    note left of Character::aplicarEfecto
+        cambia el state de mario 
+    end note
+    note left of Character::removePowerUp
+        cuando se remueve el power up tambien se remueve el state de mario
+    end note
+    note left of Character::applyPowerUp
+        se aplica cada power up en cada frame del juego segun sea necesario
+    end note
 
-   abstract StrategyState{
-        +recibirDaño(pw: powerUp)
-        +recibirDaño(pw: powerUp, pw: powerUp)
-        +colisionarConBloque(pw: powerUp)
+    abstract class StrategyState{
+        +receive(pw: PowerUp)
+        +receive(pw: PowerUp, pw: PowerUp)
+        +collideWithBlock(pw: PowerUp)
     }
-    note left of Personaje::aplicarEfecto
-    cambia el estado de mario 
-    end note
-    note left of Personaje::removerPowerUp
-    cuando se remueve el power up tambien se remueve el estado de mario
-    end note
-    note left of Personaje::aplicarPowerUps
-    se aplica cada power up en cada frame del juego segun sea necesario
-    end note
 
     interface PowerUp {
-        +activar(mario: Personaje)
-        +desactivar(mario: Personaje)
+        +activate(mario: Character)
+        +deactivate(mario: Character)
     }
-    note left of PowerUp::activar
-      método activar en cada clase concreta de PowerUp contiene la lógica específica de ese power-up
+    note left of PowerUp::activate
+      en cada clase concreta de PowerUp contiene la lógica específica de ese power-up
     end note
 
-    interface EstadoPersonaje{
-        +recibirDano(personaje: Personaje)
+    interface CharacterState{
+        +recieveDamage(character: Character)
     }
 
-    class EstadoNormal{
+    class DefaultState{
     }
 
-    class EstadoSuper{
-        +romperBloque(plataforma: Plataforma);
+    class SuperState{
+        +breakBlock(plataform: Plataform);
     }
 
-    class EstadoFlorDeFuego{
-        +lanzarBolaDeFuego()
+    class FireFlowerState{
+        +throwFireBall()
     }
 
-    class Movible{
-        +cambiarDireccion()
+    class Movable{
+        +changeDirection()
     }
 
-    interface Enemigo { 
-        +recibirDano() 
-        +morir()
-        +moverse() 
-        +getPuntajeAlMatar(): int
+    interface Enemy { 
+        +recieveDamage() 
+        +die()
+        +move() 
+        +getPoints(): int
     }
 
     class KoopaTroopa {
-        #caparazon: Caparazon
-        #escondido: Caparazon
-        +setEscondio(bool: boolean)
-        +getEscondido(): boolean
+        #shell: Shell
+        #hidden: boolean
+        +hide(bool: boolean)
+        +show(): boolean
 
     } 
 
@@ -134,59 +134,59 @@ together {
     class PiranhaPlant {  
     }
 
-    class Moneda {
+    class Coin {
     }
 
     abstract class PowerUp {
-        +aplicar(mario: Personaje)
+        +apply(character: Character)
     }
 
-    class FlorFuego{
+    class FireFlower{
     }
 
-    class ChampinionVerde{
-        +IncremetarVida()
+    class GreenMushroom{
+        +addLife()
     }
 
-    class SuperChampinion{
+    class SuperMushroom{
     }
 
-    class Estrella{
+    class Star{
     }
     
-    class Plataforma {
+    class Plataform {
     }
 
-    class Vacio {
+    class Void {
     }
 
-    class Tuberia {
-        #pirania: PiranhaPlant
+    class Pipe {
+        #piranha: PiranhaPlant
     }
 
-    class BloqueSolido {
+    class SolidBlock {
     }
 
-    class BloquePregunta {
-        #moneda: Moneda
-        #powerUp: PowerUp
+    class QuestionBlock {
+        #coin: Coin
+        #PowerUp: PowerUp
     }
 
-    class LadrilloSolido {
-        +destruir()
+    class SolidBrick {
+        +break()
     }
     
-    class Deslizable{
-        +cambiarDireccion()
+    class Slider{
+        +changeDirection()
     }
 
-    class Caparazon{
+    class Shell{
     }
 
-    class Proyectil{
+    class Proyectile{
     }
 
-    class BolaFuego {
+    class FireBall {
     }
 
 }
@@ -208,14 +208,14 @@ together {
         }
     end note
 
-    interface Entidad {
+    interface Entity {
         +update()
         +loaded(): boolean
         +load()
     }
 
     interface Collider {
-        +getEntidad(): Entidad
+        +getEntidad(): Entity
         +collide(c: Collider, d: Direction)
         +handleCollision(c: Collider, d: Direction)
         +getPosition(p: Position)
@@ -227,7 +227,7 @@ together {
         c.handleCollision(this, d)
     end note
 
-    interface ElementoGrafico {
+    interface GraphicElement {
         +draw()
         +getPosition(): Position
         +setPosition(p: Position)
@@ -245,21 +245,21 @@ together {
     class Sprite {
         #imagen : Image
         +draw(int x, int y)
-        +setImagen(image : Image)
-        +getImagen() : Image
+        +setImage(image : Image)
+        +getImage() : Image
     }
 
     class GraphicEngine {
-        #ElementosGraficos: Collection<ElementoGrafico>
-        +addElementoGrafico(e: ElementoGrafico)
+        #elements: Collection<GraphicElement>
+        +addElementoGrafico(e: GraphicElement)
         +drawFrame()
     }
 
-    class LectorNiveles <<Singleton>> {
-        +crearNivel(file: String): Nivel
+    class LevelReader <<Singleton>> {
+        +createLevel(file: String): Level
     }
 
-    class Posicion {
+    class Position {
         #x: int
         #y: int
         +alterX(diff: int)
@@ -269,10 +269,10 @@ together {
     }
 }
 
-enum Direccion {
-    IZQUIERDA
-    DERECHA
-    ARRIBA
-    ABAJO
+enum Direction {
+    LEFT
+    RIGTH
+    UP
+    DOWN
 }
 @enduml
