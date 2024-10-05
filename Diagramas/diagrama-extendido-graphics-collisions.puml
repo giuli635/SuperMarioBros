@@ -1,0 +1,113 @@
+@startuml
+' TODO: crear los colisionadores de carga
+' TODO: vincular los colisionadores de carga con el engine gráfico
+'
+class CollisionsEngine <<Singleton>> {
+    #{static} uniqueInstance: CollisionsEngine
+    #nextCollidersToCheck: Collection<Collider>
+    #chunks: [][]Collection<Collider>
+    +{static} instance()
+    #checkCollision(e1: Collider, e2: Collider)
+    +registerToCheck(c: Collider)
+    +setChunk(c: Collider, x: int, y: int)
+}
+note right of CollisionsEngine::checkCollision
+    if (hayColision) {
+        c2.collide(c1, d1);
+        c1.collide(c2, d2);
+    }
+end note
+
+interface Entity {
+    +update()
+    +loaded(): boolean
+    +load()
+    +unload()
+}
+
+interface Collider {
+    +getEntidad(): Entity
+    +collide(c: Collider, d: Direction)
+    +handleCollision(c: Collider, d: Direction)
+    +getPosition(p: Position)
+    +setPosition(): Position
+    +getHitbox(): []int
+    +setHitbox(h: []int)
+    +switch(b: boolean)
+    +activated(): boolean
+}
+note left of Collider::collide
+    c.handleCollision(this, d)
+end note
+
+abstract class GameCollider {
+    #hitbox: []int
+    +handleCollision(c: CharacterCollider, d: Direction)
+    +handleCollision(c: EnemyCollider, d: Direction)
+    +handleCollision(c: PlatformCollider, d: Direction)
+    +handleCollision(c: CoinCollider, d: Direction)
+    +handleCollision(c: PowerUpCollider, d: Direction)
+    +handleCollision(c: FireBallCollider, d: Direction)
+}
+
+CharacterCollider .u[hidden].|> GameCollider
+EnemyCollider .u[hidden].|> GameCollider
+PlatformCollider .u[hidden].|> GameCollider
+CoinCollider .u[hidden].|> GameCollider
+PowerUpCollider .u[hidden].|> GameCollider
+FireBallCollider .u[hidden].|> GameCollider
+
+interface GraphicElement {
+    +draw()
+    +getPosition(): Position
+    +setPosition(p: Position)
+    +getSprite(): Sprite
+    +setSprite(s: Sprite)
+}
+
+class SpriteFactory {
+    #possibleSprites: Collection<String>
+    #loadedSprites: Map<String, Sprite>
+    +getSprite(key: String)
+    +getPossibleSprites(): Iterable<String>
+}
+
+class Sprite {
+    #imagen : Image
+    +draw(int x, int y)
+    +setImage(image : Image)
+    +getImage() : Image
+}
+
+class GraphicEngine {
+    #elements: Collection<GraphicElement>
+    +addElementoGrafico(e: GraphicElement)
+    +drawFrame()
+}
+
+class Position {
+    #x: int
+    #y: int
+    +alterX(diff: int)
+    +alterY(diff: int)
+    +getX(): int
+    +getY(): int
+}
+
+enum Direction {
+    LEFT
+    RIGTH
+    UP
+    DOWN
+}
+
+' FORMATTING
+
+Entity -d[hidden]-> GraphicElement
+Entity -d[hidden]-> Collider
+CollisionsEngine -l[hidden]-> Collider
+GameCollider .u[hidden].|> Collider
+GraphicEngine -r[hidden]-> GraphicElement
+GraphicEngine -l[hidden]-> SpriteFactory
+SpriteFactory -d[hidden]-> Sprite
+@enduml

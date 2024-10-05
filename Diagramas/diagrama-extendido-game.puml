@@ -1,0 +1,44 @@
+@startuml
+class Game <<Singleton>> {
+    #{static} uniqueInstance: Game
+    #toUpdateRegistry: Set<Entity>
+    #currNivel: Level
+    #character: Character
+    +{static} instance()
+    #loadLevel()
+    +registerToUpdate(e: Entity)
+    +unregisterToUpdate(e: Entity)
+    +{static} main()
+}
+
+class Level{
+    #time: Duration
+    #points: int
+    +getPoints(): int
+    +setPoints(points: int)
+}
+note left of Level::time
+Duration es la clase de Java
+end note
+
+class Menu <<Singleton>> {
+    #{static} uniqueInstance: Menu
+    +{static} instance()
+    +selectMode(modo: int)
+    +showModes()
+    +showRanking()
+    ' TODO: implementar la UI del menu
+}
+
+class Ranking <<Singleton>> {
+    #rank: Map<String, Integer>
+    #{static} uniqueInstance: Ranking
+    +{static} instance()
+    +addEntry(player: String, points: int)
+    +getRanking(): Iterable<Entry<String, Integer>>
+}
+
+class LevelReader <<Singleton>> {
+    +createLevel(file: String): Level
+}
+@enduml

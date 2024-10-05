@@ -1,0 +1,64 @@
+@startuml
+class Character {
+    #characterStates: List<CharacterState>
+    #brickCollisions: List<BrickCollision>
+    #enemyCollisions: List<EnemyCollision>
+    #graphicElement: GraphicElement
+    #collider: Collider
+    +move(speed: int, d: Direction)
+    +jump()
+    +die()
+    +collide(b: SolidBrick)
+    +collide(b: SolidBlock)
+    +collide(e: Enemy)
+    +getCollider(): Collider
+    +getGraphicElement(): GraphicElement
+    +addCharacterState(s: CharacterState)
+    +removeCharacterState(s: CharacterState)
+    +addEnemyCollision(c: EnemyCollision)
+    +removeEnemyCollision(c: EnemyCollision)
+    +addBrickCollision(c: BrickCollision)
+    +removeBrickCollision(c: BrickCollision)
+}
+
+interface BrickCollision <<Strategy>> {
+    +collide(b: SolidBrick)
+}
+
+DefaultBrickCollision .u[hidden].|> BrickCollision
+BreakBrickCollision .u[hidden].|> BrickCollision
+
+interface EnemyCollision <<Strategy>> {
+    +collide(e: Enemy)
+}
+
+DefaultEnemyCollision .u[hidden].|> EnemyCollision
+SuperEnemyCollision .u[hidden].|> EnemyCollision
+InvincibleEnemyCollision .u[hidden].|> EnemyCollision
+
+together {
+    class FireBallThrower {
+        #character: Character
+        +throwFireBall()
+    }
+
+    class Croucher {
+        #character: Character
+        +crouch()
+    }
+}
+
+interface CharacterState <<Command>> {
+    +setState()
+    +removeState()
+}
+
+Fire .u[hidden].|> CharacterState
+Invincible .u[hidden].|> CharacterState
+Super .u[hidden].|> CharacterState
+
+' FORMATTING
+Character -d[hidden]-> BrickCollision
+Character -d[hidden]-> EnemyCollision
+Character -d[hidden]-> CharacterState
+@enduml

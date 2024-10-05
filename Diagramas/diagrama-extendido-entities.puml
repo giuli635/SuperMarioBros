@@ -1,0 +1,61 @@
+@startuml
+' TODO: agregar constructores y getters y setters (habría que preguntar si podemos evitar algunos getters y setters en pos de encapsulamiento)
+'
+interface Movable{
+    +move()
+    +changeDirection()
+}
+
+interface Enemy { 
+    +recieveDamage() 
+    +getPoints(): int
+}
+
+Enemy .u[hidden].|> Movable
+Goomba .u[hidden].|> Enemy
+KoopaTroopa .u[hidden].|> Enemy
+PiranhaPlant .u[hidden].|> Enemy
+Lakitu .u[hidden].|> Enemy
+Spiny .u[hidden].|> Enemy
+BuzzyBeattle .u[hidden].|> Enemy
+
+interface PowerUp {
+    +apply(character: Character)
+}
+
+class GreenMushroom{
+    +addLife()
+}
+
+class Proyectile
+class FireBall
+
+class Pipe {
+    #piranha: PiranhaPlant
+}
+
+class SolidBrick {
+    +break()
+}
+
+class QuestionBlock {
+    #coin: Coin
+    #PowerUp: PowerUp
+}
+
+class Coin
+
+Void .u[hidden].|> Platform
+SolidBlock .u[hidden].|> Platform
+SolidBrick -u[hidden]-|> SolidBlock
+QuestionBlock -u[hidden]-|> SolidBlock
+Pipe .u[hidden].|> Platform
+
+FireFlower .u[hidden].|> PowerUp
+SuperMushroom .u[hidden].|> PowerUp
+Star .u[hidden].|> PowerUp
+GreenMushroom .u[hidden].|> PowerUp
+
+Platform -l[hidden]- Movable
+Movable -l[hidden]- PowerUp
+@enduml
