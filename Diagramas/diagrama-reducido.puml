@@ -7,13 +7,15 @@ class CollisionsEngine <<Singleton>>
 class GraphicEngine <<Singleton>>
 class LevelReader <<Singleton>>
 Game "1" --> "1" Menu
-Game "1" *-l- "1" Level
-Game "1" --> "1" Character
+Game "1" *-- "1" Level
+Game "1" -r---> "1" Character
 Game "1" *-u- "1" GraphicEngine
 Game "1" *-u- "1" CollisionsEngine
-Game "1" -r-> "1" Ranking
-Game "1" -- "1" LevelReader
+Game "1" --> "1" Ranking
+Game "1" -u- "1" LevelReader
 Game "1" --> "0..*" Entity
+LevelReader "1" -- CollisionsEngine
+LevelReader "1" -- GraphicEngine
 
 ' # ENTIDAD #
 '
@@ -27,36 +29,54 @@ interface GraphicElement
 class SpriteFactory <<Singleton>>
 class Sprite <<Flyweight>>
 Sprite "0..*" --o "1" SpriteFactory
-GraphicElement o-l- "0..*" Sprite
+GraphicElement o-r- "0..*" Sprite
 GraphicElement "1..*" -- "1" GraphicEngine
 GraphicElement "1" --> "1" Position
 
 ' # COLLISIONS #
 '
 interface Collider
-Collider "0..1" -- "0..1" GraphicElement
+abstract class GameCollider
 Collider "1" --> "0..1" Position
 Collider "1..*" -- "1" CollisionsEngine
+GameCollider .....|> Collider
+CharacterCollider .u.|> GameCollider
+EnemyCollider .u.|> GameCollider
+PlatformCollider .u.|> GameCollider
+CoinCollider .u.|> GameCollider
+PowerUpCollider .u.|> GameCollider
+FireBallCollider .u.|> GameCollider
 
 ' # PERSONAJE #
 '
-interface StrategyState
+interface CharacterState <<Command>>
 class Character
-Character .....|> Entity
-Character -u-> "0..*" StrategyState
-DefaultState .u.|> StrategyState
-SuperState .u.|> StrategyState
-FireFlowerState .u.|> StrategyState
-FlowerWithSuper .u.|> StrategyState
-WithInvincible .u.|> StrategyState
-Invincible .u.|> StrategyState
+Character ..d...|> Entity
+Character "1" -- "0..*" CharacterState
+Super .u.|> CharacterState
+Fire .u.|> CharacterState
+Invincible .u.|> CharacterState
+interface EnemyCollision <<Strategy>>
+interface BrickCollision <<Strategy>>
+class FireBallThrower
+class Croucher
+Character <-d- FireBallThrower
+Character <-d- Croucher
+DefaultBrickCollision .u.|> BrickCollision
+BreakBrickCollision .u.|> BrickCollision
+DefaultEnemyCollision .u.|> EnemyCollision
+SuperEnemyCollision .u.|> EnemyCollision
+InvincibleEnemyCollision .u.|> EnemyCollision
+Character o-d- "1" EnemyCollision
+Character o-d- "1" BrickCollision
+
 ' # NIVEL #
 '
-interface Plataform
+interface Platform
 interface Enemy
 interface PowerUp
 class Coin
-Plataform ...u.|> Entity
+Platform ...u.|> Entity
 Enemy ..u.|> Entity
 PowerUp ..u.|> Entity
 Coin .u.|> Entity
@@ -64,9 +84,9 @@ Coin .u.|> Entity
 ' # ENEMIGOS #
 '
 
-Enemy .u.|> Movable
 Goomba .u.|> Enemy
 KoopaTroopa .u.|> Enemy
+KoopaTroopa "1" o-- "1" Shell
 PiranhaPlant .u.|> Enemy
 Lakitu .u.|> Enemy
 Spiny .u.|> Enemy
@@ -75,11 +95,11 @@ Pipe --> "0..1" PiranhaPlant
 
 ' # PLATAFORMAS #
 '
-Void .u.|> Plataform
-SolidBlock .u.|> Plataform
+Void .u.|> Platform
+SolidBlock .u.|> Platform
 SolidBrick -u-|> SolidBlock
 QuestionBlock -u-|> SolidBlock
-Pipe .u.|> Plataform
+Pipe .u.|> Platform
 
 ' # POWERUPS #
 '
@@ -95,17 +115,11 @@ Proyectile .u.|> Entity
 FireBall .u.|> Proyectile
 Star .u.|> Proyectile
 
-' # DESLIZABLE #
-'
-
+' # MOVABLE #
 interface Movable
-interface Slider
-Slider .u.|> Movable
-Slider .u.|> Entity
-Shell .u.|> Slider
-KoopaTroopa "1" o-- "1" Shell
-GreenMushroom .u.|> Slider
-SuperMushroom .u.|> Slider
+Enemy .u.|> Movable
+GreenMushroom .u.|> Movable
+SuperMushroom .u.|> Movable
 
 ' # FORMATTING #
 '
