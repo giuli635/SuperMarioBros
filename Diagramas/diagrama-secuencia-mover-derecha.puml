@@ -1,0 +1,9 @@
+@startuml
+Game --> Character : update() 
+activate Character
+Character --> Game : getKeyPressed(KeyEvent.VK_W)
+alt true
+    Character --> Position : alterX(speedX)
+end
+deactivate Character
+@enduml

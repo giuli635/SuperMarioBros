@@ -6,8 +6,9 @@ class CollisionsEngine <<Singleton>> {
     #{static} uniqueInstance: CollisionsEngine
     #nextCollidersToCheck: Collection<Collider>
     #chunks: [][]Collection<Collider>
-    +{static} instance()
+    +{static} instance(): CollisionsEngine
     #checkCollision(e1: Collider, e2: Collider)
+    +checkCollisions()
     +registerToCheck(c: Collider)
     +setChunk(c: Collider, x: int, y: int)
 }
@@ -33,7 +34,7 @@ interface Collider {
     +setPosition(): Position
     +getHitbox(): []int
     +setHitbox(h: []int)
-    +switch(b: boolean)
+    +setActive(b: boolean)
     +activated(): boolean
 }
 note left of Collider::collide
@@ -65,7 +66,9 @@ interface GraphicElement {
     +setSprite(s: Sprite)
 }
 
-class SpriteFactory {
+class SpriteFactory <<Singleton>> {
+    #{static} uniqueInstance: SpriteFactory
+    +{static} instance(): SpriteFactory
     #possibleSprites: Collection<String>
     #loadedSprites: Map<String, Sprite>
     +getSprite(key: String)
@@ -79,7 +82,9 @@ class Sprite {
     +getImage() : Image
 }
 
-class GraphicEngine {
+class GraphicEngine <<Singleton>> {
+    #{static} uniqueInstance: GraphicEngine
+    +{static} instance(): GraphicEngine
     #elements: Collection<GraphicElement>
     +addElementoGrafico(e: GraphicElement)
     +drawFrame()

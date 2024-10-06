@@ -5,7 +5,8 @@ class Character {
     #enemyCollisions: List<EnemyCollision>
     #graphicElement: GraphicElement
     #collider: Collider
-    +move(speed: int, d: Direction)
+    #position: Position
+    #speedX: int
     +jump()
     +die()
     +collide(b: SolidBrick)
@@ -19,6 +20,7 @@ class Character {
     +removeEnemyCollision(c: EnemyCollision)
     +addBrickCollision(c: BrickCollision)
     +removeBrickCollision(c: BrickCollision)
+    +getCharacterStates(): Iterable<CharacterState>
 }
 
 interface BrickCollision <<Strategy>> {
@@ -37,14 +39,20 @@ SuperEnemyCollision .u[hidden].|> EnemyCollision
 InvincibleEnemyCollision .u[hidden].|> EnemyCollision
 
 together {
-    class FireBallThrower {
+    class FireBallThrower <<Singleton>> {
+        #{static} uniqueInstance: FireBallThrower
+        +{static} instance(): FireBallThrower
         #character: Character
-        +throwFireBall()
+        +update()
     }
 
-    class Croucher {
+    class Croucher <<Singleton>> {
+        #{static} uniqueInstance: Croucher
+        +{static} instance(): Croucher
         #character: Character
-        +crouch()
+        #crouched: boolean
+        +getCrouch(): boolean
+        +update()
     }
 }
 

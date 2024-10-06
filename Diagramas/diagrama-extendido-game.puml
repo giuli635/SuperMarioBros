@@ -4,10 +4,12 @@ class Game <<Singleton>> {
     #toUpdateRegistry: Set<Entity>
     #currNivel: Level
     #character: Character
-    +{static} instance()
+    +{static} instance(): Game
     #loadLevel()
     +registerToUpdate(e: Entity)
     +unregisterToUpdate(e: Entity)
+    +getKeyPressed(key: int): boolean
+    +getKeyReleased(key: int): boolean
     +{static} main()
 }
 
@@ -23,7 +25,7 @@ end note
 
 class Menu <<Singleton>> {
     #{static} uniqueInstance: Menu
-    +{static} instance()
+    +{static} instance(): Menu
     +selectMode(modo: int)
     +showModes()
     +showRanking()
@@ -33,12 +35,14 @@ class Menu <<Singleton>> {
 class Ranking <<Singleton>> {
     #rank: Map<String, Integer>
     #{static} uniqueInstance: Ranking
-    +{static} instance()
+    +{static} instance(): Ranking
     +addEntry(player: String, points: int)
     +getRanking(): Iterable<Entry<String, Integer>>
 }
 
 class LevelReader <<Singleton>> {
+    #{static} uniqueInstance: LevelReader
+    +{static} instance(): LevelReader
     +createLevel(file: String): Level
 }
 @enduml
