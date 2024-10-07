@@ -60,6 +60,8 @@ interface EnemyCollision <<Strategy>>
 interface BrickCollision <<Strategy>>
 class FireBallThrower
 class Croucher
+FireBallThrower .d.|> Entity
+Croucher .d.|> Entity
 Character <-d- FireBallThrower
 Character <-d- Croucher
 DefaultBrickCollision .u.|> BrickCollision
@@ -69,6 +71,7 @@ SuperEnemyCollision .u.|> EnemyCollision
 InvincibleEnemyCollision .u.|> EnemyCollision
 Character o-d- "1" EnemyCollision
 Character o-d- "1" BrickCollision
+Character --> Position
 
 ' # NIVEL #
 '
