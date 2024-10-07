@@ -12,50 +12,109 @@ interface Enemy {
 }
 
 Enemy .u[hidden].|> Movable
-Goomba .u[hidden].|> Enemy
-KoopaTroopa .u[hidden].|> Enemy
-PiranhaPlant .u[hidden].|> Enemy
-Lakitu .u[hidden].|> Enemy
-Spiny .u[hidden].|> Enemy
-BuzzyBeattle .u[hidden].|> Enemy
+
+
+class BuzzyBeattle{
+    #graphicElement: GraphicElement
+    #pos: Position
+    # {static}speedX: int
+    +BuzzyBeattle(ge: GraphicElement, pos: Position)     
+}
+class Spiny{
+    #graphicElement: GraphicElement
+    #pos: Position
+    # {static}speedX: int
+    +Spiny(ge: GraphicElement, pos: Position)         
+}
+class Lakitu{
+    #graphicElement: GraphicElement
+    #pos: Position
+    # {static}speedX: int
+    +Lakitu(ge: GraphicElement, pos: Position)      
+}
+class PiranhaPlant{
+    #graphicElement: GraphicElement
+    #pos: Position
+    # {static}speedX: int
+    +PiranhaPlant(ge: GraphicElement, pos: Position)    
+}
+class KoopaTroopa{
+    #graphicElement: GraphicElement
+    #pos: Position
+    # {static}speedX: int
+    +KoopaTroopa(ge: GraphicElement, pos: Position)
+}
+
+class Goomba{
+    #graphicElement: GraphicElement
+    #pos: Position
+    # {static}speedX: int
+    +Goomba(ge: GraphicElement, pos: Position)
+}
+
 
 interface PowerUp {
     +apply(character: Character)
 }
 
 class GreenMushroom{
+    #graphicElement: GraphicElement
+    GreenMushroom(gE: GraphicElement)
     +addLife()
 }
 
-class Proyectile
-class FireBall
+interface Proyectile
+
+class FireBall{
+    #pos: Position
+    #graphicElement: GraphicElement
+    # {static}speedX: int
+}
 
 class Pipe {
     #piranha: PiranhaPlant
+    #graphicElement: GraphicElement
+    +Pipe(p: PiranhaPlant, gE: GraphicElement)
+
 }
 
 class SolidBrick {
+    #graphicElement: GraphicElement
+    +SolidBrick(gE: GraphicElement)
     +break()
 }
 
 class QuestionBlock {
     #coin: Coin
     #PowerUp: PowerUp
+    +QuestionBlock(pW: PowerUp, coin: Coin)
 }
 
-class Coin
+class Coin{
+    #graphicElement: GraphicElement
+    +Coin(gE: GraphicElement)
+}
 
-Void .u[hidden].|> Platform
+class FireFlower{
+    #graphicElement: GraphicElement
+    +FireFlower(gE: GraphicElement) 
+}
+class SuperMushroom{
+    #graphicElement: GraphicElement
+    +SuperMushroom(gE: GraphicElement)     
+}
+class Star{
+    #graphicElement: GraphicElement
+    +Star(gE: GraphicElement)      
+}
+class GreenMushroom{
+    #graphicElement: GraphicElement
+    +GreenMushroom(gE: GraphicElement)      
+}
 SolidBlock .u[hidden].|> Platform
 SolidBrick -u[hidden]-|> SolidBlock
 QuestionBlock -u[hidden]-|> SolidBlock
 Pipe .u[hidden].|> Platform
-
-FireFlower .u[hidden].|> PowerUp
-SuperMushroom .u[hidden].|> PowerUp
-Star .u[hidden].|> PowerUp
-GreenMushroom .u[hidden].|> PowerUp
-
 Platform -l[hidden]- Movable
 Movable -l[hidden]- PowerUp
 @enduml

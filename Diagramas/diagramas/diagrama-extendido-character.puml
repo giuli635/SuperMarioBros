@@ -7,6 +7,8 @@ class Character {
     #collider: Collider
     #position: Position
     #speedX: int
+    +Character(gE: GraphicElement, collider: Collider, 
+    p: Position)
     +jump()
     +die()
     +collide(b: SolidBrick)
@@ -21,6 +23,7 @@ class Character {
     +addBrickCollision(c: BrickCollision)
     +removeBrickCollision(c: BrickCollision)
     +getCharacterStates(): Iterable<CharacterState>
+    +setSpeedX(i: Int)
 }
 
 interface BrickCollision <<Strategy>> {

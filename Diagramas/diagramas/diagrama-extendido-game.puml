@@ -16,6 +16,7 @@ class Game <<Singleton>> {
 class Level{
     #time: Duration
     #points: int
+    +Level(time: Duration)
     +getPoints(): int
     +setPoints(points: int)
 }

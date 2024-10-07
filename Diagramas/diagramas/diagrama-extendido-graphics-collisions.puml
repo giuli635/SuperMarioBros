@@ -77,6 +77,7 @@ class SpriteFactory <<Singleton>> {
 
 class Sprite {
     #imagen : Image
+    +Sprite(s: String)
     +draw(int x, int y)
     +setImage(image : Image)
     +getImage() : Image
@@ -93,6 +94,7 @@ class GraphicEngine <<Singleton>> {
 class Position {
     #x: int
     #y: int
+    +Position(x: int, y: int)
     +alterX(diff: int)
     +alterY(diff: int)
     +getX(): int
