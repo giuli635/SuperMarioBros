@@ -8,11 +8,11 @@ class GraphicEngine <<Singleton>>
 class LevelReader <<Singleton>>
 Game "1" --> "1" Menu
 Game "1" *-- "1" Level
-Game "1" -r---> "1" Character
-Game "1" *-u- "1" GraphicEngine
-Game "1" *-u- "1" CollisionsEngine
+Game "1" --> "1" Character
+Game "1" *-- "1" GraphicEngine
+Game "1" *-- "1" CollisionsEngine
 Game "1" --> "1" Ranking
-Game "1" -u- "1" LevelReader
+Game "1" -- "1" LevelReader
 Game "1" --> "0..*" Entity
 LevelReader "1" -- CollisionsEngine
 LevelReader "1" -- GraphicEngine
@@ -20,8 +20,8 @@ LevelReader "1" -- GraphicEngine
 ' # ENTIDAD #
 '
 interface Entity
-Entity "1" ---u-> "0..*" GraphicElement
-Entity "1" ---u- "0..*" Collider
+Entity "1" ---> "0..*" GraphicElement
+Entity "1" --- "0..*" Collider
 
 ' # GRAFICA #
 '
@@ -29,7 +29,7 @@ interface GraphicElement
 class SpriteFactory <<Singleton>>
 class Sprite <<Flyweight>>
 Sprite "0..*" --o "1" SpriteFactory
-GraphicElement o-r- "0..*" Sprite
+GraphicElement o-- "0..*" Sprite
 GraphicElement "1..*" -- "1" GraphicEngine
 GraphicElement "1" --> "1" Position
 
@@ -39,7 +39,7 @@ interface Collider
 abstract class GameCollider
 Collider "1" --> "0..1" Position
 Collider "1..*" -- "1" CollisionsEngine
-GameCollider .....|> Collider
+GameCollider ..|> Collider
 CharacterCollider .u.|> GameCollider
 EnemyCollider .u.|> GameCollider
 PlatformCollider .u.|> GameCollider
@@ -51,7 +51,7 @@ FireBallCollider .u.|> GameCollider
 '
 interface CharacterState <<Command>>
 class Character
-Character ..d...|> Entity
+Character ...|> Entity
 Character "1" -- "0..*" CharacterState
 Super .u.|> CharacterState
 Fire .u.|> CharacterState
@@ -60,10 +60,10 @@ interface EnemyCollision <<Strategy>>
 interface BrickCollision <<Strategy>>
 class FireBallThrower
 class Croucher
-FireBallThrower .d.|> Entity
-Croucher .d.|> Entity
-Character <-d- FireBallThrower
-Character <-d- Croucher
+FireBallThrower ..|> Entity
+Croucher ..|> Entity
+Character <-- FireBallThrower
+Character <-- Croucher
 DefaultBrickCollision .u.|> BrickCollision
 BreakBrickCollision .u.|> BrickCollision
 DefaultEnemyCollision .u.|> EnemyCollision
@@ -72,6 +72,8 @@ InvincibleEnemyCollision .u.|> EnemyCollision
 Character o-d- "1" EnemyCollision
 Character o-d- "1" BrickCollision
 Character --> Position
+
+newpage
 
 ' # NIVEL #
 '
