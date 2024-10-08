@@ -60,7 +60,6 @@ interface PowerUp {
 class GreenMushroom{
     #graphicElement: GraphicElement
     GreenMushroom(gE: GraphicElement)
-    +addLife()
 }
 
 interface Proyectile
@@ -111,6 +110,7 @@ class GreenMushroom{
     #graphicElement: GraphicElement
     +GreenMushroom(gE: GraphicElement)      
 }
+
 SolidBlock .u[hidden].|> Platform
 SolidBrick -u[hidden]-|> SolidBlock
 QuestionBlock -u[hidden]-|> SolidBlock

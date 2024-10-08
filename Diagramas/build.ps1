@@ -1,4 +1,4 @@
-$plantuml="C:\Users\gaelr\OneDrive\Escritorio\Nomolestar\plantuml.jar"
+$plantuml=""
 $defensa = 4
 mkdir -Force -p build/images
 java -jar $plantuml -tsvg diagramas/diagrama-*.puml -o ../build/images

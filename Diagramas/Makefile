@@ -12,3 +12,7 @@ extendido:
 reducido:
 	pandoc -fmarkdown-implicit_figures -o "Diagrama-reducido-defensa-$(defensa).pdf" build/diagrama-reducido.md
 
+secuencia:
+	pandoc -fmarkdown-implicit_figures -o "diagrama-de-secuencia-1.pdf" build/diagrama-secuencia-1.md
+	pandoc -fmarkdown-implicit_figures -o "diagrama-de-secuencia-2.pdf" build/diagrama-secuencia-2.md
+

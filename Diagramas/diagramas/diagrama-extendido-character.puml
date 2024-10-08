@@ -7,6 +7,7 @@ class Character {
     #collider: Collider
     #position: Position
     #speedX: int
+    #lifes: int
     +Character(gE: GraphicElement, collider: Collider, 
     p: Position)
     +jump()
@@ -24,6 +25,7 @@ class Character {
     +removeBrickCollision(c: BrickCollision)
     +getCharacterStates(): Iterable<CharacterState>
     +setSpeedX(i: Int)
+    +addLife()
 }
 
 interface BrickCollision <<Strategy>> {
