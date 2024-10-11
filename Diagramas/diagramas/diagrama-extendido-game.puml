@@ -2,8 +2,8 @@
 class Game <<Singleton>> {
     #{static} uniqueInstance: Game
     #toUpdateRegistry: Set<Entity>
-    #currNivel: Level
-    #character: Character
+    #currLevel: Level
+    #mario: Mario
     +{static} instance(): Game
     #loadLevel()
     +registerToUpdate(e: Entity)
@@ -18,7 +18,8 @@ class Level{
     #points: int
     +Level(time: Duration)
     +getPoints(): int
-    +setPoints(points: int)
+    +addPoints(p: int)
+    +substractPoints(p: int)
 }
 note left of Level::time
 Duration es la clase de Java

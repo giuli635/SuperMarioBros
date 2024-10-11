@@ -1,9 +1,9 @@
 @startuml
-Game --> Character : update() 
-activate Character
-Character --> Game : getKeyPressed(KeyEvent.VK_W)
+Game --> Mario : update() 
+activate Mario
+Mario --> Game : getKeyPressed(KeyEvent.VK_W)
 alt true
-    Character --> Position : alterX(speedX)
+    Mario --> Position : alterX(speedX)
 end
-deactivate Character
+deactivate Mario
 @enduml

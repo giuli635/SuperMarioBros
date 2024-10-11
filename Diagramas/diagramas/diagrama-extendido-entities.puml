@@ -16,45 +16,45 @@ Enemy .u[hidden].|> Movable
 
 class BuzzyBeattle{
     #graphicElement: GraphicElement
-    #pos: Position
+    #pos: Point
     # {static}speedX: int
-    +BuzzyBeattle(ge: GraphicElement, pos: Position)     
+    +BuzzyBeattle(ge: GraphicElement, pos: Point)     
 }
 class Spiny{
     #graphicElement: GraphicElement
-    #pos: Position
+    #pos: Point
     # {static}speedX: int
-    +Spiny(ge: GraphicElement, pos: Position)         
+    +Spiny(ge: GraphicElement, pos: Point)         
 }
 class Lakitu{
     #graphicElement: GraphicElement
-    #pos: Position
+    #pos: Point
     # {static}speedX: int
-    +Lakitu(ge: GraphicElement, pos: Position)      
+    +Lakitu(ge: GraphicElement, pos: Point)      
 }
 class PiranhaPlant{
     #graphicElement: GraphicElement
-    #pos: Position
+    #pos: Point
     # {static}speedX: int
-    +PiranhaPlant(ge: GraphicElement, pos: Position)    
+    +PiranhaPlant(ge: GraphicElement, pos: Point)    
 }
 class KoopaTroopa{
     #graphicElement: GraphicElement
-    #pos: Position
+    #pos: Point
     # {static}speedX: int
-    +KoopaTroopa(ge: GraphicElement, pos: Position)
+    +KoopaTroopa(ge: GraphicElement, pos: Point)
 }
 
 class Goomba{
     #graphicElement: GraphicElement
-    #pos: Position
+    #pos: Point
     # {static}speedX: int
-    +Goomba(ge: GraphicElement, pos: Position)
+    +Goomba(ge: GraphicElement, pos: Point)
 }
 
 
 interface PowerUp {
-    +apply(character: Character)
+    +apply(mario: Mario)
 }
 
 class GreenMushroom{
@@ -65,7 +65,7 @@ class GreenMushroom{
 interface Proyectile
 
 class FireBall{
-    #pos: Position
+    #pos: Point
     #graphicElement: GraphicElement
     # {static}speedX: int
 }

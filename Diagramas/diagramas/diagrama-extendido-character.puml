@@ -1,15 +1,15 @@
 @startuml
-class Character {
-    #characterStates: List<CharacterState>
+class Mario {
+    #marioStates: List<MarioState>
     #brickCollisions: List<BrickCollision>
     #enemyCollisions: List<EnemyCollision>
     #graphicElement: GraphicElement
     #collider: Collider
-    #position: Position
+    #position: Point
     #speedX: int
     #lifes: int
-    +Character(gE: GraphicElement, collider: Collider, 
-    p: Position)
+    +Mario(gE: GraphicElement, collider: Collider, 
+    p: Point)
     +jump()
     +die()
     +collide(b: SolidBrick)
@@ -17,13 +17,13 @@ class Character {
     +collide(e: Enemy)
     +getCollider(): Collider
     +getGraphicElement(): GraphicElement
-    +addCharacterState(s: CharacterState)
-    +removeCharacterState(s: CharacterState)
+    +addMarioState(s: MarioState)
+    +removeMarioState(s: MarioState)
     +addEnemyCollision(c: EnemyCollision)
     +removeEnemyCollision(c: EnemyCollision)
     +addBrickCollision(c: BrickCollision)
     +removeBrickCollision(c: BrickCollision)
-    +getCharacterStates(): Iterable<CharacterState>
+    +getMarioStates(): Iterable<MarioState>
     +setSpeedX(i: Int)
     +addLife()
 }
@@ -47,31 +47,31 @@ together {
     class FireBallThrower <<Singleton>> {
         #{static} uniqueInstance: FireBallThrower
         +{static} instance(): FireBallThrower
-        #character: Character
+        #mario: Mario
         +update()
     }
 
     class Croucher <<Singleton>> {
         #{static} uniqueInstance: Croucher
         +{static} instance(): Croucher
-        #character: Character
+        #mario: Mario
         #crouched: boolean
         +getCrouch(): boolean
         +update()
     }
 }
 
-interface CharacterState <<Command>> {
+interface MarioState <<Command>> {
     +setState()
     +removeState()
 }
 
-Fire .u[hidden].|> CharacterState
-Invincible .u[hidden].|> CharacterState
-Super .u[hidden].|> CharacterState
+Fire .u[hidden].|> MarioState
+Invincible .u[hidden].|> MarioState
+Super .u[hidden].|> MarioState
 
 ' FORMATTING
-Character -d[hidden]-> BrickCollision
-Character -d[hidden]-> EnemyCollision
-Character -d[hidden]-> CharacterState
+Mario -d[hidden]-> BrickCollision
+Mario -d[hidden]-> EnemyCollision
+Mario -d[hidden]-> MarioState
 @enduml

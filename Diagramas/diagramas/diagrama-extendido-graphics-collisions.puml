@@ -7,7 +7,7 @@ class CollisionsEngine <<Singleton>> {
     #nextCollidersToCheck: Collection<Collider>
     #chunks: [][]Collection<Collider>
     +{static} instance(): CollisionsEngine
-    #checkCollision(e1: Collider, e2: Collider)
+    #checkCollision(e1: Collider, e2: Collider): Direction
     +checkCollisions()
     +registerToCheck(c: Collider)
     +setChunk(c: Collider, x: int, y: int)
@@ -24,16 +24,18 @@ interface Entity {
     +loaded(): boolean
     +load()
     +unload()
+    +getGraphicElement(): GraphicElement
+    +getCollider(): Collider
 }
 
 interface Collider {
-    +getEntidad(): Entity
+    +getEntity(): Entity
     +collide(c: Collider, d: Direction)
     +handleCollision(c: Collider, d: Direction)
-    +getPosition(p: Position)
-    +setPosition(): Position
-    +getHitbox(): []int
-    +setHitbox(h: []int)
+    +getLocation(): Point
+    +setLocation(p: Point)
+    +getVelocity(): Vector2D
+    +checkCollision(c: Collider): Direction
     +setActive(b: boolean)
     +activated(): boolean
 }
@@ -43,7 +45,7 @@ end note
 
 abstract class GameCollider {
     #hitbox: []int
-    +handleCollision(c: CharacterCollider, d: Direction)
+    +handleCollision(c: MarioCollider, d: Direction)
     +handleCollision(c: EnemyCollider, d: Direction)
     +handleCollision(c: PlatformCollider, d: Direction)
     +handleCollision(c: CoinCollider, d: Direction)
@@ -51,7 +53,7 @@ abstract class GameCollider {
     +handleCollision(c: FireBallCollider, d: Direction)
 }
 
-CharacterCollider .u[hidden].|> GameCollider
+MarioCollider .u[hidden].|> GameCollider
 EnemyCollider .u[hidden].|> GameCollider
 PlatformCollider .u[hidden].|> GameCollider
 CoinCollider .u[hidden].|> GameCollider
@@ -60,8 +62,8 @@ FireBallCollider .u[hidden].|> GameCollider
 
 interface GraphicElement {
     +draw()
-    +getPosition(): Position
-    +setPosition(p: Position)
+    +getPoint(): Point
+    +setPoint(p: Point)
     +getSprite(): Sprite
     +setSprite(s: Sprite)
 }
@@ -76,29 +78,25 @@ class SpriteFactory <<Singleton>> {
 }
 
 class Sprite {
-    #imagen : Image
+    #image : Image
     +Sprite(s: String)
-    +draw(int x, int y)
+    +draw(x: int, y: int)
     +setImage(image : Image)
     +getImage() : Image
 }
 
 class GraphicEngine <<Singleton>> {
     #{static} uniqueInstance: GraphicEngine
-    +{static} instance(): GraphicEngine
     #elements: Collection<GraphicElement>
-    +addElementoGrafico(e: GraphicElement)
+    -GraphicEngine()
+    +{static} instance(): GraphicEngine
+    +addGraphicElement(e: GraphicElement)
+    +removeGraphicElement(e: GraphicElement)
     +drawFrame()
 }
 
-class Position {
-    #x: int
-    #y: int
-    +Position(x: int, y: int)
-    +alterX(diff: int)
-    +alterY(diff: int)
-    +getX(): int
-    +getY(): int
+class Vector2D {
+
 }
 
 enum Direction {

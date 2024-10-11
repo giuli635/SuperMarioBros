@@ -8,7 +8,7 @@ class GraphicEngine <<Singleton>>
 class LevelReader <<Singleton>>
 Game "1" --> "1" Menu
 Game "1" *-- "1" Level
-Game "1" --> "1" Character
+Game "1" --> "1" Mario
 Game "1" *-- "1" GraphicEngine
 Game "1" *-- "1" CollisionsEngine
 Game "1" --> "1" Ranking
@@ -40,7 +40,7 @@ abstract class GameCollider
 Collider "1" --> "0..1" Position
 Collider "1..*" -- "1" CollisionsEngine
 GameCollider ..|> Collider
-CharacterCollider .u.|> GameCollider
+MarioCollider .u.|> GameCollider
 EnemyCollider .u.|> GameCollider
 PlatformCollider .u.|> GameCollider
 CoinCollider .u.|> GameCollider
@@ -49,29 +49,29 @@ FireBallCollider .u.|> GameCollider
 
 ' # PERSONAJE #
 '
-interface CharacterState <<Command>>
-class Character
-Character ...|> Entity
-Character "1" -- "0..*" CharacterState
-Super .u.|> CharacterState
-Fire .u.|> CharacterState
-Invincible .u.|> CharacterState
+interface MarioState <<Command>>
+class Mario
+Mario ...|> Entity
+Mario "1" -- "0..*" MarioState
+Super .u.|> MarioState
+Fire .u.|> MarioState
+Invincible .u.|> MarioState
 interface EnemyCollision <<Strategy>>
 interface BrickCollision <<Strategy>>
 class FireBallThrower
 class Croucher
 FireBallThrower ..|> Entity
 Croucher ..|> Entity
-Character <-- FireBallThrower
-Character <-- Croucher
+Mario <-- FireBallThrower
+Mario <-- Croucher
 DefaultBrickCollision .u.|> BrickCollision
 BreakBrickCollision .u.|> BrickCollision
 DefaultEnemyCollision .u.|> EnemyCollision
 SuperEnemyCollision .u.|> EnemyCollision
 InvincibleEnemyCollision .u.|> EnemyCollision
-Character o-d- "1" EnemyCollision
-Character o-d- "1" BrickCollision
-Character --> Position
+Mario o-d- "1" EnemyCollision
+Mario o-d- "1" BrickCollision
+Mario --> Position
 
 newpage
 
