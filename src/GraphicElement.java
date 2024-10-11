@@ -4,4 +4,5 @@ public interface GraphicElement {
     public void setPosition(Position p);
     public Sprite getSprite();
     public void setSprite(Sprite s);
+    public void translate(int dx, int dy);
 }
