@@ -1,47 +1,30 @@
-public class Mario implements Entity {
-    private GraphicElememt graphicElememt;
-    private Collider collider;
-    private Position position;
-    private int speedX; 
-    private int lifes;
+import java.awt.Point;
+import java.awt.event.KeyEvent;
 
+public class Mario extends GameEntity {
+    protected GraphicElement graphicElement;
+    protected Collider collider;
+    protected Point position;
+    protected int speedX; 
+    protected int lifes;
+    protected boolean loaded;
 
-    public Mario(GraphicElement gh, Collider c, Position p) {
-        graphicElement = gh;
-        collider = c;
-        position = p;
-    
+    public Mario() {
+        super();
+        speedX = 10;
+        position = collider.getPosition();
     }
 
-    public update() {
-        boolean keyPressed;
-        switch (keyPressed) {
-            case Game.getKeyPressed(KeyEvent.VK_A):
-                graphicElement.translate(10, 0);
-                graphicElement.setSprite();
-                collider.translate(10);
-            break;
-    
-            case Game.getKeyPressed(KeyEvent.VK_D):
-                graphicElement.translate(10, 0);
-                graphicElement.setSprite();
-                collider.translate(10);
-            break;
-    
-            case Game.getKeyPressed(KeyEvent.VK_W):
-                graphicElement.translate(0, 10);
-                graphicElement.setSprite();
-                collider.translate(x,y);
-            break;
-    
-            case Game.getKeyPressed(KeyEvent.VK_SPACE):
-                graphicElement.setSprite();
-            break;
+    public GameEntity clone() {
+        return new Mario();
+    }
+
+    public void update() {
+        int[] keysToListen = new int[]{KeyEvent.VK_D, KeyEvent.VK_A};
+        int i = 0;
+        while (!Game.instance().getKeyPressed(keysToListen[i])) {
+            i++;
         }
-        
-
-
+        graphicElement.translate(((int) Math.pow(-1, i)) * speedX, 0);
     }
-
-
 }

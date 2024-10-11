@@ -1,8 +1,12 @@
+import java.awt.Point;
+
+import javax.swing.ImageIcon;
+
 public interface GraphicElement {
-    public void draw();
-    public Position getPosition();
-    public void setPosition(Position p);
-    public Sprite getSprite();
-    public void setSprite(Sprite s);
+    public Entity getEntity();
     public void translate(int dx, int dy);
+    public Point getPosition();
+    public void setPosition(int x, int y);
+    public ImageIcon getSprite();
+    public void setSprite(ImageIcon s);
 }

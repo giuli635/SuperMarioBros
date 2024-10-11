@@ -30,12 +30,10 @@ interface Entity {
 
 interface Collider {
     +getEntity(): Entity
-    +collide(c: Collider, d: Direction)
     +handleCollision(c: Collider, d: Direction)
     +getLocation(): Point
-    +setLocation(p: Point)
+    +setLocation(x: int, y: int)
     +getVelocity(): Vector2D
-    +checkCollision(c: Collider): Direction
     +setActive(b: boolean)
     +activated(): boolean
 }

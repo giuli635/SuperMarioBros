@@ -46,14 +46,36 @@ public class CollisionsEngine {
 
     public void checkCollisions() {
         for (Collider collider : nextCollidersToCheck) {
-            Rectangle colliderBound = collider.getBound();
-            int firstChunk = (int) (colliderBound.getMinX() % chunks.size());
-            int secondChunk = (int) (colliderBound.getMaxX() % chunks.size());
-            for (int i = firstChunk; i <= secondChunk; i++) {
+            int[] chunkRange = calculateChunk(collider);
+            for (int i = chunkRange[0]; i <= chunkRange[1]; i++) {
                 for (Collider toCheck : chunks.get(i)) {
                     checkCollision(collider, toCheck);
                 }
             }
         }
+    }
+
+    public int[] calculateChunk(Collider collider) {
+        Rectangle colliderBound = collider.getBound();
+        int firstChunk = (int) (colliderBound.getMinX() % chunks.size());
+        int secondChunk = (int) (colliderBound.getMaxX() % chunks.size());
+        return new int[]{firstChunk, secondChunk};
+    }
+    
+
+    public void addToChunk(int ind, Collider item) {
+        chunks.get(ind).add(item);
+    }
+
+    public void removeFromChunk(Collider item) {
+        int[] chunkRange = calculateChunk(item);
+        for(int i = chunkRange[0]; i < chunkRange[1]; i++) {
+            chunks.get(i).remove(item);
+        }
+
+    }
+
+    public void getChunk(int ind) {
+        chunks.get(ind);
     }
 }
