@@ -1,19 +1,25 @@
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
-import java.util.TreeSet;
 
-public class Game implements WindowListener {
+public class Game implements WindowListener, KeyListener {
     protected static int SECOND = 1000;
     protected static int FPS = 60;
     protected static Game uniqueInstance;
     protected Set<Entity> toUpdateRegistry;
+    protected Map<Integer, KeyStatus> keysStatus;
     protected Level currLevel;
     protected Mario mario;
     protected boolean run;
 
     private Game() {
-        toUpdateRegistry = new TreeSet<>();
+        toUpdateRegistry = new HashSet<>();
+        keysStatus = new HashMap<>();
         currLevel = null;
         mario = null;
         run = true;
@@ -31,26 +37,27 @@ public class Game implements WindowListener {
         toUpdateRegistry.remove(e);
     }
 
-    public boolean getKeyPressed(int key) {
-        return false;
-    }
-
-    public boolean getKeyReleased(int key) {
-        return false;
+    public KeyStatus getKeyStatus(int key) {
+        return keysStatus.getOrDefault(key, KeyStatus.RELEASED);
     }
 
     private void loop() {
         GraphicEngine graphicEngine = GraphicEngine.instance();
         LevelReader reader = LevelReader.instance();
         reader.createLevel("nivel1.txt");
-        long lastUpdateTime = System.currentTimeMillis();
-        long newUpdateTime;
+        long lastUpdateTime;
         while (run) {
-            newUpdateTime = System.currentTimeMillis();
-            if (newUpdateTime - lastUpdateTime > (SECOND / FPS)) {
-                lastUpdateTime = newUpdateTime;
-                graphicEngine.drawFrame();
+            lastUpdateTime = System.currentTimeMillis();
+            for (Entity entity : toUpdateRegistry) {
+                entity.update();
             }
+
+            try {
+                Thread.sleep(SECOND / FPS - (lastUpdateTime - System.currentTimeMillis()));
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            graphicEngine.drawFrame();
         }
     }
 
@@ -86,5 +93,19 @@ public class Game implements WindowListener {
 
     @Override
     public void windowOpened(WindowEvent e) {
+    }
+
+    @Override
+    public void keyPressed(KeyEvent arg0) {
+        keysStatus.put(arg0.getKeyCode(), KeyStatus.PRESSED);
+    }
+
+    @Override
+    public void keyReleased(KeyEvent arg0) {
+        keysStatus.put(arg0.getKeyCode(), KeyStatus.RELEASED);
+    }
+
+    @Override
+    public void keyTyped(KeyEvent arg0) {
     }
 }

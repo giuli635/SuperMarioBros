@@ -11,7 +11,7 @@ public class Mario extends GameEntity {
 
     public Mario() {
         super();
-        speedX = 10;
+        speedX = 3;
         position = collider.getPosition();
         graphicElement.setSprite(new ImageIcon("sprites/mario.png"));
     }
@@ -21,11 +21,11 @@ public class Mario extends GameEntity {
     }
 
     public void update() {
-        int[] keysToListen = new int[]{KeyEvent.VK_D, KeyEvent.VK_A};
-        int i = 0;
-        while (!Game.instance().getKeyPressed(keysToListen[i])) {
-            i++;
+        System.out.println(graphicElement.getPosition());
+        if (Game.instance().getKeyStatus(KeyEvent.VK_D) == KeyStatus.PRESSED) {
+            graphicElement.translate(speedX, 0);
+        } else if (Game.instance().getKeyStatus(KeyEvent.VK_A) == KeyStatus.PRESSED) {
+            graphicElement.translate(-speedX, 0);
         }
-        graphicElement.translate(((int) Math.pow(-1, i)) * speedX, 0);
     }
 }

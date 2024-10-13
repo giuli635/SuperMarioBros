@@ -66,7 +66,7 @@ public class CollisionsEngine {
     public void addToChunk(int ind, Collider item) {
         if (ind >= chunks.size()) {
             for (int i = 0; i <= ind; i++) {
-                chunks.addLast(new ArrayList<>());
+                chunks.add(new ArrayList<>());
             }
         }
 

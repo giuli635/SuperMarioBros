@@ -41,7 +41,7 @@ public class LevelReader  {
         CollisionsEngine collisionsEngine = CollisionsEngine.instance();
         GraphicEngine graphicEngine = GraphicEngine.instance();
 
-        int lastChunkInScreen = (int) Math.ceil(graphicEngine.getPanelSize().getWidth() / 32.0);
+        int lastChunkInScreen = (int) Math.ceil(graphicEngine.getPanelSize().getWidth() / (double) CHUNK);
         double windowHeight = graphicEngine.getPanelSize().getHeight();
 
         for (int i = 0; i < lastChunkInScreen; i++) {
@@ -66,6 +66,7 @@ public class LevelReader  {
                     Entity newEntity;
                     if (item == 'M') {
                         newEntity = marioPrototype.clone();
+                        Game.instance().registerToUpdate(newEntity);
                     } else {
                         newEntity = generalPrototype.clone();
                     }

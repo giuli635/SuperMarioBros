@@ -12,6 +12,7 @@ public class GraphicEngine {
         frame = new JFrame();
         panel = new JPanel();
         frame.addWindowListener(Game.instance());
+        frame.addKeyListener(Game.instance());
         panel.setLayout(null);
         panel.setPreferredSize(new Dimension(1000, 500));
         frame.add(panel);
