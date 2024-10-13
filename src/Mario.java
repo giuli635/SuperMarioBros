@@ -1,9 +1,9 @@
 import java.awt.Point;
 import java.awt.event.KeyEvent;
 
+import javax.swing.ImageIcon;
+
 public class Mario extends GameEntity {
-    protected GraphicElement graphicElement;
-    protected Collider collider;
     protected Point position;
     protected int speedX; 
     protected int lifes;
@@ -13,9 +13,10 @@ public class Mario extends GameEntity {
         super();
         speedX = 10;
         position = collider.getPosition();
+        graphicElement.setSprite(new ImageIcon("sprites/mario.png"));
     }
 
-    public GameEntity clone() {
+    public Entity clone() {
         return new Mario();
     }
 

@@ -5,4 +5,5 @@ public interface Entity {
     public void unload();
     public GraphicElement getGraphicElement();
     public Collider getCollider();
+    public Entity clone();
 }

@@ -1,24 +1,22 @@
 import java.awt.Dimension;
-import java.util.ArrayList;
-import java.util.Collection;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 public class GraphicEngine {
     protected static GraphicEngine uniqueInstance;
-    protected Collection<GraphicElement> elements;
     protected JFrame frame;
     protected JPanel panel;
 
     private GraphicEngine() {
-        elements = new ArrayList<>();
         frame = new JFrame();
         panel = new JPanel();
-        panel.setPreferredSize(new Dimension(300, 300));
         frame.addWindowListener(Game.instance());
+        panel.setLayout(null);
+        panel.setPreferredSize(new Dimension(1000, 500));
         frame.add(panel);
         frame.pack();
+        frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setVisible(true);
     }
@@ -36,10 +34,14 @@ public class GraphicEngine {
     }
 
     public void addGraphicElement(GraphicElement e) {
-        elements.add(e);
+        panel.add(e.getLabel());
     }
 
     public void removeGraphicElement(GraphicElement e) {
-        elements.remove(e);
+        panel.remove(e.getLabel());
+    }
+
+    public Dimension getPanelSize() {
+        return panel.getSize();
     }
 }

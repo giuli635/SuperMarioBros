@@ -41,6 +41,8 @@ public class Game implements WindowListener {
 
     private void loop() {
         GraphicEngine graphicEngine = GraphicEngine.instance();
+        LevelReader reader = LevelReader.instance();
+        reader.createLevel("nivel1.txt");
         long lastUpdateTime = System.currentTimeMillis();
         long newUpdateTime;
         while (run) {

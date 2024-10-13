@@ -64,6 +64,12 @@ public class CollisionsEngine {
     
 
     public void addToChunk(int ind, Collider item) {
+        if (ind >= chunks.size()) {
+            for (int i = 0; i <= ind; i++) {
+                chunks.addLast(new ArrayList<>());
+            }
+        }
+
         chunks.get(ind).add(item);
     }
 
@@ -75,7 +81,11 @@ public class CollisionsEngine {
 
     }
 
-    public void getChunk(int ind) {
-        chunks.get(ind);
+    public Iterable<Collider> getChunk(int ind) {
+        return chunks.get(ind);
+    }
+
+    public int getAmountOfChunks() {
+        return chunks.size();
     }
 }

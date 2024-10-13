@@ -1,3 +1,4 @@
+import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.Rectangle;
 
@@ -17,7 +18,7 @@ public class GameCollider implements Collider {
     public Entity getEntity() {
         return entity;
     }
- 
+
     public Point getPosition() {
         return bounds.getLocation();
     }
@@ -57,5 +58,15 @@ public class GameCollider implements Collider {
     public void translate(int dx, int dy) {
         previousPosition = bounds.getLocation();
         bounds.translate(dx, dy);
+    }
+
+    @Override
+    public Dimension getSize() {
+        return bounds.getSize();
+    }
+
+    @Override
+    public void setSize(int width, int height) {
+        bounds.setSize(width, height);
     }
 }

@@ -1,6 +1,7 @@
 import java.awt.Point;
 
 import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 
 public interface GraphicElement {
     public Entity getEntity();
@@ -9,4 +10,5 @@ public interface GraphicElement {
     public void setPosition(int x, int y);
     public ImageIcon getSprite();
     public void setSprite(ImageIcon s);
+    public JLabel getLabel();
 }

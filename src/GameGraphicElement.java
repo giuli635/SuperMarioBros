@@ -1,4 +1,5 @@
 import java.awt.Point;
+import java.awt.Rectangle;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -11,7 +12,8 @@ public class GameGraphicElement implements GraphicElement {
     public GameGraphicElement(Entity e, ImageIcon s) {
         entity = e;
         sprite = s;
-        label = new JLabel("hola mundo");
+        label = new JLabel();
+        setSprite(s);
     }
     
     @Override
@@ -21,8 +23,9 @@ public class GameGraphicElement implements GraphicElement {
 
     @Override
     public void translate(int dx, int dy) {
-        Point previousLocation = label.getLocation();
-        label.setLocation((int) previousLocation.getX() + dx, (int) previousLocation.getY() + dy);
+        Rectangle newRect = label.getBounds();
+        newRect.translate(dx, dy);
+        label.setBounds(newRect);
     }
 
     @Override
@@ -32,7 +35,9 @@ public class GameGraphicElement implements GraphicElement {
 
     @Override
     public void setPosition(int x, int y) {
-        label.setLocation(x, y);
+        Rectangle newRect = label.getBounds();
+        newRect.setLocation(x, y);
+        label.setBounds(newRect);
     }
 
     @Override
@@ -43,6 +48,14 @@ public class GameGraphicElement implements GraphicElement {
     @Override
     public void setSprite(ImageIcon s) {
         sprite = s;
+        Rectangle newRect = label.getBounds();
+        newRect.setSize(s.getIconWidth(), s.getIconHeight());
+        label.setBounds(newRect);
         label.setIcon(s);
+    }
+
+    @Override
+    public JLabel getLabel() {
+        return label;
     }
 }

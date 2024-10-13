@@ -1,5 +1,7 @@
 import java.awt.Rectangle;
 
+import javax.swing.ImageIcon;
+
 class GameEntity implements Entity {
     protected Collider collider;
     protected GraphicElement graphicElement;
@@ -8,10 +10,10 @@ class GameEntity implements Entity {
     public GameEntity() {
         loaded = false;
         collider = new GameCollider(this, new Rectangle(20, 20));
-        graphicElement = new GameGraphicElement(this, null);
+        graphicElement = new GameGraphicElement(this, new ImageIcon("sprites/block.png"));
     }
 
-    public GameEntity clone() {
+    public Entity clone() {
         return new GameEntity();
     }
 
