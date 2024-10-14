@@ -1,20 +1,22 @@
+package game;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Vector;
 
+import colliders.Collider;
+import colliders.Direction;
+import colliders.Vector2D;
+
 public class CollisionsEngine {
     protected static CollisionsEngine uniqueInstance;
     protected Collection<Collider> nextCollidersToCheck;
     protected List<List<Collider>> chunks;
-    protected static Direction[][] directionsMapping = {{Direction.RIGTH, Direction.LEFT}, {Direction.UP, Direction.DOWN}};
-    protected int chunkCount;
 
     public CollisionsEngine() {
         nextCollidersToCheck = new ArrayList<>();
         chunks = new Vector<List<Collider>>();
-        chunkCount = 0;
     }
 
     public static CollisionsEngine instance() {
@@ -41,8 +43,8 @@ public class CollisionsEngine {
                 }
             }
             
-            c2.handleCollision(c1.getCollision(), dir);
-            c1.handleCollision(c2.getCollision(), Direction.opposite(dir));
+            c2.sendCollision(c1.getCollision(), dir);
+            c1.sendCollision(c2.getCollision(), Direction.opposite(dir));
         }
     }
 
@@ -50,17 +52,19 @@ public class CollisionsEngine {
         for (Collider collider : nextCollidersToCheck) {
             int[] chunkRange = calculateChunk(collider);
             for (int i = chunkRange[0]; i <= chunkRange[1]; i++) {
-                for (Collider toCheck : chunks.get(i)) {
+                List<Collider> chunk = new ArrayList<>(chunks.get(i));
+                for (Collider toCheck : chunk) {
                     checkCollision(collider, toCheck);
                 }
             }
         }
+        nextCollidersToCheck.removeAll(nextCollidersToCheck);
     }
 
     public int[] calculateChunk(Collider collider) {
         Rectangle colliderBound = collider.getBound();
-        int firstChunk = (int) (colliderBound.getMinX() % chunks.size());
-        int secondChunk = (int) (colliderBound.getMaxX() % chunks.size());
+        int firstChunk = (int) (colliderBound.getMinX() / 32.0);
+        int secondChunk = (int) (colliderBound.getMaxX() / 32.0);
         return new int[]{firstChunk, secondChunk};
     }
     
@@ -68,7 +72,7 @@ public class CollisionsEngine {
     public void addToChunk(int ind, Collider item) {
         if (ind >= chunks.size()) {
             for (int i = 0; i <= ind; i++) {
-                chunks.add(new ArrayList<>());
+                chunks.add(new Vector<>());
             }
         }
 
@@ -80,7 +84,6 @@ public class CollisionsEngine {
         for(int i = chunkRange[0]; i < chunkRange[1]; i++) {
             chunks.get(i).remove(item);
         }
-
     }
 
     public Iterable<Collider> getChunk(int ind) {
@@ -95,13 +98,7 @@ public class CollisionsEngine {
         nextCollidersToCheck.add(c);
     }
 
-    public int pixelChunkCount() {//ESTOS METODOS SON UN INTENTO DE DEAR DE MOVER LA PANTALLA AL LLEGAR AL FINAL DEL NIVEL
-        return chunkCount*32;
+    public void addToCheck(Collider c) {
+        nextCollidersToCheck.add(c);
     }
-
-    public void incrementChunkCount() {
-        chunkCount++;
-    }
-
-
 }

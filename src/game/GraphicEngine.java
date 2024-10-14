@@ -1,7 +1,10 @@
+package game;
 import java.awt.Dimension;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
+import graphics.GraphicElement;
 
 public class GraphicEngine {
     protected static GraphicEngine uniqueInstance;

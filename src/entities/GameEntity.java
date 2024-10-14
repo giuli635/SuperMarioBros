@@ -1,8 +1,15 @@
+package entities;
 import java.awt.Rectangle;
 
 import javax.swing.ImageIcon;
 
-class GameEntity implements Entity {
+import colliders.Collider;
+import colliders.GameCollider;
+import game.Game;
+import graphics.GraphicElement;
+import graphics.GameGraphicElement;
+
+public class GameEntity implements Entity {
     protected Collider collider;
     protected GraphicElement graphicElement;
     protected boolean loaded;

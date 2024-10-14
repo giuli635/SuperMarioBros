@@ -1,3 +1,7 @@
+package entities;
+import colliders.Collider;
+import graphics.GraphicElement;
+
 public interface Entity {
     public void update();
     public boolean loaded();

@@ -1,7 +1,10 @@
+package graphics;
 import java.awt.Point;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+
+import entities.Entity;
 
 public interface GraphicElement {
     public Entity getEntity();

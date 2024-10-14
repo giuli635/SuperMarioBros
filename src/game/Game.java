@@ -1,5 +1,4 @@
-
-import java.awt.Dimension;
+package game;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
@@ -8,6 +7,9 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+
+import entities.Entity;
+import entities.Mario;
 
 public class Game implements WindowListener, KeyListener {
     protected static int SECOND = 1000;
@@ -54,70 +56,15 @@ public class Game implements WindowListener, KeyListener {
                 entity.update();
             }
 
+            CollisionsEngine.instance().checkCollisions();
+
             try {
                 Thread.sleep(SECOND / FPS - (lastUpdateTime - System.currentTimeMillis()));
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
             graphicEngine.drawFrame();
-            scrollScreen();
         }
-    }
-
-    public void scrollScreen() {  
-        // Deberia dejar de moverse al llegar al final pero no AHHHH//
-        int screenX = Screen.instance().getX();
-        Dimension screenSize = GraphicEngine.instance().getPanelSize();
-        int screenWidth = screenSize.width;
-        int screenRight = screenWidth + screenX;
-        int levelEnd = CollisionsEngine.instance().pixelChunkCount();
-        if(screenX > 0 && screenRight != levelEnd) {
-            CollisionsEngine collisionsEngine = CollisionsEngine.instance();
-             for(int i=0;i<collisionsEngine.getAmountOfChunks();i++) {
-                for (Collider collider : collisionsEngine.getChunk(i)) {
-                
-                //collider.translate(-screenX, 0);
-                GraphicElement graphicElement = collider.getEntity().getGraphicElement();
-                graphicElement.translate(-screenX, 0);
-                
-                }
-            }
-        }
-        
-        
-        
-        
-    }
-
-    public void scrollScreenBackWards() { //ESTE METODO ES REDUNDANTE, lo dejo por dejar nunca va a volver la pantalla hacia atras//
-        //EL SIGUIENTE CODIGO NO HACE USO DEL SIGLETON SCREEN PARA EL MOVIMIENTO DE LA CAMARA//
-        //SI SE QUIERE USAR MARIO DEBE LLAMAR A ESTE METODO DESDE UPDATE() AL MOVERSE A LA IZQUIERDA//
-        
-        /* 
-        CollisionsEngine collisionsEngine = CollisionsEngine.instance();
-        int scrollAmount = 6; 
-        for(int i=0;i<collisionsEngine.getAmountOfChunks();i++) {
-            for (Collider collider : collisionsEngine.getChunk(i)) {
-                
-                collider.translate(scrollAmount,0);
-                GraphicElement graphicElement = collider.getEntity().getGraphicElement();
-                graphicElement.translate(scrollAmount, 0);
-                
-            }
-        }
-        
-        CollisionsEngine collisionsEngine = CollisionsEngine.instance();
-        int scrollAmount = 6; 
-        for(int i=0;i<collisionsEngine.getAmountOfChunks();i++) {
-            for (Collider collider : collisionsEngine.getChunk(i)) {
-                
-                collider.translate(-scrollAmount,0);
-                GraphicElement graphicElement = collider.getEntity().getGraphicElement();
-                graphicElement.translate(-scrollAmount, 0);
-                
-            }
-        }
-        */    
     }
 
     public static void main(String[] args) {

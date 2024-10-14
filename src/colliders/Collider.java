@@ -1,10 +1,15 @@
+package colliders;
+
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.Rectangle;
 
+import collisions.Collision;
+import entities.Entity;
+
 public interface Collider {
     public Entity getEntity();
-    public void handleCollision(Collision c, Direction d);
+    public void sendCollision(Collision c, Direction d);
     public Rectangle getBound();
     public Collision getCollision();
     public void setPosition(int x, int y);

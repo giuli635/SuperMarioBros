@@ -1,8 +1,17 @@
+package game;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Map;
+
+import colliders.Collider;
+import colliders.ScreenDisplacementCollider;
+import entities.Entity;
+import entities.GameEntity;
+import entities.Mario;
+import graphics.GraphicElement;
 
 public class LevelReader  {
     protected static int CHUNK = 32;
@@ -39,24 +48,29 @@ public class LevelReader  {
         CollisionsEngine collisionsEngine = CollisionsEngine.instance();
         GraphicEngine graphicEngine = GraphicEngine.instance();
 
-        //int lastChunkInScreen = (int) Math.ceil(graphicEngine.getPanelSize().getWidth() / (double) CHUNK);
+        int lastChunkInScreen = (int) Math.ceil(graphicEngine.getPanelSize().getWidth() / (double) CHUNK);
         double windowHeight = graphicEngine.getPanelSize().getHeight();
 
-        for (int i = 0; i < collisionsEngine.getAmountOfChunks(); i++) {
+        for (int i = 1; i < lastChunkInScreen; i++) {
             for (Collider collider : collisionsEngine.getChunk(i)) {
                 GraphicElement graphicElement = collider.getEntity().getGraphicElement();
                 Point colliderPosition = collider.getPosition();
                 int yPosition = (int) (windowHeight - colliderPosition.getY());
-                graphicElement.setPosition((int) colliderPosition.getX(), yPosition);
+                graphicElement.setPosition((int) colliderPosition.getX() - CHUNK, yPosition);
                 graphicEngine.addGraphicElement(graphicElement);
             }
         }
+
+        int middleChunk = lastChunkInScreen / 2;
+        new ScreenDisplacementCollider(
+            new Rectangle((int) (CHUNK * middleChunk), 0, CHUNK, (int) windowHeight)
+        );
     }
     
     public void loadEntities(BufferedReader br) throws IOException {
         String chunk;
         chunk = br.readLine();
-        int i = 0;
+        int i = 1;
         while (chunk != null) {
             for (int j = 0; j < chunk.length(); j++) {
                 char item = chunk.charAt(j);
@@ -75,7 +89,6 @@ public class LevelReader  {
                 }
             }
             i++;
-            CollisionsEngine.instance().incrementChunkCount();
             chunk = br.readLine();
         }
     }

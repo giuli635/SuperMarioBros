@@ -1,3 +1,4 @@
+package colliders;
 public enum Direction {
     LEFT,
     RIGTH,

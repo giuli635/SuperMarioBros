@@ -1,8 +1,11 @@
+package graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+
+import entities.Entity;
 
 public class GameGraphicElement implements GraphicElement {
     protected Entity entity;
