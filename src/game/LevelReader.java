@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.Map;
 
 import colliders.Collider;
+import colliders.ScreenBorderCollider;
 import colliders.ScreenDisplacementCollider;
 import entities.Entity;
 import entities.GameEntity;
@@ -60,6 +61,10 @@ public class LevelReader  {
                 graphicEngine.addGraphicElement(graphicElement);
             }
         }
+        
+        new ScreenBorderCollider(
+            new Rectangle(0, 0, CHUNK, (int) windowHeight)
+        );
 
         int middleChunk = lastChunkInScreen / 2;
         new ScreenDisplacementCollider(
