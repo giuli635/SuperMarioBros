@@ -32,7 +32,6 @@ public class MarioCollider extends BaseCollider {
     }
 
     public void handleCollision(ScreenDisplacementCollision c, Direction d) {
-        mario.getGraphicElement().translate((int) -getVelocity().getXComponent(), 0);
     }
 }
 

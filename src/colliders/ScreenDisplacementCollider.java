@@ -6,6 +6,7 @@ import collisions.Collision;
 import collisions.MarioCollision;
 import collisions.ScreenDisplacementCollision;
 import entities.Entity;
+import game.GraphicEngine;
 
 public class ScreenDisplacementCollider extends BaseCollider {
     public ScreenDisplacementCollider(Rectangle b) {
@@ -28,16 +29,6 @@ public class ScreenDisplacementCollider extends BaseCollider {
 
     public void handleCollision(MarioCollision m, Direction d) {
         translate((int) m.getCollider().getVelocity().getXComponent(), 0);
+        GraphicEngine.instance().scrollScreen((int) m.getCollider().getVelocity().getXComponent());
     }
-
-    // public void scrollScreen() {  
-    //     int screenX = Screen.instance().getX();
-    //     Dimension screenSize = GraphicEngine.instance().getPanelSize();
-    //     int screenWidth = screenSize.width;
-    //     int screenRight = screenWidth + screenX;
-    //     int levelEnd = CollisionsEngine.instance().pixelChunkCount();
-    //     if(screenX > 0 && screenRight != levelEnd) {
-    //         CollisionsEngine collisionsEngine = CollisionsEngine.instance();
-    //     }
-    // }
 }

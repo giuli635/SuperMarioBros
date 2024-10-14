@@ -1,5 +1,7 @@
 package game;
+import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Rectangle;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -47,5 +49,13 @@ public class GraphicEngine {
 
     public Dimension getPanelSize() {
         return panel.getSize();
+    }
+
+    public void scrollScreen(int velocity) {  
+        for (Component component : panel.getComponents()) {
+            Rectangle componentBounds = component.getBounds();
+            componentBounds.translate(-velocity, 0);
+            component.setBounds(componentBounds);
+        }
     }
 }
