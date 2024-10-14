@@ -15,6 +15,12 @@ public class GameCollider implements Collider {
         previousPosition = b.getLocation();
     }
 
+    public GameCollider(Rectangle b) {//x si queremos un collider sin una entidad asociada, quien sabe..//
+        bounds = b;
+        activated = true;
+        previousPosition = b.getLocation();
+    }
+
     public Entity getEntity() {
         return entity;
     }

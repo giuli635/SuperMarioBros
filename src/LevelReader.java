@@ -31,9 +31,7 @@ public class LevelReader  {
         } catch(IOException e) {
             e.printStackTrace();
         }
-
         loadScreen();
-
         return null;
     }
 
@@ -41,10 +39,10 @@ public class LevelReader  {
         CollisionsEngine collisionsEngine = CollisionsEngine.instance();
         GraphicEngine graphicEngine = GraphicEngine.instance();
 
-        int lastChunkInScreen = (int) Math.ceil(graphicEngine.getPanelSize().getWidth() / (double) CHUNK);
+        //int lastChunkInScreen = (int) Math.ceil(graphicEngine.getPanelSize().getWidth() / (double) CHUNK);
         double windowHeight = graphicEngine.getPanelSize().getHeight();
 
-        for (int i = 0; i < lastChunkInScreen; i++) {
+        for (int i = 0; i < collisionsEngine.getAmountOfChunks(); i++) {
             for (Collider collider : collisionsEngine.getChunk(i)) {
                 GraphicElement graphicElement = collider.getEntity().getGraphicElement();
                 Point colliderPosition = collider.getPosition();
@@ -77,7 +75,10 @@ public class LevelReader  {
                 }
             }
             i++;
+            CollisionsEngine.instance().incrementChunkCount();
             chunk = br.readLine();
         }
     }
+
+    
 }

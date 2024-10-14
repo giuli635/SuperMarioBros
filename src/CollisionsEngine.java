@@ -9,10 +9,12 @@ public class CollisionsEngine {
     protected Collection<Collider> nextCollidersToCheck;
     protected List<List<Collider>> chunks;
     protected static Direction[][] directionsMapping = {{Direction.RIGTH, Direction.LEFT}, {Direction.UP, Direction.DOWN}};
+    protected int chunkCount;
 
     public CollisionsEngine() {
         nextCollidersToCheck = new ArrayList<>();
         chunks = new Vector<List<Collider>>();
+        chunkCount = 0;
     }
 
     public static CollisionsEngine instance() {
@@ -88,4 +90,18 @@ public class CollisionsEngine {
     public int getAmountOfChunks() {
         return chunks.size();
     }
+
+    public void registerToCheck(Collider c) { 
+        nextCollidersToCheck.add(c);
+    }
+
+    public int pixelChunkCount() {//ESTOS METODOS SON UN INTENTO DE DEAR DE MOVER LA PANTALLA AL LLEGAR AL FINAL DEL NIVEL
+        return chunkCount*32;
+    }
+
+    public void incrementChunkCount() {
+        chunkCount++;
+    }
+
+
 }
