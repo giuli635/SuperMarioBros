@@ -5,11 +5,18 @@
 class CollisionsEngine <<Singleton>> {
     #{static} uniqueInstance: CollisionsEngine
     #nextCollidersToCheck: Collection<Collider>
-    #chunks: [][]Collection<Collider>
+    #chunks: List<List<Collider>>
     +{static} instance(): CollisionsEngine
     #checkCollision(e1: Collider, e2: Collider): Direction
     +checkCollisions()
     +registerToCheck(c: Collider)
+    +calculateChunk(c: Collider):int[]
+    +addToChunk(ind: int, item: Collider)
+    +removeFromChunk(item: Collider)
+    +getChunk(ind: int):Iterable<Collider>
+    +getAmountOfChunks():int
+    +registerToCheck()
+    +addToCheck(Collider c)
     +setChunk(c: Collider, x: int, y: int)
 }
 note right of CollisionsEngine::checkCollision
@@ -24,6 +31,7 @@ interface Entity {
     +loaded(): boolean
     +load()
     +unload()
+    +Clone(): entity
     +getGraphicElement(): GraphicElement
     +getCollider(): Collider
 }
@@ -59,10 +67,14 @@ PowerUpCollider .u[hidden].|> GameCollider
 FireBallCollider .u[hidden].|> GameCollider
 
 interface GraphicElement {
+    +getEntity(): Entity
+    +translate(dx: int, dy: int)
     +draw()
-    +getPoint(): Point
-    +setPoint(p: Point)
-    +getSprite(): Sprite
+    +getPosition(): Point
+    +setPosition(p: Point)
+    +setSprite(s: ImageIcon)
+    +getSprite(): ImageIcon
+    +getLabel(): JLabel
     +setSprite(s: Sprite)
 }
 
@@ -85,16 +97,29 @@ class Sprite {
 
 class GraphicEngine <<Singleton>> {
     #{static} uniqueInstance: GraphicEngine
+    #frame: JFrame
+    #panel: JPanel
     #elements: Collection<GraphicElement>
     -GraphicEngine()
     +{static} instance(): GraphicEngine
     +addGraphicElement(e: GraphicElement)
     +removeGraphicElement(e: GraphicElement)
+    +getPanelSize(): Dimension
+    +scrollScreen(velocity: int)
     +drawFrame()
 }
 
 class Vector2D {
-
+    #start: Point
+    #end: Point
+    #xComponent: double
+    #yComponent: double
+    +Vector2D(s: Point, e: Point)
+    +getStart(): Point
+    +getEnd(): Point
+    +sum(v: Vector2D): Vector2D
+    +getXComponent()
+    +getYComponent()
 }
 
 enum Direction {

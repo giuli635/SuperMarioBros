@@ -6,10 +6,14 @@ class Mario {
     #graphicElement: GraphicElement
     #collider: Collider
     #position: Point
+    #loaded: boolean
     #speedX: int
     #lifes: int
     +Mario(gE: GraphicElement, collider: Collider, 
     p: Point)
+    +clone(): Entity
+    +update()
+    +updateScreenPosition(levelWidth: int)
     +jump()
     +die()
     +collide(b: SolidBrick)

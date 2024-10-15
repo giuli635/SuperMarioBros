@@ -1,6 +1,22 @@
 @startuml
 ' TODO: agregar constructores y getters y setters (habría que preguntar si podemos evitar algunos getters y setters en pos de encapsulamiento)
 '
+
+class GameEntity{
+    #collider: Collider
+    #graphicElement: GraphicElement
+    #loaded: boolean
+    +GameEntity()
+    +clone(): Entity
+    +load()
+    +unload()
+    +loaded(): boolean
+    +getCollider(): Collider
+    +getGraphicElement(): GraphicElement
+    +update()
+}
+
+
 interface Movable{
     +move()
     +changeDirection()

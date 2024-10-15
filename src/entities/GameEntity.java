@@ -16,7 +16,7 @@ public class GameEntity implements Entity {
 
     public GameEntity() {
         loaded = false;
-        collider = new GameCollider(this, new Rectangle(20, 20));
+        collider = new GameCollider(this, new Rectangle(31, 31));
         graphicElement = new GameGraphicElement(this, new ImageIcon("sprites/block.png"));
     }
 
@@ -46,7 +46,6 @@ public class GameEntity implements Entity {
 
     @Override
     public void update() {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'update'");
     }
 }

@@ -1,21 +1,29 @@
 @startuml
 class Game <<Singleton>> {
+    #{static} SECOND: int
+    #{static} FPS: int
+    #keysStatus: Map<Integer, KeyStatus>
     #{static} uniqueInstance: Game
     #toUpdateRegistry: Set<Entity>
     #currLevel: Level
     #mario: Mario
+    #run: boolean
     +{static} instance(): Game
     #loadLevel()
     +registerToUpdate(e: Entity)
     +unregisterToUpdate(e: Entity)
+    +getKeyStatus(int key): KeyStatus
     +getKeyPressed(key: int): boolean
     +getKeyReleased(key: int): boolean
-    +{static} main()
+    +scrollScreen()
+    +{static} main(String[] args)
 }
+
 
 class Level{
     #time: Duration
     #points: int
+    #Background: Image
     +Level(time: Duration)
     +getPoints(): int
     +addPoints(p: int)
@@ -24,6 +32,18 @@ class Level{
 note left of Level::time
 Duration es la clase de Java
 end note
+class LevelReader <<Singleton>>{
+    #{static} CHUNK: int
+    #{static} uniqueInstance: LevelReader
+    #prototypes: Map<Character,Entity>
+    #generalPrototype: GameEntity
+    #marioPrototype: Mario
+    #Instance(): LevelReader
+    +CreateLevel(file: String):Level
+    -loadScreen()
+    +loadEntities(br: BufferedReader)
+
+}
 
 class Menu <<Singleton>> {
     #{static} uniqueInstance: Menu
@@ -42,9 +62,8 @@ class Ranking <<Singleton>> {
     +getRanking(): Iterable<Entry<String, Integer>>
 }
 
-class LevelReader <<Singleton>> {
-    #{static} uniqueInstance: LevelReader
-    +{static} instance(): LevelReader
-    +createLevel(file: String): Level
+enum KeyStatus{
+    Pressed
+    Released
 }
 @enduml
