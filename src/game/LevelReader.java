@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.Map;
 
 import colliders.Collider;
+import colliders.Direction;
 import colliders.ScreenBorderCollider;
 import colliders.ScreenDisplacementCollider;
 import entities.Entity;
@@ -62,14 +63,23 @@ public class LevelReader  {
             }
         }
         
-        new ScreenBorderCollider(
-            new Rectangle(0, 0, CHUNK, (int) windowHeight)
+        ScreenBorderCollider leftBorder = new ScreenBorderCollider(
+            new Rectangle(0, 0, CHUNK, (int) windowHeight),
+            Direction.LEFT
+        );
+
+        ScreenBorderCollider rightBorder = new ScreenBorderCollider(
+            new Rectangle(lastChunkInScreen * CHUNK, 0, CHUNK, (int) windowHeight),
+            Direction.RIGTH
         );
 
         int middleChunk = lastChunkInScreen / 2;
         new ScreenDisplacementCollider(
-            new Rectangle((int) (CHUNK * middleChunk), 0, CHUNK, (int) windowHeight)
+            new Rectangle((int) (CHUNK * middleChunk), 0, CHUNK, (int) windowHeight),
+            leftBorder,
+            rightBorder
         );
+
     }
     
     public void loadEntities(BufferedReader br) throws IOException {

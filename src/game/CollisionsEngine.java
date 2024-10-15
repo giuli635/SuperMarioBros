@@ -7,8 +7,6 @@ import java.util.Vector;
 
 import colliders.Collider;
 import colliders.Direction;
-import colliders.MarioCollider;
-import colliders.ScreenBorderCollider;
 import colliders.Vector2D;
 
 public class CollisionsEngine {
@@ -51,29 +49,17 @@ public class CollisionsEngine {
     }
 
     public void checkCollisions() {
-        for (Collider collider : nextCollidersToCheck) {
+        List<Collider> nextCollidersToCheckCopy = new ArrayList<>(nextCollidersToCheck);
+        nextCollidersToCheck.removeAll(nextCollidersToCheck);
+        for (Collider collider : nextCollidersToCheckCopy) {
             int[] chunkRange = calculateChunk(collider);
             for (int i = chunkRange[0]; i <= chunkRange[1]; i++) {
                 List<Collider> chunk = new ArrayList<>(chunks.get(i));
                 for (Collider toCheck : chunk) {
                     checkCollision(collider, toCheck);
-                    
-                    if (toCheck instanceof ScreenBorderCollider) {
-                        System.out.println("Borde");
-                        System.out.println("X: " + toCheck.getPosition().getX());
-                        System.out.println("Y: "+toCheck.getPosition().getY());
-                        System.out.println("Chunk: "+i);
-                    }
-                    else if (toCheck instanceof MarioCollider) {
-                        System.out.println("Mario");
-                        System.out.println("X: " + toCheck.getPosition().getX());
-                        System.out.println("Y: "+toCheck.getPosition().getY());
-                        System.out.println("Chunk: "+i);
-                    }
                 }
             }
         }
-        nextCollidersToCheck.removeAll(nextCollidersToCheck);
     }
 
     public int[] calculateChunk(Collider collider) {

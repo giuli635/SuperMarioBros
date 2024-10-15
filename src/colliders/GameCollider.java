@@ -23,10 +23,11 @@ public class GameCollider extends BaseCollider {
 
     @Override
     public void sendCollision(Collision c, Direction d) {
+        c.collide(this, d);
     }
 
     @Override
     public Collision getCollision() {
-        return new GameCollision();
+        return new GameCollision(this);
     }
 }

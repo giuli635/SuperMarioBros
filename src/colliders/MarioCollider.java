@@ -4,7 +4,6 @@ import java.awt.Rectangle;
 
 import collisions.Collision;
 import collisions.MarioCollision;
-import collisions.ScreenDisplacementCollision;
 import entities.Entity;
 import entities.Mario;
 
@@ -29,9 +28,6 @@ public class MarioCollider extends BaseCollider {
     @Override
     public void sendCollision(Collision c, Direction d) {
         c.collide(this, d);
-    }
-
-    public void handleCollision(ScreenDisplacementCollision c, Direction d) {
     }
 }
 

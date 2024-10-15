@@ -16,7 +16,7 @@ public class GameEntity implements Entity {
 
     public GameEntity() {
         loaded = false;
-        collider = new GameCollider(this, new Rectangle(20, 20));
+        collider = new GameCollider(this, new Rectangle(31, 31));
         graphicElement = new GameGraphicElement(this, new ImageIcon("sprites/block.png"));
     }
 
