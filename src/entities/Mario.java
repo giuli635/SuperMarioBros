@@ -31,15 +31,9 @@ public class Mario extends GameEntity {
         if (Game.instance().getKeyStatus(KeyEvent.VK_D) == KeyStatus.PRESSED) {
             graphicElement.translate(speedX, 0);
             collider.translate(speedX, 0);
-            Point pos = graphicElement.getPosition();
-            System.out.println("Mario X: " +pos.getX());
-            System.out.println("Mario Y: " +pos.getY());
         } else if (Game.instance().getKeyStatus(KeyEvent.VK_A) == KeyStatus.PRESSED) {
             graphicElement.translate(-speedX, 0);
             collider.translate(-speedX, 0);
-            Point pos = graphicElement.getPosition();
-            System.out.println("Mario X: " +pos.getX());
-            System.out.println("Mario Y: " +pos.getY());
         }
 
         CollisionsEngine.instance().addToCheck(collider);
