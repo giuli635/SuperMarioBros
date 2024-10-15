@@ -1,4 +1,4 @@
-defensa = 5
+defensa = 6
 
 all: svg extendido reducido
 
