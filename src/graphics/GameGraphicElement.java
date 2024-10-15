@@ -4,6 +4,7 @@ import java.awt.Rectangle;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.SwingUtilities;
 
 import entities.Entity;
 
@@ -27,8 +28,15 @@ public class GameGraphicElement implements GraphicElement {
     @Override
     public void translate(int dx, int dy) {
         Rectangle newRect = label.getBounds();
-        newRect.translate(dx, dy);
-        label.setBounds(newRect);
+        if ((newRect.getX() + dx) >= 0 && (newRect.getY() + dy) >= 0) {
+            newRect.translate(dx, dy);
+        }
+
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                label.setBounds(newRect);
+            }
+        });
     }
 
     @Override
@@ -40,7 +48,11 @@ public class GameGraphicElement implements GraphicElement {
     public void setPosition(int x, int y) {
         Rectangle newRect = label.getBounds();
         newRect.setLocation(x, y);
-        label.setBounds(newRect);
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                label.setBounds(newRect);
+            }
+        });
     }
 
     @Override
@@ -53,8 +65,12 @@ public class GameGraphicElement implements GraphicElement {
         sprite = s;
         Rectangle newRect = label.getBounds();
         newRect.setSize(s.getIconWidth(), s.getIconHeight());
-        label.setBounds(newRect);
-        label.setIcon(s);
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                label.setBounds(newRect);
+                label.setIcon(s);
+            }
+        });
     }
 
     @Override

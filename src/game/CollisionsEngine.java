@@ -64,25 +64,34 @@ public class CollisionsEngine {
 
     public int[] calculateChunk(Collider collider) {
         Rectangle colliderBound = collider.getBound();
-        int firstChunk = (int) (colliderBound.getMinX() / 32.0);
-        int secondChunk = (int) (colliderBound.getMaxX() / 32.0);
+        int firstChunk = (int) Math.round(colliderBound.getMinX() / 32.0);
+        int secondChunk = (int) Math.round(colliderBound.getMaxX() / 32.0);
         return new int[]{firstChunk, secondChunk};
     }
     
 
-    public void addToChunk(int ind, Collider item) {
-        if (ind >= chunks.size()) {
-            for (int i = 0; i <= ind; i++) {
+    // TODO: podría ser más eficiente?
+    public void addToChunk(Collider item) {
+        int[] chunkRange = calculateChunk(item);
+        if (chunkRange[0] >= chunks.size()) {
+            for (int i = 0; i < chunkRange[0]; i++) {
                 chunks.add(new Vector<>());
             }
         }
 
-        chunks.get(ind).add(item);
+        for(int i = chunkRange[0]; i < chunks.size() && i < chunkRange[1]; i++) {
+            chunks.get(i).add(item);
+        }
+
+        for(int i = chunks.size(); i < chunkRange[1]; i++) {
+            chunks.add(new Vector<>());
+            chunks.get(i).add(item);
+        }
     }
 
     public void removeFromChunk(Collider item) {
         int[] chunkRange = calculateChunk(item);
-        for(int i = chunkRange[0]; i < chunkRange[1]; i++) {
+        for(int i = chunkRange[0]; i < chunkRange[1] && i < chunks.size(); i++) {
             chunks.get(i).remove(item);
         }
     }

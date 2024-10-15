@@ -64,6 +64,7 @@ public class Game implements WindowListener, KeyListener {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+
             graphicEngine.drawFrame();
         }
     }

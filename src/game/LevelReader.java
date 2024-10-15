@@ -19,13 +19,6 @@ public class LevelReader  {
     protected static int CHUNK = 32;
     protected static LevelReader uniqueInstance;
     protected Map<Character,Entity> prototypes;
-    protected GameEntity generalPrototype;
-    protected Mario marioPrototype;
-
-    protected LevelReader() {
-        marioPrototype = new Mario();
-        generalPrototype = new GameEntity();
-    }
 
     protected static LevelReader instance(){
         if (uniqueInstance == null) {
@@ -92,15 +85,14 @@ public class LevelReader  {
                 if (item != ' ') {
                     Entity newEntity;
                     if (item == 'M') {
-                        newEntity = marioPrototype.clone();
+                        newEntity = new Mario();
                         Game.instance().registerToUpdate(newEntity);
                     } else {
-                        newEntity = generalPrototype.clone();
+                        newEntity = new GameEntity();
                     }
                     Collider newEntityCollider = newEntity.getCollider();
                     newEntityCollider.setPosition(i * CHUNK, j * CHUNK);
                     newEntityCollider.setSize(CHUNK, CHUNK);
-                    CollisionsEngine.instance().addToChunk(i, newEntityCollider);
                 }
             }
             i++;

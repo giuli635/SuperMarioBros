@@ -30,6 +30,6 @@ public class ScreenBorderCollision implements Collision {
 
     @Override
     public void collide(ScreenBorderCollider c, Direction d) {
+        c.handleCollision(this, d);
     }
-    
 }

@@ -5,6 +5,7 @@ import java.awt.Rectangle;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 import graphics.GraphicElement;
 
@@ -35,16 +36,25 @@ public class GraphicEngine {
     }
 
     public void drawFrame() {
+        panel.invalidate();
         panel.validate();
         panel.repaint();
     }
 
     public void addGraphicElement(GraphicElement e) {
-        panel.add(e.getLabel());
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                panel.add(e.getLabel());
+            }
+        });
     }
 
     public void removeGraphicElement(GraphicElement e) {
-        panel.remove(e.getLabel());
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                panel.remove(e.getLabel());
+            }
+        });
     }
 
     public Dimension getPanelSize() {
@@ -52,10 +62,14 @@ public class GraphicEngine {
     }
 
     public void scrollScreen(int velocity) {  
-        for (Component component : panel.getComponents()) {
-            Rectangle componentBounds = component.getBounds();
-            componentBounds.translate(-velocity, 0);
-            component.setBounds(componentBounds);
-        }
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                for (Component component : panel.getComponents()) {
+                    Rectangle componentBounds = component.getBounds();
+                    componentBounds.translate(-velocity, 0);
+                    component.setBounds(componentBounds);
+                }
+            }
+        });
     }
 }

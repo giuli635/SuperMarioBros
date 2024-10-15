@@ -37,8 +37,8 @@ public class ScreenBorderCollider extends BaseCollider {
     public void handleCollision(MarioCollision m, Direction d) {
         MarioCollider collider = m.getCollider();
         int velocity = (int) collider.getVelocity().getXComponent();
-        collider.getEntity().getGraphicElement().translate(-velocity, 0);
         collider.translate(-velocity, 0);
+        collider.getEntity().getGraphicElement().translate(-Math.abs(velocity), 0);
     }
 
     public void handleCollision(GameCollision g, Direction d) {
@@ -50,7 +50,7 @@ public class ScreenBorderCollider extends BaseCollider {
             Point colliderPosition = g.getCollider().getPosition();
             if (position == Direction.RIGTH) {
                 graphicElement.setPosition(
-                    (int) (colliderPosition.getX() - getPosition().getX() + graphicEngine.getPanelSize().getWidth()),
+                    (int) (colliderPosition.getX() - getBound().getMaxX() + graphicEngine.getPanelSize().getWidth()),
                     (int) (graphicEngine.getPanelSize().getHeight() - colliderPosition.getY())
                 );
             } else {
