@@ -37,7 +37,7 @@ public class ScreenDisplacementCollider extends BaseCollider {
         translate((int) m.getCollider().getVelocity().getXComponent(), 0);
         leftBorder.translate((int) m.getCollider().getVelocity().getXComponent(), 0);
         rightBorder.translate((int) m.getCollider().getVelocity().getXComponent(), 0);
-        GraphicEngine.instance().scrollScreen((int) m.getCollider().getVelocity().getXComponent());
+        GraphicEngine.instance().scrollScreen(-(int) m.getCollider().getVelocity().getXComponent());
         CollisionsEngine.instance().addToCheck(leftBorder);
         CollisionsEngine.instance().addToCheck(rightBorder);
     }

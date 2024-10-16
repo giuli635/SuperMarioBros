@@ -16,7 +16,7 @@ public abstract class BaseCollider implements Collider {
         bounds = b;
         activated = true;
         previousPosition = b.getLocation();
-        CollisionsEngine.instance().addToChunk(this);
+        CollisionsEngine.instance().add(this);
     }
 
     public Point getPosition() {
@@ -25,10 +25,10 @@ public abstract class BaseCollider implements Collider {
 
     public void setPosition(int x, int y) {
         CollisionsEngine collisionsEngine = CollisionsEngine.instance();
-        collisionsEngine.removeFromChunk(this);
+        collisionsEngine.remove(this);
         previousPosition = bounds.getLocation();
         bounds.setLocation(x, y);
-        collisionsEngine.addToChunk(this);
+        collisionsEngine.add(this);
     }
 
     public Vector2D getVelocity() {
@@ -49,10 +49,10 @@ public abstract class BaseCollider implements Collider {
 
     public void translate(int dx, int dy) {
         CollisionsEngine collisionsEngine = CollisionsEngine.instance();
-        collisionsEngine.removeFromChunk(this);
+        collisionsEngine.remove(this);
         previousPosition = bounds.getLocation();
         bounds.translate(dx, dy);
-        collisionsEngine.addToChunk(this);
+        collisionsEngine.add(this);
     }
 
     public Dimension getSize() {

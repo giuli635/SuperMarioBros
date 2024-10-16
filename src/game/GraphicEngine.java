@@ -1,7 +1,9 @@
 package game;
-import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.Rectangle;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Set;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -13,10 +15,25 @@ public class GraphicEngine {
     protected static GraphicEngine uniqueInstance;
     protected JFrame frame;
     protected JPanel panel;
+    protected Set<GraphicElement> onScreen;
+    protected int position;
+
+    public int getPosition() {
+        return position;
+    }
+
+    public void setPosition(int x) {
+        position = x;
+    }
+
+    public void translate(int dx) {
+        position += dx;
+    }
 
     private GraphicEngine() {
         frame = new JFrame();
         panel = new JPanel();
+        onScreen = new HashSet<>();
         frame.addWindowListener(Game.instance());
         frame.addKeyListener(Game.instance());
         panel.setLayout(null);
@@ -36,12 +53,17 @@ public class GraphicEngine {
     }
 
     public void drawFrame() {
+        for (GraphicElement element : onScreen) {
+            element.draw();
+        }
+
         panel.invalidate();
         panel.validate();
         panel.repaint();
     }
 
     public void addGraphicElement(GraphicElement e) {
+        onScreen.add(e);
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 panel.add(e.getLabel());
@@ -50,6 +72,7 @@ public class GraphicEngine {
     }
 
     public void removeGraphicElement(GraphicElement e) {
+        onScreen.remove(e);
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 panel.remove(e.getLabel());
@@ -62,14 +85,9 @@ public class GraphicEngine {
     }
 
     public void scrollScreen(int velocity) {  
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                for (Component component : panel.getComponents()) {
-                    Rectangle componentBounds = component.getBounds();
-                    componentBounds.translate(-velocity, 0);
-                    component.setBounds(componentBounds);
-                }
-            }
-        });
+        translate(-velocity);
+        for (GraphicElement element : onScreen) {
+            element.translate(velocity, 0);
+        }
     }
 }

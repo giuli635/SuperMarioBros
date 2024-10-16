@@ -48,17 +48,10 @@ public class ScreenBorderCollider extends BaseCollider {
             graphicEngine.removeGraphicElement(graphicElement);
         } else {
             Point colliderPosition = g.getCollider().getPosition();
-            if (position == Direction.RIGTH) {
-                graphicElement.setPosition(
-                    (int) (colliderPosition.getX() - getBound().getMaxX() + graphicEngine.getPanelSize().getWidth()),
-                    (int) (graphicEngine.getPanelSize().getHeight() - colliderPosition.getY())
-                );
-            } else {
-                graphicElement.setPosition(
-                    (int) (colliderPosition.getX() - getPosition().getX()),
-                    (int) (graphicEngine.getPanelSize().getHeight() - getPosition().getY())
-                );
-            }
+            graphicElement.setPosition(
+                (int) (colliderPosition.getX() - graphicEngine.getPosition()),
+                (int) (graphicEngine.getPanelSize().getHeight() - colliderPosition.getY())
+            );
             graphicEngine.addGraphicElement(graphicElement);
         }
     }

@@ -1,9 +1,11 @@
 package game;
-import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Vector;
+import java.util.NavigableMap;
+import java.util.Set;
+import java.util.TreeMap;
 
 import colliders.Collider;
 import colliders.Direction;
@@ -12,11 +14,11 @@ import colliders.Vector2D;
 public class CollisionsEngine {
     protected static CollisionsEngine uniqueInstance;
     protected Collection<Collider> nextCollidersToCheck;
-    protected List<List<Collider>> chunks;
+    protected NavigableMap<Integer, Set<Collider>> colliders;
 
     public CollisionsEngine() {
         nextCollidersToCheck = new ArrayList<>();
-        chunks = new Vector<List<Collider>>();
+        colliders = new TreeMap<>();
     }
 
     public static CollisionsEngine instance() {
@@ -28,7 +30,7 @@ public class CollisionsEngine {
 
     protected void checkCollision(Collider c1, Collider c2) {
         if (c1.getBound().intersects(c2.getBound())) {
-            Vector2D collisionVector = c1.getVelocity().sum( c2.getVelocity());
+            Vector2D collisionVector = c1.getVelocity().sum(c2.getVelocity());
             Direction dir;
 
             if (collisionVector.getYComponent() > collisionVector.getXComponent()) {
@@ -52,56 +54,38 @@ public class CollisionsEngine {
         List<Collider> nextCollidersToCheckCopy = new ArrayList<>(nextCollidersToCheck);
         nextCollidersToCheck.removeAll(nextCollidersToCheck);
         for (Collider collider : nextCollidersToCheckCopy) {
-            int[] chunkRange = calculateChunk(collider);
-            for (int i = chunkRange[0]; i <= chunkRange[1]; i++) {
-                List<Collider> chunk = new ArrayList<>(chunks.get(i));
-                for (Collider toCheck : chunk) {
-                    checkCollision(collider, toCheck);
-                }
+            int lowerBound = (int) collider.getBound().getX();
+            int higherBound = (int) collider.getBound().getMaxX();
+            for (Collider toCheck : getCollidersInRange(lowerBound, higherBound)) {
+                checkCollision(collider, toCheck);
             }
         }
     }
 
-    public int[] calculateChunk(Collider collider) {
-        Rectangle colliderBound = collider.getBound();
-        int firstChunk = (int) Math.round(colliderBound.getMinX() / 32.0);
-        int secondChunk = (int) Math.round(colliderBound.getMaxX() / 32.0);
-        return new int[]{firstChunk, secondChunk};
+    protected void addPoint(int x, Collider item) {
+        Set<Collider> set = colliders.get(x);
+        if (set == null) {
+            set = new HashSet<>();
+            colliders.put(x, set);
+        }
+        set.add(item);
     }
-    
 
-    // TODO: podría ser más eficiente?
-    public void addToChunk(Collider item) {
-        int[] chunkRange = calculateChunk(item);
-        if (chunkRange[0] >= chunks.size()) {
-            for (int i = 0; i < chunkRange[0]; i++) {
-                chunks.add(new Vector<>());
-            }
-        }
-
-        for(int i = chunkRange[0]; i < chunks.size() && i < chunkRange[1]; i++) {
-            chunks.get(i).add(item);
-        }
-
-        for(int i = chunks.size(); i < chunkRange[1]; i++) {
-            chunks.add(new Vector<>());
-            chunks.get(i).add(item);
+    protected void removePoint(int x, Collider item) {
+        Set<Collider> set = colliders.get(x);
+        if (set != null) {
+            set.remove(item);
         }
     }
 
-    public void removeFromChunk(Collider item) {
-        int[] chunkRange = calculateChunk(item);
-        for(int i = chunkRange[0]; i < chunkRange[1] && i < chunks.size(); i++) {
-            chunks.get(i).remove(item);
-        }
+    public void add(Collider item) {
+        addPoint((int) item.getBound().getX(), item);
+        addPoint((int) item.getBound().getMaxX(), item);
     }
 
-    public Iterable<Collider> getChunk(int ind) {
-        return chunks.get(ind);
-    }
-
-    public int getAmountOfChunks() {
-        return chunks.size();
+    public void remove(Collider item) {
+        removePoint((int) item.getBound().getX(), item);
+        removePoint((int) item.getBound().getMaxX(), item);
     }
 
     public void registerToCheck(Collider c) { 
@@ -110,5 +94,18 @@ public class CollisionsEngine {
 
     public void addToCheck(Collider c) {
         nextCollidersToCheck.add(c);
+    }
+
+    public Iterable<Collider> getCollidersInRange(int lowerBound, int higherBound) {
+        Collection<Set<Collider>> toFlatten = colliders.subMap(lowerBound, higherBound).values();
+        Set<Collider> setColliders = new HashSet<>();
+        for (Set<Collider> set : toFlatten) {
+            setColliders.addAll(set);
+        }
+        return setColliders;
+    }
+
+    public int getAmoutColliders() {
+        return colliders.size();
     }
 }

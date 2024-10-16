@@ -45,15 +45,14 @@ public class LevelReader  {
 
         int lastChunkInScreen = (int) Math.ceil(graphicEngine.getPanelSize().getWidth() / (double) CHUNK);
         double windowHeight = graphicEngine.getPanelSize().getHeight();
+        graphicEngine.setPosition(CHUNK);
 
-        for (int i = 1; i < lastChunkInScreen; i++) {
-            for (Collider collider : collisionsEngine.getChunk(i)) {
-                GraphicElement graphicElement = collider.getEntity().getGraphicElement();
-                Point colliderPosition = collider.getPosition();
-                int yPosition = (int) (windowHeight - colliderPosition.getY());
-                graphicElement.setPosition((int) colliderPosition.getX() - CHUNK, yPosition);
-                graphicEngine.addGraphicElement(graphicElement);
-            }
+        for (Collider collider : collisionsEngine.getCollidersInRange(CHUNK + 1, (int) graphicEngine.getPanelSize().getWidth())) {
+            GraphicElement graphicElement = collider.getEntity().getGraphicElement();
+            Point colliderPosition = collider.getPosition();
+            int yPosition = (int) (windowHeight - colliderPosition.getY());
+            graphicElement.setPosition((int) colliderPosition.getX() - CHUNK, yPosition);
+            graphicEngine.addGraphicElement(graphicElement);
         }
         
         ScreenBorderCollider leftBorder = new ScreenBorderCollider(
@@ -72,7 +71,6 @@ public class LevelReader  {
             leftBorder,
             rightBorder
         );
-
     }
     
     public void loadEntities(BufferedReader br) throws IOException {

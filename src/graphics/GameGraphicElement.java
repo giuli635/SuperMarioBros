@@ -12,11 +12,14 @@ public class GameGraphicElement implements GraphicElement {
     protected Entity entity;
     protected JLabel label;
     protected ImageIcon sprite;
+    protected Rectangle bounds;
+    protected boolean toUpdate;
 
     public GameGraphicElement(Entity e, ImageIcon s) {
         entity = e;
         sprite = s;
         label = new JLabel();
+        bounds = label.getBounds();
         setSprite(s);
     }
     
@@ -27,16 +30,10 @@ public class GameGraphicElement implements GraphicElement {
 
     @Override
     public void translate(int dx, int dy) {
-        Rectangle newRect = label.getBounds();
-        if ((newRect.getX() + dx) >= 0 && (newRect.getY() + dy) >= 0) {
-            newRect.translate(dx, dy);
+        if ((bounds.getX() + dx) >= 0 && (bounds.getY() + dy) >= 0) {
+            toUpdate = true;
+            bounds.translate(dx, dy);
         }
-
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                label.setBounds(newRect);
-            }
-        });
     }
 
     @Override
@@ -46,13 +43,8 @@ public class GameGraphicElement implements GraphicElement {
 
     @Override
     public void setPosition(int x, int y) {
-        Rectangle newRect = label.getBounds();
-        newRect.setLocation(x, y);
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                label.setBounds(newRect);
-            }
-        });
+        toUpdate = true;
+        bounds.setLocation(x, y);
     }
 
     @Override
@@ -63,14 +55,16 @@ public class GameGraphicElement implements GraphicElement {
     @Override
     public void setSprite(ImageIcon s) {
         sprite = s;
-        Rectangle newRect = label.getBounds();
-        newRect.setSize(s.getIconWidth(), s.getIconHeight());
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                label.setBounds(newRect);
-                label.setIcon(s);
-            }
-        });
+        toUpdate = true;
+        bounds.setSize(s.getIconWidth(), s.getIconHeight());
+    }
+
+    public void draw() {
+        if (toUpdate) {
+            label.setBounds(bounds);
+            label.setIcon(sprite);
+            toUpdate = false;
+        }
     }
 
     @Override

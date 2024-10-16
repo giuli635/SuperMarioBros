@@ -14,4 +14,5 @@ public interface GraphicElement {
     public ImageIcon getSprite();
     public void setSprite(ImageIcon s);
     public JLabel getLabel();
+    public void draw();
 }
