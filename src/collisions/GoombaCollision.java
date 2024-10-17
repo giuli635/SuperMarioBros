@@ -1,28 +1,25 @@
 package collisions;
+
+import colliders.Collider;
 import colliders.GameCollider;
 import colliders.GoombaCollider;
 import colliders.MarioCollider;
 import colliders.ScreenBorderCollider;
 import colliders.ScreenDisplacementCollider;
 
-public class GameCollision implements Collision {
-    protected GameCollider collider;
+public class GoombaCollision implements Collision {
+    protected GoombaCollider GC;
 
-    public GameCollision(GameCollider c) {
-        collider = c;
+    public GoombaCollision(GoombaCollider GoombaC){
+        GC=GoombaC;
     }
-
-    public GameCollider getCollider() {
-        return collider;
-    }
-
     @Override
-    public void collide(GameCollider c) {
+    public void collide(MarioCollider c) {
         c.handleCollision(this);
     }
 
     @Override
-    public void collide(MarioCollider c) {
+    public void collide(GameCollider c) {
         c.handleCollision(this);
     }
 
@@ -38,7 +35,12 @@ public class GameCollision implements Collision {
 
     @Override
     public void collide(GoombaCollider c) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'collide'");
+        c.handleCollision(this);
     }
+    @Override
+    public GoombaCollider getCollider() {
+        return GC;
+    }
+
+
 }

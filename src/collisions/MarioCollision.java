@@ -1,6 +1,7 @@
 package collisions;
 
 import colliders.GameCollider;
+import colliders.GoombaCollider;
 import colliders.MarioCollider;
 import colliders.ScreenBorderCollider;
 import colliders.ScreenDisplacementCollider;
@@ -33,6 +34,11 @@ public class MarioCollision implements Collision {
 
     @Override
     public void collide(ScreenBorderCollider c) {
+        c.handleCollision(this);
+    }
+
+    @Override
+    public void collide(GoombaCollider c) {
         c.handleCollision(this);
     }
 }

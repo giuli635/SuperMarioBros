@@ -12,6 +12,7 @@ import colliders.ScreenBorderCollider;
 import colliders.ScreenDisplacementCollider;
 import entities.Entity;
 import entities.GameEntity;
+import entities.Goomba;
 import entities.Mario;
 import graphics.GraphicElement;
 
@@ -75,7 +76,7 @@ public class LevelReader  {
     public void loadEntities(BufferedReader br) throws IOException {
         String chunk;
         chunk = br.readLine();
-        int i = 1;
+        int i = 0;
         while (chunk != null) {
             for (int j = 0; j < chunk.length(); j++) {
                 char item = chunk.charAt(j);
@@ -84,7 +85,11 @@ public class LevelReader  {
                     if (item == 'M') {
                         newEntity = new Mario();
                         Game.instance().registerToUpdate(newEntity);
-                    } else {
+                    } else if (item == 'g') {
+                        newEntity = new Goomba();
+                        Game.instance().registerToUpdate(newEntity);
+                    }
+                    else {
                         newEntity = new GameEntity();
                     }
                     Collider newEntityCollider = newEntity.getCollider();
