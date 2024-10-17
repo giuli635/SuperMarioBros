@@ -4,6 +4,7 @@ import colliders.Collider;
 import colliders.GameCollider;
 import colliders.GoombaCollider;
 import colliders.MarioCollider;
+import colliders.PowerUpCollider;
 import colliders.ScreenBorderCollider;
 import colliders.ScreenDisplacementCollider;
 
@@ -40,6 +41,10 @@ public class GoombaCollision implements Collision {
     @Override
     public GoombaCollider getCollider() {
         return GC;
+    }
+    @Override
+    public void collide(PowerUpCollider c) {
+        c.handleCollision(this);
     }
 
 

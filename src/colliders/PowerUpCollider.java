@@ -31,11 +31,11 @@ public class PowerUpCollider extends BaseCollider{
         return new PowerUpCollision(this);
     }
 
-    public void sendCollision(Collision c, Direction d) {
-        c.collide(this, d);
+    public void sendCollision(Collision c) {
+        c.collide(this);
     }
 
-    public void handleCollision(MarioCollision c, Direction d) {
+    public void handleCollision(MarioCollision c) {
         MarioCollider collider = c.getCollider();
         Mario mario = (Mario) collider.getEntity();
         GraphicElement graphicElement = collider.getEntity().getGraphicElement();

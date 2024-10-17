@@ -1,7 +1,9 @@
 package collisions;
 
+import colliders.Collider;
 import colliders.Direction;
 import colliders.GameCollider;
+import colliders.GoombaCollider;
 import colliders.MarioCollider;
 import colliders.PowerUpCollider;
 import colliders.ScreenBorderCollider;
@@ -15,28 +17,38 @@ public class PowerUpCollision implements Collision {
     }
 
     @Override
-    public void collide(MarioCollider c, Direction d) {
-        c.handleCollision(this, d);
+    public void collide(MarioCollider c) {
+        c.handleCollision(this);
     }
 
     @Override
-    public void collide(GameCollider c, Direction d) {
-        c.handleCollision(this, d);
+    public void collide(GameCollider c) {
+        c.handleCollision(this);
     }
 
     @Override
-    public void collide(ScreenDisplacementCollider c, Direction d) {
-        c.handleCollision(this, d);
+    public void collide(ScreenDisplacementCollider c) {
+        c.handleCollision(this);
     }
 
     @Override
-    public void collide(ScreenBorderCollider c, Direction d) {
-        c.handleCollision(this, d);
+    public void collide(ScreenBorderCollider c) {
+        c.handleCollision(this);
     }
 
     @Override
-    public void collide(PowerUpCollider c, Direction d) {
-        c.handleCollision(this, d);
+    public void collide(PowerUpCollider c) {
+        c.handleCollision(this);
+    }
+
+    @Override
+    public void collide(GoombaCollider c) {
+        c.handleCollision(this);
+    }
+
+    @Override
+    public Collider getCollider() {
+        return collider;
     }
 
     

@@ -39,12 +39,11 @@ public class GameCollision implements Collision {
 
     @Override
     public void collide(GoombaCollider c) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'collide'");
+        c.handleCollision(this);
     }
 
     @Override
-    public void collide(PowerUpCollider c, Direction d) {
-        c.handleCollision(this, d);
+    public void collide(PowerUpCollider c) {
+        c.handleCollision(this);
     }
 }

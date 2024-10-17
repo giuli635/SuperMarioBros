@@ -44,8 +44,8 @@ public class MarioCollision implements Collision {
     }
 
     @Override
-    public void collide(PowerUpCollider c, Direction d) {
-        c.handleCollision(this, d);
+    public void collide(PowerUpCollider c) {
+        c.handleCollision(this);
     }
 }
 

@@ -46,7 +46,7 @@ public class ScreenDisplacementCollision implements Collision {
     }
 
     @Override
-    public void collide(PowerUpCollider c, Direction d) {
-        c.handleCollision(this, d);
+    public void collide(PowerUpCollider c) {
+        c.handleCollision(this);
     }
 }
