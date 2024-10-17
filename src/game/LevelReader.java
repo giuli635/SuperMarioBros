@@ -44,30 +44,29 @@ public class LevelReader  {
         GraphicEngine graphicEngine = GraphicEngine.instance();
 
         int lastChunkInScreen = (int) Math.ceil(graphicEngine.getPanelSize().getWidth() / (double) CHUNK);
-        double windowHeight = graphicEngine.getPanelSize().getHeight();
+        int windowHeight = (int) graphicEngine.getPanelSize().getHeight();
         graphicEngine.setPosition(CHUNK);
 
         for (Collider collider : collisionsEngine.getCollidersInRange(CHUNK + 1, (int) graphicEngine.getPanelSize().getWidth())) {
             GraphicElement graphicElement = collider.getEntity().getGraphicElement();
             Point colliderPosition = collider.getPosition();
-            int yPosition = (int) (windowHeight - colliderPosition.getY());
-            graphicElement.setPosition((int) colliderPosition.getX() - CHUNK, yPosition);
+            graphicElement.setPosition((int) colliderPosition.getX() - CHUNK, (int) colliderPosition.getY());
             graphicEngine.addGraphicElement(graphicElement);
         }
         
         ScreenBorderCollider leftBorder = new ScreenBorderCollider(
-            new Rectangle(0, 0, CHUNK, (int) windowHeight),
+            new Rectangle(0, 0, CHUNK, windowHeight),
             Direction.LEFT
         );
 
         ScreenBorderCollider rightBorder = new ScreenBorderCollider(
-            new Rectangle(lastChunkInScreen * CHUNK, 0, CHUNK, (int) windowHeight),
-            Direction.RIGTH
+            new Rectangle(lastChunkInScreen * CHUNK, 0, CHUNK, windowHeight),
+            Direction.RIGHT
         );
 
         int middleChunk = lastChunkInScreen / 2;
         new ScreenDisplacementCollider(
-            new Rectangle((int) (CHUNK * middleChunk), 0, CHUNK, (int) windowHeight),
+            new Rectangle(CHUNK * middleChunk, 0, CHUNK, windowHeight),
             leftBorder,
             rightBorder
         );
@@ -90,7 +89,6 @@ public class LevelReader  {
                     }
                     Collider newEntityCollider = newEntity.getCollider();
                     newEntityCollider.setPosition(i * CHUNK, j * CHUNK);
-                    newEntityCollider.setSize(CHUNK, CHUNK);
                 }
             }
             i++;

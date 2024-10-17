@@ -1,6 +1,5 @@
 package collisions;
 
-import colliders.Direction;
 import colliders.GameCollider;
 import colliders.MarioCollider;
 import colliders.ScreenBorderCollider;
@@ -14,22 +13,22 @@ public class ScreenDisplacementCollision implements Collision {
     }
 
     @Override
-    public void collide(MarioCollider c, Direction d) {
-        c.handleCollision(this, d);
+    public void collide(MarioCollider c) {
+        c.handleCollision(this);
     }
 
     @Override
-    public void collide(GameCollider c, Direction d) {
-        c.handleCollision(this, d);
+    public void collide(GameCollider c) {
+        c.handleCollision(this);
     }
 
     @Override
-    public void collide(ScreenDisplacementCollider c, Direction d) {
-        c.handleCollision(this, d);
+    public void collide(ScreenDisplacementCollider c) {
+        c.handleCollision(this);
     }
 
     @Override
-    public void collide(ScreenBorderCollider c, Direction d) {
-        c.handleCollision(this, d);
+    public void collide(ScreenBorderCollider c) {
+        c.handleCollision(this);
     }
 }

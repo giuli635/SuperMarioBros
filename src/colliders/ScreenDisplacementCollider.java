@@ -29,15 +29,15 @@ public class ScreenDisplacementCollider extends BaseCollider {
     }
 
     @Override
-    public void sendCollision(Collision c, Direction d) {
-        c.collide(this, d);
+    public void sendCollision(Collision c) {
+        c.collide(this);
     }
 
-    public void handleCollision(MarioCollision m, Direction d) {
+    public void handleCollision(MarioCollision m) {
         translate((int) m.getCollider().getVelocity().getXComponent(), 0);
         leftBorder.translate((int) m.getCollider().getVelocity().getXComponent(), 0);
         rightBorder.translate((int) m.getCollider().getVelocity().getXComponent(), 0);
-        GraphicEngine.instance().scrollScreen(-(int) m.getCollider().getVelocity().getXComponent());
+        GraphicEngine.instance().scrollScreen((int) -m.getCollider().getVelocity().getXComponent());
         CollisionsEngine.instance().addToCheck(leftBorder);
         CollisionsEngine.instance().addToCheck(rightBorder);
     }

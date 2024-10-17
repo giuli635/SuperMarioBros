@@ -10,8 +10,12 @@ public class Vector2D {
     public Vector2D (Point s, Point e) {
         start = s;
         end = e;
-        xComponent = start.getX() - end.getX();
-        yComponent = start.getY() - end.getY();
+        calculateComponents();
+    }
+
+    protected void calculateComponents() {
+        xComponent = -(start.getX() - end.getX());
+        yComponent = -(start.getY() - end.getY());
     }
 
     public Point getStart() {
@@ -26,12 +30,26 @@ public class Vector2D {
         return new Vector2D(start, v.getEnd());
     }
 
+    public void grow(int dx, int dy) {
+        end.translate(dx, dy);
+        calculateComponents();
+    }
+
     public double getXComponent() {
         return xComponent;
     }
 
     public double getYComponent() {
         return yComponent;
+    }
+
+    protected Vector2D clone() {
+        return new Vector2D(start, end);
+    }
+
+    @Override
+    public String toString() {
+        return "[" + start + ", " + end + ", x=" + xComponent + ", y=" + yComponent + "]";
     }
 }
 

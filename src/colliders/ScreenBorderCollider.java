@@ -25,8 +25,8 @@ public class ScreenBorderCollider extends BaseCollider {
     }
 
     @Override
-    public void sendCollision(Collision c, Direction d) {
-        c.collide(this, d);
+    public void sendCollision(Collision c) {
+        c.collide(this);
     }
 
     @Override
@@ -34,23 +34,24 @@ public class ScreenBorderCollider extends BaseCollider {
         return new ScreenBorderCollision(this);
     }
 
-    public void handleCollision(MarioCollision m, Direction d) {
+    public void handleCollision(MarioCollision m) {
         MarioCollider collider = m.getCollider();
         int velocity = (int) collider.getVelocity().getXComponent();
         collider.translate(-velocity, 0);
-        collider.getEntity().getGraphicElement().translate(-Math.abs(velocity), 0);
+        collider.getEntity().getGraphicElement().translate(Math.abs(velocity), 0);
     }
 
-    public void handleCollision(GameCollision g, Direction d) {
+    public void handleCollision(GameCollision g) {
         GraphicEngine graphicEngine = GraphicEngine.instance();
         GraphicElement graphicElement = g.getCollider().getEntity().getGraphicElement();
-        if (d != position) {
+        Direction collisionDirection = getVelocity().getXComponent() > 0 ? Direction.RIGHT : Direction.LEFT;
+        if (position != collisionDirection) {
             graphicEngine.removeGraphicElement(graphicElement);
         } else {
             Point colliderPosition = g.getCollider().getPosition();
             graphicElement.setPosition(
                 (int) (colliderPosition.getX() - graphicEngine.getPosition()),
-                (int) (graphicEngine.getPanelSize().getHeight() - colliderPosition.getY())
+                (int) colliderPosition.getY()
             );
             graphicEngine.addGraphicElement(graphicElement);
         }

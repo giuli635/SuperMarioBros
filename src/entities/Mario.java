@@ -10,16 +10,16 @@ import game.Game;
 import game.KeyStatus;
 
 public class Mario extends GameEntity {
-    protected Point position;
     protected int speedX; 
+    protected int speedY;
     protected int lifes;
     protected boolean loaded;
 
     public Mario() {
         super();
         speedX = 3;
+        speedY = 9;
         collider = new MarioCollider(this, collider.getBound());
-        position = collider.getPosition();
         graphicElement.setSprite(new ImageIcon("sprites/mario.png"));
     }
 
@@ -31,11 +31,20 @@ public class Mario extends GameEntity {
         if (Game.instance().getKeyStatus(KeyEvent.VK_D) == KeyStatus.PRESSED) {
             graphicElement.translate(speedX, 0);
             collider.translate(speedX, 0);
-        } else if (Game.instance().getKeyStatus(KeyEvent.VK_A) == KeyStatus.PRESSED) {
+        }
+
+        if (Game.instance().getKeyStatus(KeyEvent.VK_A) == KeyStatus.PRESSED) {
             graphicElement.translate(-speedX, 0);
             collider.translate(-speedX, 0);
         }
 
+        if (Game.instance().getKeyStatus(KeyEvent.VK_W) == KeyStatus.PRESSED) {
+            collider.translate(0, speedY);
+            graphicElement.translate(0, speedY);
+        }
+
+        graphicElement.translate(0, -3);
+        collider.translate(0, -3);
         CollisionsEngine.instance().addToCheck(collider);
     }
 
