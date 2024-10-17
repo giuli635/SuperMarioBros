@@ -9,13 +9,13 @@ import game.CollisionsEngine;
 
 public abstract class BaseCollider implements Collider {
     protected Rectangle bounds;
-    protected Point previousPosition;
     protected boolean activated;
+    protected Vector2D velocity;
 
     public BaseCollider(Rectangle b) {
         bounds = b;
         activated = true;
-        previousPosition = b.getLocation();
+        velocity = new Vector2D(bounds.getLocation(), bounds.getLocation());
         CollisionsEngine.instance().add(this);
     }
 
@@ -26,13 +26,13 @@ public abstract class BaseCollider implements Collider {
     public void setPosition(int x, int y) {
         CollisionsEngine collisionsEngine = CollisionsEngine.instance();
         collisionsEngine.remove(this);
-        previousPosition = bounds.getLocation();
         bounds.setLocation(x, y);
         collisionsEngine.add(this);
+        velocity = new Vector2D(bounds.getLocation(), bounds.getLocation());
     }
 
     public Vector2D getVelocity() {
-        return new Vector2D(bounds.getLocation(), previousPosition);
+        return velocity.clone();
     }
 
     public boolean activated() {
@@ -50,9 +50,14 @@ public abstract class BaseCollider implements Collider {
     public void translate(int dx, int dy) {
         CollisionsEngine collisionsEngine = CollisionsEngine.instance();
         collisionsEngine.remove(this);
-        previousPosition = bounds.getLocation();
+        velocity.grow(dx, dy);
         bounds.translate(dx, dy);
         collisionsEngine.add(this);
+        collisionsEngine.addToReset(this);
+    }
+
+    public void resetVelocity() {
+        velocity = new Vector2D(bounds.getLocation(), bounds.getLocation());
     }
 
     public Dimension getSize() {
@@ -63,6 +68,6 @@ public abstract class BaseCollider implements Collider {
         bounds.setSize(width, height);
     }
 
-    public void handleCollision(Collision c, Direction d) {
+    public void handleCollision(Collision c) {
     }
 }

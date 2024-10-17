@@ -1,23 +1,18 @@
 package collisions;
 
+import colliders.Collider;
 import colliders.GameCollider;
 import colliders.GoombaCollider;
 import colliders.MarioCollider;
-import colliders.PowerUpCollider;
 import colliders.ScreenBorderCollider;
 import colliders.ScreenDisplacementCollider;
 
-public class MarioCollision implements Collision {
-    protected MarioCollider collider;
+public class GoombaCollision implements Collision {
+    protected GoombaCollider GC;
 
-    public MarioCollision(MarioCollider m) {
-        collider = m;
+    public GoombaCollision(GoombaCollider GoombaC){
+        GC=GoombaC;
     }
-
-    public MarioCollider getCollider() {
-        return collider;
-    }
-
     @Override
     public void collide(MarioCollider c) {
         c.handleCollision(this);
@@ -42,10 +37,10 @@ public class MarioCollision implements Collision {
     public void collide(GoombaCollider c) {
         c.handleCollision(this);
     }
-
     @Override
-    public void collide(PowerUpCollider c, Direction d) {
-        c.handleCollision(this, d);
+    public GoombaCollider getCollider() {
+        return GC;
     }
-}
 
+
+}

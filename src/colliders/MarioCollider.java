@@ -26,8 +26,8 @@ public class MarioCollider extends BaseCollider {
     }
 
     @Override
-    public void sendCollision(Collision c, Direction d) {
-        c.collide(this, d);
+    public void sendCollision(Collision c) {
+        c.collide(this);
     }
 }
 

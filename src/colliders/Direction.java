@@ -1,15 +1,15 @@
 package colliders;
 public enum Direction {
     LEFT,
-    RIGTH,
+    RIGHT,
     UP,
     DOWN;
 
     public static Direction opposite(Direction d1) {
         switch (d1) {
             case LEFT:
-                return RIGTH;
-            case RIGTH:
+                return RIGHT;
+            case RIGHT:
                 return LEFT;
             case UP:
                 return DOWN;

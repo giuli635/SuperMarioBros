@@ -4,9 +4,9 @@ import java.awt.Rectangle;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
-import javax.swing.SwingUtilities;
 
 import entities.Entity;
+import game.GraphicEngine;
 
 public class GameGraphicElement implements GraphicElement {
     protected Entity entity;
@@ -30,7 +30,7 @@ public class GameGraphicElement implements GraphicElement {
 
     @Override
     public void translate(int dx, int dy) {
-        if ((bounds.getX() + dx) >= 0 && (bounds.getY() + dy) >= 0) {
+        if ((bounds.getX() + dx) >= 0) {
             toUpdate = true;
             bounds.translate(dx, dy);
         }
@@ -38,7 +38,7 @@ public class GameGraphicElement implements GraphicElement {
 
     @Override
     public Point getPosition() {
-        return label.getLocation();
+        return bounds.getLocation();
     }
 
     @Override
@@ -60,8 +60,13 @@ public class GameGraphicElement implements GraphicElement {
     }
 
     public void draw() {
+        Rectangle boundsToDraw = new Rectangle(bounds);
+        boundsToDraw.setLocation(
+            (int) bounds.getX(),
+            (int) (GraphicEngine.instance().getPanelSize().getHeight() - bounds.getY())
+        );
         if (toUpdate) {
-            label.setBounds(bounds);
+            label.setBounds(boundsToDraw);
             label.setIcon(sprite);
             toUpdate = false;
         }

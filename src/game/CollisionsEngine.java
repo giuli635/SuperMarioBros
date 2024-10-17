@@ -1,24 +1,25 @@
 package game;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.NavigableMap;
+import java.util.Queue;
 import java.util.Set;
 import java.util.TreeMap;
 
 import colliders.Collider;
-import colliders.Direction;
-import colliders.Vector2D;
 
 public class CollisionsEngine {
     protected static CollisionsEngine uniqueInstance;
-    protected Collection<Collider> nextCollidersToCheck;
+    protected List<Collider> nextCollidersToCheck;
+    protected Set<Collider> toReset;
     protected NavigableMap<Integer, Set<Collider>> colliders;
 
     public CollisionsEngine() {
-        nextCollidersToCheck = new ArrayList<>();
+        nextCollidersToCheck = new LinkedList<>();
         colliders = new TreeMap<>();
+        toReset = new HashSet<>();
     }
 
     public static CollisionsEngine instance() {
@@ -30,35 +31,21 @@ public class CollisionsEngine {
 
     protected void checkCollision(Collider c1, Collider c2) {
         if (c1.getBound().intersects(c2.getBound())) {
-            Vector2D collisionVector = c1.getVelocity().sum(c2.getVelocity());
-            Direction dir;
-
-            if (collisionVector.getYComponent() > collisionVector.getXComponent()) {
-                dir = Direction.DOWN;
-                if (collisionVector.getYComponent() > 0) {
-                    dir = Direction.UP;
-                }
-            } else {
-                dir = Direction.RIGTH;
-                if (collisionVector.getXComponent() > 0) {
-                    dir = Direction.LEFT;
-                }
-            }
-            
-            c2.sendCollision(c1.getCollision(), dir);
-            c1.sendCollision(c2.getCollision(), Direction.opposite(dir));
+            c2.sendCollision(c1.getCollision());
+            c1.sendCollision(c2.getCollision());
         }
     }
 
     public void checkCollisions() {
-        List<Collider> nextCollidersToCheckCopy = new ArrayList<>(nextCollidersToCheck);
-        nextCollidersToCheck.removeAll(nextCollidersToCheck);
+        Queue<Collider> nextCollidersToCheckCopy = new LinkedList<>(nextCollidersToCheck);
+        nextCollidersToCheck = new LinkedList<>();
         for (Collider collider : nextCollidersToCheckCopy) {
             int lowerBound = (int) collider.getBound().getX();
             int higherBound = (int) collider.getBound().getMaxX();
             for (Collider toCheck : getCollidersInRange(lowerBound, higherBound)) {
                 checkCollision(collider, toCheck);
             }
+            collider.resetVelocity();
         }
     }
 
@@ -96,7 +83,7 @@ public class CollisionsEngine {
         nextCollidersToCheck.add(c);
     }
 
-    public Iterable<Collider> getCollidersInRange(int lowerBound, int higherBound) {
+    public Set<Collider> getCollidersInRange(int lowerBound, int higherBound) {
         Collection<Set<Collider>> toFlatten = colliders.subMap(lowerBound, higherBound).values();
         Set<Collider> setColliders = new HashSet<>();
         for (Set<Collider> set : toFlatten) {
@@ -107,5 +94,9 @@ public class CollisionsEngine {
 
     public int getAmoutColliders() {
         return colliders.size();
+    }
+
+    public void addToReset(Collider c) {
+        toReset.add(c);
     }
 }
