@@ -26,7 +26,6 @@ public class Mario extends GameEntity {
     public Entity clone() {
         return new Mario();
     }
-
     public void update() {
         if (Game.instance().getKeyStatus(KeyEvent.VK_D) == KeyStatus.PRESSED) {
             graphicElement.translate(speedX, 0);
@@ -47,5 +46,7 @@ public class Mario extends GameEntity {
         collider.translate(0, -3);
         CollisionsEngine.instance().addToCheck(collider);
     }
+    
+
 
 }

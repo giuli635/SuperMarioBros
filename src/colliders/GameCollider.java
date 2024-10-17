@@ -37,6 +37,5 @@ public class GameCollider extends BaseCollider {
         Vector2D colliderVelocity = m.getCollider().getVelocity();
         m.getCollider().translate(0, (int) -colliderVelocity.getYComponent());
         m.getCollider().getEntity().getGraphicElement().translate(0, (int) -colliderVelocity.getYComponent());
-        System.out.println("bloque");
     }
 }
