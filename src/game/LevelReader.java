@@ -13,6 +13,7 @@ import colliders.ScreenDisplacementCollider;
 import entities.Entity;
 import entities.GameEntity;
 import entities.Mario;
+import entities.PowerUp;
 import graphics.GraphicElement;
 
 public class LevelReader  {
@@ -85,6 +86,9 @@ public class LevelReader  {
                     if (item == 'M') {
                         newEntity = new Mario();
                         Game.instance().registerToUpdate(newEntity);
+                    } else if (item == 'S'){
+                        newEntity = new PowerUp();
+                        
                     } else {
                         newEntity = new GameEntity();
                     }

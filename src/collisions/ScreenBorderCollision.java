@@ -3,6 +3,7 @@ package collisions;
 import colliders.Direction;
 import colliders.GameCollider;
 import colliders.MarioCollider;
+import colliders.PowerUpCollider;
 import colliders.ScreenBorderCollider;
 import colliders.ScreenDisplacementCollider;
 
@@ -30,6 +31,11 @@ public class ScreenBorderCollision implements Collision {
 
     @Override
     public void collide(ScreenBorderCollider c, Direction d) {
+        c.handleCollision(this, d);
+    }
+
+    @Override
+    public void collide(PowerUpCollider c, Direction d) {
         c.handleCollision(this, d);
     }
 }
