@@ -8,6 +8,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import javax.swing.ImageIcon;
 
 import entities.Entity;
 import entities.Mario;
@@ -21,6 +22,8 @@ public class Game implements WindowListener, KeyListener {
     protected Level currLevel;
     protected Mario mario;
     protected boolean run;
+    protected boolean pause;
+    private boolean pauseKeyAlreadyPressed = false; 
 
     private Game() {
         toUpdateRegistry = new HashSet<>();
@@ -28,6 +31,7 @@ public class Game implements WindowListener, KeyListener {
         currLevel = null;
         mario = null;
         run = true;
+        pause = false;
     }
 
     public static Game instance() {
@@ -53,10 +57,13 @@ public class Game implements WindowListener, KeyListener {
         long lastUpdateTime;
         while (run) {
             lastUpdateTime = System.currentTimeMillis();
-            for (Entity entity : toUpdateRegistry) {
-                entity.update();
+            
+            if(!pause) {
+                for (Entity entity : toUpdateRegistry) {
+                    entity.update();
+                }
             }
-
+            checkPause();
             CollisionsEngine.instance().checkCollisions();
 
             try {
@@ -116,4 +123,20 @@ public class Game implements WindowListener, KeyListener {
     @Override
     public void keyTyped(KeyEvent arg0) {
     }
+
+    public void checkPause() {
+        // Verificar si la tecla P está presionada
+        if (Game.instance().getKeyStatus(KeyEvent.VK_P) == KeyStatus.PRESSED) {
+            // Solo cambiar el estado de pausa si la tecla P no estaba previamente presionada
+            if (!pauseKeyAlreadyPressed) {
+                pause = !pause; // Cambiar el estado de pausa
+                pauseKeyAlreadyPressed = true; // Registrar que la tecla P ya está presionada
+            }
+        } else {
+            // Si la tecla no está presionada, restablecer la bandera
+            pauseKeyAlreadyPressed = false;
+        }
+    }
+
+    
 }

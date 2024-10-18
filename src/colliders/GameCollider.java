@@ -7,6 +7,8 @@ import collisions.GameCollision;
 import collisions.GoombaCollision;
 import collisions.MarioCollision;
 import entities.Entity;
+import entities.Mario;
+
 
 public class GameCollider extends BaseCollider {
     protected Entity entity;
@@ -34,8 +36,12 @@ public class GameCollider extends BaseCollider {
     }
 
     public void handleCollision(MarioCollision m) {
+        Mario mario = (Mario) m.getCollider().getEntity();
         Vector2D colliderVelocity = m.getCollider().getVelocity();
         m.getCollider().translate(0, (int) -colliderVelocity.getYComponent());
         m.getCollider().getEntity().getGraphicElement().translate(0, (int) -colliderVelocity.getYComponent());
+        if(mario.isFalling()) {
+            mario.land();   
+        }
     }
 }
