@@ -4,11 +4,11 @@ import javax.swing.ImageIcon;
 
 import colliders.GoombaCollider;
 
-public class Koopa_Troopa extends Enemy {
+public class KoopaTroopa extends Enemy {
     private boolean movingRight = true;
     private int speedX = 1; // Velocidad horizontal
 
-    public Koopa_Troopa(){
+    public KoopaTroopa(){
         super();
         speedX=2;
         collider = new GoombaCollider(this, collider.getBound());
@@ -28,13 +28,12 @@ public class Koopa_Troopa extends Enemy {
 
     @Override
     public Entity clone() {
-        return new Koopa_Troopa();
+        return new KoopaTroopa();
     }
 
     @Override
     public void update() {
-        // Movimiento horizontal
-         int moveX = movingRight ? speedX : -speedX;
+        int moveX = movingRight ? speedX : -speedX;
         graphicElement.translate(moveX, 0);
         collider.translate(moveX, 0);    
     }

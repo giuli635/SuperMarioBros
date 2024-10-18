@@ -12,8 +12,7 @@ import colliders.ScreenBorderCollider;
 import colliders.ScreenDisplacementCollider;
 import entities.Entity;
 import entities.GameEntity;
-import entities.Goomba;
-import entities.Koopa_Troopa;
+import entities.KoopaTroopa;
 import entities.Mario;
 import graphics.GraphicElement;
 
@@ -47,12 +46,12 @@ public class LevelReader  {
 
         int lastChunkInScreen = (int) Math.ceil(graphicEngine.getPanelSize().getWidth() / (double) CHUNK);
         int windowHeight = (int) graphicEngine.getPanelSize().getHeight();
-        graphicEngine.setPosition(CHUNK);
+        graphicEngine.setPosition(2 * CHUNK);
 
-        for (Collider collider : collisionsEngine.getCollidersInRange(CHUNK + 1, (int) graphicEngine.getPanelSize().getWidth())) {
+        for (Collider collider : collisionsEngine.getCollidersInRange(2 * CHUNK + 1, (int) graphicEngine.getPanelSize().getWidth() + CHUNK)) {
             GraphicElement graphicElement = collider.getEntity().getGraphicElement();
             Point colliderPosition = collider.getPosition();
-            graphicElement.setPosition((int) colliderPosition.getX() - CHUNK, (int) colliderPosition.getY());
+            graphicElement.setPosition((int) colliderPosition.getX() - 2 * CHUNK, (int) colliderPosition.getY());
             graphicEngine.addGraphicElement(graphicElement);
         }
         
@@ -77,7 +76,7 @@ public class LevelReader  {
     public void loadEntities(BufferedReader br) throws IOException {
         String chunk;
         chunk = br.readLine();
-        int i = 1;
+        int i = 2;
         while (chunk != null) {
             for (int j = 0; j < chunk.length(); j++) {
                 char item = chunk.charAt(j);
@@ -87,7 +86,7 @@ public class LevelReader  {
                         newEntity = new Mario();
                         Game.instance().registerToUpdate(newEntity);
                     } else if (item == 'g') {
-                        newEntity = new Koopa_Troopa();
+                        newEntity = new KoopaTroopa();
                         Game.instance().registerToUpdate(newEntity);
                     }
                     else {
@@ -101,6 +100,4 @@ public class LevelReader  {
             chunk = br.readLine();
         }
     }
-
-    
 }

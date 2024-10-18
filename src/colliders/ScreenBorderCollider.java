@@ -35,10 +35,9 @@ public class ScreenBorderCollider extends BaseCollider {
     }
 
     public void handleCollision(MarioCollision m) {
-        MarioCollider collider = m.getCollider();
-        int velocity = (int) collider.getVelocity().getXComponent();
-        collider.translate(-velocity, 0);
-        collider.getEntity().getGraphicElement().translate(Math.abs(velocity), 0);
+        Rectangle collision = getBound().intersection(m.getCollider().getBound());
+        m.getCollider().translate(-(int) collision.getWidth(), 0);
+        m.getCollider().getEntity().getGraphicElement().translate(-(int) collision.getWidth(), 0);
     }
 
     public void handleCollision(GameCollision g) {

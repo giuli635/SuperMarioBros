@@ -17,10 +17,14 @@ public class Mario extends GameEntity {
 
     public Mario() {
         super();
-        speedX = 3;
+        speedX = 4;
         speedY = 9;
         collider = new MarioCollider(this, collider.getBound());
         graphicElement.setSprite(new ImageIcon("sprites/mario.png"));
+        collider.setSize(
+            graphicElement.getSprite().getIconWidth(),
+            graphicElement.getSprite().getIconHeight()
+        );
     }
 
     public Entity clone() {

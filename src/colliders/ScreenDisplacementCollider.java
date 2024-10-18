@@ -34,10 +34,11 @@ public class ScreenDisplacementCollider extends BaseCollider {
     }
 
     public void handleCollision(MarioCollision m) {
-        translate((int) m.getCollider().getVelocity().getXComponent(), 0);
-        leftBorder.translate((int) m.getCollider().getVelocity().getXComponent(), 0);
-        rightBorder.translate((int) m.getCollider().getVelocity().getXComponent(), 0);
-        GraphicEngine.instance().scrollScreen((int) -m.getCollider().getVelocity().getXComponent());
+        Rectangle collision = getBound().intersection(m.getCollider().getBound());
+        translate((int) collision.getWidth(), 0);
+        leftBorder.translate((int) collision.getWidth(), 0);
+        rightBorder.translate((int) collision.getWidth(), 0);
+        GraphicEngine.instance().scrollScreen((int) -collision.getWidth());
         CollisionsEngine.instance().addToCheck(leftBorder);
         CollisionsEngine.instance().addToCheck(rightBorder);
     }
