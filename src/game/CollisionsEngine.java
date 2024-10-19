@@ -3,24 +3,21 @@ import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue;
 import java.util.Set;
 import java.util.Vector;
 
 import colliders.Collider;
+import collisions.Axis;
 
 public class CollisionsEngine {
     protected static CollisionsEngine uniqueInstance;
-    protected List<Collider> nextCollidersToCheck;
-    protected Set<Collider> toReset;
     protected List<List<Collider>> chunks;
+    protected Set<Collider> toUpdate;
 
     public CollisionsEngine() {
-        nextCollidersToCheck = new LinkedList<>();
         chunks = new Vector<List<Collider>>();
-        toReset = new HashSet<>();
+        toUpdate = new HashSet<>();
     }
 
     public static CollisionsEngine instance() {
@@ -30,25 +27,44 @@ public class CollisionsEngine {
         return uniqueInstance;
     }
 
-    protected void checkCollision(Collider c1, Collider c2) {
+    protected void checkCollision(Collider c1, Collider c2, Axis axis) {
         if (c1.getBound().intersects(c2.getBound())) {
-            c2.sendCollision(c1.getCollision());
-            c1.sendCollision(c2.getCollision());
+            c2.sendCollision(c1.getCollision(), axis);
+            c1.sendCollision(c2.getCollision(), axis);
         }
     }
 
-    public void checkCollisions() {
-        Queue<Collider> nextCollidersToCheckCopy = new LinkedList<>(nextCollidersToCheck);
-        nextCollidersToCheck = new LinkedList<>();
-        for (Collider collider : nextCollidersToCheckCopy) {
+    public void update() {
+        for (Collider collider : toUpdate) {
+            collider.setMoving(true);
+            collider.moveX();
+        }
+
+        checkCollisions(toUpdate, Axis.X);
+
+        for (Collider collider : toUpdate) {
+            collider.moveY();
+        }
+
+        checkCollisions(toUpdate, Axis.Y);
+
+        for (Collider collider : toUpdate) {
+            collider.setMoving(false);
+            collider.resetVelocity();
+        }
+
+        toUpdate = new HashSet<>();
+    }
+
+    public void checkCollisions(Iterable<Collider> collidersToCheck, Axis axis) {
+        for (Collider collider : collidersToCheck) {
             int[] chunkRange = calculateChunk(collider);
             for (int i = chunkRange[0]; i <= chunkRange[1]; i++) {
                 List<Collider> chunk = new ArrayList<>(chunks.get(i));
                 for (Collider toCheck : chunk) {
-                    checkCollision(collider, toCheck);
+                    checkCollision(collider, toCheck, axis);
                 }
             }
-            collider.resetVelocity();
         }
     }
 
@@ -86,14 +102,6 @@ public class CollisionsEngine {
         }
     }
 
-    public void registerToCheck(Collider c) { 
-        nextCollidersToCheck.add(c);
-    }
-
-    public void addToCheck(Collider c) {
-        nextCollidersToCheck.add(c);
-    }
-
     public Iterable<Collider> getCollidersInRange(int lowerBound, int higherBound) {
         Collection<Collider> collidersInRange = new ArrayList<>();
         int[] range = calculateChunk(lowerBound, higherBound);
@@ -104,7 +112,7 @@ public class CollisionsEngine {
         return collidersInRange;
     }
 
-    public void addToReset(Collider c) {
-        toReset.add(c);
+    public void addToUpdate(Collider c) {
+        toUpdate.add(c);
     }
 }

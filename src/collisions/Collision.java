@@ -7,10 +7,10 @@ import colliders.ScreenBorderCollider;
 import colliders.ScreenDisplacementCollider;
 
 public interface Collision {
-    public void collide(MarioCollider c);
-    public void collide(GameCollider c);
-    public void collide(ScreenDisplacementCollider c);
-    public void collide(ScreenBorderCollider c);
-    public void collide(GoombaCollider c);
+    public void collide(MarioCollider c, Axis a);
+    public void collide(GameCollider c, Axis a);
+    public void collide(ScreenDisplacementCollider c, Axis a);
+    public void collide(ScreenBorderCollider c, Axis a);
+    public void collide(GoombaCollider c, Axis a);
     public Collider getCollider();
 }

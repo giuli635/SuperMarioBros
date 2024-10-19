@@ -85,9 +85,6 @@ public class LevelReader  {
                     if (item == 'M') {
                         newEntity = new Mario();
                         Game.instance().registerToUpdate(newEntity);
-                    } else if (item == 'g') {
-                        newEntity = new KoopaTroopa();
-                        Game.instance().registerToUpdate(newEntity);
                     }
                     else {
                         newEntity = new GameEntity();

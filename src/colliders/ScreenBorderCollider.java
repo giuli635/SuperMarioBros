@@ -3,6 +3,7 @@ package colliders;
 import java.awt.Point;
 import java.awt.Rectangle;
 
+import collisions.Axis;
 import collisions.Collision;
 import collisions.GameCollision;
 import collisions.MarioCollision;
@@ -25,8 +26,8 @@ public class ScreenBorderCollider extends BaseCollider {
     }
 
     @Override
-    public void sendCollision(Collision c) {
-        c.collide(this);
+    public void sendCollision(Collision c, Axis a) {
+        c.collide(this, a);
     }
 
     @Override
@@ -34,13 +35,13 @@ public class ScreenBorderCollider extends BaseCollider {
         return new ScreenBorderCollision(this);
     }
 
-    public void handleCollision(MarioCollision m) {
+    public void handleHorizontalCollision(MarioCollision m) {
         Rectangle collision = getBound().intersection(m.getCollider().getBound());
         m.getCollider().translate(-(int) collision.getWidth(), 0);
         m.getCollider().getEntity().getGraphicElement().translate(-(int) collision.getWidth(), 0);
     }
 
-    public void handleCollision(GameCollision g) {
+    public void handleHorizontalCollision(GameCollision g) {
         GraphicEngine graphicEngine = GraphicEngine.instance();
         GraphicElement graphicElement = g.getCollider().getEntity().getGraphicElement();
         Direction collisionDirection = getVelocity().getXComponent() > 0 ? Direction.RIGHT : Direction.LEFT;

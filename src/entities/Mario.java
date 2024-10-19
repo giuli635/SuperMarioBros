@@ -4,7 +4,6 @@ import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
 
 import colliders.MarioCollider;
-import game.CollisionsEngine;
 import game.Game;
 import game.KeyStatus;
 
@@ -61,6 +60,5 @@ public class Mario extends GameEntity {
 
         graphicElement.translate(0, -3);
         collider.translate(0, -3);
-        CollisionsEngine.instance().addToCheck(collider);
     }
 }

@@ -2,6 +2,7 @@ package colliders;
 
 import java.awt.Rectangle;
 
+import collisions.Axis;
 import collisions.Collision;
 import collisions.GoombaCollision;
 import entities.Enemy;
@@ -12,7 +13,7 @@ public class GoombaCollider extends BaseCollider {
 
     public GoombaCollider(Enemy g, Rectangle b) {
         super(b);
-        goomba=g;
+        goomba = g;
     }
 
     @Override
@@ -21,15 +22,12 @@ public class GoombaCollider extends BaseCollider {
     }
 
     @Override
-    public void sendCollision(Collision c) {
-        c.collide(this);
-    }
-
-    @Override
     public Collision getCollision() {
         return new GoombaCollision(this);
     }
 
-    
-
+    @Override
+    public void sendCollision(Collision c, Axis a) {
+        c.collide(this, a);
+    }
 }

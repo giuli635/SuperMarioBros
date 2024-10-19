@@ -2,6 +2,7 @@ package colliders;
 
 import java.awt.Rectangle;
 
+import collisions.Axis;
 import collisions.Collision;
 import collisions.MarioCollision;
 import entities.Entity;
@@ -26,8 +27,8 @@ public class MarioCollider extends BaseCollider {
     }
 
     @Override
-    public void sendCollision(Collision c) {
-        c.collide(this);
+    public void sendCollision(Collision c, Axis a) {
+        c.collide(this, a);
     }
 }
 

@@ -2,11 +2,11 @@ package colliders;
 import java.awt.Point;
 import java.awt.Rectangle;
 
+import collisions.Axis;
 import collisions.Collision;
 import collisions.GameCollision;
 import collisions.MarioCollision;
 import entities.Entity;
-import entities.Mario;
 
 
 public class GameCollider extends BaseCollider {
@@ -25,8 +25,8 @@ public class GameCollider extends BaseCollider {
     }
 
     @Override
-    public void sendCollision(Collision c) {
-        c.collide(this);
+    public void sendCollision(Collision c, Axis a) {
+        c.collide(this, a);
     }
 
     @Override
@@ -34,27 +34,21 @@ public class GameCollider extends BaseCollider {
         return new GameCollision(this);
     }
 
-    public void handleCollision(MarioCollision m) {
+    public void handleVerticalCollision(MarioCollision m) {
         Vector2D velocity = m.getCollider().getVelocity();
         Rectangle collision = getBound().intersection(m.getCollider().getBound());
 
-        int outcode = getBound().outcode(m.getCollider().getBound().getCenterX(), m.getCollider().getBound().getCenterY());
-        boolean below = (outcode & Rectangle.OUT_TOP) != 0;
-        boolean onTop = (outcode & Rectangle.OUT_BOTTOM) != 0;
-        boolean toTheLeft = (outcode & Rectangle.OUT_LEFT) != 0;
-        boolean  toTheRight = (outcode & Rectangle.OUT_RIGHT) != 0;
+        int sign = (int) -Math.signum(velocity.getYComponent());
+        m.getCollider().translate(0, sign * (int) collision.getHeight());
+        m.getCollider().getEntity().getGraphicElement().translate(0, sign * (int) collision.getHeight());
+    }
 
-        if (collision.getHeight() < collision.getWidth()) {
-            int sign = (int) -Math.signum(velocity.getYComponent());
-            m.getCollider().translate(0, sign * (int) collision.getHeight());
-            m.getCollider().getEntity().getGraphicElement().translate(0, sign * (int) collision.getHeight());
-        } else {
-            if(collision.getHeight() == collision.getWidth()) {
-            } else {
-                int sign = (int) -Math.signum(velocity.getXComponent());
-                m.getCollider().translate(sign * (int) collision.getWidth(), 0);
-                m.getCollider().getEntity().getGraphicElement().translate(sign * (int) collision.getWidth(), -1);
-            }
-        }
+    public void handleHorizontalCollision(MarioCollision m) {
+        Vector2D velocity = m.getCollider().getVelocity();
+        Rectangle collision = getBound().intersection(m.getCollider().getBound());
+
+        int sign = (int) -Math.signum(velocity.getXComponent());
+        m.getCollider().translate(sign * (int) (collision.getWidth()), 0);
+        m.getCollider().getEntity().getGraphicElement().translate(sign * (int) (collision.getWidth()), 0);
     }
 }

@@ -5,11 +5,12 @@ import java.awt.Point;
 import java.awt.Rectangle;
 
 import collisions.Collision;
+import collisions.Axis;
 import entities.Entity;
 
 public interface Collider {
     public Entity getEntity();
-    public void sendCollision(Collision c);
+    public void sendCollision(Collision c, Axis a);
     public Rectangle getBound();
     public Collision getCollision();
     public void setPosition(int x, int y);
@@ -21,4 +22,8 @@ public interface Collider {
     public void setActive(boolean b);
     public boolean activated();
     public void resetVelocity();
+    public void moveX();
+    public void moveY();
+    public void setMoving(boolean m);
+    public boolean isMoving();
 }

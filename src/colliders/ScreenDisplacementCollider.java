@@ -2,11 +2,11 @@ package colliders;
 
 import java.awt.Rectangle;
 
+import collisions.Axis;
 import collisions.Collision;
 import collisions.MarioCollision;
 import collisions.ScreenDisplacementCollision;
 import entities.Entity;
-import game.CollisionsEngine;
 import game.GraphicEngine;
 
 public class ScreenDisplacementCollider extends BaseCollider {
@@ -29,17 +29,15 @@ public class ScreenDisplacementCollider extends BaseCollider {
     }
 
     @Override
-    public void sendCollision(Collision c) {
-        c.collide(this);
+    public void sendCollision(Collision c, Axis a) {
+        c.collide(this, a);
     }
 
-    public void handleCollision(MarioCollision m) {
+    public void handleHorizontalCollision(MarioCollision m) {
         Rectangle collision = getBound().intersection(m.getCollider().getBound());
         translate((int) collision.getWidth(), 0);
         leftBorder.translate((int) collision.getWidth(), 0);
         rightBorder.translate((int) collision.getWidth(), 0);
         GraphicEngine.instance().scrollScreen((int) -collision.getWidth());
-        CollisionsEngine.instance().addToCheck(leftBorder);
-        CollisionsEngine.instance().addToCheck(rightBorder);
     }
 }

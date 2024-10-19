@@ -18,28 +18,48 @@ public class MarioCollision implements Collision {
     }
 
     @Override
-    public void collide(MarioCollider c) {
-        c.handleCollision(this);
+    public void collide(MarioCollider c, Axis a) {
+        if (a == Axis.X) {
+            c.handleHorizontalCollision(this);
+        } else {
+            c.handleVerticalCollision(this);
+        }
     }
 
     @Override
-    public void collide(GameCollider c) {
-        c.handleCollision(this);
+    public void collide(GameCollider c, Axis a) {
+        if (a == Axis.X) {
+            c.handleHorizontalCollision(this);
+        } else {
+            c.handleVerticalCollision(this);
+        }
     }
 
     @Override
-    public void collide(ScreenDisplacementCollider c) {
-        c.handleCollision(this);
+    public void collide(ScreenDisplacementCollider c, Axis a) {
+        if (a == Axis.X) {
+            c.handleHorizontalCollision(this);
+        } else {
+            c.handleVerticalCollision(this);
+        }
     }
 
     @Override
-    public void collide(ScreenBorderCollider c) {
-        c.handleCollision(this);
+    public void collide(ScreenBorderCollider c, Axis a) {
+        if (a == Axis.X) {
+            c.handleHorizontalCollision(this);
+        } else {
+            c.handleVerticalCollision(this);
+        }
     }
 
     @Override
-    public void collide(GoombaCollider c) {
-        c.handleCollision(this);
+    public void collide(GoombaCollider c, Axis a) {
+        if (a == Axis.X) {
+            c.handleHorizontalCollision(this);
+        } else {
+            c.handleVerticalCollision(this);
+        }
     }
 }
 

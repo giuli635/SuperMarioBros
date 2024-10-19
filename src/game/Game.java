@@ -57,7 +57,7 @@ public class Game implements WindowListener, KeyListener {
                 entity.update();
             }
 
-            CollisionsEngine.instance().checkCollisions();
+            CollisionsEngine.instance().update();
 
             try {
                 Thread.sleep(SECOND / FPS - (lastUpdateTime - System.currentTimeMillis()));
