@@ -1,6 +1,5 @@
 package collisions;
 
-import colliders.Collider;
 import colliders.GameCollider;
 import colliders.GoombaCollider;
 import colliders.MarioCollider;

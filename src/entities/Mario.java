@@ -1,5 +1,4 @@
 package entities;
-import java.awt.Point;
 import java.awt.event.KeyEvent;
 
 import javax.swing.ImageIcon;
@@ -14,11 +13,13 @@ public class Mario extends GameEntity {
     protected int speedY;
     protected int lifes;
     protected boolean loaded;
+    protected boolean jumping;
 
     public Mario() {
         super();
         speedX = 4;
         speedY = 9;
+        jumping = false;
         collider = new MarioCollider(this, collider.getBound());
         graphicElement.setSprite(new ImageIcon("sprites/mario.png"));
         collider.setSize(
@@ -30,6 +31,15 @@ public class Mario extends GameEntity {
     public Entity clone() {
         return new Mario();
     }
+
+    public boolean getJumping() {
+        return jumping;
+    }
+
+    public  void switchJumping() {
+        jumping = !jumping;
+    }
+
     public void update() {
         if (Game.instance().getKeyStatus(KeyEvent.VK_D) == KeyStatus.PRESSED) {
             graphicElement.translate(speedX, 0);
@@ -44,13 +54,13 @@ public class Mario extends GameEntity {
         if (Game.instance().getKeyStatus(KeyEvent.VK_W) == KeyStatus.PRESSED) {
             collider.translate(0, speedY);
             graphicElement.translate(0, speedY);
+            if (!getJumping()) {
+                switchJumping();
+            }
         }
 
         graphicElement.translate(0, -3);
         collider.translate(0, -3);
         CollisionsEngine.instance().addToCheck(collider);
     }
-    
-
-
 }

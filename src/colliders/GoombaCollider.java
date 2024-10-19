@@ -3,9 +3,7 @@ package colliders;
 import java.awt.Rectangle;
 
 import collisions.Collision;
-import collisions.GameCollision;
 import collisions.GoombaCollision;
-import collisions.MarioCollision;
 import entities.Enemy;
 import entities.Entity;
 

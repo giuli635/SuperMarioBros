@@ -3,7 +3,6 @@ package entities;
 import javax.swing.ImageIcon;
 
 import colliders.GoombaCollider;
-import game.CollisionsEngine;
 
 public class Goomba extends Enemy {
     private boolean movingRight = true;
