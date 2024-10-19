@@ -16,6 +16,7 @@ import entities.Goomba;
 import entities.Koopa_Troopa;
 import entities.Mario;
 import entities.PowerUp;
+import entities.Spiny;
 import graphics.GraphicElement;
 
 public class LevelReader  {
@@ -88,10 +89,16 @@ public class LevelReader  {
                         newEntity = new Mario();
                         Game.instance().registerToUpdate(newEntity);
                     } else if (item == 'g') {
+                        newEntity = new Goomba();
+                        Game.instance().registerToUpdate(newEntity);
+                    } else if (item == 'k') {
                         newEntity = new Koopa_Troopa();
                         Game.instance().registerToUpdate(newEntity);
+                    } else if (item == 'y') {
+                        newEntity = new Spiny();
+                        Game.instance().registerToUpdate(newEntity);
                     }
-                     else if (item == 'S'){
+                     else if (item == 's'){
                         newEntity = new PowerUp();
                      }
                      else {

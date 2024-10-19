@@ -8,6 +8,7 @@ import colliders.MarioCollider;
 import colliders.PowerUpCollider;
 import colliders.ScreenBorderCollider;
 import colliders.ScreenDisplacementCollider;
+import colliders.SpinyCollider;
 
 public class PowerUpCollision implements Collision {
     protected PowerUpCollider collider;
@@ -49,6 +50,12 @@ public class PowerUpCollision implements Collision {
     @Override
     public Collider getCollider() {
         return collider;
+    }
+
+    @Override
+    public void collide(SpinyCollider c) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'collide'");
     }
 
     

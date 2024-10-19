@@ -7,6 +7,7 @@ import colliders.MarioCollider;
 import colliders.PowerUpCollider;
 import colliders.ScreenBorderCollider;
 import colliders.ScreenDisplacementCollider;
+import colliders.SpinyCollider;
 
 public interface Collision {
     public void collide(MarioCollider c);
@@ -16,4 +17,5 @@ public interface Collision {
     public void collide(GoombaCollider c);
     public void collide(PowerUpCollider c);
     public Collider getCollider();
+    public void collide(SpinyCollider c);
 }

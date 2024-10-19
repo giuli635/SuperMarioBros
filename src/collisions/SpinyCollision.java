@@ -9,11 +9,11 @@ import colliders.ScreenBorderCollider;
 import colliders.ScreenDisplacementCollider;
 import colliders.SpinyCollider;
 
-public class ScreenBorderCollision implements Collision {
-    protected ScreenBorderCollider collider;
+public class SpinyCollision implements Collision {
+    protected SpinyCollider SC;
 
-    public ScreenBorderCollision(ScreenBorderCollider c) {
-        collider = c;
+    public SpinyCollision(SpinyCollider SpinyC) {
+        SC = SpinyC;
     }
 
     @Override
@@ -37,22 +37,21 @@ public class ScreenBorderCollision implements Collision {
     }
 
     @Override
-    public void collide(GoombaCollider c) {
-        c.handleCollision(this);
+    public void collide(SpinyCollider c) {
+        c.handleCollision(this); 
     }
-
+    
     @Override
-    public Collider getCollider() {
-        return collider;
+    public SpinyCollider getCollider() {
+        return SC;
     }
-
-    @Override
+    
     public void collide(PowerUpCollider c) {
         c.handleCollision(this);
     }
 
     @Override
-    public void collide(SpinyCollider c) {
+    public void collide(GoombaCollider c) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'collide'");
     }

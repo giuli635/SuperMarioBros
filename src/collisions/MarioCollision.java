@@ -6,6 +6,7 @@ import colliders.MarioCollider;
 import colliders.PowerUpCollider;
 import colliders.ScreenBorderCollider;
 import colliders.ScreenDisplacementCollider;
+import colliders.SpinyCollider;
 
 public class MarioCollision implements Collision {
     protected MarioCollider collider;
@@ -45,6 +46,11 @@ public class MarioCollision implements Collision {
 
     @Override
     public void collide(PowerUpCollider c) {
+        c.handleCollision(this);
+    }
+
+    @Override
+    public void collide(SpinyCollider c) {
         c.handleCollision(this);
     }
 }

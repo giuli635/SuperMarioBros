@@ -7,6 +7,7 @@ import colliders.MarioCollider;
 import colliders.PowerUpCollider;
 import colliders.ScreenBorderCollider;
 import colliders.ScreenDisplacementCollider;
+import colliders.SpinyCollider;
 
 public class GoombaCollision implements Collision {
     protected GoombaCollider GC;
@@ -45,6 +46,11 @@ public class GoombaCollision implements Collision {
     @Override
     public void collide(PowerUpCollider c) {
         c.handleCollision(this);
+    }
+    @Override
+    public void collide(SpinyCollider c) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'collide'");
     }
 
 

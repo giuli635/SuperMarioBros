@@ -2,23 +2,22 @@ package colliders;
 
 import java.awt.Rectangle;
 import collisions.Collision;
-import collisions.GameCollision;
-import collisions.GoombaCollision;
 import collisions.MarioCollision;
+import collisions.SpinyCollision;
 import entities.Enemy;
 import entities.Entity;
 
-public class GoombaCollider extends BaseCollider {
-    protected Enemy goomba;
+public class SpinyCollider extends BaseCollider {
+    protected Enemy spiny;
 
-    public GoombaCollider(Enemy g, Rectangle b) {
+    public SpinyCollider(Enemy s, Rectangle b) {
         super(b);
-        goomba = g;
+        spiny = s;
     }
 
     @Override
     public Entity getEntity() {
-        return goomba;
+        return spiny;
     }
 
     @Override
@@ -28,6 +27,6 @@ public class GoombaCollider extends BaseCollider {
 
     @Override
     public Collision getCollision() {
-        return new GoombaCollision(this);
+        return new SpinyCollision(this);
     }
 }
