@@ -9,15 +9,14 @@ import colliders.ScreenBorderCollider;
 import colliders.ScreenDisplacementCollider;
 import colliders.SpinyCollider;
 
-public class GoombaCollision implements Collision {
-    protected GoombaCollider collider;
+public class SpinyCollision implements Collision {
+    protected SpinyCollider collider;
 
-    public GoombaCollision(GoombaCollider c){
+    public SpinyCollision(SpinyCollider c) {
         collider = c;
     }
 
-    @Override
-    public GoombaCollider getCollider() {
+    public SpinyCollider getCollider() {
         return collider;
     }
 

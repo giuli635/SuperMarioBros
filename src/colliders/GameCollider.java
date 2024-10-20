@@ -7,7 +7,7 @@ import collisions.Collision;
 import collisions.GameCollision;
 import collisions.MarioCollision;
 import entities.Entity;
-
+import entities.Mario;
 
 public class GameCollider extends BaseCollider {
     protected Entity entity;
@@ -46,9 +46,13 @@ public class GameCollider extends BaseCollider {
     public void handleHorizontalCollision(MarioCollision m) {
         Vector2D velocity = m.getCollider().getVelocity();
         Rectangle collision = getBound().intersection(m.getCollider().getBound());
+        Mario mario = m.getCollider().getMario();
 
         int sign = (int) -Math.signum(velocity.getXComponent());
         m.getCollider().translate(sign * (int) (collision.getWidth()), 0);
         m.getCollider().getEntity().getGraphicElement().translate(sign * (int) (collision.getWidth()), 0);
+        if(mario.isFalling()) {
+            mario.land();
+        }
     }
 }

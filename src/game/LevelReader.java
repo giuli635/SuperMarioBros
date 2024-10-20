@@ -12,7 +12,11 @@ import colliders.ScreenBorderCollider;
 import colliders.ScreenDisplacementCollider;
 import entities.Entity;
 import entities.GameEntity;
+import entities.Goomba;
+import entities.KoopaTroopa;
 import entities.Mario;
+import entities.PowerUp;
+import entities.Spiny;
 import graphics.GraphicElement;
 
 public class LevelReader  {
@@ -84,8 +88,20 @@ public class LevelReader  {
                     if (item == 'M') {
                         newEntity = new Mario();
                         Game.instance().registerToUpdate(newEntity);
+                    } else if (item == 'g') {
+                        newEntity = new Goomba();
+                        Game.instance().registerToUpdate(newEntity);
+                    } else if (item == 'k') {
+                        newEntity = new KoopaTroopa();
+                        Game.instance().registerToUpdate(newEntity);
+                    } else if (item == 'y') {
+                        newEntity = new Spiny();
+                        Game.instance().registerToUpdate(newEntity);
                     }
-                    else {
+                     else if (item == 's'){
+                        newEntity = new PowerUp();
+                     }
+                     else {
                         newEntity = new GameEntity();
                     }
                     Collider newEntityCollider = newEntity.getCollider();

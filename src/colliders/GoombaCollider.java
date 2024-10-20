@@ -1,7 +1,6 @@
 package colliders;
 
 import java.awt.Rectangle;
-
 import collisions.Axis;
 import collisions.Collision;
 import collisions.GoombaCollision;

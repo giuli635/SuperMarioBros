@@ -1,6 +1,7 @@
 package collisions;
 
 import colliders.Collider;
+import colliders.Direction;
 import colliders.GameCollider;
 import colliders.GoombaCollider;
 import colliders.MarioCollider;
@@ -9,15 +10,14 @@ import colliders.ScreenBorderCollider;
 import colliders.ScreenDisplacementCollider;
 import colliders.SpinyCollider;
 
-public class GoombaCollision implements Collision {
-    protected GoombaCollider collider;
+public class PowerUpCollision implements Collision {
+    protected PowerUpCollider collider;
 
-    public GoombaCollision(GoombaCollider c){
-        collider = c;
+    public PowerUpCollision(PowerUpCollider pw) {
+        collider = pw;
     }
 
-    @Override
-    public GoombaCollider getCollider() {
+    public PowerUpCollider getCollider() {
         return collider;
     }
 

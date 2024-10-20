@@ -5,25 +5,21 @@ import java.awt.Rectangle;
 import collisions.Axis;
 import collisions.Collision;
 import collisions.MarioCollision;
+import collisions.SpinyCollision;
+import entities.Enemy;
 import entities.Entity;
-import entities.Mario;
 
-public class MarioCollider extends BaseCollider {
-    protected Mario mario;
+public class SpinyCollider extends BaseCollider {
+    protected Enemy spiny;
 
-    public MarioCollider(Mario m, Rectangle b) {
+    public SpinyCollider(Enemy s, Rectangle b) {
         super(b);
-        mario = m;
+        spiny = s;
     }
 
     @Override
     public Entity getEntity() {
-        return mario;
-    }
-
-    @Override
-    public Collision getCollision() {
-        return new MarioCollision(this);
+        return spiny;
     }
 
     @Override
@@ -31,8 +27,8 @@ public class MarioCollider extends BaseCollider {
         c.collide(this, a);
     }
 
-    public Mario getMario() {
-        return mario;
+    @Override
+    public Collision getCollision() {
+        return new SpinyCollision(this);
     }
 }
-
