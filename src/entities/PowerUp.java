@@ -11,7 +11,7 @@ public class PowerUp extends GameEntity{
         super();
         speedX = 1;
         collider = new PowerUpCollider(this, collider.getBound());
-        graphicElement.setSprite(new ImageIcon("sprites/SuperMushroom.gif"));
+        graphicElement.setSprite(new ImageIcon("sprites/superMushroom.png"));
     }
 
     public PowerUp clone() {

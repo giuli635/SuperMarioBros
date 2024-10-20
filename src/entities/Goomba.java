@@ -11,7 +11,7 @@ public class Goomba extends Enemy {
         super();
         speedX=2;
         collider = new GoombaCollider(this, collider.getBound());
-        graphicElement.setSprite(new ImageIcon("sprites/Goomba.png"));
+        graphicElement.setSprite(new ImageIcon("sprites/goomba.png"));
 
     }
 

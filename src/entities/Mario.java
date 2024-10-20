@@ -34,7 +34,6 @@ public class Mario extends GameEntity {
         isJumping = false;
         isGrounded = true; // Mario comienza en el suelo
         collider = new MarioCollider(this, collider.getBound());
-        graphicElement.setSprite(new ImageIcon("sprites/MarioRight.png"));
     }
 
     public Entity clone() {
@@ -70,9 +69,9 @@ public class Mario extends GameEntity {
     public void marioDirection(boolean onRight) { 
         if(!isJumping) {
             if (onRight) {
-                graphicElement.setSprite(new ImageIcon("sprites/MarioRight.png"));
+                graphicElement.setSprite(new ImageIcon("sprites/mario.png"));
             } else {
-                graphicElement.setSprite(new ImageIcon("sprites/MarioLeft.png"));
+                graphicElement.setSprite(new ImageIcon("sprites/mario.png"));
             }
         }
         
@@ -85,9 +84,9 @@ public class Mario extends GameEntity {
         
         
         if (onRight) {
-            graphicElement.setSprite(new ImageIcon("sprites/MarioJumpRight.png"));
+            graphicElement.setSprite(new ImageIcon("sprites/marioRunning1.png"));
         } else {
-            graphicElement.setSprite(new ImageIcon("sprites/MarioJumpLeft.png"));
+            graphicElement.setSprite(new ImageIcon("sprites/marioJumping.png"));
         }
     }
 
@@ -111,9 +110,9 @@ public class Mario extends GameEntity {
         // esto se ve horrible pero que se yo
         if (Game.instance().getKeyStatus(KeyEvent.VK_D) == KeyStatus.PRESSED) {
             if(!isJumping) {
-                graphicElement.setSprite(new ImageIcon("sprites/MarioRunRight.gif")); 
+                graphicElement.setSprite(new ImageIcon("sprites/marioRunning1.png")); 
             } else {
-                graphicElement.setSprite(new ImageIcon("sprites/MarioJumpRight.png"));
+                graphicElement.setSprite(new ImageIcon("sprites/marioJumping.png"));
             }
             graphicElement.translate(speedX, 0);
             collider.translate(speedX, 0);
@@ -122,9 +121,9 @@ public class Mario extends GameEntity {
 
         if (Game.instance().getKeyStatus(KeyEvent.VK_A) == KeyStatus.PRESSED) {
             if(!isJumping) {
-                graphicElement.setSprite(new ImageIcon("sprites/MarioRunLeft.gif"));
+                graphicElement.setSprite(new ImageIcon("sprites/marioRunning1.png"));
             } else {
-                graphicElement.setSprite(new ImageIcon("sprites/MarioJumpLeft.png"));
+                graphicElement.setSprite(new ImageIcon("sprites/marioJumping.png"));
             }
             graphicElement.translate(-speedX, 0);
             collider.translate(-speedX, 0);

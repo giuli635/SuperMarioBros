@@ -2,7 +2,6 @@ package entities;
 
 import javax.swing.ImageIcon;
 import colliders.SpinyCollider;
-import game.CollisionsEngine;
 
 
 public class Spiny extends Enemy {

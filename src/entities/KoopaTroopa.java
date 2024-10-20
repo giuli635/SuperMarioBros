@@ -12,7 +12,7 @@ public class KoopaTroopa extends Enemy {
         super();
         speedX=2;
         collider = new GoombaCollider(this, collider.getBound());
-        graphicElement.setSprite(new ImageIcon("sprites/Koopa_troopa.png"));
+        graphicElement.setSprite(new ImageIcon("sprites/koopaTroopa.png"));
     }
     @Override
     public void getDamage() {
