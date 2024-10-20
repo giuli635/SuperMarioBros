@@ -11,21 +11,33 @@ public abstract class BaseCollider implements Collider {
     protected Rectangle bounds;
     protected boolean activated;
     protected Vector2D velocity;
+    protected boolean colliding;
     protected boolean moving;
+    protected Vector2D nextVelocity;
 
     public boolean isMoving() {
         return moving;
     }
 
-    public void setMoving(boolean moving) {
-        this.moving = moving;
+    public void setMoving(boolean m) {
+        moving = m;
+    }
+
+    public boolean isColliding() {
+        return colliding;
+    }
+
+    public void setColliding(boolean c) {
+        colliding = c;
     }
 
     public BaseCollider(Rectangle b) {
+        colliding = false;
         moving = false;
         bounds = b;
         activated = true;
         velocity = new Vector2D(bounds.getLocation(), bounds.getLocation());
+        nextVelocity = new Vector2D(bounds.getLocation(), bounds.getLocation());
         CollisionsEngine.instance().add(this);
     }
 
@@ -39,6 +51,7 @@ public abstract class BaseCollider implements Collider {
         bounds.setLocation(x, y);
         collisionsEngine.add(this);
         velocity = new Vector2D(bounds.getLocation(), bounds.getLocation());
+        nextVelocity = new Vector2D(bounds.getLocation(), bounds.getLocation());
     }
 
     public Vector2D getVelocity() {
@@ -58,11 +71,14 @@ public abstract class BaseCollider implements Collider {
     }
 
     public void translate(int dx, int dy) {
-        if (moving) {
+        if (colliding) {
             CollisionsEngine collisionsEngine = CollisionsEngine.instance();
             collisionsEngine.remove(this);
             bounds.translate(dx, dy);
             collisionsEngine.add(this);
+        } else if (moving) {
+            nextVelocity.grow(dx, dy);
+            CollisionsEngine.instance().addToUpdate(this);
         } else {
             velocity.grow(dx, dy);
             CollisionsEngine.instance().addToUpdate(this);
@@ -81,7 +97,8 @@ public abstract class BaseCollider implements Collider {
     }
 
     public void resetVelocity() {
-        velocity = new Vector2D(bounds.getLocation(), bounds.getLocation());
+        velocity = nextVelocity;
+        nextVelocity = new Vector2D(bounds.getLocation(), bounds.getLocation());
     }
 
     public Dimension getSize() {

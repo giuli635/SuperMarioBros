@@ -8,6 +8,7 @@ import java.util.Set;
 import java.util.Vector;
 
 import colliders.Collider;
+import colliders.ScreenBorderCollider;
 import collisions.Axis;
 
 public class CollisionsEngine {
@@ -35,25 +36,25 @@ public class CollisionsEngine {
     }
 
     public void update() {
-        for (Collider collider : toUpdate) {
+        List<Collider> toUpdateCopy = new ArrayList<>(toUpdate);
+        toUpdate = new HashSet<>();
+        for (Collider collider : toUpdateCopy) {
             collider.setMoving(true);
             collider.moveX();
         }
 
-        checkCollisions(toUpdate, Axis.X);
+        checkCollisions(toUpdateCopy, Axis.X);
 
-        for (Collider collider : toUpdate) {
+        for (Collider collider : toUpdateCopy) {
             collider.moveY();
         }
 
-        checkCollisions(toUpdate, Axis.Y);
+        checkCollisions(toUpdateCopy, Axis.Y);
 
-        for (Collider collider : toUpdate) {
+        for (Collider collider : toUpdateCopy) {
             collider.setMoving(false);
             collider.resetVelocity();
         }
-
-        toUpdate = new HashSet<>();
     }
 
     public void checkCollisions(Iterable<Collider> collidersToCheck, Axis axis) {
@@ -62,9 +63,13 @@ public class CollisionsEngine {
             for (int i = chunkRange[0]; i <= chunkRange[1]; i++) {
                 List<Collider> chunk = new ArrayList<>(chunks.get(i));
                 for (Collider toCheck : chunk) {
+                    collider.setColliding(true); // Parche
+                    toCheck.setColliding(true);
                     checkCollision(collider, toCheck, axis);
+                    toCheck.setColliding(false);
                 }
             }
+            collider.setColliding(false);
         }
     }
 

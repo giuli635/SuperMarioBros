@@ -24,6 +24,8 @@ public interface Collider {
     public void resetVelocity();
     public void moveX();
     public void moveY();
-    public void setMoving(boolean m);
+    public void setColliding(boolean c);
+    public boolean isColliding();
     public boolean isMoving();
+    public void setMoving(boolean m);
 }
