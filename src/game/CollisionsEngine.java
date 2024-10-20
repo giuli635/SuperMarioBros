@@ -8,7 +8,6 @@ import java.util.Set;
 import java.util.Vector;
 
 import colliders.Collider;
-import colliders.ScreenBorderCollider;
 import collisions.Axis;
 
 public class CollisionsEngine {

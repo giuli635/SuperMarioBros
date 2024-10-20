@@ -12,7 +12,6 @@ import colliders.ScreenBorderCollider;
 import colliders.ScreenDisplacementCollider;
 import entities.Entity;
 import entities.GameEntity;
-import entities.KoopaTroopa;
 import entities.Mario;
 import graphics.GraphicElement;
 
@@ -56,7 +55,7 @@ public class LevelReader  {
         }
         
         ScreenBorderCollider leftBorder = new ScreenBorderCollider(
-            new Rectangle(0, 0, CHUNK, windowHeight),
+            new Rectangle(32, 0, CHUNK, windowHeight),
             Direction.LEFT
         );
 
