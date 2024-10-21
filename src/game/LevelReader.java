@@ -15,8 +15,8 @@ import entities.GameEntity;
 import entities.Goomba;
 import entities.KoopaTroopa;
 import entities.Mario;
-import entities.PowerUp;
 import entities.Spiny;
+import entities.SuperMushroom;
 import graphics.GraphicElement;
 
 public class LevelReader  {
@@ -99,7 +99,8 @@ public class LevelReader  {
                         Game.instance().registerToUpdate(newEntity);
                     }
                      else if (item == 's'){
-                        newEntity = new PowerUp();
+                        newEntity = new SuperMushroom();
+                        Game.instance().registerToUpdate(newEntity);
                      }
                      else {
                         newEntity = new GameEntity();

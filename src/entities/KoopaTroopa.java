@@ -2,16 +2,16 @@ package entities;
 
 import javax.swing.ImageIcon;
 
-import colliders.GoombaCollider;
+import colliders.KoopaTroopaCollider;
 
 public class KoopaTroopa extends Enemy {
-    private boolean movingRight = true;
-    private int speedX = 1; // Velocidad horizontal
+    protected boolean movingRight = true;
+    protected int speedX = 1;
 
-    public KoopaTroopa(){
+    public KoopaTroopa() {
         super();
-        speedX=2;
-        collider = new GoombaCollider(this, collider.getBound());
+        speedX = 2;
+        collider = new KoopaTroopaCollider(this, collider.getBound());
         graphicElement.setSprite(new ImageIcon("sprites/koopaTroopa.png"));
     }
     @Override
@@ -31,11 +31,17 @@ public class KoopaTroopa extends Enemy {
         return new KoopaTroopa();
     }
 
+    public void switchDirection() {
+        movingRight = !movingRight;
+    }
+
     @Override
     public void update() {
         int moveX = movingRight ? speedX : -speedX;
         graphicElement.translate(moveX, 0);
-        collider.translate(moveX, 0);    
+        collider.translate(moveX, 0);  
+        graphicElement.translate(0, -3);
+        collider.translate(0, -3);  
     }
 
 }

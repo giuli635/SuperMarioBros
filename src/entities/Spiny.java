@@ -5,14 +5,14 @@ import colliders.SpinyCollider;
 
 
 public class Spiny extends Enemy {
-    private boolean movingRight = true;
-    private int speedX = 1;
+    protected boolean movingRight = true;
+    protected int speedX = 1;
 
     public Spiny() {
         super();
         speedX = 2;
         collider = new SpinyCollider(this, collider.getBound());
-        graphicElement.setSprite(new ImageIcon("sprites/Spiny.png"));
+        graphicElement.setSprite(new ImageIcon("sprites/spiny.png"));
     }
 
     @Override
@@ -32,10 +32,16 @@ public class Spiny extends Enemy {
        return new Spiny();
     }
 
+    public void switchDirection() {
+        movingRight  = !movingRight;
+    }
+
     @Override
     public void update() {
         int moveX = movingRight ? speedX : -speedX;
         graphicElement.translate(moveX, 0);
         collider.translate(moveX, 0);
+        graphicElement.translate(0, -3);
+        collider.translate(0, -3);
     }
 }

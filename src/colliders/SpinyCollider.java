@@ -4,10 +4,10 @@ import java.awt.Rectangle;
 
 import collisions.Axis;
 import collisions.Collision;
-import collisions.MarioCollision;
 import collisions.SpinyCollision;
 import entities.Enemy;
 import entities.Entity;
+import entities.Spiny;
 
 public class SpinyCollider extends BaseCollider {
     protected Enemy spiny;
@@ -20,6 +20,10 @@ public class SpinyCollider extends BaseCollider {
     @Override
     public Entity getEntity() {
         return spiny;
+    }
+
+    public Spiny getSpiny() {
+        return  (Spiny) spiny;
     }
 
     @Override

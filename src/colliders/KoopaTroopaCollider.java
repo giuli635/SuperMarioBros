@@ -1,34 +1,34 @@
 package colliders;
 
 import java.awt.Rectangle;
+
 import collisions.Axis;
 import collisions.Collision;
-import collisions.GoombaCollision;
+import collisions.KoopaTroopaCollision;
 import entities.Enemy;
 import entities.Entity;
-import entities.Goomba;
+import entities.KoopaTroopa;
 
-public class GoombaCollider extends BaseCollider {
-    protected Enemy goomba;
+public class KoopaTroopaCollider extends BaseCollider {
+    protected Enemy koopa;
 
-    public GoombaCollider(Enemy g, Rectangle b) {
+    public KoopaTroopaCollider(Enemy k, Rectangle b) {
         super(b);
-        goomba = g;
+        koopa = k;
     }
 
     @Override
     public Entity getEntity() {
-        return goomba;
+        return koopa;
     }
 
-    public Goomba getGoomba() {
-        return  (Goomba) goomba;
-
+    public KoopaTroopa getKoopaTroopa() {
+        return  (KoopaTroopa)koopa;
     }
 
     @Override
     public Collision getCollision() {
-        return new GoombaCollision(this);
+        return new KoopaTroopaCollision(this);
     }
 
     @Override

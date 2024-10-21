@@ -1,4 +1,5 @@
 package collisions;
+
 import colliders.GameCollider;
 import colliders.GoombaCollider;
 import colliders.KoopaTroopaCollider;
@@ -8,14 +9,15 @@ import colliders.ScreenDisplacementCollider;
 import colliders.SpinyCollider;
 import colliders.SuperMushroomCollider;
 
-public class GameCollision implements Collision {
-    protected GameCollider collider;
+public class KoopaTroopaCollision implements Collision {
+    protected KoopaTroopaCollider collider;
 
-    public GameCollision(GameCollider c) {
-        collider = c;
+    public KoopaTroopaCollision(KoopaTroopaCollider k) {
+        collider = k;
     }
 
-    public GameCollider getCollider() {
+    @Override
+    public KoopaTroopaCollider getCollider() {
         return collider;
     }
 
