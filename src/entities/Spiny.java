@@ -17,13 +17,11 @@ public class Spiny extends Enemy {
 
     @Override
     public void getDamage() {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getDamage'");
     }
 
     @Override
     public int getPoints() {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getPoints'");
     }
 
