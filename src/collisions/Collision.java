@@ -3,6 +3,7 @@ import colliders.Collider;
 import colliders.GoombaCollider;
 import colliders.BlockCollider;
 import colliders.KoopaTroopaCollider;
+import colliders.LoaderCollider;
 import colliders.MarioCollider;
 import colliders.ScreenBorderCollider;
 import colliders.ScreenDisplacementCollider;
@@ -19,4 +20,5 @@ public interface Collision {
     public void collide(SpinyCollider c, Axis a);
     public void collide(KoopaTroopaCollider c, Axis a);
     public void collide(SuperMushroomCollider c, Axis a);
+    public void collide(LoaderCollider c, Axis a);
 }

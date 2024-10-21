@@ -3,13 +3,14 @@ package collisions;
 import colliders.BlockCollider;
 import colliders.GoombaCollider;
 import colliders.KoopaTroopaCollider;
+import colliders.LoaderCollider;
 import colliders.MarioCollider;
 import colliders.ScreenBorderCollider;
 import colliders.ScreenDisplacementCollider;
 import colliders.SpinyCollider;
 import colliders.SuperMushroomCollider;
 
-public class SpinyCollision implements Collision {
+public class SpinyCollision implements UpdateableEntityCollision {
     protected SpinyCollider collider;
 
     public SpinyCollision(SpinyCollider c) {
@@ -85,6 +86,15 @@ public class SpinyCollision implements Collision {
 
     @Override
     public void collide(KoopaTroopaCollider c, Axis a) {
+        if (a == Axis.X) {
+            c.handleHorizontalCollision(this);
+        } else {
+            c.handleVerticalCollision(this);
+        }
+    }
+
+    @Override
+    public void collide(LoaderCollider c, Axis a) {
         if (a == Axis.X) {
             c.handleHorizontalCollision(this);
         } else {

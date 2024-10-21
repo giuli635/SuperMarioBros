@@ -7,7 +7,7 @@ import collisions.Collision;
 import collisions.SpinyCollision;
 import entities.Spiny;
 
-public class SpinyCollider extends BaseCollider {
+public class SpinyCollider extends BaseCollider implements UpdateableEntityCollider {
     protected Spiny spiny;
 
     public SpinyCollider(Spiny s, Rectangle b) {

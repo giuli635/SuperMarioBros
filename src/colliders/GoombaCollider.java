@@ -7,7 +7,7 @@ import collisions.Collision;
 import collisions.GoombaCollision;
 import entities.Goomba;
 
-public class GoombaCollider extends BaseCollider {
+public class GoombaCollider extends BaseCollider implements UpdateableEntityCollider {
     protected Goomba goomba;
 
     public GoombaCollider(Goomba g, Rectangle b) {

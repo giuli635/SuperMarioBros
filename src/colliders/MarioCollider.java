@@ -7,7 +7,7 @@ import collisions.Collision;
 import collisions.MarioCollision;
 import entities.Mario;
 
-public class MarioCollider extends BaseCollider {
+public class MarioCollider extends BaseCollider implements UpdateableEntityCollider {
     protected Mario mario;
 
     public MarioCollider(Mario m, Rectangle b) {

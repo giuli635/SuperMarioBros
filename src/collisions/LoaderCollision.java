@@ -1,6 +1,7 @@
 package collisions;
 
 import colliders.BlockCollider;
+import colliders.Collider;
 import colliders.GoombaCollider;
 import colliders.KoopaTroopaCollider;
 import colliders.LoaderCollider;
@@ -10,16 +11,17 @@ import colliders.ScreenDisplacementCollider;
 import colliders.SpinyCollider;
 import colliders.SuperMushroomCollider;
 
-public class GoombaCollision implements UpdateableEntityCollision {
-    protected GoombaCollider collider;
+public class LoaderCollision implements Collision {
+    protected LoaderCollider loader;
 
-    public GoombaCollision(GoombaCollider c){
-        collider = c;
+    public LoaderCollision(LoaderCollider l) {
+        loader = l;
     }
 
+
     @Override
-    public GoombaCollider getCollider() {
-        return collider;
+    public Collider getCollider() {
+        return loader;
     }
 
     @Override
@@ -59,6 +61,15 @@ public class GoombaCollision implements UpdateableEntityCollision {
     }
 
     @Override
+    public void collide(GoombaCollider c, Axis a) {
+        if (a == Axis.X) {
+            c.handleHorizontalCollision(this);
+        } else {
+            c.handleVerticalCollision(this);
+        }
+    }
+
+    @Override
     public void collide(SpinyCollider c, Axis a) {
         if (a == Axis.X) {
             c.handleHorizontalCollision(this);
@@ -85,14 +96,6 @@ public class GoombaCollision implements UpdateableEntityCollision {
         }
     }
 
-    @Override
-    public void collide(GoombaCollider c, Axis a) {
-        if (a == Axis.X) {
-            c.handleHorizontalCollision(this);
-        } else {
-            c.handleVerticalCollision(this);
-        }
-    }
 
     @Override
     public void collide(LoaderCollider c, Axis a) {

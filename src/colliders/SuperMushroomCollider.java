@@ -8,21 +8,21 @@ import collisions.Axis;
 import collisions.Collision;
 import collisions.MarioCollision;
 import collisions.SuperMushroomCollision;
-import entities.Entity;
 import entities.SuperMushroom;
+import entities.UpdatableEntity;
 import game.CollisionsEngine;
 import game.GraphicEngine;
 
-public class SuperMushroomCollider extends BaseCollider {
-    protected Entity m;
+public class SuperMushroomCollider extends BaseCollider implements UpdateableEntityCollider {
+    protected SuperMushroom m;
 
-    public  SuperMushroomCollider(Entity mushroom, Rectangle b) {
+    public  SuperMushroomCollider(SuperMushroom mushroom, Rectangle b) {
         super(b);
         m = mushroom;
     }
     
     @Override
-    public Entity getEntity() {
+    public UpdatableEntity getEntity() {
         return m;
     }
 

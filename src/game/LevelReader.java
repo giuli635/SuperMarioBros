@@ -9,6 +9,7 @@ import java.util.Map;
 
 import colliders.Collider;
 import colliders.Direction;
+import colliders.LoaderCollider;
 import colliders.ScreenBorderCollider;
 import colliders.ScreenDisplacementCollider;
 import entities.Entity;
@@ -68,9 +69,16 @@ public class LevelReader  {
             graphicElement.setPosition((int) colliderPosition.getX() - 2 * CHUNK, (int) colliderPosition.getY());
             graphicEngine.addGraphicElement(graphicElement);
         }
+
+        LoaderCollider loader = new LoaderCollider(new Rectangle(0, 0, CHUNK, windowHeight));
+
+        for (int i =  0; i <= lastChunkInScreen; i++) {
+            loader.translate(CHUNK, 0);
+            collisionsEngine.update();
+        }
         
         ScreenBorderCollider leftBorder = new ScreenBorderCollider(
-            new Rectangle(32, 0, CHUNK, windowHeight),
+            new Rectangle(CHUNK, 0, CHUNK, windowHeight),
             Direction.LEFT
         );
 
@@ -83,7 +91,8 @@ public class LevelReader  {
         new ScreenDisplacementCollider(
             new Rectangle(CHUNK * middleChunk, 0, CHUNK, windowHeight),
             leftBorder,
-            rightBorder
+            rightBorder,
+            loader
         );
     }
     

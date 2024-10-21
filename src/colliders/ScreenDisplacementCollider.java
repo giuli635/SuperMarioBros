@@ -12,11 +12,13 @@ import game.GraphicEngine;
 public class ScreenDisplacementCollider extends BaseCollider {
     protected ScreenBorderCollider leftBorder;
     protected ScreenBorderCollider rightBorder;
+    protected LoaderCollider loader;
 
-    public ScreenDisplacementCollider(Rectangle b, ScreenBorderCollider left, ScreenBorderCollider right) {
+    public ScreenDisplacementCollider(Rectangle b, ScreenBorderCollider left, ScreenBorderCollider right, LoaderCollider l) {
         super(b);
         leftBorder = left;
         rightBorder = right;
+        loader = l;
     }
 
     public Entity getEntity() {
@@ -38,6 +40,7 @@ public class ScreenDisplacementCollider extends BaseCollider {
         translate((int) collision.getWidth(), 0);
         leftBorder.translate((int) collision.getWidth(), 0);
         rightBorder.translate((int) collision.getWidth(), 0);
+        loader.translate((int) collision.getWidth(), 0);
         GraphicEngine.instance().scrollScreen((int) -collision.getWidth());
     }
 }

@@ -7,7 +7,7 @@ import collisions.Collision;
 import collisions.KoopaTroopaCollision;
 import entities.KoopaTroopa;
 
-public class KoopaTroopaCollider extends BaseCollider {
+public class KoopaTroopaCollider extends BaseCollider implements UpdateableEntityCollider {
     protected KoopaTroopa koopa;
 
     public KoopaTroopaCollider(KoopaTroopa k, Rectangle b) {
