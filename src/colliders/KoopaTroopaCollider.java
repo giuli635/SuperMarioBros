@@ -5,25 +5,19 @@ import java.awt.Rectangle;
 import collisions.Axis;
 import collisions.Collision;
 import collisions.KoopaTroopaCollision;
-import entities.Enemy;
-import entities.Entity;
 import entities.KoopaTroopa;
 
 public class KoopaTroopaCollider extends BaseCollider {
-    protected Enemy koopa;
+    protected KoopaTroopa koopa;
 
-    public KoopaTroopaCollider(Enemy k, Rectangle b) {
+    public KoopaTroopaCollider(KoopaTroopa k, Rectangle b) {
         super(b);
         koopa = k;
     }
 
     @Override
-    public Entity getEntity() {
+    public KoopaTroopa getEntity() {
         return koopa;
-    }
-
-    public KoopaTroopa getKoopaTroopa() {
-        return  (KoopaTroopa)koopa;
     }
 
     @Override

@@ -8,14 +8,14 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import entities.Entity;
 import entities.Mario;
+import entities.UpdatableEntity;
 
 public class Game implements WindowListener, KeyListener {
     protected static int SECOND = 1000;
     protected static int FPS = 60;
     protected static Game uniqueInstance;
-    protected Set<Entity> toUpdateRegistry;
+    protected Set<UpdatableEntity> toUpdateRegistry;
     protected Map<Integer, KeyStatus> keysStatus;
     protected Level currLevel;
     protected Mario mario;
@@ -36,11 +36,11 @@ public class Game implements WindowListener, KeyListener {
         return uniqueInstance;
     }
 
-    public void registerToUpdate(Entity e) {
+    public void registerToUpdate(UpdatableEntity e) {
         toUpdateRegistry.add(e);
     }
 
-    public void unregisterToUpdate(Entity e) {
+    public void unregisterToUpdate(UpdatableEntity e) {
         toUpdateRegistry.remove(e);
     }
 
@@ -57,7 +57,7 @@ public class Game implements WindowListener, KeyListener {
             lastUpdateTime = System.currentTimeMillis();
             
             if(!pause) {
-                for (Entity entity : toUpdateRegistry) {
+                for (UpdatableEntity entity : toUpdateRegistry) {
                     entity.update();
                 }
             }

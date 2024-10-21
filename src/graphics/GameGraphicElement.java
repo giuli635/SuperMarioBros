@@ -15,6 +15,13 @@ public class GameGraphicElement implements GraphicElement {
     protected Rectangle bounds;
     protected boolean toUpdate;
 
+    public GameGraphicElement(Entity e) {
+        entity = e;
+        sprite = null;
+        label = new JLabel();
+        bounds = label.getBounds();
+    }
+    
     public GameGraphicElement(Entity e, ImageIcon s) {
         entity = e;
         sprite = s;

@@ -1,7 +1,7 @@
 package collisions;
 import colliders.Collider;
-import colliders.GameCollider;
 import colliders.GoombaCollider;
+import colliders.BlockCollider;
 import colliders.KoopaTroopaCollider;
 import colliders.MarioCollider;
 import colliders.ScreenBorderCollider;
@@ -12,7 +12,7 @@ import colliders.SuperMushroomCollider;
 public interface Collision {
     public Collider getCollider();
     public void collide(MarioCollider c, Axis a);
-    public void collide(GameCollider c, Axis a);
+    public void collide(BlockCollider c, Axis a);
     public void collide(ScreenDisplacementCollider c, Axis a);
     public void collide(ScreenBorderCollider c, Axis a);
     public void collide(GoombaCollider c, Axis a);

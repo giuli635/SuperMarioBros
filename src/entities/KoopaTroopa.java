@@ -1,18 +1,25 @@
 package entities;
 
+import java.awt.Rectangle;
+
 import javax.swing.ImageIcon;
 
 import colliders.KoopaTroopaCollider;
+import graphics.GameGraphicElement;
 
-public class KoopaTroopa extends Enemy {
+public class KoopaTroopa extends BaseUpdatableEntity implements Enemy {
     protected boolean movingRight = true;
     protected int speedX = 1;
 
-    public KoopaTroopa() {
-        super();
-        speedX = 2;
-        collider = new KoopaTroopaCollider(this, collider.getBound());
+    public KoopaTroopa(){
+        speedX=2;
+        collider = new KoopaTroopaCollider(this, new Rectangle());
+        graphicElement = new GameGraphicElement(this);
         graphicElement.setSprite(new ImageIcon("sprites/koopaTroopa.png"));
+        collider.setSize(
+            graphicElement.getSprite().getIconWidth(),
+            graphicElement.getSprite().getIconHeight()
+        );
     }
     @Override
     public void getDamage() {
@@ -43,5 +50,4 @@ public class KoopaTroopa extends Enemy {
         graphicElement.translate(0, -3);
         collider.translate(0, -3);  
     }
-
 }

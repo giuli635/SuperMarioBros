@@ -4,6 +4,7 @@ import java.awt.Rectangle;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 
 import colliders.Collider;
@@ -11,18 +12,28 @@ import colliders.Direction;
 import colliders.ScreenBorderCollider;
 import colliders.ScreenDisplacementCollider;
 import entities.Entity;
-import entities.GameEntity;
-import entities.Goomba;
-import entities.KoopaTroopa;
-import entities.Mario;
-import entities.Spiny;
-import entities.SuperMushroom;
 import graphics.GraphicElement;
+import loading.BlockLoader;
+import loading.EntityLoader;
+import loading.GoombaLoader;
+import loading.KoopaTroopaLoader;
+import loading.MarioLoader;
+import loading.SpinyLoader;
+import loading.SuperMushroomLoader;
 
 public class LevelReader  {
     protected static int CHUNK = 32;
     protected static LevelReader uniqueInstance;
-    protected Map<Character,Entity> prototypes;
+    protected Map<Character, EntityLoader> loaders;
+
+    private LevelReader() {
+        loaders = new HashMap<>();
+        loaders.put('M', new MarioLoader());
+        loaders.put('y', new SpinyLoader());
+        loaders.put('k', new KoopaTroopaLoader());
+        loaders.put('g', new GoombaLoader());
+        loaders.put('s', new SuperMushroomLoader());
+    }
 
     protected static LevelReader instance(){
         if (uniqueInstance == null) {
@@ -78,33 +89,14 @@ public class LevelReader  {
     
     public void loadEntities(BufferedReader br) throws IOException {
         String chunk;
+        BlockLoader blockLoader = new BlockLoader();
         chunk = br.readLine();
         int i = 2;
         while (chunk != null) {
             for (int j = 0; j < chunk.length(); j++) {
-                char item = chunk.charAt(j);
-                if (item != ' ') {
-                    Entity newEntity;
-                    if (item == 'M') {
-                        newEntity = new Mario();
-                        Game.instance().registerToUpdate(newEntity);
-                    } else if (item == 'g') {
-                        newEntity = new Goomba();
-                        Game.instance().registerToUpdate(newEntity);
-                    } else if (item == 'k') {
-                        newEntity = new KoopaTroopa();
-                        Game.instance().registerToUpdate(newEntity);
-                    } else if (item == 'y') {
-                        newEntity = new Spiny();
-                        Game.instance().registerToUpdate(newEntity);
-                    }
-                     else if (item == 's'){
-                        newEntity = new SuperMushroom();
-                        Game.instance().registerToUpdate(newEntity);
-                     }
-                     else {
-                        newEntity = new GameEntity();
-                    }
+                char character = chunk.charAt(j);
+                if (character != ' ') {
+                    Entity newEntity = loaders.getOrDefault(character, blockLoader).load();
                     Collider newEntityCollider = newEntity.getCollider();
                     newEntityCollider.setPosition(i * CHUNK, j * CHUNK);
                 }

@@ -1,5 +1,5 @@
 package collisions;
-import colliders.GameCollider;
+import colliders.BlockCollider;
 import colliders.GoombaCollider;
 import colliders.KoopaTroopaCollider;
 import colliders.MarioCollider;
@@ -8,14 +8,14 @@ import colliders.ScreenDisplacementCollider;
 import colliders.SpinyCollider;
 import colliders.SuperMushroomCollider;
 
-public class GameCollision implements Collision {
-    protected GameCollider collider;
+public class BlockCollision implements Collision {
+    protected BlockCollider collider;
 
-    public GameCollision(GameCollider c) {
+    public BlockCollision(BlockCollider c) {
         collider = c;
     }
 
-    public GameCollider getCollider() {
+    public BlockCollider getCollider() {
         return collider;
     }
 
@@ -29,7 +29,7 @@ public class GameCollision implements Collision {
     }
 
     @Override
-    public void collide(GameCollider c, Axis a) {
+    public void collide(BlockCollider c, Axis a) {
         if (a == Axis.X) {
             c.handleHorizontalCollision(this);
         } else {
@@ -56,7 +56,7 @@ public class GameCollision implements Collision {
     }
 
     @Override
-    public void collide(GoombaCollider c, Axis a) {
+    public void collide(SpinyCollider c, Axis a) {
         if (a == Axis.X) {
             c.handleHorizontalCollision(this);
         } else {
@@ -65,7 +65,7 @@ public class GameCollision implements Collision {
     }
 
     @Override
-    public void collide(SpinyCollider c, Axis a) {
+    public void collide(GoombaCollider c, Axis a) {
         if (a == Axis.X) {
             c.handleHorizontalCollision(this);
         } else {

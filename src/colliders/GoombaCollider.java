@@ -1,29 +1,23 @@
 package colliders;
 
 import java.awt.Rectangle;
+
 import collisions.Axis;
 import collisions.Collision;
 import collisions.GoombaCollision;
-import entities.Enemy;
-import entities.Entity;
 import entities.Goomba;
 
 public class GoombaCollider extends BaseCollider {
-    protected Enemy goomba;
+    protected Goomba goomba;
 
-    public GoombaCollider(Enemy g, Rectangle b) {
+    public GoombaCollider(Goomba g, Rectangle b) {
         super(b);
         goomba = g;
     }
 
     @Override
-    public Entity getEntity() {
+    public Goomba getEntity() {
         return goomba;
-    }
-
-    public Goomba getGoomba() {
-        return  (Goomba) goomba;
-
     }
 
     @Override

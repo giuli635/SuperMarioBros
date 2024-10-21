@@ -5,25 +5,19 @@ import java.awt.Rectangle;
 import collisions.Axis;
 import collisions.Collision;
 import collisions.SpinyCollision;
-import entities.Enemy;
-import entities.Entity;
 import entities.Spiny;
 
 public class SpinyCollider extends BaseCollider {
-    protected Enemy spiny;
+    protected Spiny spiny;
 
-    public SpinyCollider(Enemy s, Rectangle b) {
+    public SpinyCollider(Spiny s, Rectangle b) {
         super(b);
         spiny = s;
     }
 
     @Override
-    public Entity getEntity() {
+    public Spiny getEntity() {
         return spiny;
-    }
-
-    public Spiny getSpiny() {
-        return  (Spiny) spiny;
     }
 
     @Override

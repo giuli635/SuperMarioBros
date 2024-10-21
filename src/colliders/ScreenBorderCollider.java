@@ -5,7 +5,7 @@ import java.awt.Rectangle;
 
 import collisions.Axis;
 import collisions.Collision;
-import collisions.GameCollision;
+import collisions.BlockCollision;
 import collisions.MarioCollision;
 import collisions.ScreenBorderCollision;
 import entities.Entity;
@@ -41,7 +41,7 @@ public class ScreenBorderCollider extends BaseCollider {
         m.getCollider().getEntity().getGraphicElement().translate(-(int) collision.getWidth(), 0);
     }
 
-    public void handleHorizontalCollision(GameCollision g) {
+    public void handleHorizontalCollision(BlockCollision g) {
         GraphicEngine graphicEngine = GraphicEngine.instance();
         GraphicElement graphicElement = g.getCollider().getEntity().getGraphicElement();
         Direction collisionDirection = getVelocity().getXComponent() > 0 ? Direction.RIGHT : Direction.LEFT;

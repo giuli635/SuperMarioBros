@@ -1,39 +1,38 @@
 package entities;
+import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 
 import javax.swing.ImageIcon;
 
+import colliders.Direction;
 import colliders.MarioCollider;
 import game.Game;
 import game.KeyStatus;
+import graphics.GameGraphicElement;
 
-public class Mario extends GameEntity {
+public class Mario extends BaseUpdatableEntity {
     protected int speedX; 
     protected int speedY;
     protected int lifes;
     protected boolean loaded;
     protected boolean jumping;
-    protected boolean onRight;
-    protected boolean isJumping;
-    protected boolean isGrounded;
+    protected Direction direction;
     protected float gravity;
+    protected int jumpForce;
 
     public Mario() {
-        super();
         speedX = 4;
-        speedY = 0;
+        speedY = -3;
+        gravity = 2;
+        jumpForce = 10;
+        loaded = false;
         jumping = false;
-        collider = new MarioCollider(this, collider.getBound());
-        graphicElement.setSprite(new ImageIcon("sprites/mario.png"));
+        collider = new MarioCollider(this, new Rectangle());
+        graphicElement = new GameGraphicElement(this, new ImageIcon("sprites/mario.png"));
         collider.setSize(
             graphicElement.getSprite().getIconWidth(),
             graphicElement.getSprite().getIconHeight()
         );
-        onRight = true;
-        gravity = 0.5f;
-        isJumping = false;
-        isGrounded = true; // Mario comienza en el suelo
-        collider = new MarioCollider(this, collider.getBound());
     }
 
     public Entity clone() {
@@ -44,90 +43,64 @@ public class Mario extends GameEntity {
         return jumping;
     }
 
-    public  void switchJumping() {
-        jumping = !jumping;
+    public void setJumping(boolean j) {
+        jumping = j;
     }
 
     public void update() {
-        // Manejar el salto solo si Mario está en el suelo
-        if (Game.instance().getKeyStatus(KeyEvent.VK_W) == KeyStatus.PRESSED && isGrounded) {
-            startJump(); // este metodo inizializa los parametros del salto
+        if (Game.instance().getKeyStatus(KeyEvent.VK_W) == KeyStatus.PRESSED && !jumping) {
+            startJump();
         }
 
-        if (isJumping) {
-            applyGravity(); // este es el metodo que lo hace saltar
-        }
-        
-        marioDirection(onRight);
-        
-        handleHorizontalMovement();// lo puse asi para que se vea bien
-
-        graphicElement.translate(0, -3);
-        collider.translate(0, -3);
+        handleHorizontalMovement();
+        handleVerticalMovement();
     }
 
-    public void marioDirection(boolean onRight) { 
-        if(!isJumping) {
-            if (onRight) {
-                graphicElement.setSprite(new ImageIcon("sprites/mario.png"));
-            } else {
-                graphicElement.setSprite(new ImageIcon("sprites/mario.png"));
-            }
-        }
-        
+    public void land() {
+        jumping = false;
+        graphicElement.setSprite(new ImageIcon("sprites/mario.png"));
     }
 
-    public void startJump() {
-        isJumping = true;
-        isGrounded = false;
-        speedY = 15;
-        
-        
-        if (onRight) {
-            graphicElement.setSprite(new ImageIcon("sprites/marioRunning1.png"));
-        } else {
-            graphicElement.setSprite(new ImageIcon("sprites/marioJumping.png"));
-        }
+    protected void startJump() {
+        jumping = true;
+        jumpForce = 10;
+        graphicElement.setSprite(new ImageIcon("sprites/marioJumping.png"));
     }
 
-    public void applyGravity() {
-        speedY -= gravity; 
+    protected void handleVerticalMovement() {
+        if (speedY > -5) {
+            speedY -= gravity; 
+        }
+
+        if (speedY > 20) {
+            jumpForce = 0;
+        }
+
+        speedY += jumpForce;
 
         collider.translate(0, (int) speedY);
         graphicElement.translate(0, (int) speedY);
     }
 
-    public void land() {
-        isJumping = false;  // Detener el salto
-        isGrounded = true;  // Indicar que Mario está en el suelo de nuevo
-    }
-
-    public boolean isFalling() {
-        return !isGrounded;
-    }
-
-    public void handleHorizontalMovement() {
-        // esto se ve horrible pero que se yo
+    protected void handleHorizontalMovement() {
         if (Game.instance().getKeyStatus(KeyEvent.VK_D) == KeyStatus.PRESSED) {
-            if(!isJumping) {
+            if(!jumping) {
                 graphicElement.setSprite(new ImageIcon("sprites/marioRunning1.png")); 
             } else {
                 graphicElement.setSprite(new ImageIcon("sprites/marioJumping.png"));
             }
             graphicElement.translate(speedX, 0);
             collider.translate(speedX, 0);
-            onRight = true;
         }
 
         if (Game.instance().getKeyStatus(KeyEvent.VK_A) == KeyStatus.PRESSED) {
-            if(!isJumping) {
+            if(!jumping) {
                 graphicElement.setSprite(new ImageIcon("sprites/marioRunning1.png"));
             } else {
                 graphicElement.setSprite(new ImageIcon("sprites/marioJumping.png"));
             }
             graphicElement.translate(-speedX, 0);
             collider.translate(-speedX, 0);
-            onRight = false;
         }
     }
 

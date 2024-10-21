@@ -1,6 +1,6 @@
 package entities;
 
-public abstract class Enemy extends GameEntity{
+public interface Enemy extends UpdatableEntity {
     abstract public void getDamage();
     abstract public int getPoints();
     abstract public Entity clone();

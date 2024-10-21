@@ -1,18 +1,25 @@
 package entities;
 
+import java.awt.Rectangle;
+
 import javax.swing.ImageIcon;
 import colliders.SpinyCollider;
+import graphics.GameGraphicElement;
 
-
-public class Spiny extends Enemy {
+public class Spiny extends BaseUpdatableEntity implements Enemy {
     protected boolean movingRight = true;
     protected int speedX = 1;
 
     public Spiny() {
         super();
         speedX = 2;
-        collider = new SpinyCollider(this, collider.getBound());
+        collider = new SpinyCollider(this, new Rectangle());
+        graphicElement = new GameGraphicElement(this);
         graphicElement.setSprite(new ImageIcon("sprites/spiny.png"));
+        collider.setSize(
+            graphicElement.getSprite().getIconWidth(),
+            graphicElement.getSprite().getIconHeight()
+        );
     }
 
     @Override

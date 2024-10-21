@@ -41,13 +41,13 @@ public class SuperMushroomCollider extends BaseCollider {
     }
 
     public void handleVerticalCollision(MarioCollision m) {
-        m.getCollider().getMario().getGraphicElement().setSprite(new ImageIcon("sprites/superMarioStill.png"));
+        m.getCollider().getEntity().getGraphicElement().setSprite(new ImageIcon("sprites/superMarioStill.png"));
         CollisionsEngine.instance().remove(this);
         GraphicEngine.instance().removeGraphicElement(this.getEntity().getGraphicElement());
     }
 
     public void handleHorizontalCollision(MarioCollision m) {
-        m.getCollider().getMario().getGraphicElement().setSprite(new ImageIcon("sprites/superMarioStill.png"));
+        m.getCollider().getEntity().getGraphicElement().setSprite(new ImageIcon("sprites/superMarioStill.png"));
         CollisionsEngine.instance().remove(this);
         GraphicEngine.instance().removeGraphicElement(this.getEntity().getGraphicElement());
     }

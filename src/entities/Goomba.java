@@ -1,17 +1,24 @@
 package entities;
 
+import java.awt.Rectangle;
+
 import javax.swing.ImageIcon;
 import colliders.GoombaCollider;
+import graphics.GameGraphicElement;
 
-public class Goomba extends Enemy {
-    protected boolean movingRight = true;
-    protected int speedX = 1; // Velocidad horizontal
+public class Goomba extends BaseUpdatableEntity implements Enemy {
+    private boolean movingRight = true;
+    private int speedX = 1; // Velocidad horizontal
 
     public Goomba() {
-        super();
         speedX=2;
-        collider = new GoombaCollider(this, collider.getBound());
+        collider = new GoombaCollider(this, new Rectangle());
+        graphicElement = new GameGraphicElement(this);
         graphicElement.setSprite(new ImageIcon("sprites/goomba.png"));
+        collider.setSize(
+            graphicElement.getSprite().getIconWidth(),
+            graphicElement.getSprite().getIconHeight()
+        );
     }
 
     @Override
@@ -39,13 +46,9 @@ public class Goomba extends Enemy {
         int moveX = movingRight ? speedX : -speedX;
         graphicElement.translate(moveX, 0);
         collider.translate(moveX, 0);
+
         graphicElement.translate(0, -3);
         collider.translate(0, -3);
-
-        
-        // Verificar colisiones
-       /*  CollisionsEngine collisionsEngine = CollisionsEngine.instance();
-        collisionsEngine.addToCheck(collider);*/
     }
     
 }

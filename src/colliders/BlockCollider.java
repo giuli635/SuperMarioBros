@@ -4,28 +4,28 @@ import java.awt.Rectangle;
 
 import collisions.Axis;
 import collisions.Collision;
-import collisions.GameCollision;
 import collisions.GoombaCollision;
 import collisions.KoopaTroopaCollision;
+import collisions.BlockCollision;
 import collisions.MarioCollision;
 import collisions.SpinyCollision;
 import collisions.SuperMushroomCollision;
-import entities.Entity;
+import entities.Block;
 import entities.Mario;
 
-public class GameCollider extends BaseCollider {
-    protected Entity entity;
+public class BlockCollider extends BaseCollider {
+    protected Block block;
     protected Rectangle bounds;
     protected Point previousPosition;
     protected boolean activated;
 
-    public GameCollider(Entity e, Rectangle b) {
+    public BlockCollider(Block e, Rectangle b) {
         super(b);
-        entity = e;
+        block = e;
     }
 
-    public Entity getEntity() {
-        return entity;
+    public Block getEntity() {
+        return block;
     }
 
     @Override
@@ -35,29 +35,29 @@ public class GameCollider extends BaseCollider {
 
     @Override
     public Collision getCollision() {
-        return new GameCollision(this);
+        return new BlockCollision(this);
     }
 
     public void handleVerticalCollision(MarioCollision m) {
         Vector2D velocity = m.getCollider().getVelocity();
         Rectangle collision = getBound().intersection(m.getCollider().getBound());
+        Mario mario = m.getCollider().getEntity();
 
         int sign = (int) -Math.signum(velocity.getYComponent());
         m.getCollider().translate(0, sign * (int) collision.getHeight());
         m.getCollider().getEntity().getGraphicElement().translate(0, sign * (int) collision.getHeight());
+        if (sign == 1) {
+            mario.land();
+        }
     }
 
     public void handleHorizontalCollision(MarioCollision m) {
         Vector2D velocity = m.getCollider().getVelocity();
         Rectangle collision = getBound().intersection(m.getCollider().getBound());
-        Mario mario = m.getCollider().getMario();
 
         int sign = (int) -Math.signum(velocity.getXComponent());
         m.getCollider().translate(sign * (int) (collision.getWidth()), 0);
         m.getCollider().getEntity().getGraphicElement().translate(sign * (int) (collision.getWidth()), 0);
-        if(mario.isFalling()) {
-            mario.land();
-        }
     }
 
     public void handleVerticalCollision(GoombaCollision g) {
@@ -76,7 +76,7 @@ public class GameCollider extends BaseCollider {
         int sign = (int) -Math.signum(velocity.getXComponent());
         g.getCollider().translate(sign * (int) (collision.getWidth()), 0);
         g.getCollider().getEntity().getGraphicElement().translate(sign * (int) (collision.getWidth()), 0);
-        g.getCollider().getGoomba().switchDirection();
+        g.getCollider().getEntity().switchDirection();
     }
 
     public void handleVerticalCollision(KoopaTroopaCollision k) {
@@ -95,7 +95,7 @@ public class GameCollider extends BaseCollider {
         int sign = (int) -Math.signum(velocity.getXComponent());
         k.getCollider().translate(sign * (int) (collision.getWidth()), 0);
         k.getCollider().getEntity().getGraphicElement().translate(sign * (int) (collision.getWidth()), 0);
-        k.getCollider().getKoopaTroopa().switchDirection();
+        k.getCollider().getEntity().switchDirection();
     }
 
     public void handleVerticalCollision(SpinyCollision s) {
@@ -114,7 +114,7 @@ public class GameCollider extends BaseCollider {
         int sign = (int) -Math.signum(velocity.getXComponent());
         s.getCollider().translate(sign * (int) (collision.getWidth()), 0);
         s.getCollider().getEntity().getGraphicElement().translate(sign * (int) (collision.getWidth()), 0);
-        s.getCollider().getSpiny().switchDirection();
+        s.getCollider().getEntity().switchDirection();
     }
 
     public void handleVerticalCollision(SuperMushroomCollision s) {

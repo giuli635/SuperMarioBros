@@ -5,7 +5,6 @@ import java.awt.Rectangle;
 import collisions.Axis;
 import collisions.Collision;
 import collisions.MarioCollision;
-import entities.Entity;
 import entities.Mario;
 
 public class MarioCollider extends BaseCollider {
@@ -17,7 +16,7 @@ public class MarioCollider extends BaseCollider {
     }
 
     @Override
-    public Entity getEntity() {
+    public Mario getEntity() {
         return mario;
     }
 
@@ -29,10 +28,6 @@ public class MarioCollider extends BaseCollider {
     @Override
     public void sendCollision(Collision c, Axis a) {
         c.collide(this, a);
-    }
-
-    public Mario getMario() {
-        return mario;
     }
 }
 
