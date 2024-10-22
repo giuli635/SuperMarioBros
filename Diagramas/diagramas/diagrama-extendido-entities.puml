@@ -1,136 +1,102 @@
 @startuml
-' TODO: agregar constructores y getters y setters (habría que preguntar si podemos evitar algunos getters y setters en pos de encapsulamiento)
-'
-
-class GameEntity{
-    #collider: Collider
-    #graphicElement: GraphicElement
-    #loaded: boolean
-    +GameEntity()
-    +clone(): Entity
-    +load()
-    +unload()
-    +loaded(): boolean
-    +getCollider(): Collider
-    +getGraphicElement(): GraphicElement
-    +update()
+abstract class BaseEntity {
+   #collider: Collider
+   #graphicElement: GraphicElement
+   +getCollider(): Collider 
+   +getGraphicElement(): GraphicElement 
 }
 
-
-interface Movable{
-    +move()
-    +changeDirection()
+abstract class BaseUpdatableEntity {
+   #loaded: boolean
+   +load()
+   +unload()
+   +loaded(): boolean 
 }
 
-interface Enemy { 
-    +recieveDamage() 
-    +getPoints(): int
+class Block {
+   +Block()
 }
 
-Enemy .u[hidden].|> Movable
-
-
-class BuzzyBeattle{
-    #graphicElement: GraphicElement
-    #pos: Point
-    # {static}speedX: int
-    +BuzzyBeattle(ge: GraphicElement, pos: Point)     
-}
-class Spiny{
-    #graphicElement: GraphicElement
-    #pos: Point
-    # {static}speedX: int
-    +Spiny(ge: GraphicElement, pos: Point)         
-}
-class Lakitu{
-    #graphicElement: GraphicElement
-    #pos: Point
-    # {static}speedX: int
-    +Lakitu(ge: GraphicElement, pos: Point)      
-}
-class PiranhaPlant{
-    #graphicElement: GraphicElement
-    #pos: Point
-    # {static}speedX: int
-    +PiranhaPlant(ge: GraphicElement, pos: Point)    
-}
-class KoopaTroopa{
-    #graphicElement: GraphicElement
-    #pos: Point
-    # {static}speedX: int
-    +KoopaTroopa(ge: GraphicElement, pos: Point)
+interface Enemy {
+   +getDamage()
+   +getPoints(): int 
+   +clone(): Entity 
+   +update()
 }
 
-class Goomba{
-    #graphicElement: GraphicElement
-    #pos: Point
-    # {static}speedX: int
-    +Goomba(ge: GraphicElement, pos: Point)
+interface Entity {
+   +getGraphicElement(): GraphicElement 
+   +getCollider(): Collider 
 }
 
-
-interface PowerUp {
-    +apply(mario: Mario)
+class Goomba {
+   -movingRight: boolean
+   -int speedX = 1 // Velocidad horizontal
+   +Goomba()
+   +clone(): Entity 
+   +getDamage()
+   +getPoints(): int 
+   +switchDirection()
+   +update()
 }
 
-class GreenMushroom{
-    #graphicElement: GraphicElement
-    GreenMushroom(gE: GraphicElement)
+class KoopaTroopa {
+   #movingRight: boolean
+   #speedX: int
+   +KoopaTroopa()
+   +getDamage()
+   +getPoints(): int 
+   +clone(): Entity 
+   +switchDirection()
+   +update()
 }
 
-interface Proyectile
-
-class FireBall{
-    #pos: Point
-    #graphicElement: GraphicElement
-    # {static}speedX: int
+class Mario {
+   #speedX: int
+   #speedY: int
+   #lifes: int
+   #loaded: boolean
+   #jumping: boolean
+   #direction: Direction
+   #gravity: float
+   #jumpForce: int
+   +Mario()
+   +clone(): Entity 
+   +getJumping(): boolean 
+   +setJumping(j: boolean)
+   +update()
+   +land()
+   #startJump()
+   #handleVerticalMovement()
+   #handleHorizontalMovement()
 }
 
-class Pipe {
-    #piranha: PiranhaPlant
-    #graphicElement: GraphicElement
-    +Pipe(p: PiranhaPlant, gE: GraphicElement)
-
+class Spiny {
+   #movingRight: boolean
+   #speedX: int
+   +Spiny()
+   +getDamage()
+   +getPoints(): int 
+   +clone(): Entity 
+   +switchDirection()
+   +update()
 }
 
-class SolidBrick {
-    #graphicElement: GraphicElement
-    +SolidBrick(gE: GraphicElement)
-    +break()
+class SuperMushroom {
+   #points: int
+   #movingRight: boolean
+   #speedX: int
+   +SuperMushroom()
+   +clone(): Entity 
+   +switchDirection()
+   +update()
 }
 
-class QuestionBlock {
-    #coin: Coin
-    #PowerUp: PowerUp
-    +QuestionBlock(pW: PowerUp, coin: Coin)
+interface UpdatableEntity {
+   +update()
+   +loaded(): boolean 
+   +load()
+   +unload()
 }
 
-class Coin{
-    #graphicElement: GraphicElement
-    +Coin(gE: GraphicElement)
-}
-
-class FireFlower{
-    #graphicElement: GraphicElement
-    +FireFlower(gE: GraphicElement) 
-}
-class SuperMushroom{
-    #graphicElement: GraphicElement
-    +SuperMushroom(gE: GraphicElement)     
-}
-class Star{
-    #graphicElement: GraphicElement
-    +Star(gE: GraphicElement)      
-}
-class GreenMushroom{
-    #graphicElement: GraphicElement
-    +GreenMushroom(gE: GraphicElement)      
-}
-
-SolidBlock .u[hidden].|> Platform
-SolidBrick -u[hidden]-|> SolidBlock
-QuestionBlock -u[hidden]-|> SolidBlock
-Pipe .u[hidden].|> Platform
-Platform -l[hidden]- Movable
-Movable -l[hidden]- PowerUp
 @enduml

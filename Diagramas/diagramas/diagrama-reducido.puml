@@ -1,137 +1,163 @@
 @startuml
-' # JUEGO #
-'
-class Game <<Singleton>>
-class Menu <<Singleton>>
-class GameEntity
-class CollisionsEngine <<Singleton>>
-class GraphicEngine <<Singleton>>
-class LevelReader <<Singleton>>
-Game "1" --> "1" Menu
-Game "1" *-- "1" Level
-Game "1" --> "1" Mario
-Game "1" *-- "1" GraphicEngine
-Game "1" *-- "1" CollisionsEngine
-Game "1" --> "1" Ranking
-Game "1" -- "1" LevelReader
-Game "1" --> "0..*" Entity
-LevelReader "1" -- CollisionsEngine
-LevelReader "1" -- GraphicEngine
-LevelReader "1" -- Mario
-LevelReader "1" -- GameEntity
-GameEntity ..|> Entity
-
-' # ENTIDAD #
-'
-interface Entity
-Entity "1" ---> "0..*" GraphicElement
-Entity "1" --- "0..*" Collider
-
-' # GRAFICA #
-'
-interface GraphicElement
-class GameGraphicElement
-class SpriteFactory <<Singleton>>
-class Sprite <<Flyweight>>
-GameGraphicElement .u.|> GraphicElement
-Sprite "0..*" --o "1" SpriteFactory
-GraphicElement o-- "0..*" Sprite
-GraphicElement "1..*" -- "1" GraphicEngine
-GraphicElement "1" --> "1" Position
-
-' # COLLISIONS #
-'
-interface Collider
-abstract class GameCollider
-Collider "1" --> "0..1" Position
-Collider "1..*" -- "1" CollisionsEngine
-GameCollider ..|> Collider
-MarioCollider .u.|> GameCollider
-EnemyCollider .u.|> GameCollider
-PlatformCollider .u.|> GameCollider
-CoinCollider .u.|> GameCollider
-PowerUpCollider .u.|> GameCollider
-FireBallCollider .u.|> GameCollider
-
-' # PERSONAJE #
-'
-interface MarioState <<Command>>
-class Mario 
-Mario ...|> Entity
-Mario "1" -- "0..*" MarioState
-Super .u.|> MarioState
-Fire .u.|> MarioState
-Invincible .u.|> MarioState
-interface EnemyCollision <<Strategy>>
-interface BrickCollision <<Strategy>>
-class FireBallThrower
-class Croucher
-FireBallThrower ..|> Entity
-Croucher ..|> Entity
-Mario <-- FireBallThrower
-Mario <-- Croucher
-DefaultBrickCollision .u.|> BrickCollision
-BreakBrickCollision .u.|> BrickCollision
-DefaultEnemyCollision .u.|> EnemyCollision
-SuperEnemyCollision .u.|> EnemyCollision
-InvincibleEnemyCollision .u.|> EnemyCollision
-Mario o-d- "1" EnemyCollision
-Mario o-d- "1" BrickCollision
-Mario --> Position
-
+class CollisionsEngine 
+CollisionsEngine --> CollisionsEngine
+CollisionsEngine --> List
+CollisionsEngine --> Set
+CollisionsEngine --> Collider
+Game ..|> WindowListener
+Game ..|> KeyListener
+class Game 
+Game --> Game
+Game --> Set
+Game --> UpdatableEntity
+Game --> Map
+Game --> Integer
+Game --> KeyStatus
+Game --> Level
+Game --> Mario
+class GraphicEngine 
+GraphicEngine --> GraphicEngine
+GraphicEngine --> JFrame
+GraphicEngine --> JPanel
+GraphicEngine --> Set
+GraphicEngine --> GraphicElement
+enum KeyStatus 
+class Level 
+Level --> Duration
+Level --> Image
+class LevelReader 
+LevelReader --> LevelReader
+LevelReader --> Map
+LevelReader --> Character
+LevelReader --> EntityLoader
+BaseCollider ..|> Collider
+abstract class BaseCollider 
+BaseCollider --> Rectangle
+BaseCollider --> Vector2D
+BaseCollider --> Vector2D
+BlockCollider --|> BaseCollider
 newpage
-
-' # NIVEL #
-'
-interface Platform
-interface Enemy
-interface PowerUp
-class Coin
-Platform ...u.|> Entity
-Enemy ..u.|> Entity
-PowerUp ..u.|> Entity
-Coin .u.|> Entity
-
-' # ENEMIGOS #
-'
-
-Goomba .u.|> Enemy
-KoopaTroopa .u.|> Enemy
-KoopaTroopa "1" o-- "1" Shell
-PiranhaPlant .u.|> Enemy
-Lakitu .u.|> Enemy
-Spiny .u.|> Enemy
-BuzzyBeattle .u.|> Enemy
-Pipe --> "0..1" PiranhaPlant
-
-' # PLATAFORMAS #
-'
-Void .u.|> Platform
-SolidBlock .u.|> Platform
-SolidBrick -u-|> SolidBlock
-QuestionBlock -u-|> SolidBlock
-Pipe .u.|> Platform
-
-' # POWERUPS #
-'
-SuperMushroom .u.|> PowerUp
-FireFlower .u.|> PowerUp
-Star .u.|> PowerUp
-GreenMushroom .u.|> PowerUp
-
-' # PROYECTIL #
-'
-interface Proyectile
-Proyectile .u.|> Entity
-FireBall .u.|> Proyectile
-Star .u.|> Proyectile
-
-' # MOVABLE #
-interface Movable
-Enemy .u.|> Movable
-GreenMushroom .u.|> Movable
-SuperMushroom .u.|> Movable
-
-' # FORMATTING #
-'
+class BlockCollider 
+BlockCollider --> Block
+BlockCollider --> Rectangle
+BlockCollider --> Point
+interface Collider 
+enum Direction 
+GoombaCollider --|> BaseCollider
+GoombaCollider ..|> UpdateableEntityCollider
+class GoombaCollider 
+GoombaCollider --> Goomba
+KoopaTroopaCollider --|> BaseCollider
+KoopaTroopaCollider ..|> UpdateableEntityCollider
+class KoopaTroopaCollider 
+KoopaTroopaCollider --> KoopaTroopa
+LoaderCollider --|> BaseCollider
+class LoaderCollider 
+MarioCollider --|> BaseCollider
+MarioCollider ..|> UpdateableEntityCollider
+class MarioCollider 
+MarioCollider --> Mario
+ScreenBorderCollider --|> BaseCollider
+class ScreenBorderCollider 
+ScreenBorderCollider --> Direction
+ScreenDisplacementCollider --|> BaseCollider
+class ScreenDisplacementCollider 
+ScreenDisplacementCollider --> ScreenBorderCollider
+ScreenDisplacementCollider --> ScreenBorderCollider
+ScreenDisplacementCollider --> LoaderCollider
+SpinyCollider --|> BaseCollider
+SpinyCollider ..|> UpdateableEntityCollider
+class SpinyCollider 
+SpinyCollider --> Spiny
+SuperMushroomCollider --|> BaseCollider
+SuperMushroomCollider ..|> UpdateableEntityCollider
+class SuperMushroomCollider 
+SuperMushroomCollider --> SuperMushroom
+UpdateableEntityCollider --|> Collider
+interface UpdateableEntityCollider 
+class Vector2D 
+Vector2D --> Point
+Vector2D --> Point
+enum Axis 
+BlockCollision ..|> Collision
+class BlockCollision 
+BlockCollision --> BlockCollider
+interface Collision 
+GoombaCollision ..|> UpdateableEntityCollision
+class GoombaCollision 
+GoombaCollision --> GoombaCollider
+KoopaTroopaCollision ..|> UpdateableEntityCollision
+class KoopaTroopaCollision 
+KoopaTroopaCollision --> KoopaTroopaCollider
+LoaderCollision ..|> Collision
+class LoaderCollision 
+LoaderCollision --> LoaderCollider
+MarioCollision ..|> UpdateableEntityCollision
+class MarioCollision 
+MarioCollision --> MarioCollider
+ScreenBorderCollision ..|> Collision
+class ScreenBorderCollision 
+ScreenBorderCollision --> ScreenBorderCollider
+ScreenDisplacementCollision ..|> Collision
+class ScreenDisplacementCollision 
+ScreenDisplacementCollision --> ScreenDisplacementCollider
+SpinyCollision ..|> UpdateableEntityCollision
+class SpinyCollision 
+SpinyCollision --> SpinyCollider
+SuperMushroomCollision ..|> UpdateableEntityCollision
+newpage
+class SuperMushroomCollision 
+SuperMushroomCollision --> SuperMushroomCollider
+UpdateableEntityCollision --|> Collision
+interface UpdateableEntityCollision 
+BlockLoader ..|> EntityLoader
+class BlockLoader 
+interface EntityLoader 
+GoombaLoader ..|> EntityLoader
+class GoombaLoader 
+KoopaTroopaLoader ..|> EntityLoader
+class KoopaTroopaLoader 
+MarioLoader ..|> EntityLoader
+class MarioLoader 
+SpinyLoader ..|> EntityLoader
+class SpinyLoader 
+SuperMushroomLoader ..|> EntityLoader
+class SuperMushroomLoader 
+BaseEntity ..|> Entity
+abstract class BaseEntity 
+BaseEntity --> Collider
+BaseEntity --> GraphicElement
+BaseUpdatableEntity --|> BaseEntity
+BaseUpdatableEntity ..|> UpdatableEntity
+abstract class BaseUpdatableEntity 
+Block --|> BaseEntity
+newpage
+class Block 
+Enemy --|> UpdatableEntity
+interface Enemy 
+interface Entity 
+Goomba --|> BaseUpdatableEntity
+Goomba ..|> Enemy
+class Goomba 
+Goomba --> Velocidad
+KoopaTroopa --|> BaseUpdatableEntity
+KoopaTroopa ..|> Enemy
+class KoopaTroopa 
+Mario --|> BaseUpdatableEntity
+class Mario 
+Mario --> Direction
+Spiny --|> BaseUpdatableEntity
+Spiny ..|> Enemy
+class Spiny 
+SuperMushroom --|> BaseUpdatableEntity
+class SuperMushroom 
+UpdatableEntity --|> Entity
+interface UpdatableEntity 
+GameGraphicElement ..|> GraphicElement
+class GameGraphicElement 
+GameGraphicElement --> Entity
+GameGraphicElement --> JLabel
+GameGraphicElement --> ImageIcon
+GameGraphicElement --> Rectangle
+interface GraphicElement 
 @enduml

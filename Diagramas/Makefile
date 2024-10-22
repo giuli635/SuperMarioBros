@@ -1,11 +1,19 @@
-defensa = 6
+defensa = 7
 
-all: svg extendido reducido
+all: puml svg extendido reducido
 
 svg:
 	mkdir -p build/images
 	plantuml -tsvg diagramas/diagrama-*.puml -o ../build/images
 	
+puml:
+	cat ../src/game/* | awk -f extdiagram.awk > ./diagramas/diagrama-extendido-game.puml
+	cat ../src/colliders/* | awk -f extdiagram.awk > ./diagramas/diagrama-extendido-colliders.puml
+	cat ../src/collisions/* | awk -f extdiagram.awk > ./diagramas/diagrama-extendido-collisions.puml
+	cat ../src/entities/* | awk -f extdiagram.awk > ./diagramas/diagrama-extendido-entities.puml
+	cat ../src/loading/* | awk -f extdiagram.awk > ./diagramas/diagrama-extendido-loading.puml
+	cat ../src/graphics/* | awk -f extdiagram.awk > ./diagramas/diagrama-extendido-graphics.puml
+
 extendido:
 	pandoc -fmarkdown-implicit_figures -o "Diagrama-extendido-defensa-$(defensa).pdf" build/diagrama-extendido.md
 

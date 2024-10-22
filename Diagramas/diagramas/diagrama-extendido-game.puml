@@ -1,69 +1,92 @@
 @startuml
-class Game <<Singleton>> {
-    #{static} SECOND: int
-    #{static} FPS: int
-    #keysStatus: Map<Integer, KeyStatus>
-    #{static} uniqueInstance: Game
-    #toUpdateRegistry: Set<Entity>
-    #currLevel: Level
-    #mario: Mario
-    #run: boolean
-    +{static} instance(): Game
-    #loadLevel()
-    +registerToUpdate(e: Entity)
-    +unregisterToUpdate(e: Entity)
-    +getKeyStatus(int key): KeyStatus
-    +getKeyPressed(key: int): boolean
-    +getKeyReleased(key: int): boolean
-    +scrollScreen()
-    +{static} main(String[] args)
+class CollisionsEngine {
+   #{static} uniqueInstance: CollisionsEngine
+   #chunks: List<List<Collider>>
+   #toUpdate: Set<Collider>
+   +CollisionsEngine()
+   +{static}instance(): CollisionsEngine 
+   #checkCollision(c1: Collider, c2: Collider, axis: Axis)
+   +update()
+   +checkCollisions(collidersToCheck: Iterable<Collider>, axis: Axis)
+   #calculateChunk(minX: int, maxX: int): int[] 
+   #calculateChunk(collider: Collider): int[] 
+   +add(collider: Collider)
+   +remove(item: Collider)
+   +getCollidersInRange(lowerBound: int, higherBound: int): Iterable<Collider> 
+   +addToUpdate(c: Collider)
 }
 
-
-class Level{
-    #time: Duration
-    #points: int
-    #Background: Image
-    +Level(time: Duration)
-    +getPoints(): int
-    +addPoints(p: int)
-    +substractPoints(p: int)
-}
-note left of Level::time
-Duration es la clase de Java
-end note
-class LevelReader <<Singleton>>{
-    #{static} CHUNK: int
-    #{static} uniqueInstance: LevelReader
-    #prototypes: Map<Character,Entity>
-    #generalPrototype: GameEntity
-    #marioPrototype: Mario
-    #Instance(): LevelReader
-    +CreateLevel(file: String):Level
-    -loadScreen()
-    +loadEntities(br: BufferedReader)
-
-}
-
-class Menu <<Singleton>> {
-    #{static} uniqueInstance: Menu
-    +{static} instance(): Menu
-    +selectMode(modo: int)
-    +showModes()
-    +showRanking()
-    ' TODO: implementar la UI del menu
+class Game {
+   #{static} SECOND: int
+   #{static} FPS: int
+   #{static} uniqueInstance: Game
+   #toUpdateRegistry: Set<UpdatableEntity>
+   #keysStatus: Map<Integer, KeyStatus>
+   #currLevel: Level
+   #mario: Mario
+   #run: boolean
+   #pause: boolean
+   -boolean pauseKeyAlreadyPressed = false 
+   -Game()
+   +{static}instance(): Game 
+   +registerToUpdate(e: UpdatableEntity)
+   +unregisterToUpdate(e: UpdatableEntity)
+   +getKeyStatus(key: int): KeyStatus 
+   -loop()
+   +{static} main(args: String[])
+   +windowActivated(e: WindowEvent)
+   +windowClosed(e: WindowEvent)
+   +windowClosing(e: WindowEvent)
+   +windowDeactivated(e: WindowEvent)
+   +windowDeiconified(e: WindowEvent)
+   +windowIconified(e: WindowEvent)
+   +windowOpened(e: WindowEvent)
+   +keyPressed(arg0: KeyEvent)
+   +keyReleased(arg0: KeyEvent)
+   +keyTyped(arg0: KeyEvent)
+   +checkPause()
 }
 
-class Ranking <<Singleton>> {
-    #rank: Map<String, Integer>
-    #{static} uniqueInstance: Ranking
-    +{static} instance(): Ranking
-    +addEntry(player: String, points: int)
-    +getRanking(): Iterable<Entry<String, Integer>>
+class GraphicEngine {
+   #{static} uniqueInstance: GraphicEngine
+   #frame: JFrame
+   #panel: JPanel
+   #onScreen: Set<GraphicElement>
+   #position: int
+   +getPosition(): int 
+   +setPosition(x: int)
+   +translate(dx: int)
+   -GraphicEngine()
+   +{static}instance(): GraphicEngine 
+   +drawFrame()
+   +addGraphicElement(e: GraphicElement)
+   +removeGraphicElement(e: GraphicElement)
+   +getPanelSize(): Dimension 
+   +scrollScreen(velocity: int) {  
 }
 
-enum KeyStatus{
-    Pressed
-    Released
+enum KeyStatus {
 }
+
+class Level {
+   #time: Duration
+   #points: int
+   #background: Image
+   +Level(t: Duration)
+   +getPoints(): int 
+   +addPoints(p: int)
+   +substractPoints(p: int)
+}
+
+class LevelReader  {
+   #{static} CHUNK: int
+   #{static} uniqueInstance: LevelReader
+   #loaders: Map<Character, EntityLoader>
+   -LevelReader()
+   #{static}instance(): LevelReader 
+   +createLevel(file: String): Level 
+   -loadScreen()
+   +loadEntities(br: BufferedReader)
+}
+
 @enduml

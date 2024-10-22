@@ -1,0 +1,31 @@
+@startuml
+class GameGraphicElement {
+   #entity: Entity
+   #label: JLabel
+   #sprite: ImageIcon
+   #bounds: Rectangle
+   #toUpdate: boolean
+   +GameGraphicElement(e: Entity)
+   +GameGraphicElement(e: Entity, s: ImageIcon)
+   +getEntity(): Entity 
+   +translate(dx: int, dy: int)
+   +getPosition(): Point 
+   +setPosition(x: int, y: int)
+   +getSprite(): ImageIcon 
+   +setSprite(s: ImageIcon)
+   +draw()
+   +getLabel(): JLabel 
+}
+
+interface GraphicElement {
+   +getEntity(): Entity 
+   +translate(dx: int, dy: int)
+   +getPosition(): Point 
+   +setPosition(x: int, y: int)
+   +getSprite(): ImageIcon 
+   +setSprite(s: ImageIcon)
+   +getLabel(): JLabel 
+   +draw()
+}
+
+@enduml

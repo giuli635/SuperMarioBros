@@ -1,0 +1,30 @@
+@startuml
+class BlockLoader {
+   +load(): Entity 
+}
+
+interface EntityLoader {
+   +load(): Entity 
+}
+
+class GoombaLoader {
+   +load(): Entity 
+}
+
+class KoopaTroopaLoader {
+   +load(): Entity 
+}
+
+class MarioLoader {
+   +load(): Entity 
+}
+
+class SpinyLoader {
+   +load(): Entity 
+}
+
+class SuperMushroomLoader {
+   +load(): Entity 
+}
+
+@enduml
