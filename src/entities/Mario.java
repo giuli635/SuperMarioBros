@@ -2,8 +2,6 @@ package entities;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 
-import javax.swing.ImageIcon;
-
 import colliders.Direction;
 import colliders.MarioCollider;
 import game.Game;
@@ -11,7 +9,8 @@ import game.KeyStatus;
 import graphics.GameGraphicElement;
 
 public class Mario extends BaseUpdatableEntity {
-    protected int speedX; 
+    protected static String SPRITES_FOLDER = "mario";
+    protected int speedX;
     protected int speedY;
     protected int lifes;
     protected boolean loaded;
@@ -28,10 +27,11 @@ public class Mario extends BaseUpdatableEntity {
         loaded = false;
         jumping = false;
         collider = new MarioCollider(this, new Rectangle());
-        graphicElement = new GameGraphicElement(this, new ImageIcon("sprites/mario.png"));
+        graphicElement = new GameGraphicElement(this, SPRITES_FOLDER, Game.instance().getMode());
+        graphicElement.setSprite(SPRITES_FOLDER);
         collider.setSize(
-            graphicElement.getSprite().getIconWidth(),
-            graphicElement.getSprite().getIconHeight()
+            graphicElement.getCurrentSprite().getIconWidth(),
+            graphicElement.getCurrentSprite().getIconHeight()
         );
     }
 
@@ -58,13 +58,13 @@ public class Mario extends BaseUpdatableEntity {
 
     public void land() {
         jumping = false;
-        graphicElement.setSprite(new ImageIcon("sprites/mario.png"));
+        //graphicElement.setSprite(new ImageIcon("sprites/mario.png"));
     }
 
     protected void startJump() {
         jumping = true;
         jumpForce = 10;
-        graphicElement.setSprite(new ImageIcon("sprites/marioJumping.png"));
+        //graphicElement.setSprite(new ImageIcon("sprites/marioJumping.png"));
     }
 
     protected void handleVerticalMovement() {
@@ -84,20 +84,16 @@ public class Mario extends BaseUpdatableEntity {
 
     protected void handleHorizontalMovement() {
         if (Game.instance().getKeyStatus(KeyEvent.VK_D) == KeyStatus.PRESSED) {
-            if(!jumping) {
-                graphicElement.setSprite(new ImageIcon("sprites/marioRunning1.png")); 
-            } else {
-                graphicElement.setSprite(new ImageIcon("sprites/marioJumping.png"));
+            if(jumping) {
+                //graphicElement.setSprite(new ImageIcon("sprites/marioJumping.png"));
             }
             graphicElement.translate(speedX, 0);
             collider.translate(speedX, 0);
         }
 
         if (Game.instance().getKeyStatus(KeyEvent.VK_A) == KeyStatus.PRESSED) {
-            if(!jumping) {
-                graphicElement.setSprite(new ImageIcon("sprites/marioRunning1.png"));
-            } else {
-                graphicElement.setSprite(new ImageIcon("sprites/marioJumping.png"));
+            if(jumping) {
+                //graphicElement.setSprite(new ImageIcon("sprites/marioJumping.png"));
             }
             graphicElement.translate(-speedX, 0);
             collider.translate(-speedX, 0);

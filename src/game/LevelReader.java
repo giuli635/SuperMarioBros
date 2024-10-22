@@ -89,7 +89,7 @@ public class LevelReader  {
 
         int middleChunk = lastChunkInScreen / 2;
         new ScreenDisplacementCollider(
-            new Rectangle(CHUNK * middleChunk, 0, CHUNK, windowHeight),
+            new Rectangle(CHUNK * middleChunk, 0, CHUNK, 2 * windowHeight),
             leftBorder,
             rightBorder,
             loader

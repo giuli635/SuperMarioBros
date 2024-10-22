@@ -7,6 +7,7 @@ public abstract class BaseUpdatableEntity extends BaseEntity implements Updatabl
     
     public void load() {
         Game.instance().registerToUpdate(this);
+        this.getGraphicElement().loadSprites("mode1");
     }
 
     public void unload() {

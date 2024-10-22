@@ -2,11 +2,12 @@ package entities;
 
 import java.awt.Rectangle;
 
-import javax.swing.ImageIcon;
 import colliders.SpinyCollider;
+import game.Game;
 import graphics.GameGraphicElement;
 
 public class Spiny extends BaseUpdatableEntity implements Enemy {
+    protected static String SPRITES_FOLDER = "spiny";
     protected boolean movingRight = true;
     protected int speedX = 1;
 
@@ -14,11 +15,11 @@ public class Spiny extends BaseUpdatableEntity implements Enemy {
         super();
         speedX = 2;
         collider = new SpinyCollider(this, new Rectangle());
-        graphicElement = new GameGraphicElement(this);
-        graphicElement.setSprite(new ImageIcon("sprites/spiny.png"));
+        graphicElement = new GameGraphicElement(this, SPRITES_FOLDER, Game.instance().getMode());
+        graphicElement.setSprite(SPRITES_FOLDER);
         collider.setSize(
-            graphicElement.getSprite().getIconWidth(),
-            graphicElement.getSprite().getIconHeight()
+            graphicElement.getCurrentSprite().getIconWidth(),
+            graphicElement.getCurrentSprite().getIconHeight()
         );
     }
 

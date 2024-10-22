@@ -2,22 +2,23 @@ package entities;
 
 import java.awt.Rectangle;
 
-import javax.swing.ImageIcon;
 import colliders.GoombaCollider;
+import game.Game;
 import graphics.GameGraphicElement;
 
 public class Goomba extends BaseUpdatableEntity implements Enemy {
-    private boolean movingRight = true;
-    private int speedX = 1; // Velocidad horizontal
+    protected static String SPRITES_FOLDER = "goomba";
+    protected boolean movingRight = true;
+    protected int speedX = 1;
 
     public Goomba() {
         speedX=2;
         collider = new GoombaCollider(this, new Rectangle());
-        graphicElement = new GameGraphicElement(this);
-        graphicElement.setSprite(new ImageIcon("sprites/goomba.png"));
+        graphicElement = new GameGraphicElement(this, SPRITES_FOLDER, Game.instance().getMode());
+        graphicElement.setSprite(SPRITES_FOLDER);
         collider.setSize(
-            graphicElement.getSprite().getIconWidth(),
-            graphicElement.getSprite().getIconHeight()
+            graphicElement.getCurrentSprite().getIconWidth(),
+            graphicElement.getCurrentSprite().getIconHeight()
         );
     }
 

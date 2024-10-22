@@ -21,7 +21,8 @@ public class Game implements WindowListener, KeyListener {
     protected Mario mario;
     protected boolean run;
     protected boolean pause;
-    private boolean pauseKeyAlreadyPressed = false; 
+    private boolean pauseKeyAlreadyPressed = false;
+    protected String mode; 
 
     private Game() {
         toUpdateRegistry = new HashSet<>();
@@ -30,6 +31,7 @@ public class Game implements WindowListener, KeyListener {
         mario = null;
         run = true;
         pause = false;
+        mode = "mode1";
     }
 
     public static Game instance() {
@@ -48,6 +50,10 @@ public class Game implements WindowListener, KeyListener {
         return keysStatus.getOrDefault(key, KeyStatus.RELEASED);
     }
 
+    public String getMode(){
+        return mode;
+    }
+
     private void loop() {
         GraphicEngine graphicEngine = GraphicEngine.instance();
         LevelReader reader = LevelReader.instance();
@@ -60,9 +66,9 @@ public class Game implements WindowListener, KeyListener {
                 for (UpdatableEntity entity : toUpdateRegistry) {
                     entity.update();
                 }
+                CollisionsEngine.instance().update();
             }
 
-            CollisionsEngine.instance().update();
             checkPause();
 
             try {

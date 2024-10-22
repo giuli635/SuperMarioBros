@@ -11,8 +11,11 @@ public interface GraphicElement {
     public void translate(int dx, int dy);
     public Point getPosition();
     public void setPosition(int x, int y);
-    public ImageIcon getSprite();
-    public void setSprite(ImageIcon s);
+    public ImageIcon getCurrentSprite();
+    public void setSprite(String s);
     public JLabel getLabel();
     public void draw();
+    public void loadSprites(String mode);
+    public void setFolder(String folder);
+    public String getFolder();
 }

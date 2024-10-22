@@ -2,13 +2,13 @@ package entities;
 
 import java.awt.Rectangle;
 
-import javax.swing.ImageIcon;
-
 import colliders.SuperMushroomCollider;
+import game.Game;
 import graphics.GameGraphicElement;
 
 public class SuperMushroom extends BaseUpdatableEntity {
-    protected  int points;
+    protected static String SPRITES_FOLDER = "superMushroom";
+    protected int points;
     protected boolean movingRight = true;
     protected int speedX;
 
@@ -17,10 +17,11 @@ public class SuperMushroom extends BaseUpdatableEntity {
         points = 100;
         speedX = 1;
         collider = new SuperMushroomCollider(this, new Rectangle());
-        graphicElement = new GameGraphicElement(this, new ImageIcon("sprites/superMushroom.png"));
+        graphicElement = new GameGraphicElement(this, SPRITES_FOLDER, Game.instance().getMode());
+        graphicElement.setSprite(SPRITES_FOLDER);
         collider.setSize(
-            graphicElement.getSprite().getIconWidth(),
-            graphicElement.getSprite().getIconHeight()
+            graphicElement.getCurrentSprite().getIconWidth(),
+            graphicElement.getCurrentSprite().getIconHeight()
         );
     }
 

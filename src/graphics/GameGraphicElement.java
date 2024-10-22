@@ -1,6 +1,7 @@
 package graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.util.Map;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -14,20 +15,16 @@ public class GameGraphicElement implements GraphicElement {
     protected ImageIcon sprite;
     protected Rectangle bounds;
     protected boolean toUpdate;
+    protected Map<String, ImageIcon> sprites;
+    protected String folder;
 
-    public GameGraphicElement(Entity e) {
+    public GameGraphicElement(Entity e, String folderPath, String mode) {
+        folder = folderPath;
         entity = e;
         sprite = null;
         label = new JLabel();
         bounds = label.getBounds();
-    }
-    
-    public GameGraphicElement(Entity e, ImageIcon s) {
-        entity = e;
-        sprite = s;
-        label = new JLabel();
-        bounds = label.getBounds();
-        setSprite(s);
+        loadSprites(mode);
     }
     
     @Override
@@ -55,15 +52,15 @@ public class GameGraphicElement implements GraphicElement {
     }
 
     @Override
-    public ImageIcon getSprite() {
+    public ImageIcon getCurrentSprite() {
         return sprite;
     }
 
     @Override
-    public void setSprite(ImageIcon s) {
-        sprite = s;
+    public void setSprite(String s) {
+        sprite = sprites.get(s + ".png");
         toUpdate = true;
-        bounds.setSize(s.getIconWidth(), s.getIconHeight());
+        bounds.setSize(sprite.getIconWidth(), sprite.getIconHeight());
     }
 
     public void draw() {
@@ -82,5 +79,20 @@ public class GameGraphicElement implements GraphicElement {
     @Override
     public JLabel getLabel() {
         return label;
+    }
+
+    @Override
+    public void loadSprites(String mode) {
+        sprites = SpriteFactory.instance().getSprites(folder);
+    }
+
+    @Override
+    public void setFolder(String f) {
+        folder = f;
+    }
+
+    @Override
+    public String getFolder() {
+        return folder;
     }
 }

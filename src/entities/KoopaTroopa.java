@@ -2,23 +2,23 @@ package entities;
 
 import java.awt.Rectangle;
 
-import javax.swing.ImageIcon;
-
 import colliders.KoopaTroopaCollider;
+import game.Game;
 import graphics.GameGraphicElement;
 
 public class KoopaTroopa extends BaseUpdatableEntity implements Enemy {
+    protected static String SPRITES_FOLDER = "koopa";
     protected boolean movingRight = true;
     protected int speedX = 1;
 
     public KoopaTroopa(){
         speedX=2;
         collider = new KoopaTroopaCollider(this, new Rectangle());
-        graphicElement = new GameGraphicElement(this);
-        graphicElement.setSprite(new ImageIcon("sprites/koopaTroopa.png"));
+        graphicElement = new GameGraphicElement(this, SPRITES_FOLDER, Game.instance().getMode());
+        graphicElement.setSprite(SPRITES_FOLDER);
         collider.setSize(
-            graphicElement.getSprite().getIconWidth(),
-            graphicElement.getSprite().getIconHeight()
+            graphicElement.getCurrentSprite().getIconWidth(),
+            graphicElement.getCurrentSprite().getIconHeight()
         );
     }
     @Override
