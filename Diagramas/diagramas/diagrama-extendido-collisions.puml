@@ -1,0 +1,157 @@
+@startuml
+enum Axis {
+}
+
+class BlockCollision {
+   #collider: BlockCollider
+   +BlockCollision(c: BlockCollider)
+   +getCollider(): BlockCollider 
+   +collide(c: MarioCollider, a: Axis)
+   +collide(c: BlockCollider, a: Axis)
+   +collide(c: ScreenDisplacementCollider, a: Axis)
+   +collide(c: ScreenBorderCollider, a: Axis)
+   +collide(c: SpinyCollider, a: Axis)
+   +collide(c: GoombaCollider, a: Axis)
+   +collide(c: KoopaTroopaCollider, a: Axis)
+   +collide(c: SuperMushroomCollider, a: Axis)
+   +collide(c: LoaderCollider, a: Axis)
+}
+
+interface Collision {
+   +getCollider(): Collider 
+   +collide(c: MarioCollider, a: Axis)
+   +collide(c: BlockCollider, a: Axis)
+   +collide(c: ScreenDisplacementCollider, a: Axis)
+   +collide(c: ScreenBorderCollider, a: Axis)
+   +collide(c: GoombaCollider, a: Axis)
+   +collide(c: SpinyCollider, a: Axis)
+   +collide(c: KoopaTroopaCollider, a: Axis)
+   +collide(c: SuperMushroomCollider, a: Axis)
+   +collide(c: LoaderCollider, a: Axis)
+}
+
+class GoombaCollision {
+   #collider: GoombaCollider
+   +GoombaCollision(c: GoombaCollider)
+   +getCollider(): GoombaCollider 
+   +collide(c: MarioCollider, a: Axis)
+   +collide(c: BlockCollider, a: Axis)
+   +collide(c: ScreenDisplacementCollider, a: Axis)
+   +collide(c: ScreenBorderCollider, a: Axis)
+   +collide(c: SpinyCollider, a: Axis)
+   +collide(c: KoopaTroopaCollider, a: Axis)
+   +collide(c: SuperMushroomCollider, a: Axis)
+   +collide(c: GoombaCollider, a: Axis)
+   +collide(c: LoaderCollider, a: Axis)
+}
+
+class KoopaTroopaCollision {
+   #collider: KoopaTroopaCollider
+   +KoopaTroopaCollision(k: KoopaTroopaCollider)
+   +getCollider(): KoopaTroopaCollider 
+   +collide(c: MarioCollider, a: Axis)
+   +collide(c: BlockCollider, a: Axis)
+   +collide(c: ScreenDisplacementCollider, a: Axis)
+   +collide(c: ScreenBorderCollider, a: Axis)
+   +collide(c: SpinyCollider, a: Axis)
+   +collide(c: KoopaTroopaCollider, a: Axis)
+   +collide(c: SuperMushroomCollider, a: Axis)
+   +collide(c: GoombaCollider, a: Axis)
+   +collide(c: LoaderCollider, a: Axis)
+}
+
+class LoaderCollision {
+   #loader: LoaderCollider
+   +LoaderCollision(l: LoaderCollider)
+   +getCollider(): Collider 
+   +collide(c: MarioCollider, a: Axis)
+   +collide(c: BlockCollider, a: Axis)
+   +collide(c: ScreenDisplacementCollider, a: Axis)
+   +collide(c: ScreenBorderCollider, a: Axis)
+   +collide(c: GoombaCollider, a: Axis)
+   +collide(c: SpinyCollider, a: Axis)
+   +collide(c: KoopaTroopaCollider, a: Axis)
+   +collide(c: SuperMushroomCollider, a: Axis)
+   +collide(c: LoaderCollider, a: Axis)
+}
+
+class MarioCollision {
+   #collider: MarioCollider
+   +MarioCollision(m: MarioCollider)
+   +getCollider(): MarioCollider 
+   +collide(c: MarioCollider, a: Axis)
+   +collide(c: BlockCollider, a: Axis)
+   +collide(c: ScreenDisplacementCollider, a: Axis)
+   +collide(c: ScreenBorderCollider, a: Axis)
+   +collide(c: SpinyCollider, a: Axis)
+   +collide(c: SuperMushroomCollider, a: Axis)
+   +collide(c: GoombaCollider, a: Axis)
+   +collide(c: KoopaTroopaCollider, a: Axis)
+   +collide(c: LoaderCollider, a: Axis)
+}
+
+class ScreenBorderCollision {
+   #collider: ScreenBorderCollider
+   +ScreenBorderCollision(c: ScreenBorderCollider)
+   +getCollider(): ScreenBorderCollider 
+   +collide(c: MarioCollider, a: Axis)
+   +collide(c: BlockCollider, a: Axis)
+   +collide(c: ScreenDisplacementCollider, a: Axis)
+   +collide(c: ScreenBorderCollider, a: Axis)
+   +collide(c: SpinyCollider, a: Axis)
+   +collide(c: SuperMushroomCollider, a: Axis)
+   +collide(c: GoombaCollider, a: Axis)
+   +collide(c: KoopaTroopaCollider, a: Axis)
+   +collide(c: LoaderCollider, a: Axis)
+}
+
+class ScreenDisplacementCollision {
+   #collider: ScreenDisplacementCollider
+   +ScreenDisplacementCollision(c: ScreenDisplacementCollider)
+   +getCollider(): ScreenDisplacementCollider 
+   +collide(c: MarioCollider, a: Axis)
+   +collide(c: BlockCollider, a: Axis)
+   +collide(c: ScreenDisplacementCollider, a: Axis)
+   +collide(c: ScreenBorderCollider, a: Axis)
+   +collide(c: SpinyCollider, a: Axis)
+   +collide(c: SuperMushroomCollider, a: Axis)
+   +collide(c: GoombaCollider, a: Axis)
+   +collide(c: KoopaTroopaCollider, a: Axis)
+   +collide(c: LoaderCollider, a: Axis)
+}
+
+class SpinyCollision {
+   #collider: SpinyCollider
+   +SpinyCollision(c: SpinyCollider)
+   +getCollider(): SpinyCollider 
+   +collide(c: MarioCollider, a: Axis)
+   +collide(c: BlockCollider, a: Axis)
+   +collide(c: ScreenDisplacementCollider, a: Axis)
+   +collide(c: ScreenBorderCollider, a: Axis)
+   +collide(c: SpinyCollider, a: Axis)
+   +collide(c: SuperMushroomCollider, a: Axis)
+   +collide(c: GoombaCollider, a: Axis)
+   +collide(c: KoopaTroopaCollider, a: Axis)
+   +collide(c: LoaderCollider, a: Axis)
+}
+
+class SuperMushroomCollision {
+   #collider: SuperMushroomCollider
+   +SuperMushroomCollision(c: SuperMushroomCollider)
+   +getCollider(): SuperMushroomCollider 
+   +collide(c: MarioCollider, a: Axis)
+   +collide(c: BlockCollider, a: Axis)
+   +collide(c: ScreenDisplacementCollider, a: Axis)
+   +collide(c: ScreenBorderCollider, a: Axis)
+   +collide(c: GoombaCollider, a: Axis)
+   +collide(c: SpinyCollider, a: Axis)
+   +collide(c: KoopaTroopaCollider, a: Axis)
+   +collide(c: SuperMushroomCollider, a: Axis)
+   +collide(c: LoaderCollider, a: Axis)
+}
+
+interface UpdateableEntityCollision {
+   +getCollider(): UpdateableEntityCollider 
+}
+
+@enduml

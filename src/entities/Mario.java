@@ -11,7 +11,7 @@ import game.KeyStatus;
 import graphics.GameGraphicElement;
 
 public class Mario extends BaseUpdatableEntity {
-    protected int speedX; 
+    protected int speedX;
     protected int speedY;
     protected int lifes;
     protected boolean loaded;

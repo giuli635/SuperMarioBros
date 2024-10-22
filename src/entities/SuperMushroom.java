@@ -8,7 +8,7 @@ import colliders.SuperMushroomCollider;
 import graphics.GameGraphicElement;
 
 public class SuperMushroom extends BaseUpdatableEntity {
-    protected  int points;
+    protected int points;
     protected boolean movingRight = true;
     protected int speedX;
 
