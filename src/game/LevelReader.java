@@ -84,7 +84,7 @@ public class LevelReader  {
         }
         
         ScreenBorderCollider leftBorder = new ScreenBorderCollider(
-            new Rectangle(CHUNK, 0, CHUNK, windowHeight),
+            new Rectangle(0, 0, CHUNK, windowHeight),
             Direction.LEFT
         );
 
@@ -106,7 +106,7 @@ public class LevelReader  {
         String chunk;
         BlockLoader blockLoader = new BlockLoader();
         chunk = br.readLine();
-        int i = 2;
+        int i = 0;
         while (chunk != null) {
             for (int j = 0; j < chunk.length(); j++) {
                 char character = chunk.charAt(j);

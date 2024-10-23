@@ -37,7 +37,7 @@ public class ScreenBorderCollider extends BaseCollider {
     public void handleHorizontalCollision(MarioCollision m) {
         Rectangle collision = getBound().intersection(m.getCollider().getBound());
         m.getCollider().translate((int) collision.getWidth(), 0);
-        m.getCollider().getEntity().getGraphicElement().translate(-(int) collision.getWidth(), 0);
+        m.getCollider().getEntity().getGraphicElement().translate((int) collision.getWidth(), 0);
     }
 
     public void handleHorizontalCollision(ScreenBorderCollision s){
