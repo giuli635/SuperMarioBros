@@ -13,12 +13,16 @@ public class ScreenDisplacementCollider extends BaseCollider {
     protected ScreenBorderCollider leftBorder;
     protected ScreenBorderCollider rightBorder;
     protected LoaderCollider loader;
+    protected UnloaderCollider unloader;
+    protected DeleterCollider deleter;
 
-    public ScreenDisplacementCollider(Rectangle b, ScreenBorderCollider left, ScreenBorderCollider right, LoaderCollider l) {
+    public ScreenDisplacementCollider(Rectangle b, ScreenBorderCollider left, ScreenBorderCollider right, LoaderCollider l, UnloaderCollider ul, DeleterCollider d) {
         super(b);
         leftBorder = left;
         rightBorder = right;
         loader = l;
+        unloader = ul;
+        deleter = d;
     }
 
     public Entity getEntity() {
@@ -41,6 +45,8 @@ public class ScreenDisplacementCollider extends BaseCollider {
         leftBorder.translate((int) collision.getWidth(), 0);
         rightBorder.translate((int) collision.getWidth(), 0);
         loader.translate((int) collision.getWidth(), 0);
+        unloader.translate((int) collision.getWidth(), 0);
+        deleter.translate((int) collision.getWidth(), 0);
         GraphicEngine.instance().scrollScreen((int) -collision.getWidth());
     }
 }

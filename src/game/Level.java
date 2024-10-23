@@ -6,6 +6,7 @@ public class Level {
     protected Duration time;
     protected int points;
     protected Image background;
+    protected int lifes;
 
     public Level(Duration t) {
         time = t;

@@ -8,10 +8,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 import colliders.Collider;
+import colliders.DeleterCollider;
 import colliders.Direction;
 import colliders.LoaderCollider;
 import colliders.ScreenBorderCollider;
 import colliders.ScreenDisplacementCollider;
+import colliders.UnloaderCollider;
 import entities.Entity;
 import graphics.GraphicElement;
 import loading.BlockLoader;
@@ -29,6 +31,7 @@ public class LevelReader  {
     protected static int CHUNK = 32;
     protected static LevelReader uniqueInstance;
     protected Map<Character, EntityLoader> loaders;
+    protected static int loadingStartingPoint = 6;
 
     private LevelReader() {
         loaders = new HashMap<>();
@@ -65,31 +68,35 @@ public class LevelReader  {
         CollisionsEngine collisionsEngine = CollisionsEngine.instance();
         GraphicEngine graphicEngine = GraphicEngine.instance();
 
-        int lastChunkInScreen = (int) Math.ceil(graphicEngine.getPanelSize().getWidth() / (double) CHUNK);
+        int lastChunkInScreen = (int) Math.ceil(graphicEngine.getPanelSize().getWidth() / (double) CHUNK) + loadingStartingPoint;
         int windowHeight = (int) graphicEngine.getPanelSize().getHeight();
-        graphicEngine.setPosition(2 * CHUNK);
+        graphicEngine.setPosition(loadingStartingPoint * CHUNK);
 
-        for (Collider collider : collisionsEngine.getCollidersInRange(2 * CHUNK + 1, (int) graphicEngine.getPanelSize().getWidth() + CHUNK)) {
+        for (Collider collider : collisionsEngine.getCollidersInRange(loadingStartingPoint * CHUNK + 1, (int) graphicEngine.getPanelSize().getWidth() + CHUNK)) {
             GraphicElement graphicElement = collider.getEntity().getGraphicElement();
             Point colliderPosition = collider.getPosition();
-            graphicElement.setPosition((int) colliderPosition.getX() - 2 * CHUNK, (int) colliderPosition.getY());
+            graphicElement.setPosition((int) colliderPosition.getX() - loadingStartingPoint * CHUNK, (int) colliderPosition.getY());
             graphicEngine.addGraphicElement(graphicElement);
         }
 
-        LoaderCollider loader = new LoaderCollider(new Rectangle(0, 0, CHUNK, windowHeight));
+        LoaderCollider loader = new LoaderCollider(new Rectangle(0, 0, CHUNK, 2 * windowHeight));
 
         for (int i =  0; i <= lastChunkInScreen; i++) {
             loader.translate(CHUNK, 0);
             collisionsEngine.update();
         }
+
+        UnloaderCollider unloader = new UnloaderCollider(new Rectangle((loadingStartingPoint - 2) * CHUNK, 0, CHUNK, 2 * windowHeight));
+
+        DeleterCollider deleter = new DeleterCollider(new Rectangle((loadingStartingPoint - 6) * CHUNK, 0, CHUNK, 2 * windowHeight));
         
         ScreenBorderCollider leftBorder = new ScreenBorderCollider(
-            new Rectangle(0, 0, CHUNK, windowHeight),
+            new Rectangle((loadingStartingPoint - 1) * CHUNK, 0, CHUNK, windowHeight),
             Direction.LEFT
         );
 
         ScreenBorderCollider rightBorder = new ScreenBorderCollider(
-            new Rectangle(lastChunkInScreen * CHUNK, 0, CHUNK, windowHeight),
+            new Rectangle(lastChunkInScreen * CHUNK, 0, CHUNK, 2 * windowHeight),
             Direction.RIGHT
         );
 
@@ -98,7 +105,9 @@ public class LevelReader  {
             new Rectangle(CHUNK * middleChunk, 0, CHUNK, 2 * windowHeight),
             leftBorder,
             rightBorder,
-            loader
+            loader,
+            unloader,
+            deleter
         );
     }
     
@@ -106,7 +115,7 @@ public class LevelReader  {
         String chunk;
         BlockLoader blockLoader = new BlockLoader();
         chunk = br.readLine();
-        int i = 0;
+        int i = loadingStartingPoint - 1;
         while (chunk != null) {
             for (int j = 0; j < chunk.length(); j++) {
                 char character = chunk.charAt(j);

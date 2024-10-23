@@ -5,6 +5,7 @@ import java.awt.Rectangle;
 import collisions.Axis;
 import collisions.Collision;
 import collisions.GoombaCollision;
+import collisions.MarioCollision;
 import entities.Goomba;
 
 public class GoombaCollider extends BaseCollider implements UpdateableEntityCollider {
@@ -28,5 +29,12 @@ public class GoombaCollider extends BaseCollider implements UpdateableEntityColl
     @Override
     public void sendCollision(Collision c, Axis a) {
         c.collide(this, a);
+    }
+
+    public void handleVerticalCollision(MarioCollision m) {
+        Direction collisionDirection = m.getCollider().getVelocity().getYComponent() > 0 ? Direction.UP : Direction.DOWN;
+        if(collisionDirection == Direction.DOWN) {
+            goomba.getDamage();
+        }
     }
 }

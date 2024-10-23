@@ -16,8 +16,7 @@ public class CollisionsEngine {
     protected Set<Collider> toUpdate;
 
     public CollisionsEngine() {
-        chunks = new Vector<List<Collider>>();
-        toUpdate = new HashSet<>();
+        reset();
     }
 
     public static CollisionsEngine instance() {
@@ -118,5 +117,10 @@ public class CollisionsEngine {
 
     public void addToUpdate(Collider c) {
         toUpdate.add(c);
+    }
+
+    public void reset(){
+        chunks = new Vector<List<Collider>>();
+        toUpdate = new HashSet<>();
     }
 }

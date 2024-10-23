@@ -24,6 +24,7 @@ public class Mario extends BaseUpdatableEntity {
     protected boolean loaded;
     protected boolean jumping;
     protected Direction direction;
+    protected int jumpForce;
     protected boolean dead;
     protected boolean moving;
 
@@ -68,13 +69,13 @@ public class Mario extends BaseUpdatableEntity {
 
     public void land() {
         jumping = false;
-        // graphicElement.setSprite(new ImageIcon("sprites/mario.png"));
+        graphicElement.setSprite(SPRITES_FOLDER);
     }
 
     protected void startJump() {
         jumping = true;
         speedY = 24;
-        // graphicElement.setSprite(new ImageIcon("sprites/marioJumping.png"));
+        graphicElement.setSprite("marioJumping");
     }
 
     protected void handleVerticalMovement() {
@@ -93,9 +94,9 @@ public class Mario extends BaseUpdatableEntity {
             moving = true;
 
             if (jumping) {
-                // graphicElement.setSprite(new ImageIcon("sprites/marioRunning1.png"));
+                graphicElement.setSprite("marioJumping");
             } else {
-                // graphicElement.setSprite(new ImageIcon("sprites/marioJumping.png"));
+                graphicElement.setSprite("marioRunning1");
             }
 
             if (speedX < maxSpeedX) {
@@ -107,9 +108,9 @@ public class Mario extends BaseUpdatableEntity {
             moving = true;
 
             if (jumping) {
-                // graphicElement.setSprite(new ImageIcon("sprites/marioRunning1.png"));
+                graphicElement.setSprite("marioJumping");
             } else {
-                // graphicElement.setSprite(new ImageIcon("sprites/marioJumping.png"));
+                graphicElement.setSprite("marioRunning1");
             }
 
             if (speedX > -maxSpeedX) {
@@ -117,6 +118,22 @@ public class Mario extends BaseUpdatableEntity {
             }
         }
 
+        if (Game.instance().getKeyStatus(KeyEvent.VK_D) == KeyStatus.PRESSED) {
+            moving = true;
+    
+            if (jumping) {
+                graphicElement.setSprite("marioJumping");
+            } else {
+                graphicElement.setSprite("marioRunning1");
+            }
+    
+
+            if (speedX < maxSpeedX) {
+                speedX += accelerationX;
+            }
+        }
+    
+        
         if (!moving) {
             if (speedX > 0) {
                 speedX -= decelerationX;
@@ -137,12 +154,11 @@ public class Mario extends BaseUpdatableEntity {
 
     public void die() {
         speedY -= gravity;
-        // graphicElement.setSprite(new ImageIcon("sprites/marioDeath.png"));
+         graphicElement.setSprite("marioDeath");
         graphicElement.translate(0, (int) speedY);
     }
 
     public void takeDamage() {
-        // aca va la logica que depende del estado
         die();
         CollisionsEngine.instance().remove(collider);
         dead = true;

@@ -47,9 +47,7 @@ public class ScreenBorderCollider extends BaseCollider {
         GraphicEngine graphicEngine = GraphicEngine.instance();
         GraphicElement graphicElement = g.getCollider().getEntity().getGraphicElement();
         Direction collisionDirection = getVelocity().getXComponent() > 0 ? Direction.RIGHT : Direction.LEFT;
-        if (position != collisionDirection) {
-            graphicEngine.removeGraphicElement(graphicElement);
-        } else {
+        if  (collisionDirection == position) {
             Point colliderPosition = g.getCollider().getPosition();
             graphicElement.setPosition(
                 (int) (colliderPosition.getX() - graphicEngine.getPosition()),

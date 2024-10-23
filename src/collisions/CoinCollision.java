@@ -16,17 +16,16 @@ import colliders.SpinyCollider;
 import colliders.SuperMushroomCollider;
 import colliders.UnloaderCollider;
 
-public class LoaderCollision implements Collision {
-    protected LoaderCollider loader;
+public class CoinCollision implements Collision{
+    protected CoinCollider coinCollider;
 
-    public LoaderCollision(LoaderCollider l) {
-        loader = l;
+    public  CoinCollision(CoinCollider c) {
+        coinCollider = c;
     }
 
-
     @Override
-    public LoaderCollider getCollider() {
-        return loader;
+    public CoinCollider getCollider() {
+        return coinCollider;
     }
 
     @Override
@@ -66,15 +65,6 @@ public class LoaderCollision implements Collision {
     }
 
     @Override
-    public void collide(GoombaCollider c, Axis a) {
-        if (a == Axis.X) {
-            c.handleHorizontalCollision(this);
-        } else {
-            c.handleVerticalCollision(this);
-        }
-    }
-
-    @Override
     public void collide(SpinyCollider c, Axis a) {
         if (a == Axis.X) {
             c.handleHorizontalCollision(this);
@@ -101,6 +91,14 @@ public class LoaderCollision implements Collision {
         }
     }
 
+    @Override
+    public void collide(GoombaCollider c, Axis a) {
+        if (a == Axis.X) {
+            c.handleHorizontalCollision(this);
+        } else {
+            c.handleVerticalCollision(this);
+        }
+    }
 
     @Override
     public void collide(LoaderCollider c, Axis a) {
