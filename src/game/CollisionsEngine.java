@@ -16,8 +16,7 @@ public class CollisionsEngine {
     protected Set<Collider> toUpdate;
 
     public CollisionsEngine() {
-        chunks = new Vector<List<Collider>>();
-        toUpdate = new HashSet<>();
+        reset();
     }
 
     public static CollisionsEngine instance() {
@@ -59,7 +58,7 @@ public class CollisionsEngine {
     public void checkCollisions(Iterable<Collider> collidersToCheck, Axis axis) {
         for (Collider collider : collidersToCheck) {
             int[] chunkRange = calculateChunk(collider);
-            for (int i = chunkRange[0]; i <= chunkRange[1]; i++) {
+            for (int i = chunkRange[0]; i <= chunkRange[1] && i < chunks.size(); i++) {
                 List<Collider> chunk = new ArrayList<>(chunks.get(i));
                 for (Collider toCheck : chunk) {
                     collider.setColliding(true); // Parche
@@ -118,5 +117,10 @@ public class CollisionsEngine {
 
     public void addToUpdate(Collider c) {
         toUpdate.add(c);
+    }
+
+    public void reset(){
+        chunks = new Vector<List<Collider>>();
+        toUpdate = new HashSet<>();
     }
 }

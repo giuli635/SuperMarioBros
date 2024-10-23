@@ -2,6 +2,8 @@ package collisions;
 
 import colliders.BlockCollider;
 import colliders.BrickCollider;
+import colliders.CoinCollider;
+import colliders.DeleterCollider;
 import colliders.GoombaCollider;
 import colliders.KoopaTroopaCollider;
 import colliders.LoaderCollider;
@@ -12,6 +14,7 @@ import colliders.ScreenBorderCollider;
 import colliders.ScreenDisplacementCollider;
 import colliders.SpinyCollider;
 import colliders.SuperMushroomCollider;
+import colliders.UnloaderCollider;
 
 public class SpinyCollision implements UpdateableEntityCollision {
     protected SpinyCollider collider;
@@ -125,6 +128,33 @@ public class SpinyCollision implements UpdateableEntityCollision {
 
     @Override
     public void collide(QuestionBlockCollider c, Axis a) {
+        if (a == Axis.X) {
+            c.handleHorizontalCollision(this);
+        } else {
+            c.handleVerticalCollision(this);
+        }
+    }
+
+    @Override
+    public void collide(CoinCollider c, Axis a) {
+        if (a == Axis.X) {
+            c.handleHorizontalCollision(this);
+        } else {
+            c.handleVerticalCollision(this);
+        }
+    }
+
+    @Override
+    public void collide(UnloaderCollider c, Axis a) {
+        if (a == Axis.X) {
+            c.handleHorizontalCollision(this);
+        } else {
+            c.handleVerticalCollision(this);
+        }
+    }
+
+    @Override
+    public void collide(DeleterCollider c, Axis a) {
         if (a == Axis.X) {
             c.handleHorizontalCollision(this);
         } else {

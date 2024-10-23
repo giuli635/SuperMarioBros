@@ -46,7 +46,7 @@ public class BlockCollider extends BaseCollider {
         int sign = (int) -Math.signum(velocity.getYComponent());
         m.getCollider().translate(0, sign * (int) collision.getHeight());
         m.getCollider().getEntity().getGraphicElement().translate(0, sign * (int) collision.getHeight());
-        if (sign == 1) {
+        if (mario.getJumping()) {
             mario.land();
         }
     }

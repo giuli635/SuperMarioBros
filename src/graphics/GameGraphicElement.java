@@ -38,10 +38,8 @@ public class GameGraphicElement implements GraphicElement {
 
     @Override
     public void translate(int dx, int dy) {
-        if ((bounds.getX() + dx) >= 0) {
-            toUpdate = true;
-            bounds.translate(dx, dy);
-        }
+        toUpdate = true;
+        bounds.translate(dx, dy);
     }
 
     @Override
@@ -81,12 +79,12 @@ public class GameGraphicElement implements GraphicElement {
     }
 
     public void draw() {
-        Rectangle boundsToDraw = new Rectangle(bounds);
-        boundsToDraw.setLocation(
-            (int) bounds.getX(),
-            (int) (GraphicEngine.instance().getPanelSize().getHeight() - bounds.getY())
-        );
         if (toUpdate) {
+            Rectangle boundsToDraw = new Rectangle(bounds);
+            boundsToDraw.setLocation(
+                (int) bounds.getX(),
+                (int) (GraphicEngine.instance().getPanelSize().getHeight() - bounds.getY())
+            );
             label.setBounds(boundsToDraw);
             label.setIcon(sprite);
             toUpdate = false;

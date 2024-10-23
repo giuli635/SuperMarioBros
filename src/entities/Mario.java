@@ -1,4 +1,5 @@
 package entities;
+
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
@@ -16,16 +17,18 @@ public class Mario extends BaseUpdatableEntity {
     protected static String MARIO_JUMP = "marioJumping"; 
     protected static String MARIO_WALKING = "marioWalking";
     protected static String MARIO_WALKING2 = "marioWalking2";
-    protected int speedX;
-    protected int speedY;
-    protected int accelerationX;
-    protected int decelerationX;
-    protected int maxSpeed = 8;
+    protected static float maxSpeedX = 5;
+    protected static float accelerationX = 0.1f;
+    protected static float decelerationX = 0.18f;
+    protected static float accelerationY = 0.5f;
+    protected static float minSpeedX = 1;
+    protected static float gravity = 2;
+    protected float speedX;
+    protected float speedY;
     protected int lifes;
     protected boolean loaded;
     protected boolean jumping;
     protected Direction direction;
-    protected float gravity;
     protected int jumpForce;
     protected boolean dead;
     protected boolean moving;
@@ -34,13 +37,8 @@ public class Mario extends BaseUpdatableEntity {
     protected int framesPerSprite = 10;
 
     public Mario() {
-        speedX = 4;
+        speedX = minSpeedX;
         speedY = -3;
-        gravity = 2;
-        jumpForce = 0;
-        accelerationX = 1;
-        decelerationX = 2;
-        onRight = true;
         dead = false;
         loaded = false;
         jumping = false;
@@ -70,8 +68,8 @@ public class Mario extends BaseUpdatableEntity {
             startJump();
         }
         if (!dead) {
-        handleHorizontalMovement();
-        handleVerticalMovement();
+            handleHorizontalMovement();
+            handleVerticalMovement();
         } else {
             die();
         }
@@ -98,14 +96,8 @@ public class Mario extends BaseUpdatableEntity {
 
     protected void handleVerticalMovement() {
         if (speedY > -5) {
-            speedY -= gravity; 
+            speedY -= gravity;
         }
-        
-        if (speedY > 20) {
-            jumpForce = 0;
-        }
-        
-        //speedY += jumpForce;
 
         collider.translate(0, (int) speedY);
         graphicElement.translate(0, (int) speedY);
@@ -113,35 +105,38 @@ public class Mario extends BaseUpdatableEntity {
 
     protected void handleHorizontalMovement() {
         moving = false;
-        
+
 
         if (Game.instance().getKeyStatus(KeyEvent.VK_D) == KeyStatus.PRESSED) {
             moving = true;
             onRight = true;
 
-            if (speedX < maxSpeed) {
+            if (speedX < maxSpeedX) {
                 speedX += accelerationX;
             }
         }
-    
-  
+
         if (Game.instance().getKeyStatus(KeyEvent.VK_A) == KeyStatus.PRESSED) {
             moving = true;
             onRight = false;
-
-            if (speedX > -maxSpeed) {
+            
+            if (speedX > -maxSpeedX) {
                 speedX -= accelerationX;
             }
         }
+
     
-        
         if (!moving) {
             if (speedX > 0) {
                 speedX -= decelerationX;
-                if (speedX < 0) speedX = 0;
+                if (speedX < 0) {
+                    speedX = 0;
+                }
             } else if (speedX < 0) {
                 speedX += decelerationX;
-                if (speedX > 0) speedX = 0;
+                if (speedX > 0) {
+                    speedX = 0;
+                }
             }
         } else if (moving) {
             
@@ -168,19 +163,19 @@ public class Mario extends BaseUpdatableEntity {
 
             animationFrameCounter++;
         }
+    
 
-        graphicElement.translate(speedX, 0);
-        collider.translate(speedX, 0);
+        graphicElement.translate((int) speedX, 0);
+        collider.translate((int) speedX, 0);
     }
 
     public void die() {
         speedY -= gravity;
-        //graphicElement.setSprite(new ImageIcon("sprites/marioDeath.png"));
-        graphicElement.translate(0, speedY);
+         graphicElement.setSprite("marioDeath");
+        graphicElement.translate(0, (int) speedY);
     }
 
     public void takeDamage() {
-        //aca va la logica que depende del estado
         die();
         CollisionsEngine.instance().remove(collider);
         dead = true;

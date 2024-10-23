@@ -1,8 +1,10 @@
 package collisions;
 import colliders.Collider;
+import colliders.DeleterCollider;
 import colliders.GoombaCollider;
 import colliders.BlockCollider;
 import colliders.BrickCollider;
+import colliders.CoinCollider;
 import colliders.KoopaTroopaCollider;
 import colliders.LoaderCollider;
 import colliders.MarioCollider;
@@ -12,6 +14,7 @@ import colliders.ScreenBorderCollider;
 import colliders.ScreenDisplacementCollider;
 import colliders.SpinyCollider;
 import colliders.SuperMushroomCollider;
+import colliders.UnloaderCollider;
 
 public interface Collision {
     public Collider getCollider();
@@ -27,4 +30,7 @@ public interface Collision {
     public void collide(BrickCollider c, Axis a);
     public void collide(PipeCollider c, Axis a);
     public void collide(QuestionBlockCollider c, Axis a);
+    public void collide(CoinCollider c, Axis a);
+    public void collide(UnloaderCollider c, Axis a);
+    public void collide(DeleterCollider c, Axis a);
 }

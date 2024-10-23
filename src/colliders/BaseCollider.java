@@ -15,18 +15,22 @@ public abstract class BaseCollider implements Collider {
     protected boolean moving;
     protected Vector2D nextVelocity;
 
+    @Override
     public boolean isMoving() {
         return moving;
     }
 
+    @Override
     public void setMoving(boolean m) {
         moving = m;
     }
 
+    @Override
     public boolean isColliding() {
         return colliding;
     }
 
+    @Override
     public void setColliding(boolean c) {
         colliding = c;
     }
@@ -41,6 +45,7 @@ public abstract class BaseCollider implements Collider {
         CollisionsEngine.instance().add(this);
     }
 
+    @Override
     public Point getPosition() {
         return bounds.getLocation();
     }

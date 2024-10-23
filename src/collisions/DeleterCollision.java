@@ -16,17 +16,17 @@ import colliders.SpinyCollider;
 import colliders.SuperMushroomCollider;
 import colliders.UnloaderCollider;
 
-public class LoaderCollision implements Collision {
-    protected LoaderCollider loader;
+public class DeleterCollision implements Collision {
+    protected DeleterCollider deleter;
 
-    public LoaderCollision(LoaderCollider l) {
-        loader = l;
+    public DeleterCollision(DeleterCollider d) {
+        deleter = d;
     }
 
 
     @Override
-    public LoaderCollider getCollider() {
-        return loader;
+    public DeleterCollider getCollider() {
+        return deleter;
     }
 
     @Override
