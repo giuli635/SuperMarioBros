@@ -6,7 +6,6 @@ import java.util.Set;
 
 import javax.swing.JFrame;
 import javax.swing.JLayeredPane;
-import javax.swing.RepaintManager;
 import javax.swing.SwingUtilities;
 
 import graphics.GameGraphicElement;
@@ -18,7 +17,7 @@ public class GraphicEngine {
     protected JLayeredPane panel;
     protected Set<GraphicElement> onScreen;
     protected int position;
-    protected GraphicElement background;
+    protected GraphicElement[] backgrounds;
 
     public int getPosition() {
         return position;
@@ -49,10 +48,14 @@ public class GraphicEngine {
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setVisible(true);
 
-        background = new GameGraphicElement(null, "level", "mode1");
-        background.setSprite("levelBackground1");
-        addGraphicElement(background);
-        background.setPosition(0, 480);
+        backgrounds = new GraphicElement[]{new GameGraphicElement(null, "level", "mode1"), new GameGraphicElement(null, "level", "mode1")};
+        for (int i = 0; i < backgrounds.length; i++) {
+            backgrounds[i].setSprite("levelBackground1");
+            addGraphicElement(backgrounds[i]);
+        }
+
+        backgrounds[0].setPosition(0, 480);
+        backgrounds[1].setPosition((int) backgrounds[1].getCurrentSprite().getIconWidth(), 480);
     }
 
     public static GraphicEngine instance() {
@@ -103,6 +106,14 @@ public class GraphicEngine {
 
     public void scrollScreen(int velocity) {  
         translate(-velocity);
+        if (backgrounds[1].getLabel().getBounds().getMaxX() < getPanelSize().getWidth()) {
+            GraphicElement aux = backgrounds[0];
+            backgrounds[0].setPosition((int) backgrounds[1].getLabel().getBounds().getMaxX(), 480);
+            panel.moveToBack(backgrounds[0].getLabel());
+            backgrounds[0] = backgrounds[1];
+            backgrounds[1] = aux;
+        }
+
         for (GraphicElement element : onScreen) {
             element.translate(velocity, 0);
         }

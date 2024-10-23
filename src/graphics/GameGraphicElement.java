@@ -5,7 +5,6 @@ import java.util.Map;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
-import javax.swing.SwingUtilities;
 
 import entities.Entity;
 import game.GraphicEngine;
@@ -60,11 +59,6 @@ public class GameGraphicElement implements GraphicElement {
         sprite = sprites.get(s + ".png");
         toUpdate = true;
         bounds.setSize(sprite.getIconWidth(), sprite.getIconHeight());
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                label.setIcon(sprite);
-            }
-        });
     }
 
     public void draw() {
@@ -75,6 +69,7 @@ public class GameGraphicElement implements GraphicElement {
                 (int) (GraphicEngine.instance().getPanelSize().getHeight() - bounds.getY())
             );
             label.setBounds(boundsToDraw);
+            label.setIcon(sprite);
             toUpdate = false;
         }
     }
