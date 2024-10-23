@@ -171,7 +171,7 @@ public class Mario extends BaseUpdatableEntity {
 
     public void die() {
         speedY -= gravity;
-         graphicElement.setSprite("marioDeath");
+        graphicElement.setSprite("marioDeath");
         graphicElement.translate(0, (int) speedY);
     }
 

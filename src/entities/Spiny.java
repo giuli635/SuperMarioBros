@@ -50,4 +50,11 @@ public class Spiny extends BaseUpdatableEntity implements Enemy {
         graphicElement.translate(0, -3);
         collider.translate(0, -3);
     }
+
+    public void spawn(int x, int y) {
+        graphicElement.setPosition(x, y);
+        collider.setPosition(x, y);
+
+        System.out.println("Spiny Position: " + graphicElement.getPosition());
+    }
 }

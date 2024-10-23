@@ -3,8 +3,10 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -26,6 +28,10 @@ public class Game implements WindowListener, KeyListener {
     protected String mode; 
     private LevelTimer levelTimer; // Agregamos el temporizador
     private TimerGraphicElement timerGraphicElement; // Elemento gráfico del temporizador
+
+
+    protected List<UpdatableEntity> toAddList = new ArrayList<>();
+    protected List<UpdatableEntity> toRemoveList = new ArrayList<>();
 
 
     private Game() {
@@ -70,7 +76,9 @@ public class Game implements WindowListener, KeyListener {
             lastUpdateTime = System.currentTimeMillis();
             
             if(!pause) {
-                for (UpdatableEntity entity : toUpdateRegistry) {
+                List<UpdatableEntity> list = new ArrayList<>(toUpdateRegistry);
+                
+                for (UpdatableEntity entity : list) {
                     entity.update();
                 }
                 CollisionsEngine.instance().update();
@@ -150,6 +158,4 @@ public class Game implements WindowListener, KeyListener {
             pauseKeyAlreadyPressed = false;
         }
     }
-
-    
 }

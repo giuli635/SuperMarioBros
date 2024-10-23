@@ -15,20 +15,19 @@ import colliders.ScreenBorderCollider;
 import colliders.ScreenDisplacementCollider;
 import colliders.SpinyCollider;
 import colliders.SuperMushroomCollider;
-import colliders.UnloaderCollider;
+import colliders.UnloaderCollider;         
 
-public class CoinCollision implements Collision{
-    protected CoinCollider coinCollider;
+public class LakituCollision implements UpdateableEntityCollision {
+    protected LakituCollider collider;
 
-    public  CoinCollision(CoinCollider c) {
-        coinCollider = c;
+    public LakituCollision(LakituCollider c) {
+        collider = c;
     }
 
-    @Override
-    public CoinCollider getCollider() {
-        return coinCollider;
+    public LakituCollider getCollider() {
+        return collider;
     }
-
+ 
     @Override
     public void collide(MarioCollider c, Axis a) {
         if (a == Axis.X) {
@@ -66,6 +65,15 @@ public class CoinCollision implements Collision{
     }
 
     @Override
+    public void collide(GoombaCollider c, Axis a) {
+        if (a == Axis.X) {
+            c.handleHorizontalCollision(this);
+        } else {
+            c.handleVerticalCollision(this);
+        }
+    }
+
+    @Override
     public void collide(SpinyCollider c, Axis a) {
         if (a == Axis.X) {
             c.handleHorizontalCollision(this);
@@ -84,7 +92,7 @@ public class CoinCollision implements Collision{
     }
 
     @Override
-    public void collide(SuperMushroomCollider c, Axis a) {
+    public void collide(colliders.LakituCollider c, Axis a) {
         if (a == Axis.X) {
             c.handleHorizontalCollision(this);
         } else {
@@ -93,7 +101,7 @@ public class CoinCollision implements Collision{
     }
 
     @Override
-    public void collide(GoombaCollider c, Axis a) {
+    public void collide(SuperMushroomCollider c, Axis a) {
         if (a == Axis.X) {
             c.handleHorizontalCollision(this);
         } else {
@@ -157,15 +165,6 @@ public class CoinCollision implements Collision{
 
     @Override
     public void collide(DeleterCollider c, Axis a) {
-        if (a == Axis.X) {
-            c.handleHorizontalCollision(this);
-        } else {
-            c.handleVerticalCollision(this);
-        }
-    }
-
-    @Override
-    public void collide(LakituCollider c, Axis a) {
         if (a == Axis.X) {
             c.handleHorizontalCollision(this);
         } else {

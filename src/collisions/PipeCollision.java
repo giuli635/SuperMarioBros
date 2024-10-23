@@ -160,4 +160,13 @@ public class PipeCollision implements Collision {
             c.handleVerticalCollision(this);
         }
     }
+
+    @Override
+    public void collide(colliders.LakituCollider c, Axis a) {
+        if (a == Axis.X) {
+            c.handleHorizontalCollision(this);
+        } else {
+            c.handleVerticalCollision(this);
+        }
+    }
 }

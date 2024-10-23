@@ -20,6 +20,7 @@ import loading.BlockLoader;
 import loading.EntityLoader;
 import loading.GoombaLoader;
 import loading.KoopaTroopaLoader;
+import loading.LakituLoader;
 import loading.MarioLoader;
 import loading.PipeLoader;
 import loading.QuestionBlockLoader;
@@ -43,6 +44,7 @@ public class LevelReader  {
         loaders.put('b', new BrickLoader());
         //loaders.put('p', new PipeLoader());
         //loaders.put('?', new QuestionBlockLoader());
+        loaders.put('l', new LakituLoader());
     }
 
     protected static LevelReader instance(){

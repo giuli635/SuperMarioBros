@@ -5,6 +5,7 @@ import colliders.CoinCollider;
 import colliders.DeleterCollider;
 import colliders.GoombaCollider;
 import colliders.KoopaTroopaCollider;
+import colliders.LakituCollider;
 import colliders.LoaderCollider;
 import colliders.MarioCollider;
 import colliders.PipeCollider;
@@ -154,6 +155,15 @@ public class BlockCollision implements Collision {
 
     @Override
     public void collide(DeleterCollider c, Axis a) {
+        if (a == Axis.X) {
+            c.handleHorizontalCollision(this);
+        } else {
+            c.handleVerticalCollision(this);
+        }
+    }
+
+    @Override
+    public void collide(LakituCollider c, Axis a) {
         if (a == Axis.X) {
             c.handleHorizontalCollision(this);
         } else {
