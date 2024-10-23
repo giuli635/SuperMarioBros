@@ -1,5 +1,4 @@
 package collisions;
-
 import colliders.BlockCollider;
 import colliders.BrickCollider;
 import colliders.GoombaCollider;
@@ -13,14 +12,14 @@ import colliders.ScreenDisplacementCollider;
 import colliders.SpinyCollider;
 import colliders.SuperMushroomCollider;
 
-public class MarioCollision implements UpdateableEntityCollision {
-    protected MarioCollider collider;
+public class PipeCollision implements Collision {
+    protected PipeCollider collider;
 
-    public MarioCollision(MarioCollider m) {
-        collider = m;
+    public PipeCollision(PipeCollider c) {
+        collider = c;
     }
 
-    public MarioCollider getCollider() {
+    public PipeCollider getCollider() {
         return collider;
     }
 
@@ -70,15 +69,6 @@ public class MarioCollision implements UpdateableEntityCollision {
     }
 
     @Override
-    public void collide(SuperMushroomCollider c, Axis a) {
-        if (a == Axis.X) {
-            c.handleHorizontalCollision(this);
-        } else {
-            c.handleVerticalCollision(this);
-        }
-    }
-
-    @Override
     public void collide(GoombaCollider c, Axis a) {
         if (a == Axis.X) {
             c.handleHorizontalCollision(this);
@@ -89,6 +79,15 @@ public class MarioCollision implements UpdateableEntityCollision {
 
     @Override
     public void collide(KoopaTroopaCollider c, Axis a) {
+        if (a == Axis.X) {
+            c.handleHorizontalCollision(this);
+        } else {
+            c.handleVerticalCollision(this);
+        }
+    }
+
+    @Override
+    public void collide(SuperMushroomCollider c, Axis a) {
         if (a == Axis.X) {
             c.handleHorizontalCollision(this);
         } else {

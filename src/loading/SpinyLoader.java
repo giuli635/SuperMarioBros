@@ -1,11 +1,10 @@
 package loading;
 
-import entities.Entity;
 import entities.Spiny;
 
 public class SpinyLoader implements EntityLoader {
     @Override
-    public Entity load() {
+    public Spiny load() {
         return new Spiny();
     }
 }

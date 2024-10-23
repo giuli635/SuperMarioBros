@@ -2,8 +2,6 @@ package entities;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 
-import javax.swing.ImageIcon;
-
 import colliders.Direction;
 import colliders.MarioCollider;
 import game.CollisionsEngine;

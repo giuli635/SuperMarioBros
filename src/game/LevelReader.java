@@ -19,8 +19,11 @@ import loading.EntityLoader;
 import loading.GoombaLoader;
 import loading.KoopaTroopaLoader;
 import loading.MarioLoader;
+import loading.PipeLoader;
+import loading.QuestionBlockLoader;
 import loading.SpinyLoader;
 import loading.SuperMushroomLoader;
+import loading.BrickLoader;
 
 public class LevelReader  {
     protected static int CHUNK = 32;
@@ -34,6 +37,9 @@ public class LevelReader  {
         loaders.put('k', new KoopaTroopaLoader());
         loaders.put('g', new GoombaLoader());
         loaders.put('s', new SuperMushroomLoader());
+        loaders.put('b', new BrickLoader());
+        //loaders.put('p', new PipeLoader());
+        //loaders.put('?', new QuestionBlockLoader());
     }
 
     protected static LevelReader instance(){

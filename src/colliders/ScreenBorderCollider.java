@@ -5,10 +5,8 @@ import java.awt.Rectangle;
 
 import collisions.Axis;
 import collisions.Collision;
-import collisions.BlockCollision;
 import collisions.MarioCollision;
 import collisions.ScreenBorderCollision;
-import collisions.UpdateableEntityCollision;
 import entities.Entity;
 import game.GraphicEngine;
 import graphics.GraphicElement;
@@ -42,23 +40,10 @@ public class ScreenBorderCollider extends BaseCollider {
         m.getCollider().getEntity().getGraphicElement().translate(-(int) collision.getWidth(), 0);
     }
 
-    public void handleHorizontalCollision(BlockCollision g) {
-        GraphicEngine graphicEngine = GraphicEngine.instance();
-        GraphicElement graphicElement = g.getCollider().getEntity().getGraphicElement();
-        Direction collisionDirection = getVelocity().getXComponent() > 0 ? Direction.RIGHT : Direction.LEFT;
-        if (position != collisionDirection) {
-            graphicEngine.removeGraphicElement(graphicElement);
-        } else {
-            Point colliderPosition = g.getCollider().getPosition();
-            graphicElement.setPosition(
-                (int) (colliderPosition.getX() - graphicEngine.getPosition()),
-                (int) colliderPosition.getY()
-            );
-            graphicEngine.addGraphicElement(graphicElement);
-        }
+    public void handleHorizontalCollision(ScreenBorderCollision s){
     }
 
-    public void handleHorizontalCollision(UpdateableEntityCollision g) {
+    public void handleHorizontalCollision(Collision g) {
         GraphicEngine graphicEngine = GraphicEngine.instance();
         GraphicElement graphicElement = g.getCollider().getEntity().getGraphicElement();
         Direction collisionDirection = getVelocity().getXComponent() > 0 ? Direction.RIGHT : Direction.LEFT;

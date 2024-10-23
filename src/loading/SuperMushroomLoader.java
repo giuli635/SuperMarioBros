@@ -1,11 +1,10 @@
 package loading;
 
-import entities.Entity;
 import entities.SuperMushroom;
 
 public class SuperMushroomLoader implements EntityLoader {
     @Override
-    public Entity load() {
+    public SuperMushroom load() {
         return new SuperMushroom();
     }
 }
