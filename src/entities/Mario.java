@@ -1,6 +1,8 @@
 package entities;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 import colliders.Direction;
 import colliders.MarioCollider;
@@ -10,7 +12,10 @@ import game.KeyStatus;
 import graphics.GameGraphicElement;
 
 public class Mario extends BaseUpdatableEntity {
-    protected static String SPRITES_FOLDER = "mario";
+    protected static String MARIO = "mario";
+    protected static String MARIO_JUMP = "marioJumping"; 
+    protected static String MARIO_WALKING = "marioWalking";
+    protected static String MARIO_WALKING2 = "marioWalking2";
     protected int speedX;
     protected int speedY;
     protected int accelerationX;
@@ -24,6 +29,9 @@ public class Mario extends BaseUpdatableEntity {
     protected int jumpForce;
     protected boolean dead;
     protected boolean moving;
+    protected boolean onRight;
+    protected int animationFrameCounter = 0;
+    protected int framesPerSprite = 10;
 
     public Mario() {
         speedX = 4;
@@ -32,12 +40,13 @@ public class Mario extends BaseUpdatableEntity {
         jumpForce = 0;
         accelerationX = 1;
         decelerationX = 2;
+        onRight = true;
         dead = false;
         loaded = false;
         jumping = false;
         collider = new MarioCollider(this, new Rectangle());
-        graphicElement = new GameGraphicElement(this, SPRITES_FOLDER, Game.instance().getMode());
-        graphicElement.setSprite(SPRITES_FOLDER);
+        graphicElement = new GameGraphicElement(this, MARIO, Game.instance().getMode());
+        graphicElement.setSprite(MARIO);
         collider.setSize(
             graphicElement.getCurrentSprite().getIconWidth(),
             graphicElement.getCurrentSprite().getIconHeight()
@@ -70,13 +79,21 @@ public class Mario extends BaseUpdatableEntity {
 
     public void land() {
         jumping = false;
-        //graphicElement.setSprite(new ImageIcon("sprites/mario.png"));
+        if (onRight && !moving) {
+            graphicElement.setSprite(MARIO);
+        } else if (!moving && !onRight) {
+            graphicElement.flipSprite(MARIO);
+        }
     }
 
     protected void startJump() {
         jumping = true;
         speedY = 24;
-        //graphicElement.setSprite(new ImageIcon("sprites/marioJumping.png"));
+        if (onRight) {
+            graphicElement.setSprite(MARIO_JUMP);
+        } else {
+            graphicElement.flipSprite(MARIO_JUMP);
+        }
     }
 
     protected void handleVerticalMovement() {
@@ -96,17 +113,11 @@ public class Mario extends BaseUpdatableEntity {
 
     protected void handleHorizontalMovement() {
         moving = false;
-    
+        
 
         if (Game.instance().getKeyStatus(KeyEvent.VK_D) == KeyStatus.PRESSED) {
             moving = true;
-    
-            if (jumping) {
-                //graphicElement.setSprite(new ImageIcon("sprites/marioRunning1.png"));
-            } else {
-                //graphicElement.setSprite(new ImageIcon("sprites/marioJumping.png"));
-            }
-    
+            onRight = true;
 
             if (speedX < maxSpeed) {
                 speedX += accelerationX;
@@ -116,13 +127,7 @@ public class Mario extends BaseUpdatableEntity {
   
         if (Game.instance().getKeyStatus(KeyEvent.VK_A) == KeyStatus.PRESSED) {
             moving = true;
-    
-            if (jumping) {
-               // graphicElement.setSprite(new ImageIcon("sprites/marioRunning1.png"));
-            } else {
-                //graphicElement.setSprite(new ImageIcon("sprites/marioJumping.png"));
-            }
-    
+            onRight = false;
 
             if (speedX > -maxSpeed) {
                 speedX -= accelerationX;
@@ -138,8 +143,31 @@ public class Mario extends BaseUpdatableEntity {
                 speedX += decelerationX;
                 if (speedX > 0) speedX = 0;
             }
-        }
+        } else if (moving) {
+            
+            if (onRight && !jumping) {
+                if (animationFrameCounter / framesPerSprite % 2 == 0) {
+                    graphicElement.setSprite(MARIO_WALKING);
+                } else {
+                    graphicElement.setSprite(MARIO_WALKING2);
+                }
+            } else if (!onRight && !jumping) {
+                if (animationFrameCounter / framesPerSprite % 2 == 0) {
+                    graphicElement.flipSprite(MARIO_WALKING);
+                } else {
+                    graphicElement.flipSprite(MARIO_WALKING2);
+                }
+            }
+
+            if (onRight && jumping) {
+                graphicElement.setSprite(MARIO_JUMP);
+            } else if (!onRight && jumping){
+                graphicElement.flipSprite(MARIO_JUMP);
+            }
     
+
+            animationFrameCounter++;
+        }
 
         graphicElement.translate(speedX, 0);
         collider.translate(speedX, 0);

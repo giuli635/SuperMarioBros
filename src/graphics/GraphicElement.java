@@ -13,6 +13,7 @@ public interface GraphicElement {
     public void setPosition(int x, int y);
     public ImageIcon getCurrentSprite();
     public void setSprite(String s);
+    public void flipSprite(String s);
     public JLabel getLabel();
     public void draw();
     public void loadSprites(String mode);
