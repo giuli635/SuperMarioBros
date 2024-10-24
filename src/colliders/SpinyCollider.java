@@ -4,6 +4,7 @@ import java.awt.Rectangle;
 
 import collisions.Axis;
 import collisions.Collision;
+import collisions.MarioCollision;
 import collisions.SpinyCollision;
 import entities.Spiny;
 
@@ -28,5 +29,13 @@ public class SpinyCollider extends BaseCollider implements UpdateableEntityColli
     @Override
     public Collision getCollision() {
         return new SpinyCollision(this);
+    }
+
+    public void handleHorizontalCollision(MarioCollision m) {
+        m.getCollider().getEntity().die();
+    }
+
+    public void handleVerticalCollision(MarioCollision m) {
+        m.getCollider().getEntity().die();
     }
 }

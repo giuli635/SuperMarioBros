@@ -72,7 +72,7 @@ public class LevelReader  {
         int windowHeight = (int) graphicEngine.getPanelSize().getHeight();
         graphicEngine.setPosition(loadingStartingPoint * CHUNK);
 
-        for (Collider collider : collisionsEngine.getCollidersInRange(loadingStartingPoint * CHUNK + 1, (int) graphicEngine.getPanelSize().getWidth() + CHUNK)) {
+        for (Collider collider : collisionsEngine.getCollidersInRange(loadingStartingPoint * CHUNK + 1, (int) graphicEngine.getPanelSize().getWidth() + CHUNK * loadingStartingPoint)) {
             GraphicElement graphicElement = collider.getEntity().getGraphicElement();
             Point colliderPosition = collider.getPosition();
             graphicElement.setPosition((int) colliderPosition.getX() - loadingStartingPoint * CHUNK, (int) colliderPosition.getY());

@@ -2,13 +2,12 @@ package entities;
 
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
-import java.util.List;
 
 import colliders.Direction;
 import colliders.MarioCollider;
 import game.CollisionsEngine;
 import game.Game;
+import game.GraphicEngine;
 import game.KeyStatus;
 import graphics.GameGraphicElement;
 
@@ -29,8 +28,6 @@ public class Mario extends BaseUpdatableEntity {
     protected boolean loaded;
     protected boolean jumping;
     protected Direction direction;
-    protected int jumpForce;
-    protected boolean dead;
     protected boolean moving;
     protected boolean onRight;
     protected int animationFrameCounter = 0;
@@ -39,7 +36,6 @@ public class Mario extends BaseUpdatableEntity {
     public Mario() {
         speedX = minSpeedX;
         speedY = -3;
-        dead = false;
         loaded = false;
         jumping = false;
         collider = new MarioCollider(this, new Rectangle());
@@ -67,12 +63,9 @@ public class Mario extends BaseUpdatableEntity {
         if (Game.instance().getKeyStatus(KeyEvent.VK_W) == KeyStatus.PRESSED && !jumping) {
             startJump();
         }
-        if (!dead) {
-            handleHorizontalMovement();
-            handleVerticalMovement();
-        } else {
-            die();
-        }
+
+        handleHorizontalMovement();
+        handleVerticalMovement();
     }
 
     public void land() {
@@ -170,16 +163,15 @@ public class Mario extends BaseUpdatableEntity {
     }
 
     public void die() {
-        speedY -= gravity;
-         graphicElement.setSprite("marioDeath");
-        graphicElement.translate(0, (int) speedY);
-    }
-
-    public void takeDamage() {
-        die();
+        Game.instance().unregisterToUpdate(this);
         CollisionsEngine.instance().remove(collider);
-        dead = true;
-        speedY = 15;
+        graphicElement.setSprite("marioDeath");
+        //TODO: deathAnimation();
+        GraphicEngine.instance().removeGraphicElement(graphicElement);
     }
 
+    public void addVelocity(int dx, int dy) {
+        speedX += dx;
+        speedY += dy;
+    }
 }
