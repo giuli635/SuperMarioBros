@@ -14,7 +14,7 @@ public class Lakitu extends BaseUpdatableEntity implements Enemy {
     protected int speedX = 1;
     protected long lastThrowTime = 0;
     protected static final int THROW_COOLDOWN = 10000; 
-    protected static final int MIN_DISTANCE = 100; // Distancia mínima desde los bordes para lanzar
+    protected static final int MIN_DISTANCE = 100;
 
     public Lakitu() {
         super();
@@ -69,8 +69,8 @@ public class Lakitu extends BaseUpdatableEntity implements Enemy {
 
         System.out.println("Lakitu Position: " + graphicElement.getPosition());
         
-        int spinyX = graphicElement.getPosition().x; //+ (graphicElement.getSprite().getIconWidth());
-        int spinyY = graphicElement.getPosition().y; //- graphicElement.getSprite().getIconHeight();
+        int spinyX = graphicElement.getPosition().x; 
+        int spinyY = graphicElement.getPosition().y; 
 
         spiny.spawn(spinyX-32, spinyY-32);
       
