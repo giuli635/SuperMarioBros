@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.SwingUtilities;
 
@@ -81,12 +82,19 @@ public class GraphicEngine {
             e.printStackTrace();
         }
     }
-
     public void addGraphicElement(GraphicElement e) {
         onScreen.add(e);
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                panel.add(e.getLabel(), (Integer) onScreen.size());
+                javax.swing.JLabel[] panels=e.getLabels();
+                if (panels != null) {
+                    for (JLabel label : panels) {
+                        if (label != null) {
+                            panel.add(label, (Integer) onScreen.size());
+                        }
+                    }
+                }
+                else panel.add(e.getLabel(), (Integer) onScreen.size());
             }
         });
     }
@@ -95,9 +103,16 @@ public class GraphicEngine {
         onScreen.remove(e);
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                panel.remove(e.getLabel());
-            }
-        });
+                javax.swing.JLabel[] panels=e.getLabels();
+                if (panels != null) {
+                    for (JLabel label : panels) {
+                        if (label != null) {
+                            panel.remove(label);
+                        }
+                    }
+                }
+                else panel.remove(e.getLabel());
+        }});
     }
 
     public Dimension getPanelSize() {

@@ -136,4 +136,9 @@ public class GameGraphicElement implements GraphicElement {
 
         return flippedImage;
     }
+
+    @Override
+    public JLabel[] getLabels() {
+        return null;
+    }
 }

@@ -15,6 +15,7 @@ public interface GraphicElement {
     public void setSprite(String s);
     public void flipSprite(String s);
     public JLabel getLabel();
+    public JLabel[] getLabels();
     public void draw();
     public void loadSprites(String mode);
     public void setFolder(String folder);

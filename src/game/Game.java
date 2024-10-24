@@ -10,6 +10,7 @@ import java.util.Set;
 
 import entities.Mario;
 import entities.UpdatableEntity;
+import graphics.TimerGraphicElement;
 
 public class Game implements WindowListener, KeyListener {
     protected static int SECOND = 1000;
@@ -23,6 +24,9 @@ public class Game implements WindowListener, KeyListener {
     protected boolean pause;
     private boolean pauseKeyAlreadyPressed = false;
     protected String mode; 
+    private LevelTimer levelTimer; // Agregamos el temporizador
+    private TimerGraphicElement timerGraphicElement; // Elemento gráfico del temporizador
+
 
     private Game() {
         toUpdateRegistry = new HashSet<>();
@@ -59,6 +63,9 @@ public class Game implements WindowListener, KeyListener {
         LevelReader reader = LevelReader.instance();
         reader.createLevel("nivel1.txt");
         long lastUpdateTime;
+        levelTimer = new LevelTimer(300);
+        timerGraphicElement = new TimerGraphicElement(levelTimer); // Crear elemento gráfico
+        GraphicEngine.instance().addGraphicElement(timerGraphicElement); // Añadirlo a la pantalla
         while (run) {
             lastUpdateTime = System.currentTimeMillis();
             
@@ -79,6 +86,7 @@ public class Game implements WindowListener, KeyListener {
 
             graphicEngine.drawFrame();
         }
+        levelTimer.stopTimer();
     }
 
     public static void main(String[] args) {
