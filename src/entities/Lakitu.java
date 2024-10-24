@@ -13,7 +13,7 @@ public class Lakitu extends BaseUpdatableEntity implements Enemy {
     protected boolean movingRight = true;
     protected int speedX = 1;
     protected long lastThrowTime = 0;
-    protected static final int THROW_COOLDOWN = 10000; 
+    protected static final int THROW_COOLDOWN = 10000;
     protected static final int MIN_DISTANCE = 100;
 
     public Lakitu() {
@@ -40,11 +40,11 @@ public class Lakitu extends BaseUpdatableEntity implements Enemy {
 
     @Override
     public Entity clone() {
-       return new Lakitu();
+        return new Lakitu();
     }
 
     public void switchDirection() {
-        movingRight  = !movingRight;
+        movingRight = !movingRight;
     }
 
     @Override
@@ -52,33 +52,32 @@ public class Lakitu extends BaseUpdatableEntity implements Enemy {
         int moveX = movingRight ? speedX : -speedX;
         graphicElement.translate(moveX, 0);
         collider.translate(moveX, 0);
-        
+
         long currentTime = System.currentTimeMillis();
-        if (currentTime - lastThrowTime >= THROW_COOLDOWN && 
-            graphicElement.getPosition().x > MIN_DISTANCE && 
-            graphicElement.getPosition().x < game.GraphicEngine.instance().getPanelSize().width - MIN_DISTANCE) {
-                System.out.print("Lanzar!");
-                throwEnemy();
+        if (currentTime - lastThrowTime >= THROW_COOLDOWN &&
+                graphicElement.getPosition().getX() > MIN_DISTANCE &&
+                graphicElement.getPosition().getX() < game.GraphicEngine.instance().getPanelSize().width
+                        - MIN_DISTANCE) {
+            throwEnemy();
             lastThrowTime = currentTime;
         }
     }
 
     public void throwEnemy() {
-        System.out.println("Crear");
         Spiny spiny = new Spiny();
 
-        System.out.println("Lakitu Position: " + graphicElement.getPosition());
-        
-        int spinyX = graphicElement.getPosition().x; 
-        int spinyY = graphicElement.getPosition().y; 
+        int spinyGraphicX = (int) graphicElement.getPosition().getX();
+        int spinyGraphicY = (int) graphicElement.getPosition().getY();
 
-        spiny.spawn(spinyX-32, spinyY-32);
-      
+        spiny.getGraphicElement().setPosition(spinyGraphicX, spinyGraphicY);
+
+        int spinyColliderX = (int) collider.getPosition().getX();
+        int spinyColliderY = (int) collider.getPosition().getY();
+
+        spiny.getCollider().setPosition(spinyColliderX, spinyColliderY);
+
         GraphicEngine.instance().addGraphicElement(spiny.getGraphicElement());
         spiny.load();
-
-        System.out.println("agregado");
     }
 
 }
-
