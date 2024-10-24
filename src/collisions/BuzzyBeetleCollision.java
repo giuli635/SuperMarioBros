@@ -175,12 +175,12 @@ public class BuzzyBeetleCollision implements UpdateableEntityCollision {
         }
     }
 
-	@Override
-	public void collide(BuzzyBeetleCollider c, Axis a) {
+    @Override
+    public void collide(BuzzyBeetleCollider c, Axis a) {
         if (a == Axis.X) {
             c.handleHorizontalCollision(this);
         } else {
             c.handleVerticalCollision(this);
         }
-	}
+    }
 }

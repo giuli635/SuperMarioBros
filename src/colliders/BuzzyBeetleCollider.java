@@ -39,7 +39,7 @@ public class BuzzyBeetleCollider extends BaseCollider implements UpdateableEntit
 
         Direction collisionDirection = m.getCollider().getVelocity().getYComponent() > 0 ? Direction.UP : Direction.DOWN;
         
-        if(collisionDirection == Direction.DOWN && m.getCollider().getEntity().getJumping()) { //TODO: make this more robust
+        if(collisionDirection == Direction.DOWN) {
             buzzyBeetle.recieveDamage();
             m.getCollider().getEntity().addVelocity(0, 8);
         } else {
