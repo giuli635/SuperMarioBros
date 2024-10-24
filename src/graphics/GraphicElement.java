@@ -13,11 +13,13 @@ public interface GraphicElement {
     public void setPosition(int x, int y);
     public ImageIcon getCurrentSprite();
     public void setSprite(String s);
-    public void flipSprite(String s);
+    public void flipSprite();
     public JLabel getLabel();
     public JLabel[] getLabels();
     public void draw();
     public void loadSprites(String mode);
     public void setFolder(String folder);
     public String getFolder();
+    public boolean isFlipped();
+    public void setFlipped(boolean f);
 }

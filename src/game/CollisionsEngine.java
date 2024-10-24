@@ -35,7 +35,6 @@ public class CollisionsEngine {
 
     public void update() {
         List<Collider> toUpdateCopy = new ArrayList<>(toUpdate);
-        toUpdate = new HashSet<>();
         for (Collider collider : toUpdateCopy) {
             collider.setMoving(true);
             collider.moveX();
@@ -43,6 +42,8 @@ public class CollisionsEngine {
 
         checkCollisions(toUpdateCopy, Axis.X);
 
+        toUpdateCopy = new ArrayList<>(toUpdate);
+        toUpdate = new HashSet<>();
         for (Collider collider : toUpdateCopy) {
             collider.moveY();
         }

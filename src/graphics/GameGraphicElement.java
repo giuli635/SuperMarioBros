@@ -18,6 +18,16 @@ public class GameGraphicElement implements GraphicElement {
     protected ImageIcon sprite;
     protected Rectangle bounds;
     protected boolean toUpdate;
+    protected boolean flipped;
+
+    public boolean isFlipped() {
+        return flipped;
+    }
+
+    public void setFlipped(boolean flipped) {
+        this.flipped = flipped;
+    }
+
     protected Map<String, ImageIcon> sprites;
     protected String folder;
 
@@ -26,6 +36,7 @@ public class GameGraphicElement implements GraphicElement {
         entity = e;
         sprite = null;
         label = new JLabel();
+        flipped = false;
         bounds = label.getBounds();
         loadSprites(mode);
     }
@@ -64,17 +75,32 @@ public class GameGraphicElement implements GraphicElement {
         bounds.setSize(sprite.getIconWidth(), sprite.getIconHeight());
     }
 
-    public void flipSprite(String s) {
-        ImageIcon originalIcon = sprites.get(s + ".png");
-
-        BufferedImage originalImage = iconToBufferedImage(originalIcon);
-
-        BufferedImage flippedHorizontally = flipImage(originalImage);
-
-        sprite = new ImageIcon(flippedHorizontally);
+    public void flipSprite() {
         toUpdate = true;
+        flipped = true;
+        sprite = new ImageIcon(flipImage(iconToBufferedImage(sprite)));
         bounds.setSize(sprite.getIconWidth(), sprite.getIconHeight());
+    }
 
+    public static BufferedImage iconToBufferedImage(ImageIcon icon) {
+        BufferedImage bufferedImage = new BufferedImage(icon.getIconWidth(), icon.getIconHeight(), BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g = bufferedImage.createGraphics();
+        g.drawImage(icon.getImage(), 0, 0, null);
+        g.dispose();
+        return bufferedImage;
+    }
+
+    public static BufferedImage flipImage(BufferedImage image) {
+        AffineTransform transform = new AffineTransform();
+        transform.scale(-1, 1);
+        transform.translate(-image.getWidth(), 0);
+        BufferedImage flippedImage = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2d = flippedImage.createGraphics();
+        g2d.setTransform(transform);
+        g2d.drawImage(image, 0, 0, null);
+        g2d.dispose();
+
+        return flippedImage;
     }
 
     public void draw() {
@@ -108,32 +134,6 @@ public class GameGraphicElement implements GraphicElement {
     @Override
     public String getFolder() {
         return folder;
-    }
-
-    public static BufferedImage iconToBufferedImage(ImageIcon icon) {
-        BufferedImage bufferedImage = new BufferedImage(icon.getIconWidth(), icon.getIconHeight(), BufferedImage.TYPE_INT_ARGB);
-        Graphics2D g = bufferedImage.createGraphics();
-        g.drawImage(icon.getImage(), 0, 0, null);
-        g.dispose();
-        return bufferedImage;
-    }
-
-    public static BufferedImage flipImage(BufferedImage image) {
-        AffineTransform transform = new AffineTransform();
-
-        
-        transform.scale(-1, 1);
-        transform.translate(-image.getWidth(), 0);
-
-
-        // Create a new BufferedImage to draw the flipped image
-        BufferedImage flippedImage = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_ARGB);
-        Graphics2D g2d = flippedImage.createGraphics();
-        g2d.setTransform(transform);
-        g2d.drawImage(image, 0, 0, null);
-        g2d.dispose();
-
-        return flippedImage;
     }
 
     @Override

@@ -107,8 +107,20 @@ public class TimerGraphicElement implements GraphicElement {
     }
 
     @Override
-    public void flipSprite(String s) {
+    public void flipSprite() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'flipSprite'");
+    }
+
+    @Override
+    public boolean isFlipped() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'isFlipped'");
+    }
+
+    @Override
+    public void setFlipped(boolean f) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'setFlipped'");
     }
 }

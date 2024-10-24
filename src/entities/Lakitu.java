@@ -29,7 +29,7 @@ public class Lakitu extends BaseUpdatableEntity implements Enemy {
     }
 
     @Override
-    public void getDamage() {
+    public void recieveDamage() {
         throw new UnsupportedOperationException("Unimplemented method 'getDamage'");
     }
 
