@@ -100,11 +100,11 @@ public class Game implements WindowListener, KeyListener {
     }
 
     public void StartLifes(){
-            if (mario == null) { // si no hago esto no anda, capaz se suporponen los hilos, o podriamos hacer capaz en el graphicEngine
-              mario = new Mario(); 
-            }
-            livesGraphic = new MarioGraphicLives(mario);
-            GraphicEngine.instance().addGraphicElement(livesGraphic); 
+        if (mario == null) { // si no hago esto no anda, capaz se suporponen los hilos, o podriamos hacer capaz en el graphicEngine
+          mario = new Mario(); 
+        }
+        livesGraphic = new MarioGraphicLives(mario);
+        GraphicEngine.instance().addGraphicElement(livesGraphic); 
 
     }
 

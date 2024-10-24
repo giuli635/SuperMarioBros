@@ -37,13 +37,14 @@ public class CollisionsEngine {
         List<Collider> toUpdateCopy = new ArrayList<>(toUpdate);
         for (Collider collider : toUpdateCopy) {
             collider.setMoving(true);
+            removeFromChunks(collider);
             collider.moveX();
+            add(collider);
         }
 
         checkCollisions(toUpdateCopy, Axis.X);
 
         toUpdateCopy = new ArrayList<>(toUpdate);
-        toUpdate = new HashSet<>();
         for (Collider collider : toUpdateCopy) {
             collider.moveY();
         }
@@ -62,7 +63,7 @@ public class CollisionsEngine {
             for (int i = chunkRange[0]; i <= chunkRange[1] && i < chunks.size(); i++) {
                 List<Collider> chunk = new ArrayList<>(chunks.get(i));
                 for (Collider toCheck : chunk) {
-                    collider.setColliding(true); // Parche
+                    collider.setColliding(true);
                     toCheck.setColliding(true);
                     checkCollision(collider, toCheck, axis);
                     toCheck.setColliding(false);
@@ -70,6 +71,18 @@ public class CollisionsEngine {
             }
             collider.setColliding(false);
         }
+    }
+
+    public void translateCollider(Collider c, int dx, int dy) {
+        removeFromChunks(c);
+        c.getBound().translate(dx, dy);
+        add(c);
+    }
+
+    public void setColliderPosition(Collider c, int x, int y) {
+        removeFromChunks(c);
+        c.getBound().setLocation(x, y);
+        add(c);
     }
 
     protected int[] calculateChunk(int minX, int maxX) {
@@ -90,20 +103,27 @@ public class CollisionsEngine {
                 chunks.add(new Vector<>());
             }
         }
+
         for(int i = chunkRange[0]; i < chunks.size() && i < chunkRange[1]; i++) {
             chunks.get(i).add(collider);
         }
+
         for(int i = chunks.size(); i < chunkRange[1]; i++) {
             chunks.add(new Vector<>());
             chunks.get(i).add(collider);
         }
     }
 
-    public void remove(Collider item) {
-        int[] chunkRange = calculateChunk(item);
+    protected void removeFromChunks(Collider c) {
+        int[] chunkRange = calculateChunk(c);
         for(int i = chunkRange[0]; i < chunkRange[1] && i < chunks.size(); i++) {
-            chunks.get(i).remove(item);
+            chunks.get(i).remove(c);
         }
+    }
+
+    public void remove(Collider c) {
+        removeFromChunks(c);
+        toUpdate.remove(c);
     }
 
     public Iterable<Collider> getCollidersInRange(int lowerBound, int higherBound) {
