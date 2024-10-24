@@ -12,6 +12,7 @@ import java.util.Set;
 
 import entities.Mario;
 import entities.UpdatableEntity;
+import graphics.MarioGraphicLives;
 import graphics.TimerGraphicElement;
 
 public class Game implements WindowListener, KeyListener {
@@ -26,9 +27,9 @@ public class Game implements WindowListener, KeyListener {
     protected boolean pause;
     private boolean pauseKeyAlreadyPressed = false;
     protected String mode; 
-    private LevelTimer levelTimer; // Agregamos el temporizador
-    private TimerGraphicElement timerGraphicElement; // Elemento gráfico del temporizador
-
+    protected LevelTimer levelTimer; 
+    protected TimerGraphicElement timerGraphicElement;
+    protected MarioGraphicLives livesGraphic;
 
     protected List<UpdatableEntity> toAddList = new ArrayList<>();
     protected List<UpdatableEntity> toRemoveList = new ArrayList<>();
@@ -38,7 +39,6 @@ public class Game implements WindowListener, KeyListener {
         toUpdateRegistry = new HashSet<>();
         keysStatus = new HashMap<>();
         currLevel = null;
-        mario = null;
         run = true;
         pause = false;
         mode = "mode1";
@@ -69,12 +69,10 @@ public class Game implements WindowListener, KeyListener {
         LevelReader reader = LevelReader.instance();
         reader.createLevel("nivel1.txt");
         long lastUpdateTime;
-        levelTimer = new LevelTimer(300);
-        timerGraphicElement = new TimerGraphicElement(levelTimer); // Crear elemento gráfico
-        GraphicEngine.instance().addGraphicElement(timerGraphicElement); // Añadirlo a la pantalla
+        StartTime();
+        StartLifes();
         while (run) {
             lastUpdateTime = System.currentTimeMillis();
-            
             if(!pause) {
                 List<UpdatableEntity> list = new ArrayList<>(toUpdateRegistry);
                 
@@ -91,7 +89,6 @@ public class Game implements WindowListener, KeyListener {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-
             graphicEngine.drawFrame();
         }
         levelTimer.stopTimer();
@@ -100,6 +97,21 @@ public class Game implements WindowListener, KeyListener {
     public static void main(String[] args) {
         uniqueInstance = new Game();
         uniqueInstance.loop();
+    }
+
+    public void StartLifes(){
+            if (mario == null) { // si no hago esto no anda, capaz se suporponen los hilos, o podriamos hacer capaz en el graphicEngine
+              mario = new Mario(); 
+            }
+            livesGraphic = new MarioGraphicLives(mario);
+            GraphicEngine.instance().addGraphicElement(livesGraphic); 
+
+    }
+
+    private void StartTime(){
+        levelTimer = new LevelTimer(300);
+        timerGraphicElement = new TimerGraphicElement(levelTimer); 
+        GraphicEngine.instance().addGraphicElement(timerGraphicElement); 
     }
 
     @Override

@@ -33,8 +33,8 @@ public class TimerGraphicElement implements GraphicElement {
         
         timeLabel.setForeground(Color.WHITE);
         numberLabel.setForeground(Color.WHITE);
-        timeLabel.setBounds(800, 20, 300, 50);    
-        numberLabel.setBounds(800, 50, 300, 50); 
+        timeLabel.setBounds(700, 20, 300, 50);    
+        numberLabel.setBounds(700, 50, 300, 50); 
         timeLabel.setText("TIME");
         updateLabel();
     }

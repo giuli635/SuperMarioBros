@@ -23,10 +23,10 @@ public class Mario extends BaseUpdatableEntity {
     protected static float accelerationY = 0.5f;
     protected static float minSpeedX = 1;
     protected static float gravity = 2;
-
+    protected boolean dead=false;
     protected float speedX;
     protected float speedY;
-    protected int lifes;
+    protected int lives;
     protected boolean loaded;
     protected boolean jumping;
     protected Direction direction;
@@ -156,5 +156,9 @@ public class Mario extends BaseUpdatableEntity {
     public void addVelocity(int dx, int dy) {
         speedX += dx;
         speedY += dy;
+    }
+
+    public int getLives(){
+        return lives;
     }
 }
