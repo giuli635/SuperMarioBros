@@ -4,26 +4,26 @@ import java.awt.Rectangle;
 
 import collisions.Axis;
 import collisions.Collision;
-import collisions.LakituCollision;
+import collisions.BuzzyBeetleCollision;
 import collisions.MarioCollision;
-import entities.Lakitu;
+import entities.BuzzyBeetle;
 
-public class LakituCollider extends BaseCollider implements UpdateableEntityCollider {
-    protected Lakitu lakitu;
+public class BuzzyBeetleCollider extends BaseCollider implements UpdateableEntityCollider {
+    protected BuzzyBeetle buzzyBeetle;
 
-    public LakituCollider(Lakitu l, Rectangle b) {
+    public BuzzyBeetleCollider(BuzzyBeetle z, Rectangle b) {
         super(b);
-        lakitu = l;
+        buzzyBeetle = z;
     }
 
     @Override
-    public Lakitu getEntity() {
-        return lakitu;
+    public BuzzyBeetle getEntity() {
+        return buzzyBeetle;
     }
 
     @Override
     public Collision getCollision() {
-        return new LakituCollision(this);
+        return new BuzzyBeetleCollision(this);
     }
 
     @Override
@@ -36,9 +36,11 @@ public class LakituCollider extends BaseCollider implements UpdateableEntityColl
     }
 
     public void handleVerticalCollision(MarioCollision m) {
+
         Direction collisionDirection = m.getCollider().getVelocity().getYComponent() > 0 ? Direction.UP : Direction.DOWN;
+        
         if(collisionDirection == Direction.DOWN && m.getCollider().getEntity().getJumping()) { //TODO: make this more robust
-            lakitu.recieveDamage();
+            buzzyBeetle.recieveDamage();
             m.getCollider().getEntity().addVelocity(0, 8);
         } else {
             m.getCollider().getEntity().die();

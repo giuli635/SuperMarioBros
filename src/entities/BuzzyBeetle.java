@@ -2,7 +2,7 @@ package entities;
 
 import java.awt.Rectangle;
 
-import colliders.GoombaCollider;
+import colliders.BuzzyBeetleCollider;
 import game.CollisionsEngine;       
 import game.Game;
 import game.GraphicEngine;
@@ -10,14 +10,14 @@ import graphics.GameGraphicElement;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class Goomba extends BaseUpdatableEntity implements Enemy {
-    protected static String SPRITES_FOLDER = "goomba";
+public class BuzzyBeetle extends BaseUpdatableEntity implements Enemy {
+    protected static String SPRITES_FOLDER = "buzzyBeetle";
     protected boolean movingRight = true;
     protected int speedX;
 
-    public Goomba() {
+    public BuzzyBeetle() {
         speedX = 2;
-        collider = new GoombaCollider(this, new Rectangle());
+        collider = new BuzzyBeetleCollider(this, new Rectangle());
         graphicElement = new GameGraphicElement(this, SPRITES_FOLDER, Game.instance().getMode());
         graphicElement.setSprite(SPRITES_FOLDER);
         collider.setSize(
@@ -28,15 +28,16 @@ public class Goomba extends BaseUpdatableEntity implements Enemy {
 
     @Override
     public Entity clone() {
-        return new Goomba();
+        return new BuzzyBeetle();
     }
 
     @Override
     public void recieveDamage() {
         Game.instance().unregisterToUpdate(this);
         CollisionsEngine.instance().remove(collider);
-        graphicElement.setSprite(SPRITES_FOLDER + "Death");
+        graphicElement.setSprite(SPRITES_FOLDER + "Shell");
         graphicElement.translate(0, -9);
+        
         Timer timer = new Timer();
         TimerTask task = new TimerTask() {
             public void run(){
@@ -49,15 +50,14 @@ public class Goomba extends BaseUpdatableEntity implements Enemy {
 
     @Override
     public int getPoints() {
-          // TODO Auto-generated method stub
-          throw new UnsupportedOperationException("Unimplemented method 'getPoints'");
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getPoints'");
     }
-
+    
     public void switchDirection() {
         movingRight  = !movingRight;
     }
 
-    @Override
     public void update() {
         int moveX = movingRight ? speedX : -speedX;
         graphicElement.translate(moveX, 0);
@@ -66,5 +66,4 @@ public class Goomba extends BaseUpdatableEntity implements Enemy {
         graphicElement.translate(0, -3);
         collider.translate(0, -3);
     }
-    
 }

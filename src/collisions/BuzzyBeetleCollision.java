@@ -18,15 +18,16 @@ import colliders.SpinyCollider;
 import colliders.SuperMushroomCollider;
 import colliders.UnloaderCollider;
 
-public class SuperMushroomCollision implements UpdateableEntityCollision {
-    protected SuperMushroomCollider collider;
 
-    public SuperMushroomCollision(SuperMushroomCollider c) {
+public class BuzzyBeetleCollision implements UpdateableEntityCollision {
+    protected BuzzyBeetleCollider collider;
+
+    public BuzzyBeetleCollision(BuzzyBeetleCollider c) {
         collider = c;
     }
 
     @Override
-    public SuperMushroomCollider getCollider() {
+    public BuzzyBeetleCollider getCollider() {
         return collider;
     }
 
@@ -94,6 +95,15 @@ public class SuperMushroomCollision implements UpdateableEntityCollision {
     }
 
     @Override
+    public void collide(LakituCollider c, Axis a) {
+        if (a == Axis.X) {
+            c.handleHorizontalCollision(this);
+        } else {
+            c.handleVerticalCollision(this);
+        }
+    }
+
+    @Override
     public void collide(SuperMushroomCollider c, Axis a) {
         if (a == Axis.X) {
             c.handleHorizontalCollision(this);
@@ -111,15 +121,6 @@ public class SuperMushroomCollision implements UpdateableEntityCollision {
         }
     }
 
-    @Override
-    public void collide(LakituCollider c, Axis a) {
-        if (a == Axis.X) {
-            c.handleHorizontalCollision(this);
-        } else {
-            c.handleVerticalCollision(this);
-        }
-    }
-    
     @Override
     public void collide(BrickCollider c, Axis a) {
         if (a == Axis.X) {
@@ -174,12 +175,12 @@ public class SuperMushroomCollision implements UpdateableEntityCollision {
         }
     }
 
-    @Override
-    public void collide(BuzzyBeetleCollider c, Axis a) {
+	@Override
+	public void collide(BuzzyBeetleCollider c, Axis a) {
         if (a == Axis.X) {
             c.handleHorizontalCollision(this);
         } else {
             c.handleVerticalCollision(this);
         }
-    }
+	}
 }
