@@ -3,8 +3,12 @@ package entities;
 import java.awt.Rectangle;
 
 import colliders.KoopaTroopaCollider;
+import game.CollisionsEngine;
 import game.Game;
+import game.GraphicEngine;
 import graphics.GameGraphicElement;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class KoopaTroopa extends BaseUpdatableEntity implements Enemy {
     protected static String SPRITES_FOLDER = "koopa";
@@ -12,7 +16,7 @@ public class KoopaTroopa extends BaseUpdatableEntity implements Enemy {
     protected int speedX = 1;
 
     public KoopaTroopa(){
-        speedX=2;
+        speedX = 2;
         collider = new KoopaTroopaCollider(this, new Rectangle());
         graphicElement = new GameGraphicElement(this, SPRITES_FOLDER, Game.instance().getMode());
         graphicElement.setSprite(SPRITES_FOLDER);
@@ -22,9 +26,20 @@ public class KoopaTroopa extends BaseUpdatableEntity implements Enemy {
         );
     }
     @Override
-    public void getDamage() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getDamage'");
+    public void recieveDamage() {
+        Game.instance().unregisterToUpdate(this);
+        CollisionsEngine.instance().remove(collider);
+        graphicElement.setSprite(SPRITES_FOLDER + "Shell");
+        graphicElement.translate(0, -9);
+        
+        Timer timer = new Timer();
+        TimerTask task = new TimerTask() {
+            public void run(){
+                GraphicEngine.instance().removeGraphicElement(graphicElement);
+            }
+        };
+
+        timer.schedule(task,1000);
     }
 
     @Override

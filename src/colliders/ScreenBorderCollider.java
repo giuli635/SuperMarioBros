@@ -43,12 +43,13 @@ public class ScreenBorderCollider extends BaseCollider {
     public void handleHorizontalCollision(ScreenBorderCollision s){
     }
 
-    public void handleHorizontalCollision(Collision g) {
+    public void handleHorizontalCollision(Collision c) {
         GraphicEngine graphicEngine = GraphicEngine.instance();
-        GraphicElement graphicElement = g.getCollider().getEntity().getGraphicElement();
-        Direction collisionDirection = getVelocity().getXComponent() > 0 ? Direction.RIGHT : Direction.LEFT;
-        if  (collisionDirection == position) {
-            Point colliderPosition = g.getCollider().getPosition();
+        GraphicElement graphicElement = c.getCollider().getEntity().getGraphicElement();
+        Direction myCollisionDirection = getVelocity().getXComponent() > 0 ? Direction.RIGHT : Direction.LEFT;
+        Direction collisionDirection = c.getCollider().getVelocity().getXComponent() < 0 ? Direction.RIGHT : Direction.LEFT;
+        if  (myCollisionDirection == position || collisionDirection == position) {
+            Point colliderPosition = c.getCollider().getPosition();
             graphicElement.setPosition(
                 (int) (colliderPosition.getX() - graphicEngine.getPosition()),
                 (int) colliderPosition.getY()

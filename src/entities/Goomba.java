@@ -32,7 +32,7 @@ public class Goomba extends BaseUpdatableEntity implements Enemy {
     }
 
     @Override
-    public void getDamage() {
+    public void recieveDamage() {
         Game.instance().unregisterToUpdate(this);
         CollisionsEngine.instance().remove(collider);
         graphicElement.setSprite(SPRITES_FOLDER + "Death");
