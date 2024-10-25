@@ -14,33 +14,30 @@ import graphics.GameGraphicElement;
 public class Mario extends BaseUpdatableEntity {
     protected final static String MARIO = "mario";
     protected final static String MARIO_JUMP = "marioJumping";
-    protected final static String MARIO_WALKING = "marioWalking";
-    protected final static String MARIO_WALKING2 = "marioWalking2";
+    protected final static String[] MARIO_WALKING = {"marioWalking", "marioWalking2"};
+    protected final static String MARIO_STOPPING = "marioStopping";
 
-    protected static float maxSpeedX = 5;
+    protected static float maxSpeedX = 6;
     protected static float accelerationX = 0.1f;
     protected static float decelerationX = 0.18f;
     protected static float accelerationY = 0.5f;
     protected static float minSpeedX = 1;
     protected static float gravity = 2;
-    protected boolean dead=false;
+
     protected float speedX;
     protected float speedY;
     protected int lives;
     protected boolean loaded;
     protected boolean jumping;
-    protected Direction direction;
-    protected boolean moving;
-    protected boolean onRight;
     protected int animationFrameCounter = 0;
     protected int framesPerSprite = 10;
+    protected int walkingSprite;
 
     public Mario() {
-        speedX = minSpeedX;
+        speedX = 0;
         speedY = -3;
         loaded = false;
         jumping = false;
-        direction = Direction.RIGHT;
         collider = new MarioCollider(this, new Rectangle());
         graphicElement = new GameGraphicElement(this, MARIO, Game.instance().getMode());
         graphicElement.setSprite(MARIO);
@@ -66,21 +63,17 @@ public class Mario extends BaseUpdatableEntity {
         if (Game.instance().getKeyStatus(KeyEvent.VK_W) == KeyStatus.PRESSED && !jumping) {
             startJump();
         }
-        if (!dead) {
-            handleHorizontalMovement();
-            handleVerticalMovement();
-        } else {
-            die();
-        }
+        handleHorizontalMovement();
+        handleVerticalMovement();
     }
 
-    protected void processDirection() {
-        if (direction == Direction.LEFT) {
-            if (!graphicElement.isFlipped()) {
-                graphicElement.flipSprite();
-            }
-        }
-    }
+    // protected void processDirection() {
+    //     if (direction == Direction.LEFT) {
+    //         if (!graphicElement.isFlipped()) {
+    //             graphicElement.flipSprite();
+    //         }
+    //     }
+    // }
 
     public void land() {
         jumping = false;
@@ -103,46 +96,55 @@ public class Mario extends BaseUpdatableEntity {
     }
 
     protected void handleHorizontalMovement() {
-        boolean move = false;
+        Direction currentDirection = Direction.horizontalDirectionFromSign((int) speedX);
+        Direction movementDirection = Direction.NONE;
+
         if (Game.instance().getKeyStatus(KeyEvent.VK_D) == KeyStatus.PRESSED) {
-            move = true;
-            direction = Direction.RIGHT;
+            movementDirection = Direction.RIGHT;
         }
 
         if (Game.instance().getKeyStatus(KeyEvent.VK_A) == KeyStatus.PRESSED) {
-            move = true;
-            direction = Direction.LEFT;
+            movementDirection = Direction.sum(movementDirection, Direction.LEFT);
         }
 
-        int directionSign = direction == Direction.RIGHT ? 1 : -1;
+        if (!jumping) {
+            if (movementDirection != Direction.NONE) {
+                if (currentDirection == Direction.NONE || movementDirection == currentDirection) {
+                    if (Math.abs(speedX) < maxSpeedX) {
+                        speedX += Direction.signFromDirection(movementDirection) * accelerationX;
+                    }
 
-        if (!move) {
-            if (Math.abs(speedX) > 0) {
-                if (Math.abs(speedX) < decelerationX) {
-                    speedX = 0;
+                    setWalkingSprites();
                 } else {
-                    speedX -= directionSign * decelerationX;
-                }
-            }
-        } else {
-            if (Math.abs(speedX) < maxSpeedX) {
-                speedX += directionSign * accelerationX;
-            }
-            if (!jumping) {
-                if (animationFrameCounter / framesPerSprite % 2 == 0) {
-                    graphicElement.setSprite(MARIO_WALKING);
-                } else {
-                    graphicElement.setSprite(MARIO_WALKING2);
+                    declerate(currentDirection, 2);
+                    graphicElement.setSprite(MARIO_STOPPING);
                 }
             } else {
-                graphicElement.setSprite(MARIO_JUMP);
+                declerate(currentDirection, 1);
             }
-
-            animationFrameCounter++;
+        } else {
+            graphicElement.setSprite(MARIO_JUMP);
         }
 
         graphicElement.translate((int) speedX, 0);
         collider.translate((int) speedX, 0);
+    }
+
+    protected void setWalkingSprites() {
+        walkingSprite += (animationFrameCounter %= framesPerSprite) == 0 ? 1 : 0;
+        walkingSprite %= 2;
+        graphicElement.setSprite(MARIO_WALKING[walkingSprite]);
+        animationFrameCounter++;
+    }
+
+    protected void declerate(Direction currentDirection, int rate) {
+        if (Math.abs(Math.floor(speedX)) < decelerationX) {
+            speedX = 0;
+            graphicElement.setSprite(MARIO);
+        } else {
+            speedX -= rate * Direction.signFromDirection(currentDirection) * decelerationX;
+            setWalkingSprites();
+        }
     }
 
     public void die() {

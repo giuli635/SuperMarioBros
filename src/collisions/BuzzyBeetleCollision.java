@@ -11,7 +11,6 @@ import colliders.LakituCollider;
 import colliders.LoaderCollider;
 import colliders.MarioCollider;
 import colliders.PipeCollider;
-import colliders.PiranhaPlantCollider;
 import colliders.QuestionBlockCollider;
 import colliders.ScreenBorderCollider;
 import colliders.ScreenDisplacementCollider;
@@ -19,15 +18,16 @@ import colliders.SpinyCollider;
 import colliders.SuperMushroomCollider;
 import colliders.UnloaderCollider;
 
-public class KoopaTroopaCollision implements UpdateableEntityCollision {
-    protected KoopaTroopaCollider collider;
 
-    public KoopaTroopaCollision(KoopaTroopaCollider k) {
-        collider = k;
+public class BuzzyBeetleCollision implements UpdateableEntityCollision {
+    protected BuzzyBeetleCollider collider;
+
+    public BuzzyBeetleCollision(BuzzyBeetleCollider c) {
+        collider = c;
     }
 
     @Override
-    public KoopaTroopaCollider getCollider() {
+    public BuzzyBeetleCollider getCollider() {
         return collider;
     }
 
@@ -68,6 +68,15 @@ public class KoopaTroopaCollision implements UpdateableEntityCollision {
     }
 
     @Override
+    public void collide(GoombaCollider c, Axis a) {
+        if (a == Axis.X) {
+            c.handleHorizontalCollision(this);
+        } else {
+            c.handleVerticalCollision(this);
+        }
+    }
+
+    @Override
     public void collide(SpinyCollider c, Axis a) {
         if (a == Axis.X) {
             c.handleHorizontalCollision(this);
@@ -86,7 +95,7 @@ public class KoopaTroopaCollision implements UpdateableEntityCollision {
     }
 
     @Override
-    public void collide(SuperMushroomCollider c, Axis a) {
+    public void collide(LakituCollider c, Axis a) {
         if (a == Axis.X) {
             c.handleHorizontalCollision(this);
         } else {
@@ -95,7 +104,7 @@ public class KoopaTroopaCollision implements UpdateableEntityCollision {
     }
 
     @Override
-    public void collide(GoombaCollider c, Axis a) {
+    public void collide(SuperMushroomCollider c, Axis a) {
         if (a == Axis.X) {
             c.handleHorizontalCollision(this);
         } else {
@@ -167,24 +176,7 @@ public class KoopaTroopaCollision implements UpdateableEntityCollision {
     }
 
     @Override
-    public void collide(LakituCollider c, Axis a) {
-        if (a == Axis.X) {
-            c.handleHorizontalCollision(this);
-        } else {
-            c.handleVerticalCollision(this);
-        }
-    }
-
-    @Override
     public void collide(BuzzyBeetleCollider c, Axis a) {
-        if (a == Axis.X) {
-            c.handleHorizontalCollision(this);
-        } else {
-            c.handleVerticalCollision(this);
-        }
-    }
-
-    public void collide(PiranhaPlantCollider c, Axis a) {
         if (a == Axis.X) {
             c.handleHorizontalCollision(this);
         } else {

@@ -14,6 +14,7 @@ import colliders.LoaderCollider;
 import colliders.ScreenBorderCollider;
 import colliders.ScreenDisplacementCollider;
 import colliders.UnloaderCollider;
+import entities.BuzzyBeetle;
 import entities.Entity;
 import graphics.GraphicElement;
 import loading.BlockLoader;
@@ -29,6 +30,7 @@ import loading.QuestionBlockLoader;
 import loading.SpinyLoader;
 import loading.SuperMushroomLoader;
 import loading.BrickLoader;
+import loading.BuzzyBeetleLoader;
 
 public class LevelReader  {
     protected static int CHUNK = 32;
@@ -42,6 +44,7 @@ public class LevelReader  {
         loaders.put('y', new SpinyLoader());
         loaders.put('k', new KoopaTroopaLoader());
         loaders.put('g', new GoombaLoader());
+        loaders.put('z', new BuzzyBeetleLoader());
         loaders.put('s', new SuperMushroomLoader());
         loaders.put('b', new BrickLoader());
         loaders.put('P', new PipeLoader());

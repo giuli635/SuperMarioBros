@@ -2,19 +2,22 @@ package entities;
 
 import java.awt.Rectangle;
 
-import javax.swing.ImageIcon;
 import colliders.LakituCollider;
+import game.CollisionsEngine;
 import game.Game;
 import game.GraphicEngine;
 import graphics.GameGraphicElement;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Lakitu extends BaseUpdatableEntity implements Enemy {
+    protected static final int THROW_COOLDOWN = 10000;
+    protected static final int MIN_DISTANCE = 100;
     protected static String SPRITES_FOLDER = "lakitu";
     protected boolean movingRight = true;
     protected int speedX = 1;
     protected long lastThrowTime = 0;
-    protected static final int THROW_COOLDOWN = 10000;
-    protected static final int MIN_DISTANCE = 100;
+
 
     public Lakitu() {
         super();
@@ -29,18 +32,30 @@ public class Lakitu extends BaseUpdatableEntity implements Enemy {
     }
 
     @Override
+    public Entity clone() {
+        return new Lakitu();
+    }
+
+    @Override
     public void recieveDamage() {
-        throw new UnsupportedOperationException("Unimplemented method 'getDamage'");
+        Game.instance().unregisterToUpdate(this);
+        CollisionsEngine.instance().remove(collider);
+        graphicElement.setSprite(SPRITES_FOLDER + "Hiding");
+        graphicElement.translate(0, -9);
+        
+        Timer timer = new Timer();
+        TimerTask task = new TimerTask() {
+            public void run(){
+                GraphicEngine.instance().removeGraphicElement(graphicElement);
+            }
+        };
+
+        timer.schedule(task,1000);
     }
 
     @Override
     public int getPoints() {
         throw new UnsupportedOperationException("Unimplemented method 'getPoints'");
-    }
-
-    @Override
-    public Entity clone() {
-        return new Lakitu();
     }
 
     public void switchDirection() {

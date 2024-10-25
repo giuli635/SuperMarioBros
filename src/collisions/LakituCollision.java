@@ -2,6 +2,7 @@ package collisions;
 
 import colliders.BlockCollider;
 import colliders.BrickCollider;
+import colliders.BuzzyBeetleCollider;
 import colliders.CoinCollider;
 import colliders.DeleterCollider;
 import colliders.GoombaCollider;
@@ -25,6 +26,7 @@ public class LakituCollision implements UpdateableEntityCollision {
         collider = c;
     }
 
+    @Override
     public LakituCollider getCollider() {
         return collider;
     }
@@ -166,6 +168,15 @@ public class LakituCollision implements UpdateableEntityCollision {
 
     @Override
     public void collide(DeleterCollider c, Axis a) {
+        if (a == Axis.X) {
+            c.handleHorizontalCollision(this);
+        } else {
+            c.handleVerticalCollision(this);
+        }
+    }
+
+    @Override
+    public void collide(BuzzyBeetleCollider c, Axis a) {
         if (a == Axis.X) {
             c.handleHorizontalCollision(this);
         } else {

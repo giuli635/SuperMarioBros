@@ -4,6 +4,7 @@ import colliders.DeleterCollider;
 import colliders.GoombaCollider;
 import colliders.BlockCollider;
 import colliders.BrickCollider;
+import colliders.BuzzyBeetleCollider;
 import colliders.CoinCollider;
 import colliders.KoopaTroopaCollider;
 import colliders.LakituCollider;
@@ -29,6 +30,7 @@ public interface Collision {
     public void collide(SpinyCollider c, Axis a);
     public void collide(KoopaTroopaCollider c, Axis a);
     public void collide(LakituCollider c, Axis a);
+    public void collide(BuzzyBeetleCollider c, Axis a);
     public void collide(SuperMushroomCollider c, Axis a);
     public void collide(LoaderCollider c, Axis a);
     public void collide(BrickCollider c, Axis a);
