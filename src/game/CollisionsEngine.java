@@ -3,6 +3,7 @@ import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import java.util.Vector;
@@ -58,15 +59,18 @@ public class CollisionsEngine {
     }
 
     public void checkCollisions(Iterable<Collider> collidersToCheck, Axis axis) {
+        Set<Integer> visitedChunks = new HashSet<>();
         for (Collider collider : collidersToCheck) {
             int[] chunkRange = calculateChunk(collider);
             for (int i = chunkRange[0]; i <= chunkRange[1] && i < chunks.size(); i++) {
-                List<Collider> chunk = new ArrayList<>(chunks.get(i));
-                for (Collider toCheck : chunk) {
-                    collider.setColliding(true);
-                    toCheck.setColliding(true);
-                    checkCollision(collider, toCheck, axis);
-                    toCheck.setColliding(false);
+                if (!visitedChunks.contains(i)) {
+                    List<Collider> chunk = new ArrayList<>(chunks.get(i));
+                    for (Collider toCheck : chunk) {
+                        collider.setColliding(true);
+                        toCheck.setColliding(true);
+                        checkCollision(collider, toCheck, axis);
+                        toCheck.setColliding(false);
+                    }
                 }
             }
             collider.setColliding(false);
