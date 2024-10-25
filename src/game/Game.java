@@ -23,6 +23,7 @@ public class Game implements WindowListener, KeyListener {
     protected Map<Integer, KeyStatus> keysStatus;
     protected Level currLevel;
     protected Mario mario;
+    protected int livesMario=10;
     protected boolean run;
     protected boolean pause;
     private boolean pauseKeyAlreadyPressed = false;
@@ -67,10 +68,8 @@ public class Game implements WindowListener, KeyListener {
     private void loop() {
         GraphicEngine graphicEngine = GraphicEngine.instance();
         LevelReader reader = LevelReader.instance();
-        reader.createLevel("nivel1.txt");
+        currLevel= reader.createLevel("nivel1.txt", livesMario, 300);
         long lastUpdateTime;
-        StartTime();
-        StartLifes();
         while (run) {
             lastUpdateTime = System.currentTimeMillis();
             if(!pause) {
@@ -94,24 +93,14 @@ public class Game implements WindowListener, KeyListener {
         levelTimer.stopTimer();
     }
 
+    public void decreaceLives(){
+        livesMario--;
+        currLevel.decreacedLives();
+    }
+
     public static void main(String[] args) {
         uniqueInstance = new Game();
         uniqueInstance.loop();
-    }
-
-    public void StartLifes(){
-        if (mario == null) { // si no hago esto no anda, capaz se suporponen los hilos, o podriamos hacer capaz en el graphicEngine
-          mario = new Mario(); 
-        }
-        livesGraphic = new MarioGraphicLives(mario);
-        GraphicEngine.instance().addGraphicElement(livesGraphic); 
-
-    }
-
-    private void StartTime(){
-        levelTimer = new LevelTimer(300);
-        timerGraphicElement = new TimerGraphicElement(levelTimer); 
-        GraphicEngine.instance().addGraphicElement(timerGraphicElement); 
     }
 
     @Override
