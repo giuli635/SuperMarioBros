@@ -61,16 +61,18 @@ public class LevelReader  {
         return uniqueInstance;
     }
 
-    public Level createLevel(String file) {
+    public Level createLevel(String file, int livesMario, int lTimer) {
+        Level l=null;
         try {
             BufferedReader br = new BufferedReader(new FileReader(file));
             loadEntities(br);
             br.close();
+            l = new Level(lTimer, livesMario);
         } catch(IOException e) {
             e.printStackTrace();
         }
         loadScreen();
-        return null;
+        return l;
     }
 
     private void loadScreen() {

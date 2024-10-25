@@ -15,10 +15,10 @@ import java.awt.Color;
 public class MarioGraphicLives implements GraphicElement {
     private JLabel livesLabel;
     private JLabel numberLabel;
-    private Mario mario;
+    private int livesMario;
 
-    public MarioGraphicLives(Mario mario) {
-        this.mario = mario;
+    public MarioGraphicLives(int LivesMario) {
+        livesMario = LivesMario;
         livesLabel = new JLabel();
         numberLabel = new JLabel();
         
@@ -45,12 +45,8 @@ public class MarioGraphicLives implements GraphicElement {
         updateLabel();
     }
 
-    public void updateLives(int lives){
-        
-    }
-
     private void updateLabel() {
-        numberLabel.setText(String.valueOf("  " + 0));
+        numberLabel.setText(String.valueOf("  " + livesMario));
     }
 
     @Override
@@ -65,7 +61,7 @@ public class MarioGraphicLives implements GraphicElement {
 
     @Override
     public Entity getEntity() {
-        return mario;
+        return null;
     }
 
     @Override
@@ -112,4 +108,8 @@ public class MarioGraphicLives implements GraphicElement {
 
     @Override
     public void setFlipped(boolean f) {}
+
+    public void decreaceLives() {
+        livesMario--;
+    }
 }

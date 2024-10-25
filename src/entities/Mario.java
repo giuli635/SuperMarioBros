@@ -185,6 +185,7 @@ public class Mario extends BaseUpdatableEntity {
         graphicElement.setSprite("marioDeath");
         //TODO: deathAnimation();
         GraphicEngine.instance().removeGraphicElement(graphicElement);
+        Game.instance().decreaceLives();
     }
 
     public void addVelocity(int dx, int dy) {
