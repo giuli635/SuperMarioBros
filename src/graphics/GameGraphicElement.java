@@ -72,6 +72,7 @@ public class GameGraphicElement implements GraphicElement {
     public void setSprite(String s) {
         sprite = sprites.get(s + ".png");
         toUpdate = true;
+        flipped = false;
         bounds.setSize(sprite.getIconWidth(), sprite.getIconHeight());
     }
 

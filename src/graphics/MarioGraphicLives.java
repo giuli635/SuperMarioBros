@@ -50,7 +50,7 @@ public class MarioGraphicLives implements GraphicElement {
     }
 
     private void updateLabel() {
-        numberLabel.setText(String.valueOf("  " + mario.getLives()));
+        numberLabel.setText(String.valueOf("  " + 0));
     }
 
     @Override
