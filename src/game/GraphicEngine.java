@@ -90,11 +90,11 @@ public class GraphicEngine {
                 if (panels != null) {
                     for (JLabel label : panels) {
                         if (label != null) {
-                            panel.add(label, (Integer) onScreen.size());
+                            panel.add(label, (Integer) onScreen.size(), 0);
                         }
                     }
                 }
-                else panel.add(e.getLabel(), (Integer) onScreen.size());
+                else panel.add(e.getLabel(), (Integer) onScreen.size(), 0);
             }
         });
     }
@@ -132,5 +132,9 @@ public class GraphicEngine {
         for (GraphicElement element : onScreen) {
             element.translate(velocity, 0);
         }
+    }
+
+    public void moveToBack(GraphicElement e) {
+        panel.moveToBack(e.getLabel());
     }
 }

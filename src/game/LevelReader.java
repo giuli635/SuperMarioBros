@@ -22,7 +22,9 @@ import loading.GoombaLoader;
 import loading.KoopaTroopaLoader;
 import loading.LakituLoader;
 import loading.MarioLoader;
+import loading.PipeBLoader;
 import loading.PipeLoader;
+import loading.PiranhaPlantLoader;
 import loading.QuestionBlockLoader;
 import loading.SpinyLoader;
 import loading.SuperMushroomLoader;
@@ -42,9 +44,11 @@ public class LevelReader  {
         loaders.put('g', new GoombaLoader());
         loaders.put('s', new SuperMushroomLoader());
         loaders.put('b', new BrickLoader());
-        //loaders.put('p', new PipeLoader());
+        loaders.put('P', new PipeLoader());
+        loaders.put('p', new PipeBLoader());
         //loaders.put('?', new QuestionBlockLoader());
         loaders.put('l', new LakituLoader());
+        loaders.put('r', new PiranhaPlantLoader());
     }
 
     protected static LevelReader instance(){

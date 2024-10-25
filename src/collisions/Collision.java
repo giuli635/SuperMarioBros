@@ -10,12 +10,14 @@ import colliders.LakituCollider;
 import colliders.LoaderCollider;
 import colliders.MarioCollider;
 import colliders.PipeCollider;
+import colliders.PiranhaPlantCollider;
 import colliders.QuestionBlockCollider;
 import colliders.ScreenBorderCollider;
 import colliders.ScreenDisplacementCollider;
 import colliders.SpinyCollider;
 import colliders.SuperMushroomCollider;
 import colliders.UnloaderCollider;
+import entities.PiranhaPlant;
 
 public interface Collision {
     public Collider getCollider();
@@ -35,4 +37,5 @@ public interface Collision {
     public void collide(CoinCollider c, Axis a);
     public void collide(UnloaderCollider c, Axis a);
     public void collide(DeleterCollider c, Axis a);
+    public void collide(PiranhaPlantCollider c, Axis a);
 }
