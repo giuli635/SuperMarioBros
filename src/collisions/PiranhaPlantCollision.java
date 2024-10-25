@@ -2,6 +2,7 @@ package collisions;
 
 import colliders.BlockCollider;
 import colliders.BrickCollider;
+import colliders.BuzzyBeetleCollider;
 import colliders.CoinCollider;
 import colliders.DeleterCollider;
 import colliders.GoombaCollider;
@@ -174,6 +175,14 @@ public class PiranhaPlantCollision implements UpdateableEntityCollision {
     }
 
     public void collide(PiranhaPlantCollider c, Axis a) {
+        if (a == Axis.X) {
+            c.handleHorizontalCollision(this);
+        } else {
+            c.handleVerticalCollision(this);
+        }
+    }
+
+    public void collide(BuzzyBeetleCollider c, Axis a) {
         if (a == Axis.X) {
             c.handleHorizontalCollision(this);
         } else {
