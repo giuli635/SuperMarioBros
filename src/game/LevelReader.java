@@ -32,7 +32,7 @@ import loading.BrickLoader;
 import loading.BuzzyBeetleLoader;
 
 public class LevelReader  {
-    protected static int CHUNK = 32;
+    public static final int CHUNK = 32;
     protected static LevelReader uniqueInstance;
     protected Map<Character, EntityLoader> loaders;
     protected static int loadingStartingPoint = 6;

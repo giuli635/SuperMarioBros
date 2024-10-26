@@ -5,15 +5,26 @@ import graphics.GameGraphicElement;
 
 public class SuperMario implements MarioState {
     protected static final String SUPER_MARIO_SPRITES = "superMario";
+    protected Croucher croucher;
 
     @Override
-    public void setState(Mario m) {
+    public void setFunctionality(Mario m) {
         GameGraphicElement graphicElement = m.getGraphicElement();
         Collider collider = m.getCollider();
         graphicElement.setFolder("superMario");
         
-        collider.setSize(32, 64);
-        m.getCollider().translate(0, -32);
+        collider.setSize(
+            graphicElement.getCurrentSprite().getIconWidth(),
+            graphicElement.getCurrentSprite().getIconHeight()
+        );
+
+        croucher = new Croucher(m);
+        croucher.load();
+    }
+
+    @Override
+    public void setCollisions(Mario m) {
+        m.getCollider();
     }
 
     @Override

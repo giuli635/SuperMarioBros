@@ -84,8 +84,8 @@ public class CollisionsEngine {
     }
 
     protected int[] calculateChunk(int minX, int maxX) {
-        int firstChunk = (int) Math.floor(minX / 32.0);
-        int secondChunk = (int) Math.ceil(maxX / 32.0);
+        int firstChunk = (int) Math.floor(minX / (float) LevelReader.CHUNK);
+        int secondChunk = (int) Math.ceil(maxX / (float) LevelReader.CHUNK);
         return new int[]{firstChunk, secondChunk};
     }
 

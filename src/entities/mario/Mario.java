@@ -5,6 +5,7 @@ import java.awt.event.KeyEvent;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import colliders.Collider;
 import colliders.Direction;
 import colliders.MarioCollider;
 import entities.BaseUpdatableEntity;
@@ -43,9 +44,22 @@ public class Mario extends BaseUpdatableEntity {
     protected int framesPerSprite = 10;
     protected int walkingSprite;
 
+    protected MarioCollider collider;
+    protected GameGraphicElement graphicElement;
+    protected boolean listenToKeys;
+
+    public boolean isListeningToKeys() {
+        return listenToKeys;
+    }
+
+    public void listenToKeys(boolean listenToKeys) {
+        this.listenToKeys = listenToKeys;
+    }
+
     public Mario() {
         loaded = false;
         jumping = false;
+        listenToKeys = true;
         collider = new MarioCollider(this, new Rectangle());
         graphicElement = new GameGraphicElement(this, "mario");
         graphicElement.setSprite(MARIO_STILL);
@@ -53,6 +67,16 @@ public class Mario extends BaseUpdatableEntity {
                 graphicElement.getCurrentSprite().getIconWidth(),
                 graphicElement.getCurrentSprite().getIconHeight()
         );
+    }
+
+    @Override
+    public MarioCollider getCollider() {
+        return collider;
+    }
+
+    @Override
+    public GameGraphicElement getGraphicElement() {
+        return graphicElement;
     }
 
     public Entity clone() {
@@ -72,15 +96,17 @@ public class Mario extends BaseUpdatableEntity {
         Direction movementDirection = Direction.NONE;
         String newSprite;
         
-        if (Game.instance().getKeyStatus(KeyEvent.VK_D) == KeyStatus.PRESSED) {
-            movementDirection = Direction.RIGHT;
-        }
+        if (listenToKeys) {
+            if (Game.instance().getKeyStatus(KeyEvent.VK_D) == KeyStatus.PRESSED) {
+                movementDirection = Direction.RIGHT;
+            }
 
-        if (Game.instance().getKeyStatus(KeyEvent.VK_A) == KeyStatus.PRESSED) {
-            movementDirection = Direction.sum(movementDirection, Direction.LEFT);
-        }
+            if (Game.instance().getKeyStatus(KeyEvent.VK_A) == KeyStatus.PRESSED) {
+                movementDirection = Direction.sum(movementDirection, Direction.LEFT);
+            }
 
-        handleVerticalMovement();
+            handleVerticalMovement();
+        }
 
         if (!jumping) {
             newSprite = handleGroundHorizontalMovement(movementDirection, currentDirection);
@@ -89,7 +115,10 @@ public class Mario extends BaseUpdatableEntity {
         }
 
         resolveSpriteDirection(movementDirection, newSprite);
-        jumping = true;
+
+        if (listenToKeys) {
+            jumping = true;
+        }
     }
 
     protected String handleAirHorizontalMovement(Direction movementDirection, Direction currentDirection) {

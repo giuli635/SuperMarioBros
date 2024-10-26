@@ -2,6 +2,7 @@ package entities;
 
 import java.awt.Rectangle;
 
+import colliders.Collider;
 import colliders.KoopaTroopaCollider;
 import graphics.GameGraphicElement;
 
@@ -10,6 +11,9 @@ public class KoopaTroopa extends BaseUpdatableEntity implements Enemy {
     protected boolean movingRight = true;
     protected int speedX;
     protected boolean shell;
+
+    protected KoopaTroopaCollider collider;
+    protected GameGraphicElement graphicElement;
 
     public KoopaTroopa(){
         speedX = 2;
@@ -74,5 +78,15 @@ public class KoopaTroopa extends BaseUpdatableEntity implements Enemy {
 
     public void setVelocityX(int dx) {
         speedX += dx;
+    }
+
+    @Override
+    public GameGraphicElement getGraphicElement() {
+        return graphicElement;
+    }
+
+    @Override
+    public KoopaTroopaCollider getCollider() {
+        return collider;
     }
 }

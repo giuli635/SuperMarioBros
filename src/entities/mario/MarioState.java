@@ -1,6 +1,7 @@
 package entities.mario;
 
 public interface MarioState {
-    public void setState(Mario m);
+    public void setCollisions(Mario m);
+    public void setFunctionality(Mario m);
     public void removeState(Mario m);
 }

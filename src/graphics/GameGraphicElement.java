@@ -68,7 +68,8 @@ public class GameGraphicElement implements GraphicElement {
     }
 
     public void setSprite(String s) {
-        if(sprite != null){
+        currentSprite = s;
+        if (sprite != null) {
             int preHeight = sprite.getIconHeight();
             sprite = sprites.get(s + ".png");
             toUpdate = true;
