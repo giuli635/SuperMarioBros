@@ -12,31 +12,31 @@ import java.io.File;
 import java.io.IOException;
 import java.awt.Color;
 
-public class MarioGraphicLives implements GraphicElement {
-    private JLabel livesLabel;
+public class ScoreGraphicElement implements GraphicElement {
+    private JLabel scoreLabel;
     private JLabel numberLabel;
-    private int livesMario;
+    private int scoreLevel;
 
-    public MarioGraphicLives(int LivesMario) {
-        livesMario = LivesMario;
-        livesLabel = new JLabel();
+    public ScoreGraphicElement(int scoreLevel) {
+        this.scoreLevel = scoreLevel;
+        scoreLabel = new JLabel();
         numberLabel = new JLabel();
         
         try {
             Font customFont = Font.createFont(Font.TRUETYPE_FONT, new File("font/SuperMario256.ttf")).deriveFont(38f);
-            livesLabel.setFont(customFont);
+            scoreLabel.setFont(customFont);
             numberLabel.setFont(customFont);
         } catch (FontFormatException | IOException e) {
             e.printStackTrace();
-            livesLabel.setFont(new Font("Arial", Font.BOLD, 24));
+            scoreLabel.setFont(new Font("Arial", Font.BOLD, 24));
             numberLabel.setFont(new Font("Arial", Font.BOLD, 24));
         }
         
-        livesLabel.setForeground(Color.WHITE);
+        scoreLabel.setForeground(Color.WHITE);
         numberLabel.setForeground(Color.WHITE);
-        livesLabel.setBounds(850, 20, 300, 50);
-        numberLabel.setBounds(850, 50, 300, 50);
-        livesLabel.setText("LIVES");
+        scoreLabel.setBounds(50, 20, 300, 50);
+        numberLabel.setBounds(50, 50, 300, 50);
+        scoreLabel.setText("SCORE");
         updateLabel();
     }
 
@@ -45,26 +45,34 @@ public class MarioGraphicLives implements GraphicElement {
         updateLabel();
     }
 
+    public int getScore(){
+        return scoreLevel;
+    }
+
+    public void updateScore(int score) {
+        scoreLevel=score;
+    }
+
     private void updateLabel() {
-        numberLabel.setText(String.valueOf("  " + livesMario));
-    }
-
-    public int getLivesMario(){
-        return livesMario;
-    }
-
-    public void updateLives(int lives) {
-        livesMario = lives;
+        numberLabel.setText(String.valueOf("  " + scoreLevel));
     }
 
     @Override
     public JLabel[] getLabels() {
-        return new JLabel[]{livesLabel, numberLabel};
+        return new JLabel[]{scoreLabel, numberLabel};
+    }
+    
+    public void decreaceScore(int decreaded) {
+        scoreLevel-=decreaded;
+    }
+
+    public void incrementScore(int increment){
+        scoreLevel+=increment;
     }
 
     @Override
     public JLabel getLabel() {
-        return livesLabel;
+        return scoreLabel;
     }
 
     @Override
@@ -74,12 +82,12 @@ public class MarioGraphicLives implements GraphicElement {
 
     @Override
     public Point getPosition() {
-        return new Point(livesLabel.getX(), livesLabel.getY());
+        return new Point(scoreLabel.getX(), scoreLabel.getY());
     }
 
     @Override
     public void setPosition(int x, int y) {
-        livesLabel.setLocation(x, y);
+        scoreLabel.setLocation(x, y);
         numberLabel.setLocation(x, y + 30);
     }
 
@@ -117,8 +125,5 @@ public class MarioGraphicLives implements GraphicElement {
     @Override
     public void setFlipped(boolean f) {}
 
-    public void decreaceLives() {
-        livesMario--;
-    }
-
+    
 }

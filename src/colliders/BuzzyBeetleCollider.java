@@ -41,6 +41,7 @@ public class BuzzyBeetleCollider extends BaseCollider implements UpdateableEntit
         
         if(collisionDirection == Direction.DOWN) {
             buzzyBeetle.recieveDamage();
+            m.getCollider().getEntity().addPoints(30);
             m.getCollider().getEntity().addVelocity(0, 8);
         } else {
             m.getCollider().getEntity().die();

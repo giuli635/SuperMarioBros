@@ -192,4 +192,8 @@ public class Mario extends BaseUpdatableEntity {
         speedX += dx;
         speedY += dy;
     }
+
+    public void addPoints(int i) {
+        Game.instance().addPoints(i);
+    }
 }

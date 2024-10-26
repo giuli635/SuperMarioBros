@@ -39,6 +39,7 @@ public class GoombaCollider extends BaseCollider implements UpdateableEntityColl
         Direction collisionDirection = m.getCollider().getVelocity().getYComponent() > 0 ? Direction.UP : Direction.DOWN;
         if(collisionDirection == Direction.DOWN) {
             goomba.recieveDamage();
+            //m.getCollider().getEntity().addPoints(60);
             m.getCollider().getEntity().addVelocity(0, 8);
         } else {
             m.getCollider().getEntity().die();

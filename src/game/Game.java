@@ -21,7 +21,7 @@ public class Game implements WindowListener, KeyListener {
     protected static Game uniqueInstance;
     protected Set<UpdatableEntity> toUpdateRegistry;
     protected Map<Integer, KeyStatus> keysStatus;
-    protected Level currLevel;
+    protected LevelStats currLevel;
     protected Mario mario;
     protected int livesMario=10;
     protected boolean run;
@@ -80,7 +80,7 @@ public class Game implements WindowListener, KeyListener {
                 }
                 CollisionsEngine.instance().update();
             }
-
+            
             checkPause();
 
             try {
@@ -95,7 +95,7 @@ public class Game implements WindowListener, KeyListener {
 
     public void decreaceLives(){
         livesMario--;
-        currLevel.decreacedLives();
+        currLevel.decreasedLives();
     }
 
     public static void main(String[] args) {
@@ -158,5 +158,9 @@ public class Game implements WindowListener, KeyListener {
             // Si la tecla no está presionada, restablecer la bandera
             pauseKeyAlreadyPressed = false;
         }
+    }
+
+    public void addPoints(int i) {
+        currLevel.addPoints(i);
     }
 }

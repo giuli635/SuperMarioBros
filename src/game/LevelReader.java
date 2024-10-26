@@ -17,6 +17,7 @@ import colliders.UnloaderCollider;
 import entities.BuzzyBeetle;
 import entities.Entity;
 import graphics.GraphicElement;
+import graphics.LevelGraphic;
 import loading.BlockLoader;
 import loading.EntityLoader;
 import loading.GoombaLoader;
@@ -61,18 +62,20 @@ public class LevelReader  {
         return uniqueInstance;
     }
 
-    public Level createLevel(String file, int livesMario, int lTimer) {
-        Level l=null;
+    public LevelStats createLevel(String file, int livesMario, int lTimer) {
+        LevelStats level = null;
+        LevelGraphic levelG = null;
         try {
             BufferedReader br = new BufferedReader(new FileReader(file));
             loadEntities(br);
             br.close();
-            l = new Level(lTimer, livesMario);
+            level = new LevelStats(lTimer, livesMario);
+            levelG = new LevelGraphic(level);
         } catch(IOException e) {
             e.printStackTrace();
         }
         loadScreen();
-        return l;
+        return level;
     }
 
     private void loadScreen() {
