@@ -57,7 +57,7 @@ public class Game implements WindowListener, KeyListener {
         GraphicEngine graphicEngine = GraphicEngine.instance();
         graphicEngine.initBackgrounds();
         LevelReader reader = LevelReader.instance();
-        reader.createLevel("nivel1.txt", 10, 300, 1);
+        currLevel = reader.createLevel("nivel1.txt", 10, 300, 1);
         long lastUpdateTime;
         while (run) {
             lastUpdateTime = System.currentTimeMillis();
@@ -96,7 +96,7 @@ public class Game implements WindowListener, KeyListener {
                 pause = false;
                 GraphicEngine.instance().initBackgrounds();
                 LevelReader reader = LevelReader.instance();
-                reader.createLevel("nivel1.txt");
+                currLevel = reader.createLevel("nivel1.txt", 10, 300, 1);
                 
             }
         } , 5000);
