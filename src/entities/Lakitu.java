@@ -23,7 +23,7 @@ public class Lakitu extends BaseUpdatableEntity implements Enemy {
         super();
         speedX = 2;
         collider = new LakituCollider(this, new Rectangle());
-        graphicElement = new GameGraphicElement(this, SPRITES_FOLDER, Game.instance().getMode());
+        graphicElement = new GameGraphicElement(this, SPRITES_FOLDER);
         graphicElement.setSprite(SPRITES_FOLDER);
         collider.setSize(
             graphicElement.getCurrentSprite().getIconWidth(),

@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.Vector;
+import java.util.concurrent.ConcurrentHashMap;
 
 import colliders.Collider;
 import collisions.Axis;
@@ -15,7 +16,7 @@ public class CollisionsEngine {
     protected List<List<Collider>> chunks;
     protected Set<Collider> toUpdate;
 
-    public CollisionsEngine() {
+    protected CollisionsEngine() {
         reset();
     }
 
@@ -27,67 +28,57 @@ public class CollisionsEngine {
     }
 
     protected void checkCollision(Collider c1, Collider c2, Axis axis) {
-        if (c1.getBound().intersects(c2.getBound())) {
+        if (c1.isActivated() && c2.isActivated() && c1.getBounds().intersects(c2.getBounds())) {
             c2.sendCollision(c1.getCollision(), axis);
             c1.sendCollision(c2.getCollision(), axis);
         }
     }
 
     public void update() {
-        List<Collider> toUpdateCopy = new ArrayList<>(toUpdate);
-
-        for (Collider collider : toUpdateCopy) {
+        for (Collider collider : toUpdate) {
             collider.moveY();
         }
 
-        checkCollisions(toUpdateCopy, Axis.Y);
+        checkCollisions(Axis.Y);
 
-        toUpdateCopy = new ArrayList<>(toUpdate);
-        for (Collider collider : toUpdateCopy) {
+        for (Collider collider : toUpdate) {
             collider.setMoving(true);
-            removeFromChunks(collider);
+            removeFromChunks(collider.getBounds(), collider);
             collider.moveX();
             add(collider);
         }
 
-        checkCollisions(toUpdateCopy, Axis.X);
+        checkCollisions(Axis.X);
 
-        for (Collider collider : toUpdateCopy) {
+        for (Collider collider : toUpdate) {
             collider.setMoving(false);
             collider.resetVelocity();
         }
     }
 
-    public void checkCollisions(Iterable<Collider> collidersToCheck, Axis axis) {
-        Set<Collider> visitedColliders = new HashSet<>();
-        for (Collider collider : collidersToCheck) {
-            int[] chunkRange = calculateChunk(collider);
+    public void checkCollisions(Axis axis) {
+        for (Collider collider : toUpdate) {
+            int[] chunkRange = calculateChunk(collider.getBounds());
+            Set<Collider> collidersInChunkRange = new HashSet<>();
             for (int i = chunkRange[0]; i <= chunkRange[1] && i < chunks.size(); i++) {
-                List<Collider> chunk = new ArrayList<>(chunks.get(i));
-                for (Collider toCheck : chunk) {
-                    if (!visitedColliders.contains(toCheck)) {
-                        collider.setColliding(true);
-                        toCheck.setColliding(true);
-                        checkCollision(collider, toCheck, axis);
-                        toCheck.setColliding(false);
-                    }
-                }
+                collidersInChunkRange.addAll(chunks.get(i));
+            }
+
+            for (Collider toCheck : collidersInChunkRange) {
+                collider.setColliding(true);
+                toCheck.setColliding(true);
+                checkCollision(collider, toCheck, axis);
+                toCheck.setColliding(false);
             }
             collider.setColliding(false);
-            visitedColliders.add(collider);
         }
     }
 
-    public void translateCollider(Collider c, int dx, int dy) {
-        removeFromChunks(c);
-        c.getBound().translate(dx, dy);
-        add(c);
-    }
-
-    public void setColliderPosition(Collider c, int x, int y) {
-        removeFromChunks(c);
-        c.getBound().setLocation(x, y);
-        add(c);
+    public void updateColliderBounds(Rectangle previousBounds, Collider c) {
+        if (c.isActivated()) {
+            removeFromChunks(previousBounds, c);
+            add(c);
+        }
     }
 
     protected int[] calculateChunk(int minX, int maxX) {
@@ -96,13 +87,12 @@ public class CollisionsEngine {
         return new int[]{firstChunk, secondChunk};
     }
 
-    protected int[] calculateChunk(Collider collider) {
-        Rectangle bounds = collider.getBound();
+    protected int[] calculateChunk(Rectangle bounds) {
         return calculateChunk((int) bounds.getX(), (int) bounds.getMaxX());
     }
 
     public void add(Collider collider) {
-        int[] chunkRange = calculateChunk(collider);
+        int[] chunkRange = calculateChunk(collider.getBounds());
         if (chunkRange[0] >= chunks.size()) {
             for (int i = 0; i < chunkRange[0]; i++) {
                 chunks.add(new Vector<>());
@@ -119,15 +109,15 @@ public class CollisionsEngine {
         }
     }
 
-    protected void removeFromChunks(Collider c) {
-        int[] chunkRange = calculateChunk(c);
+    protected void removeFromChunks(Rectangle bounds, Collider c) {
+        int[] chunkRange = calculateChunk(bounds);
         for(int i = chunkRange[0]; i < chunkRange[1] && i < chunks.size(); i++) {
             chunks.get(i).remove(c);
         }
     }
 
     public void remove(Collider c) {
-        removeFromChunks(c);
+        removeFromChunks(c.getBounds(), c);
         toUpdate.remove(c);
     }
 
@@ -147,6 +137,6 @@ public class CollisionsEngine {
 
     public void reset(){
         chunks = new Vector<List<Collider>>();
-        toUpdate = new HashSet<>();
+        toUpdate = ConcurrentHashMap.newKeySet();
     }
 }

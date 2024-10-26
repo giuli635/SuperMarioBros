@@ -19,7 +19,7 @@ public class PiranhaPlant extends BaseUpdatableEntity implements Enemy{
 
     public PiranhaPlant() {
         collider = new PiranhaPlantCollider(this, new Rectangle());
-        graphicElement = new GameGraphicElement(this, SPRITES_FOLDER, Game.instance().getMode());
+        graphicElement = new GameGraphicElement(this, SPRITES_FOLDER);
         graphicElement.setSprite(SPRITES_FOLDER);
         GraphicEngine.instance().moveToBack(graphicElement);
         

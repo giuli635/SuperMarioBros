@@ -10,6 +10,7 @@ import javax.swing.SwingUtilities;
 
 import graphics.GameGraphicElement;
 import graphics.GraphicElement;
+import graphics.StatsGraphicElement;
 
 public class GraphicEngine {
     protected static GraphicEngine uniqueInstance;
@@ -17,6 +18,7 @@ public class GraphicEngine {
     public static final Integer FRONT_DEPTH = 100;
     public static final Integer DEFAULT_DEPTH = 50;
     protected JFrame frame;
+    protected String mode;
     protected JLayeredPane panel;
     protected Set<GraphicElement> onScreen;
     protected int position;
@@ -38,6 +40,8 @@ public class GraphicEngine {
         onScreen = new HashSet<>();
         frame = new JFrame();
 
+        mode = "mode1";
+
         panel = new JLayeredPane();
         panel.setPreferredSize(new Dimension(1000, 480));
         panel.setLayout(null);
@@ -51,7 +55,17 @@ public class GraphicEngine {
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setVisible(true);
 
-        backgrounds = new GameGraphicElement[]{new GameGraphicElement(null, "level", "mode1"), new GameGraphicElement(null, "level", "mode1")};
+        //TODO: SACAME ESTA COSA FEA;
+        StatsGraphicElement stats = new StatsGraphicElement(new LevelTimer(300), 3, 1, 60);
+        add(stats);
+        setDepth(stats, FRONT_DEPTH);
+
+
+
+    }
+
+    public void initBackgrounds() {
+        backgrounds = new GameGraphicElement[]{new GameGraphicElement(null, "level"), new GameGraphicElement(null, "level")};
         for (int i = 0; i < backgrounds.length; i++) {
             backgrounds[i].setSprite("levelBackground1");
             add(backgrounds[i]);
@@ -145,5 +159,13 @@ public class GraphicEngine {
                 panel.setLayer(e.getComponent(), depth);
             }
         });
+    }
+
+    public void setMode(String s) {
+        mode = s;
+    }
+
+    public String getMode() {
+        return mode;
     }
 }

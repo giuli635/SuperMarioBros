@@ -10,10 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import entities.Mario;
 import entities.UpdatableEntity;
-import graphics.MarioGraphicLives;
-import graphics.StatsGraphicElement;
 
 public class Game implements WindowListener, KeyListener {
     protected static int SECOND = 1000;
@@ -21,16 +18,10 @@ public class Game implements WindowListener, KeyListener {
     protected static Game uniqueInstance;
     protected Set<UpdatableEntity> toUpdateRegistry;
     protected Map<Integer, KeyStatus> keysStatus;
-    protected Level currLevel;
-    protected Mario mario;
-    protected int livesMario=10;
+    protected LevelStats currLevel;
     protected boolean run;
     protected boolean pause;
     private boolean pauseKeyAlreadyPressed = false;
-    protected String mode; 
-    protected LevelTimer levelTimer; 
-    protected StatsGraphicElement timerGraphicElement;
-    protected MarioGraphicLives livesGraphic;
 
     protected List<UpdatableEntity> toAddList = new ArrayList<>();
     protected List<UpdatableEntity> toRemoveList = new ArrayList<>();
@@ -42,7 +33,6 @@ public class Game implements WindowListener, KeyListener {
         currLevel = null;
         run = true;
         pause = false;
-        mode = "mode1";
     }
 
     public static Game instance() {
@@ -61,14 +51,11 @@ public class Game implements WindowListener, KeyListener {
         return keysStatus.getOrDefault(key, KeyStatus.RELEASED);
     }
 
-    public String getMode(){
-        return mode;
-    }
-
     private void loop() {
         GraphicEngine graphicEngine = GraphicEngine.instance();
+        graphicEngine.initBackgrounds();
         LevelReader reader = LevelReader.instance();
-        currLevel= reader.createLevel("nivel1.txt", livesMario, 300);
+        currLevel = reader.createLevel("nivel1.txt");
         long lastUpdateTime;
         while (run) {
             lastUpdateTime = System.currentTimeMillis();
@@ -80,7 +67,7 @@ public class Game implements WindowListener, KeyListener {
                 }
                 CollisionsEngine.instance().update();
             }
-
+            
             checkPause();
 
             try {
@@ -90,12 +77,6 @@ public class Game implements WindowListener, KeyListener {
             }
             graphicEngine.drawFrame();
         }
-        levelTimer.stopTimer();
-    }
-
-    public void decreaceLives(){
-        livesMario--;
-        currLevel.decreacedLives();
     }
 
     public static void main(String[] args) {

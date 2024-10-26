@@ -5,7 +5,7 @@ import java.awt.Rectangle;
 import collisions.Axis;
 import collisions.Collision;
 import collisions.MarioCollision;
-import entities.Mario;
+import entities.mario.Mario;
 
 public class MarioCollider extends BaseCollider implements UpdateableEntityCollider {
     protected Mario mario;

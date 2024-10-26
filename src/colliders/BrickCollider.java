@@ -10,7 +10,7 @@ import collisions.EnemyCollision;
 import collisions.MarioCollision;
 import collisions.PiranhaPlantCollision;
 import entities.Brick;
-import entities.Mario;
+import entities.mario.Mario;
 
 public class BrickCollider extends BaseCollider {
     protected Brick brick;
@@ -39,7 +39,7 @@ public class BrickCollider extends BaseCollider {
 
     public void handleVerticalCollision(MarioCollision m) {
         Vector2D velocity = m.getCollider().getVelocity();
-        Rectangle collision = getBound().intersection(m.getCollider().getBound());
+        Rectangle collision = getBounds().intersection(m.getCollider().getBounds());
         Mario mario = m.getCollider().getEntity();
 
         int sign = (int) -Math.signum(velocity.getYComponent());
@@ -52,7 +52,7 @@ public class BrickCollider extends BaseCollider {
 
     public void handleHorizontalCollision(MarioCollision m) {
         Vector2D velocity = m.getCollider().getVelocity();
-        Rectangle collision = getBound().intersection(m.getCollider().getBound());
+        Rectangle collision = getBounds().intersection(m.getCollider().getBounds());
 
         int sign = (int) -Math.signum(velocity.getXComponent());
         m.getCollider().translate(sign * (int) (collision.getWidth()), 0);
@@ -61,7 +61,7 @@ public class BrickCollider extends BaseCollider {
 
     public void handleVerticalCollision(EnemyCollision e) {
         Vector2D velocity = e.getCollider().getVelocity();
-        Rectangle collision = getBound().intersection(e.getCollider().getBound());
+        Rectangle collision = getBounds().intersection(e.getCollider().getBounds());
 
         int sign = (int) -Math.signum(velocity.getYComponent());
         e.getCollider().translate(0, sign * (int) collision.getHeight());
@@ -70,7 +70,7 @@ public class BrickCollider extends BaseCollider {
 
     public void handleHorizontalCollision(EnemyCollision e) {
         Vector2D velocity = e.getCollider().getVelocity();
-        Rectangle collision = getBound().intersection(e.getCollider().getBound());
+        Rectangle collision = getBounds().intersection(e.getCollider().getBounds());
 
         int sign = (int) -Math.signum(velocity.getXComponent());
         e.getCollider().translate(sign * (int) (collision.getWidth()), 0);

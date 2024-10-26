@@ -49,7 +49,7 @@ public class BuzzyBeetleCollider extends BaseCollider implements EnemyCollider {
     public void handleVerticalCollision(KoopaTroopaCollision k) {
         if (!k.getCollider().getEntity().getShell() || k.getCollider().getEntity().getSpeedX() == 0) {
             Vector2D velocity = k.getCollider().getVelocity();
-            Rectangle collision = getBound().intersection(k.getCollider().getBound());
+            Rectangle collision = getBounds().intersection(k.getCollider().getBounds());
         
             int sign = (int) -Math.signum(velocity.getYComponent());
             k.getCollider().translate(0, sign * (int) collision.getHeight());
@@ -62,7 +62,7 @@ public class BuzzyBeetleCollider extends BaseCollider implements EnemyCollider {
     public void handleHorizontalCollision(KoopaTroopaCollision k) {
         if(!k.getCollider().getEntity().getShell() || k.getCollider().getEntity().getSpeedX() == 0) {
             Vector2D velocity = k.getCollider().getVelocity();
-            Rectangle collision = getBound().intersection(k.getCollider().getBound());
+            Rectangle collision = getBounds().intersection(k.getCollider().getBounds());
             int otherDirection = (int) Math.signum(velocity.getXComponent());
             int myDirection = (int) Math.signum(this.velocity.getXComponent());
 
@@ -85,7 +85,7 @@ public class BuzzyBeetleCollider extends BaseCollider implements EnemyCollider {
 
     public void handleVerticalCollision(EnemyCollision e) {
         Vector2D velocity = e.getCollider().getVelocity();
-        Rectangle collision = getBound().intersection(e.getCollider().getBound());
+        Rectangle collision = getBounds().intersection(e.getCollider().getBounds());
 
         int sign = (int) -Math.signum(velocity.getYComponent());
         e.getCollider().translate(0, sign * (int) collision.getHeight());
@@ -94,7 +94,7 @@ public class BuzzyBeetleCollider extends BaseCollider implements EnemyCollider {
 
     public void handleHorizontalCollision(EnemyCollision e) {
         Vector2D velocity = e.getCollider().getVelocity();
-        Rectangle collision = getBound().intersection(e.getCollider().getBound());
+        Rectangle collision = getBounds().intersection(e.getCollider().getBounds());
         int otherDirection = (int) Math.signum(velocity.getXComponent());
         int myDirection = (int) Math.signum(this.velocity.getXComponent());
 

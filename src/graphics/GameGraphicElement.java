@@ -16,6 +16,7 @@ public class GameGraphicElement implements GraphicElement {
     protected Entity entity;
     protected JLabel label;
     protected ImageIcon sprite;
+    protected String currentSprite;
     protected Rectangle bounds;
     protected boolean toUpdate;
     protected boolean flipped;
@@ -31,14 +32,14 @@ public class GameGraphicElement implements GraphicElement {
     protected Map<String, ImageIcon> sprites;
     protected String folder;
 
-    public GameGraphicElement(Entity e, String folderPath, String mode) {
+    public GameGraphicElement(Entity e, String folderPath) {
         folder = folderPath;
         entity = e;
         sprite = null;
         label = new JLabel();
         flipped = false;
         bounds = label.getBounds();
-        loadSprites(mode);
+        loadSprites();
     }
     
     public Entity getEntity() {
@@ -131,12 +132,14 @@ public class GameGraphicElement implements GraphicElement {
         return label;
     }
 
-    public void loadSprites(String mode) {
-        sprites = SpriteFactory.instance().getSprites(folder);
+    public void loadSprites() {
+        sprites = SpriteFactory.instance().getSprites(folder, GraphicEngine.instance().getMode());
     }
 
     public void setFolder(String f) {
         folder = f;
+        loadSprites();
+        setSprite(currentSprite);
     }
 
     public String getFolder() {

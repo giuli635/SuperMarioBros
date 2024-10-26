@@ -1,4 +1,4 @@
-package entities;
+package entities.mario;
 
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
@@ -7,6 +7,8 @@ import java.util.TimerTask;
 
 import colliders.Direction;
 import colliders.MarioCollider;
+import entities.BaseUpdatableEntity;
+import entities.Entity;
 import game.CollisionsEngine;
 import game.Game;
 import game.GraphicEngine;
@@ -14,7 +16,8 @@ import game.KeyStatus;
 import graphics.GameGraphicElement;
 
 public class Mario extends BaseUpdatableEntity {
-    protected final static String MARIO = "mario";
+    protected final static String MARIO_STILL = "marioStill";
+    protected final static String MARIO_DEATH = "marioDeath";
     protected final static String MARIO_JUMP = "marioJumping";
     protected final static String[] MARIO_WALKING = {"marioWalking", "marioWalking2"};
     protected final static String MARIO_STOPPING = "marioStopping";
@@ -44,8 +47,8 @@ public class Mario extends BaseUpdatableEntity {
         loaded = false;
         jumping = false;
         collider = new MarioCollider(this, new Rectangle());
-        graphicElement = new GameGraphicElement(this, MARIO, Game.instance().getMode());
-        graphicElement.setSprite(MARIO);
+        graphicElement = new GameGraphicElement(this, "mario");
+        graphicElement.setSprite(MARIO_STILL);
         collider.setSize(
                 graphicElement.getCurrentSprite().getIconWidth(),
                 graphicElement.getCurrentSprite().getIconHeight()
@@ -126,7 +129,7 @@ public class Mario extends BaseUpdatableEntity {
     }
 
     protected String handleGroundHorizontalMovement(Direction movementDirection, Direction currentDirection) {
-        String newSprite = MARIO;
+        String newSprite = MARIO_STILL;
 
         if (movementDirection != Direction.NONE) {
             if (currentDirection == Direction.NONE || movementDirection == currentDirection) {
@@ -164,6 +167,10 @@ public class Mario extends BaseUpdatableEntity {
     protected void resolveSpriteDirection(Direction movementDirection, String newSprite) {
         boolean flipped = graphicElement.isFlipped();
         graphicElement.setSprite(newSprite);
+        collider.setSize(
+                graphicElement.getCurrentSprite().getIconWidth(),
+                graphicElement.getCurrentSprite().getIconHeight()
+        );
         if (movementDirection == Direction.LEFT || movementDirection == Direction.NONE && flipped) {
             graphicElement.flipSprite();
         }
@@ -184,7 +191,7 @@ public class Mario extends BaseUpdatableEntity {
     public void die() {
         Game.instance().unregisterToUpdate(this);
         CollisionsEngine.instance().remove(collider);
-        graphicElement.setSprite(MARIO + "Death");
+        graphicElement.setSprite(MARIO_DEATH);
         
         Timer timer = new Timer();
         TimerTask task = new TimerTask() {
@@ -194,7 +201,6 @@ public class Mario extends BaseUpdatableEntity {
         };
 
         timer.schedule(task,1000);
-        Game.instance().decreaceLives();
     }
 
     public void addVelocity(int dx, int dy) {

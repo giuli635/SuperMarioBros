@@ -3,7 +3,6 @@ package entities;
 import java.awt.Rectangle;
 
 import colliders.KoopaTroopaCollider;
-import game.Game;
 import graphics.GameGraphicElement;
 
 public class KoopaTroopa extends BaseUpdatableEntity implements Enemy {
@@ -16,7 +15,7 @@ public class KoopaTroopa extends BaseUpdatableEntity implements Enemy {
         speedX = 2;
         shell = false;
         collider = new KoopaTroopaCollider(this, new Rectangle());
-        graphicElement = new GameGraphicElement(this, SPRITES_FOLDER, Game.instance().getMode());
+        graphicElement = new GameGraphicElement(this, SPRITES_FOLDER);
         graphicElement.setSprite(SPRITES_FOLDER);
         collider.setSize(
             graphicElement.getCurrentSprite().getIconWidth(),

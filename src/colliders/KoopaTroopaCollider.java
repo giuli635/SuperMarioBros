@@ -39,7 +39,7 @@ public class KoopaTroopaCollider extends BaseCollider implements EnemyCollider {
     }
 
     public void handleHorizontalCollision(MarioCollision m) {
-        Rectangle collision = getBound().intersection(m.getCollider().getBound());
+        Rectangle collision = getBounds().intersection(m.getCollider().getBounds());
         if (!koopa.getShell()) {
             m.getCollider().getEntity().die();
         } else if(koopa.getSpeedX() == 0) {
@@ -54,7 +54,7 @@ public class KoopaTroopaCollider extends BaseCollider implements EnemyCollider {
 
     public void handleVerticalCollision(MarioCollision m) {
         Direction collisionDirection = m.getCollider().getVelocity().getYComponent() > 0 ? Direction.UP : Direction.DOWN;
-        Rectangle collision = getBound().intersection(m.getCollider().getBound());
+        Rectangle collision = getBounds().intersection(m.getCollider().getBounds());
         if(collisionDirection == Direction.DOWN) {
            if (!koopa.getShell()) {
                 koopa.recieveDamage();
@@ -75,7 +75,7 @@ public class KoopaTroopaCollider extends BaseCollider implements EnemyCollider {
 
     public void handleVerticalCollision(EnemyCollision e) {
         Vector2D velocity = e.getCollider().getVelocity();
-        Rectangle collision = getBound().intersection(e.getCollider().getBound());
+        Rectangle collision = getBounds().intersection(e.getCollider().getBounds());
 
         int sign = (int) -Math.signum(velocity.getYComponent());
         e.getCollider().translate(0, sign * (int) collision.getHeight());
@@ -84,7 +84,7 @@ public class KoopaTroopaCollider extends BaseCollider implements EnemyCollider {
 
     public void handleHorizontalCollision(EnemyCollision e) {
         Vector2D velocity = e.getCollider().getVelocity();
-        Rectangle collision = getBound().intersection(e.getCollider().getBound());
+        Rectangle collision = getBounds().intersection(e.getCollider().getBounds());
         int otherDirection = (int) Math.signum(velocity.getXComponent());
         int myDirection = (int) Math.signum(this.velocity.getXComponent());
 
