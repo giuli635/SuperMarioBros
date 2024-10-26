@@ -69,13 +69,8 @@ public class TimerGraphicElement implements GraphicElement {
     }
 
     @Override
-    public void loadSprites(String mode) {
-
-    }
-
-    @Override
     public void setSprite(String s) {
-  
+
     }
 
     @Override
@@ -122,5 +117,11 @@ public class TimerGraphicElement implements GraphicElement {
     public void setFlipped(boolean f) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'setFlipped'");
+    }
+
+    @Override
+    public void loadSprites() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'loadSprites'");
     }
 }

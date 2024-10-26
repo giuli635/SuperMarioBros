@@ -8,7 +8,7 @@ import collisions.LoaderCollision;
 import collisions.UpdateableEntityCollision;
 import entities.Entity;
 
-public class LoaderCollider extends BaseCollider{
+public class LoaderCollider extends BaseCollider {
 
     public LoaderCollider(Rectangle b) {
         super(b);

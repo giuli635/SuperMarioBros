@@ -3,7 +3,7 @@ package graphics;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import entities.Entity;
-import entities.Mario;
+import entities.mario.Mario;
 
 import java.awt.Font;
 import java.awt.FontFormatException;
@@ -107,7 +107,7 @@ public class ScoreGraphicElement implements GraphicElement {
     public void flipSprite() {}
 
     @Override
-    public void loadSprites(String mode) {}
+    public void loadSprites() {}
 
     @Override
     public void setFolder(String folder) {}

@@ -18,7 +18,7 @@ public class Goomba extends BaseUpdatableEntity implements Enemy {
     public Goomba() {
         speedX = 2;
         collider = new GoombaCollider(this, new Rectangle());
-        graphicElement = new GameGraphicElement(this, SPRITES_FOLDER, Game.instance().getMode());
+        graphicElement = new GameGraphicElement(this, SPRITES_FOLDER);
         graphicElement.setSprite(SPRITES_FOLDER);
         collider.setSize(
             graphicElement.getCurrentSprite().getIconWidth(),

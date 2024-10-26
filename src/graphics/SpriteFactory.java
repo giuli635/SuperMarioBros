@@ -25,13 +25,13 @@ public class SpriteFactory {
         return uniqueInstance;
     }
 
-    public Map<String, ImageIcon> getSprites(String entity) {
-        return loadSprites(entity);
+    public Map<String, ImageIcon> getSprites(String entity, String mode) {
+        return loadSprites(entity, mode);
     }
     
-    private Map<String, ImageIcon> loadSprites(String entity) {
+    private Map<String, ImageIcon> loadSprites(String entity, String mode) {
         Map<String, ImageIcon> entitySprites = new ConcurrentHashMap<>();
-        Path spritePath = Paths.get(SPRITES_DIR, entity, "mode1");
+        Path spritePath = Paths.get(SPRITES_DIR, entity, mode);
         File spriteDir = spritePath.toFile();
         
         File[] spriteFiles = spriteDir.listFiles();

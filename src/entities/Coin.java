@@ -3,7 +3,6 @@ package entities;
 import java.awt.Rectangle;
 
 import colliders.CoinCollider;
-import game.Game;
 import graphics.GameGraphicElement;
 
 public class Coin extends BaseEntity {
@@ -11,7 +10,7 @@ public class Coin extends BaseEntity {
 
     public Coin() {
         collider = new CoinCollider(this, new Rectangle());
-        graphicElement = new GameGraphicElement(this, SPRITES_FOLDER, Game.instance().getMode());
+        graphicElement = new GameGraphicElement(this, SPRITES_FOLDER);
         graphicElement.setSprite(SPRITES_FOLDER);
         collider.setSize(
             graphicElement.getCurrentSprite().getIconWidth(),

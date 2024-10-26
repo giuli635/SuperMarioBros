@@ -15,10 +15,19 @@ import graphics.GraphicElement;
 public class GraphicEngine {
     protected static GraphicEngine uniqueInstance;
     protected JFrame frame;
+    protected String mode;
     protected JLayeredPane panel;
     protected Set<GraphicElement> onScreen;
     protected int position;
     protected GraphicElement[] backgrounds;
+
+    public String getMode() {
+        return mode;
+    }
+
+    public void setMode(String mode) {
+        this.mode = mode;
+    }
 
     public int getPosition() {
         return position;
@@ -49,7 +58,10 @@ public class GraphicEngine {
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setVisible(true);
 
-        backgrounds = new GraphicElement[]{new GameGraphicElement(null, "level", "mode1"), new GameGraphicElement(null, "level", "mode1")};
+    }
+
+    public void initBackgrounds() {
+        backgrounds = new GraphicElement[]{new GameGraphicElement(null, "level"), new GameGraphicElement(null, "level")};
         for (int i = 0; i < backgrounds.length; i++) {
             backgrounds[i].setSprite("levelBackground1");
             addGraphicElement(backgrounds[i]);

@@ -1,6 +1,6 @@
 package loading;
 
-import entities.Mario;
+import entities.mario.Mario;
 
 public class MarioLoader implements EntityLoader {
     @Override

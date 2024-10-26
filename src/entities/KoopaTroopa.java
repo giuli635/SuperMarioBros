@@ -13,12 +13,12 @@ import java.util.TimerTask;
 public class KoopaTroopa extends BaseUpdatableEntity implements Enemy {
     protected static String SPRITES_FOLDER = "koopa";
     protected boolean movingRight = true;
-    protected int speedX = 1;
+    protected int speedX;
 
     public KoopaTroopa(){
-        speedX = 2;
+        speedX = -2;
         collider = new KoopaTroopaCollider(this, new Rectangle());
-        graphicElement = new GameGraphicElement(this, SPRITES_FOLDER, Game.instance().getMode());
+        graphicElement = new GameGraphicElement(this, SPRITES_FOLDER);
         graphicElement.setSprite(SPRITES_FOLDER);
         collider.setSize(
             graphicElement.getCurrentSprite().getIconWidth(),

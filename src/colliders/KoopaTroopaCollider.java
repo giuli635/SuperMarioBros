@@ -32,10 +32,12 @@ public class KoopaTroopaCollider extends BaseCollider implements UpdateableEntit
     }
 
     public void handleHorizontalCollision(MarioCollision m) {
+        System.out.println("horizontal");
         m.getCollider().getEntity().die();
     }
 
     public void handleVerticalCollision(MarioCollision m) {
+        System.out.println("vertical");
         Direction collisionDirection = m.getCollider().getVelocity().getYComponent() > 0 ? Direction.UP : Direction.DOWN;
         if(collisionDirection == Direction.DOWN && m.getCollider().getEntity().getJumping()) {
             koopa.recieveDamage();

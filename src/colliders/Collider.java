@@ -11,7 +11,7 @@ import entities.Entity;
 public interface Collider {
     public Entity getEntity();
     public void sendCollision(Collision c, Axis a);
-    public Rectangle getBound();
+    public Rectangle getBounds();
     public Collision getCollision();
     public void setPosition(int x, int y);
     public Point getPosition();
@@ -19,8 +19,9 @@ public interface Collider {
     public Dimension getSize();
     public void setSize(int width, int height);
     public Vector2D getVelocity();
-    public void setActive(boolean b);
-    public boolean activated();
+    public boolean isActivated();
+    public void activate();
+    public void deactivate();
     public void resetVelocity();
     public void moveX();
     public void moveY();

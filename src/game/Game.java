@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import entities.Mario;
+import entities.mario.Mario;
 import entities.UpdatableEntity;
 import graphics.MarioGraphicLives;
 import graphics.TimerGraphicElement;
@@ -27,7 +27,6 @@ public class Game implements WindowListener, KeyListener {
     protected boolean run;
     protected boolean pause;
     private boolean pauseKeyAlreadyPressed = false;
-    protected String mode; 
     protected LevelTimer levelTimer; 
     protected TimerGraphicElement timerGraphicElement;
     protected MarioGraphicLives livesGraphic;
@@ -42,7 +41,6 @@ public class Game implements WindowListener, KeyListener {
         currLevel = null;
         run = true;
         pause = false;
-        mode = "mode1";
     }
 
     public static Game instance() {
@@ -61,14 +59,12 @@ public class Game implements WindowListener, KeyListener {
         return keysStatus.getOrDefault(key, KeyStatus.RELEASED);
     }
 
-    public String getMode(){
-        return mode;
-    }
-
     private void loop() {
         GraphicEngine graphicEngine = GraphicEngine.instance();
+        graphicEngine.setMode("mode1");
+        graphicEngine.initBackgrounds();
         LevelReader reader = LevelReader.instance();
-        currLevel= reader.createLevel("nivel1.txt", livesMario, 300);
+        currLevel = reader.createLevel("nivel1.txt", livesMario, 300);
         long lastUpdateTime;
         while (run) {
             lastUpdateTime = System.currentTimeMillis();
@@ -90,7 +86,6 @@ public class Game implements WindowListener, KeyListener {
             }
             graphicEngine.drawFrame();
         }
-        levelTimer.stopTimer();
     }
 
     public void decreaceLives(){

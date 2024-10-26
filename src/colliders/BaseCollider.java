@@ -38,11 +38,10 @@ public abstract class BaseCollider implements Collider {
     public BaseCollider(Rectangle b) {
         colliding = false;
         moving = false;
+        activated = false;
         bounds = b;
-        activated = true;
         velocity = new Vector2D(bounds.getLocation(), bounds.getLocation());
         nextVelocity = new Vector2D(bounds.getLocation(), bounds.getLocation());
-        CollisionsEngine.instance().add(this);
     }
 
     @Override
@@ -52,7 +51,9 @@ public abstract class BaseCollider implements Collider {
 
     public void setPosition(int x, int y) {
         CollisionsEngine collisionsEngine = CollisionsEngine.instance();
-        collisionsEngine.setColliderPosition(this, x, y);
+        Rectangle previousBounds = new Rectangle(bounds);
+        bounds.setLocation(x, y);
+        collisionsEngine.updateColliderBounds(previousBounds, this);
         velocity = new Vector2D(bounds.getLocation(), bounds.getLocation());
         nextVelocity = new Vector2D(bounds.getLocation(), bounds.getLocation());
     }
@@ -61,22 +62,30 @@ public abstract class BaseCollider implements Collider {
         return velocity.clone();
     }
 
-    public boolean activated() {
+    public boolean isActivated() {
         return activated;
     }
 
-    public void setActive(boolean a) {
-        activated = a;
+    public void activate() {
+        activated = true;
+        CollisionsEngine.instance().add(this);
     }
 
-    public Rectangle getBound() {
+    public void deactivate() {
+        activated = false;
+        CollisionsEngine.instance().remove(this);
+    }
+
+    public Rectangle getBounds() {
         return bounds;
     }
 
     public void translate(int dx, int dy) {
         if (colliding) {
             CollisionsEngine collisionsEngine = CollisionsEngine.instance();
-            collisionsEngine.translateCollider(this, dx, dy);
+            Rectangle previousBounds = new Rectangle(bounds);
+            bounds.translate(dx, dy);
+            collisionsEngine.updateColliderBounds(previousBounds, this);
         } else if (moving) {
             nextVelocity.grow(dx, dy);
             CollisionsEngine.instance().addToUpdate(this);
@@ -105,6 +114,7 @@ public abstract class BaseCollider implements Collider {
 
     public void setSize(int width, int height) {
         bounds.setSize(width, height);
+        CollisionsEngine.instance().updateColliderBounds(bounds, this);
     }
 
     public void handleHorizontalCollision(Collision c) {

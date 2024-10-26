@@ -17,7 +17,7 @@ public interface GraphicElement {
     public JLabel getLabel();
     public JLabel[] getLabels();
     public void draw();
-    public void loadSprites(String mode);
+    public void loadSprites();
     public void setFolder(String folder);
     public String getFolder();
     public boolean isFlipped();

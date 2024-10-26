@@ -13,7 +13,7 @@ import collisions.MarioCollision;
 import collisions.SpinyCollision;
 import collisions.SuperMushroomCollision;
 import entities.Block;
-import entities.Mario;
+import entities.mario.Mario;
 
 public class BlockCollider extends BaseCollider {
     protected Block block;
@@ -42,7 +42,7 @@ public class BlockCollider extends BaseCollider {
 
     public void handleVerticalCollision(MarioCollision m) {
         Vector2D velocity = m.getCollider().getVelocity();
-        Rectangle collision = getBound().intersection(m.getCollider().getBound());
+        Rectangle collision = getBounds().intersection(m.getCollider().getBounds());
         Mario mario = m.getCollider().getEntity();
 
         int sign = (int) -Math.signum(velocity.getYComponent());
@@ -55,7 +55,7 @@ public class BlockCollider extends BaseCollider {
 
     public void handleHorizontalCollision(MarioCollision m) {
         Vector2D velocity = m.getCollider().getVelocity();
-        Rectangle collision = getBound().intersection(m.getCollider().getBound());
+        Rectangle collision = getBounds().intersection(m.getCollider().getBounds());
 
         int sign = (int) -Math.signum(velocity.getXComponent());
         m.getCollider().translate(sign * (int) (collision.getWidth()), 0);
@@ -64,7 +64,7 @@ public class BlockCollider extends BaseCollider {
 
     public void handleVerticalCollision(GoombaCollision g) {
         Vector2D velocity = g.getCollider().getVelocity();
-        Rectangle collision = getBound().intersection(g.getCollider().getBound());
+        Rectangle collision = getBounds().intersection(g.getCollider().getBounds());
 
         int sign = (int) -Math.signum(velocity.getYComponent());
         g.getCollider().translate(0, sign * (int) collision.getHeight());
@@ -73,7 +73,7 @@ public class BlockCollider extends BaseCollider {
 
     public void handleHorizontalCollision(GoombaCollision g) {
         Vector2D velocity = g.getCollider().getVelocity();
-        Rectangle collision = getBound().intersection(g.getCollider().getBound());
+        Rectangle collision = getBounds().intersection(g.getCollider().getBounds());
 
         int sign = (int) -Math.signum(velocity.getXComponent());
         g.getCollider().translate(sign * (int) (collision.getWidth()), 0);
@@ -83,7 +83,7 @@ public class BlockCollider extends BaseCollider {
 
     public void handleVerticalCollision(KoopaTroopaCollision k) {
         Vector2D velocity = k.getCollider().getVelocity();
-        Rectangle collision = getBound().intersection(k.getCollider().getBound());
+        Rectangle collision = getBounds().intersection(k.getCollider().getBounds());
 
         int sign = (int) -Math.signum(velocity.getYComponent());
         k.getCollider().translate(0, sign * (int) collision.getHeight());
@@ -92,7 +92,7 @@ public class BlockCollider extends BaseCollider {
 
     public void handleHorizontalCollision(KoopaTroopaCollision k) {
         Vector2D velocity = k.getCollider().getVelocity();
-        Rectangle collision = getBound().intersection(k.getCollider().getBound());
+        Rectangle collision = getBounds().intersection(k.getCollider().getBounds());
 
         int sign = (int) -Math.signum(velocity.getXComponent());
         k.getCollider().translate(sign * (int) (collision.getWidth()), 0);
@@ -102,7 +102,7 @@ public class BlockCollider extends BaseCollider {
 
     public void handleVerticalCollision(SpinyCollision s) {
         Vector2D velocity = s.getCollider().getVelocity();
-        Rectangle collision = getBound().intersection(s.getCollider().getBound());
+        Rectangle collision = getBounds().intersection(s.getCollider().getBounds());
 
         int sign = (int) -Math.signum(velocity.getYComponent());
         s.getCollider().translate(0, sign * (int) collision.getHeight());
@@ -111,7 +111,7 @@ public class BlockCollider extends BaseCollider {
 
     public void handleHorizontalCollision(SpinyCollision s) {
         Vector2D velocity = s.getCollider().getVelocity();
-        Rectangle collision = getBound().intersection(s.getCollider().getBound());
+        Rectangle collision = getBounds().intersection(s.getCollider().getBounds());
 
         int sign = (int) -Math.signum(velocity.getXComponent());
         s.getCollider().translate(sign * (int) (collision.getWidth()), 0);
@@ -121,7 +121,7 @@ public class BlockCollider extends BaseCollider {
 
     public void handleVerticalCollision(LakituCollision l) {
         Vector2D velocity = l.getCollider().getVelocity();
-        Rectangle collision = getBound().intersection(l.getCollider().getBound());
+        Rectangle collision = getBounds().intersection(l.getCollider().getBounds());
 
         int sign = (int) -Math.signum(velocity.getYComponent());
         l.getCollider().translate(0, sign * (int) collision.getHeight());
@@ -130,7 +130,7 @@ public class BlockCollider extends BaseCollider {
 
     public void handleHorizontalCollision(LakituCollision l) {
         Vector2D velocity = l.getCollider().getVelocity();
-        Rectangle collision = getBound().intersection(l.getCollider().getBound());
+        Rectangle collision = getBounds().intersection(l.getCollider().getBounds());
 
         int sign = (int) -Math.signum(velocity.getXComponent());
         l.getCollider().translate(sign * (int) (collision.getWidth()), 0);
@@ -141,7 +141,7 @@ public class BlockCollider extends BaseCollider {
 
     public void handleVerticalCollision(SuperMushroomCollision s) {
         Vector2D velocity = s.getCollider().getVelocity();
-        Rectangle collision = getBound().intersection(s.getCollider().getBound());
+        Rectangle collision = getBounds().intersection(s.getCollider().getBounds());
 
         int sign = (int) -Math.signum(velocity.getYComponent());
         s.getCollider().translate(0, sign * (int) collision.getHeight());
@@ -150,7 +150,7 @@ public class BlockCollider extends BaseCollider {
 
     public void handleHorizontalCollision(SuperMushroomCollision s) {
         Vector2D velocity = s.getCollider().getVelocity();
-        Rectangle collision = getBound().intersection(s.getCollider().getBound());
+        Rectangle collision = getBounds().intersection(s.getCollider().getBounds());
 
         int sign = (int) -Math.signum(velocity.getXComponent());
         s.getCollider().translate(sign * (int) (collision.getWidth()), 0);
@@ -160,7 +160,7 @@ public class BlockCollider extends BaseCollider {
 
     public void handleVerticalCollision(BuzzyBeetleCollision z) {
         Vector2D velocity = z.getCollider().getVelocity();
-        Rectangle collision = getBound().intersection(z.getCollider().getBound());
+        Rectangle collision = getBounds().intersection(z.getCollider().getBounds());
 
         int sign = (int) -Math.signum(velocity.getYComponent());
         z.getCollider().translate(0, sign * (int) collision.getHeight());
@@ -169,7 +169,7 @@ public class BlockCollider extends BaseCollider {
 
     public void handleHorizontalCollision(BuzzyBeetleCollision z) {
         Vector2D velocity = z.getCollider().getVelocity();
-        Rectangle collision = getBound().intersection(z.getCollider().getBound());
+        Rectangle collision = getBounds().intersection(z.getCollider().getBounds());
 
         int sign = (int) -Math.signum(velocity.getXComponent());
         z.getCollider().translate(sign * (int) (collision.getWidth()), 0);

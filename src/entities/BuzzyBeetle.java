@@ -18,7 +18,7 @@ public class BuzzyBeetle extends BaseUpdatableEntity implements Enemy {
     public BuzzyBeetle() {
         speedX = 2;
         collider = new BuzzyBeetleCollider(this, new Rectangle());
-        graphicElement = new GameGraphicElement(this, SPRITES_FOLDER, Game.instance().getMode());
+        graphicElement = new GameGraphicElement(this, SPRITES_FOLDER);
         graphicElement.setSprite(SPRITES_FOLDER);
         collider.setSize(
             graphicElement.getCurrentSprite().getIconWidth(),

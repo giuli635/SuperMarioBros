@@ -8,6 +8,8 @@ import collisions.MarioCollision;
 import collisions.SuperMushroomCollision;
 import entities.SuperMushroom;
 import entities.UpdatableEntity;
+import entities.mario.Mario;
+import entities.mario.SuperMario;
 import game.CollisionsEngine;
 import game.GraphicEngine;
 
@@ -38,18 +40,19 @@ public class SuperMushroomCollider extends BaseCollider implements UpdateableEnt
         return new SuperMushroomCollision(this);
     }
 
-    public void handleVerticalCollision(MarioCollision m) {
-        //m.getCollider().getEntity().getGraphicElement().setSprite(new ImageIcon("sprites/superMarioStill.png"));
+    protected void handleMarioCollision(Mario m) {
+        new SuperMario().setState(m);
         getEntity().unload();
         GraphicEngine.instance().removeGraphicElement(getEntity().getGraphicElement());
         CollisionsEngine.instance().remove(this);
     }
 
+    public void handleVerticalCollision(MarioCollision m) {
+        handleMarioCollision(m.getCollider().getEntity());
+    }
+
     public void handleHorizontalCollision(MarioCollision m) {
-        //m.getCollider().getEntity().getGraphicElement().setSprite(new ImageIcon("sprites/superMarioStill.png"));
-        getEntity().unload();
-        GraphicEngine.instance().removeGraphicElement(getEntity().getGraphicElement());
-        CollisionsEngine.instance().remove(this);
+        handleMarioCollision(m.getCollider().getEntity());
     }
     
 }

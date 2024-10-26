@@ -94,6 +94,7 @@ public class LevelReader  {
         }
 
         LoaderCollider loader = new LoaderCollider(new Rectangle(0, 0, CHUNK, 2 * windowHeight));
+        loader.activate();
 
         for (int i =  0; i <= lastChunkInScreen; i++) {
             loader.translate(CHUNK, 0);
@@ -101,18 +102,22 @@ public class LevelReader  {
         }
 
         UnloaderCollider unloader = new UnloaderCollider(new Rectangle((loadingStartingPoint - 2) * CHUNK, 0, CHUNK, 2 * windowHeight));
+        unloader.activate();
 
         DeleterCollider deleter = new DeleterCollider(new Rectangle((loadingStartingPoint - 6) * CHUNK, 0, CHUNK, 2 * windowHeight));
+        deleter.activate();
         
         ScreenBorderCollider leftBorder = new ScreenBorderCollider(
             new Rectangle((loadingStartingPoint - 1) * CHUNK, 0, CHUNK, windowHeight),
             Direction.LEFT
         );
+        leftBorder.activate();
 
         ScreenBorderCollider rightBorder = new ScreenBorderCollider(
             new Rectangle(lastChunkInScreen * CHUNK, 0, CHUNK, 2 * windowHeight),
             Direction.RIGHT
         );
+        rightBorder.activate();
 
         int middleChunk = lastChunkInScreen / 2;
         new ScreenDisplacementCollider(
@@ -122,7 +127,7 @@ public class LevelReader  {
             loader,
             unloader,
             deleter
-        );
+        ).activate();
     }
     
     public void loadEntities(BufferedReader br) throws IOException {
@@ -137,6 +142,7 @@ public class LevelReader  {
                     Entity newEntity = loaders.getOrDefault(character, blockLoader).load();
                     Collider newEntityCollider = newEntity.getCollider();
                     newEntityCollider.setPosition(i * CHUNK, j * CHUNK);
+                    newEntityCollider.activate();
                 }
             }
             i++;

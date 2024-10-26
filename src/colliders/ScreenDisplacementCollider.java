@@ -40,7 +40,7 @@ public class ScreenDisplacementCollider extends BaseCollider {
     }
 
     public void handleHorizontalCollision(MarioCollision m) {
-        Rectangle collision = getBound().intersection(m.getCollider().getBound());
+        Rectangle collision = getBounds().intersection(m.getCollider().getBounds());
         translate((int) collision.getWidth(), 0);
         leftBorder.translate((int) collision.getWidth(), 0);
         rightBorder.translate((int) collision.getWidth(), 0);

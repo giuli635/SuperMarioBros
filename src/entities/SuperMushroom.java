@@ -3,7 +3,6 @@ package entities;
 import java.awt.Rectangle;
 
 import colliders.SuperMushroomCollider;
-import game.Game;
 import graphics.GameGraphicElement;
 
 public class SuperMushroom extends BaseUpdatableEntity {
@@ -13,11 +12,10 @@ public class SuperMushroom extends BaseUpdatableEntity {
     protected int speedX;
 
     public SuperMushroom() {
-        super();
         points = 100;
         speedX = 1;
         collider = new SuperMushroomCollider(this, new Rectangle());
-        graphicElement = new GameGraphicElement(this, SPRITES_FOLDER, Game.instance().getMode());
+        graphicElement = new GameGraphicElement(this, SPRITES_FOLDER);
         graphicElement.setSprite(SPRITES_FOLDER);
         collider.setSize(
             graphicElement.getCurrentSprite().getIconWidth(),
