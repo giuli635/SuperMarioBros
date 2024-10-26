@@ -13,6 +13,7 @@ import game.CollisionsEngine;
 import game.Game;
 import game.GraphicEngine;
 import game.KeyStatus;
+import game.LevelReader;
 import graphics.GameGraphicElement;
 
 public class Mario extends BaseUpdatableEntity {
@@ -197,6 +198,7 @@ public class Mario extends BaseUpdatableEntity {
         TimerTask task = new TimerTask() {
             public void run(){
                 GraphicEngine.instance().remove(graphicElement);
+                Game.instance().resetCurrentLevel();
             }
         };
 

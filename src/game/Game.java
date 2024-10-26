@@ -9,6 +9,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import entities.UpdatableEntity;
 
@@ -55,7 +57,7 @@ public class Game implements WindowListener, KeyListener {
         GraphicEngine graphicEngine = GraphicEngine.instance();
         graphicEngine.initBackgrounds();
         LevelReader reader = LevelReader.instance();
-        currLevel = reader.createLevel("nivel1.txt");
+        reader.createLevel("nivel1.txt");
         long lastUpdateTime;
         while (run) {
             lastUpdateTime = System.currentTimeMillis();
@@ -66,22 +68,48 @@ public class Game implements WindowListener, KeyListener {
                     entity.update();
                 }
                 CollisionsEngine.instance().update();
+
+                try {
+                    Thread.sleep(SECOND / FPS - (lastUpdateTime - System.currentTimeMillis()));
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                graphicEngine.drawFrame();
             }
-            
+
             checkPause();
 
-            try {
-                Thread.sleep(SECOND / FPS - (lastUpdateTime - System.currentTimeMillis()));
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            graphicEngine.drawFrame();
         }
     }
 
     public static void main(String[] args) {
         uniqueInstance = new Game();
         uniqueInstance.loop();
+    }
+
+    public void resetCurrentLevel() {
+        pause = true;
+        
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            public void run() {
+                pause = false;
+                GraphicEngine.instance().initBackgrounds();
+                LevelReader reader = LevelReader.instance();
+                reader.createLevel("nivel1.txt");
+                
+            }
+        } , 5000);
+        
+        List<UpdatableEntity> list = new ArrayList<>(toUpdateRegistry);
+               
+        for (UpdatableEntity entity : list) {
+            entity.unload();
+        }
+        
+        CollisionsEngine.instance().reset();
+        GraphicEngine.instance().reset();
+        
     }
 
     @Override

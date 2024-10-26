@@ -164,4 +164,11 @@ public class GraphicEngine {
     public String getMode() {
         return mode;
     }
+
+    public void reset() {
+        panel.removeAll();
+        panel.revalidate();
+        panel.repaint();
+        onScreen = new HashSet<>();
+    }
 }

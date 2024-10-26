@@ -59,8 +59,7 @@ public class LevelReader  {
         return uniqueInstance;
     }
 
-    public LevelStats createLevel(String file) {
-        LevelStats level = null;
+    public void createLevel(String file) {
         try {
             BufferedReader br = new BufferedReader(new FileReader(file));
             loadEntities(br);
@@ -70,7 +69,6 @@ public class LevelReader  {
             e.printStackTrace();
         }
         loadScreen();
-        return level;
     }
 
     private void loadScreen() {
