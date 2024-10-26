@@ -65,10 +65,12 @@ public class CollisionsEngine {
             }
 
             for (Collider toCheck : collidersInChunkRange) {
-                collider.setColliding(true);
-                toCheck.setColliding(true);
-                checkCollision(collider, toCheck, axis);
-                toCheck.setColliding(false);
+                if (toCheck != collider){
+                    collider.setColliding(true);
+                    toCheck.setColliding(true);
+                    checkCollision(collider, toCheck, axis);
+                    toCheck.setColliding(false);
+                }
             }
             collider.setColliding(false);
         }

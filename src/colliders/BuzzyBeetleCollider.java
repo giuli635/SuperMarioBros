@@ -77,12 +77,6 @@ public class BuzzyBeetleCollider extends BaseCollider implements EnemyCollider {
         }
     }
 
-    public void handleHorizontalCollision(BuzzyBeetleCollision b) {
-    }
-
-    public void handleVerticalCollision(BuzzyBeetleCollision b) {
-    }
-
     public void handleVerticalCollision(EnemyCollision e) {
         Vector2D velocity = e.getCollider().getVelocity();
         Rectangle collision = getBounds().intersection(e.getCollider().getBounds());

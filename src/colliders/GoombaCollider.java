@@ -77,12 +77,6 @@ public class GoombaCollider extends BaseCollider implements EnemyCollider {
         }
     }
 
-    public void handleHorizontalCollision(GoombaCollision g) {
-    }
-
-    public void handleVerticalCollision(GoombaCollision g) {
-    }
-
     public void handleVerticalCollision(EnemyCollision e) {
         Vector2D velocity = e.getCollider().getVelocity();
         Rectangle collision = getBounds().intersection(e.getCollider().getBounds());
