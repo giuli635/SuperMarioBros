@@ -7,6 +7,8 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import game.GraphicEngine;
+import game.LevelStats;
+import game.LevelStatsObserver;
 import game.LevelTimer;
 
 import java.awt.Font;
@@ -18,12 +20,12 @@ import java.io.IOException;
 import java.awt.Color;
 import java.awt.Component;
 
-public class StatsBar implements GraphicElement {
+public class StatsBar implements GraphicElement, LevelStatsObserver {
     protected Font customFont;
     protected LevelTimer levelTimer;
     protected int lives;
     protected int level;
-    protected  int score;
+    protected int score;
     protected JLabel timeLabel;
     protected JLabel livesLabel;
     protected JLabel levelLabel;
@@ -33,12 +35,13 @@ public class StatsBar implements GraphicElement {
     protected JPanel levelPanel;
     protected JPanel scorePanel;
     protected JPanel mainPanel;
+    protected LevelStats levelStats;
 
-    public StatsBar(LevelTimer timer, int lives, int level, int score) {
-        levelTimer = timer;
-        this.lives = lives;
-        this.level = level;
-        this.score = score;
+    public StatsBar(LevelStats l) {
+        levelTimer = l.getLevelTimer();
+        lives = l.getLives();
+        score = l.getScore();
+        this.level = l.getNumberLevel();
 
         timeLabel = new JLabel();
         livesLabel = new JLabel();
@@ -137,5 +140,11 @@ public class StatsBar implements GraphicElement {
 
     public Font getFont() {
         return customFont;
+    }
+
+    @Override
+    public void onStatsChanged() {
+        lives = levelStats.getLives();
+        score = levelStats.getScore();
     }
 }

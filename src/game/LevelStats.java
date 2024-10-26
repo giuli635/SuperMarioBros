@@ -7,13 +7,15 @@ public class LevelStats {
     private int remainingTime;
     private int score;
     private int lives;
+    private int numberLevel;
     private LevelTimer levelTimer;
     private List<LevelStatsObserver> observers;
     
-    public LevelStats(int initialTime, int initialLives) {
+    public LevelStats(int initialTime, int initialLives, int numberLevel) {
         this.remainingTime = initialTime;
         this.lives = initialLives;
         this.score = 0;
+        this.numberLevel = numberLevel;
         this.levelTimer = new LevelTimer(remainingTime);
         this.observers = new ArrayList<>();
     }
@@ -57,6 +59,10 @@ public class LevelStats {
 
     public LevelTimer getLevelTimer(){
         return levelTimer;
+    }
+    
+    public int getNumberLevel(){
+        return numberLevel;
     }
 
 }

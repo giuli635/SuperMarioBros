@@ -16,6 +16,7 @@ import colliders.ScreenDisplacementCollider;
 import colliders.UnloaderCollider;
 import entities.Entity;
 import graphics.GameGraphicElement;
+import graphics.StatsBar;
 import loading.BlockLoader;
 import loading.EntityLoader;
 import loading.GoombaLoader;
@@ -59,13 +60,16 @@ public class LevelReader  {
         return uniqueInstance;
     }
 
-    public LevelStats createLevel(String file) {
+    public LevelStats createLevel(String file, int livesMario, int levelTimer, int numberLevel) {
         LevelStats level = null;
         try {
             BufferedReader br = new BufferedReader(new FileReader(file));
             loadEntities(br);
             br.close();
-            // TODO: level = new LevelStats(lTimer, livesMario);
+            level = new LevelStats(levelTimer, livesMario, numberLevel);
+            StatsBar statsBar = new StatsBar(level);
+            GraphicEngine.instance().add(statsBar);
+            GraphicEngine.instance().setDepth(statsBar, 100);
         } catch(IOException e) {
             e.printStackTrace();
         }
