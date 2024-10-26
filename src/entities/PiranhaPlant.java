@@ -4,6 +4,7 @@ import java.awt.Rectangle;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import colliders.Collider;
 import colliders.PiranhaPlantCollider;
 import game.CollisionsEngine;
 import game.Game;
@@ -16,6 +17,9 @@ public class PiranhaPlant extends BaseUpdatableEntity implements Enemy{
     protected static String SPRITES_FOLDER = "piranha";
     protected boolean movingUp = false;
     protected boolean adjusted = false;
+
+    protected PiranhaPlantCollider collider;
+    protected GameGraphicElement graphicElement;
 
     public PiranhaPlant() {
         collider = new PiranhaPlantCollider(this, new Rectangle());
@@ -35,11 +39,11 @@ public class PiranhaPlant extends BaseUpdatableEntity implements Enemy{
 
     @Override
     public void recieveDamage() {
-       Game.instance().unregisterToUpdate(this);
+        Game.instance().unregisterToUpdate(this);
         CollisionsEngine.instance().remove(collider);
         //graphicElement.setSprite(SPRITES_FOLDER + "Death");
         graphicElement.translate(0, -9);
-        
+
         Timer timer = new Timer();
         TimerTask task = new TimerTask() {
             public void run(){
@@ -92,5 +96,15 @@ public class PiranhaPlant extends BaseUpdatableEntity implements Enemy{
             collider.translate(22, 0);
             adjusted = true;
         }
+    }
+
+    @Override
+    public GameGraphicElement getGraphicElement() {
+        return graphicElement;
+    }
+
+    @Override
+    public PiranhaPlantCollider getCollider() {
+        return collider;
     }
 }

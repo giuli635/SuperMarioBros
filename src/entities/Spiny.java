@@ -2,6 +2,7 @@ package entities;
 
 import java.awt.Rectangle;
 
+import colliders.Collider;
 import colliders.SpinyCollider;
 import graphics.GameGraphicElement;
 
@@ -9,6 +10,9 @@ public class Spiny extends BaseUpdatableEntity implements Enemy {
     protected static String SPRITES_FOLDER = "spiny";
     protected boolean movingRight = true;
     protected int speedX = 1;
+
+    protected SpinyCollider collider;
+    protected GameGraphicElement graphicElement;
 
     public Spiny() {
         super();
@@ -48,5 +52,15 @@ public class Spiny extends BaseUpdatableEntity implements Enemy {
         collider.translate(moveX, 0);
         graphicElement.translate(0, -3);
         collider.translate(0, -3);
+    }
+
+    @Override
+    public GameGraphicElement getGraphicElement() {
+        return graphicElement;
+    }
+
+    @Override
+    public SpinyCollider getCollider() {
+        return collider;
     }
 }

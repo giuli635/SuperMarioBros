@@ -11,6 +11,9 @@ public class SuperMushroom extends BaseUpdatableEntity {
     protected boolean movingRight = true;
     protected int speedX;
 
+    protected SuperMushroomCollider collider;
+    protected GameGraphicElement graphicElement;
+
     public SuperMushroom() {
         points = 100;
         speedX = 1;
@@ -39,5 +42,15 @@ public class SuperMushroom extends BaseUpdatableEntity {
 
         graphicElement.translate(0, -3);
         collider.translate(0, -3);
+    }
+
+    @Override
+    public GameGraphicElement getGraphicElement() {
+        return graphicElement;
+    }
+
+    @Override
+    public SuperMushroomCollider getCollider() {
+        return collider;
     }
 }

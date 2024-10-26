@@ -6,6 +6,7 @@ import colliders.LakituCollider;
 import game.CollisionsEngine;
 import game.Game;
 import game.GraphicEngine;
+import game.LevelReader;
 import graphics.GameGraphicElement;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -18,6 +19,8 @@ public class Lakitu extends BaseUpdatableEntity implements Enemy {
     protected int speedX = 1;
     protected long lastThrowTime = 0;
 
+    protected LakituCollider collider;
+    protected GameGraphicElement graphicElement;
 
     public Lakitu() {
         super();
@@ -84,16 +87,26 @@ public class Lakitu extends BaseUpdatableEntity implements Enemy {
         int spinyGraphicX = (int) graphicElement.getPosition().getX();
         int spinyGraphicY = (int) graphicElement.getPosition().getY();
 
-        spiny.getGraphicElement().setPosition(spinyGraphicX, spinyGraphicY - 32);
+        spiny.getGraphicElement().setPosition(spinyGraphicX, spinyGraphicY - LevelReader.CHUNK);
 
         int spinyColliderX = (int) collider.getPosition().getX();
         int spinyColliderY = (int) collider.getPosition().getY();
 
-        spiny.getCollider().setPosition(spinyColliderX, spinyColliderY -32);
+        spiny.getCollider().setPosition(spinyColliderX, spinyColliderY - LevelReader.CHUNK);
         spiny.getCollider().activate();
 
         GraphicEngine.instance().add(spiny.getGraphicElement());
         spiny.load();
+    }
+
+    @Override
+    public GameGraphicElement getGraphicElement() {
+        return graphicElement;
+    }
+
+    @Override
+    public LakituCollider getCollider() {
+        return collider;
     }
 
 }

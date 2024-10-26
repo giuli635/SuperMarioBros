@@ -15,6 +15,9 @@ public class Goomba extends BaseUpdatableEntity implements Enemy {
     protected boolean movingRight = true;
     protected int speedX;
 
+    protected GoombaCollider collider;
+    protected GameGraphicElement graphicElement;
+
     public Goomba() {
         speedX = 2;
         collider = new GoombaCollider(this, new Rectangle());
@@ -64,6 +67,16 @@ public class Goomba extends BaseUpdatableEntity implements Enemy {
 
         graphicElement.translate(0, -3);
         collider.translate(0, -3);
+    }
+
+    @Override
+    public GameGraphicElement getGraphicElement() {
+        return graphicElement;
+    }
+
+    @Override
+    public GoombaCollider getCollider() {
+        return collider;
     }
     
 }

@@ -7,6 +7,8 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import game.GraphicEngine;
+import game.LevelStats;
+import game.LevelStatsObserver;
 import game.LevelTimer;
 
 import java.awt.Font;
@@ -15,20 +17,42 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.io.File;
 import java.io.IOException;
+import java.awt.Color;
+import java.awt.Component;
 
-public class StatsBar implements GraphicElement {
+public class StatsBar implements GraphicElement, LevelStatsObserver {
     protected Font customFont;
     protected LevelTimer levelTimer;
     protected int lives;
     protected int level;
-    protected  int score;
+    protected int score;
+    protected JLabel timeLabel;
+    protected JLabel livesLabel;
+    protected JLabel levelLabel;
+    protected JLabel scoreLabel;
+    protected JPanel timePanel;
+    protected JPanel livesPanel;
+    protected JPanel levelPanel;
+    protected JPanel scorePanel;
     protected JPanel mainPanel;
+    protected LevelStats levelStats;
 
-    public StatsBar (LevelTimer timer, int lives, int level, int score) {
-        levelTimer = timer;
-        this.lives = lives;
-        this.level = level;
-        this.score = score;
+    public StatsBar(LevelStats l) {
+        levelTimer = l.getLevelTimer();
+        lives = l.getLives();
+        score = l.getScore();
+        this.level = l.getNumberLevel();
+
+        timeLabel = new JLabel();
+        livesLabel = new JLabel();
+        levelLabel = new JLabel();
+        scoreLabel = new JLabel();
+
+        levelPanel = new JPanel();
+        scorePanel = new JPanel();
+        timePanel = new JPanel();
+        livesPanel  = new JPanel();
+        
         mainPanel = new JPanel();
 
         try {
@@ -36,31 +60,57 @@ public class StatsBar implements GraphicElement {
         } catch (FontFormatException | IOException e) {
             e.printStackTrace();
         }
-
-        StatsBar thisBar = this;
         
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
+                timePanel = createPanel("TIME", timeLabel, customFont);
+                livesPanel = createPanel("LIVES", livesLabel, customFont);
+                levelPanel = createPanel("LEVEL", levelLabel, customFont);
+                scorePanel = createPanel("SCORE", scoreLabel, customFont);
+                
                 mainPanel.setLayout(new BoxLayout(mainPanel,BoxLayout.LINE_AXIS));
-                mainPanel.add(Box.createHorizontalGlue());
-                addElement(new StatsBarElement(thisBar, "TIME"));
-                addElement(new StatsBarElement(thisBar, "LEVEL"));
-                addElement(new StatsBarElement(thisBar, "SCORE"));
-                addElement(new StatsBarElement(thisBar, "LIVES"));
                 mainPanel.setBounds(0,0,(int) GraphicEngine.instance().getPanelSize().getWidth(),100);
                 mainPanel.setOpaque(false);
+                mainPanel.add(Box.createHorizontalGlue());
+                addElement(timePanel);
+                addElement(livesPanel);
+                addElement(levelPanel);
+                addElement(scorePanel);
             }
         });
     }
 
-    public void addElement(StatsBarElement element) {
-        mainPanel.add(element.getPanel());
+    public JPanel createPanel(String t, JLabel stat, Font  font) { 
+        JLabel text = new JLabel();
+        JPanel panel = new JPanel();
+
+        text.setText(t);
+        text.setFont(customFont);
+        text.setAlignmentX(Component.CENTER_ALIGNMENT);
+        text.setForeground(Color.WHITE);
+        stat.setFont(customFont);
+        stat.setAlignmentX(Component.CENTER_ALIGNMENT);
+        stat.setForeground(Color.WHITE);
+                
+        panel.add(text);
+        panel.add(stat);
+        panel.setLayout(new BoxLayout(panel,BoxLayout.PAGE_AXIS));
+        panel.setAlignmentX(Component.RIGHT_ALIGNMENT);
+        panel.setOpaque(false);
+
+        return panel;
+    }
+
+    public void addElement(JPanel element) {
+        mainPanel.add(element);
         mainPanel.add(Box.createHorizontalGlue());
     }
 
     public void draw() {
-        // timeLabel.setText("" + levelTimer.getRemainingTime());
-        // livesLabel.setText("" + lives);
+        timeLabel.setText("" + levelTimer.getRemainingTime());
+        livesLabel.setText("" + lives);
+        levelLabel.setText("" + level);
+        scoreLabel.setText("" + score);
     }
 
     @Override
@@ -90,5 +140,11 @@ public class StatsBar implements GraphicElement {
 
     public Font getFont() {
         return customFont;
+    }
+
+    @Override
+    public void onStatsChanged() {
+        lives = levelStats.getLives();
+        score = levelStats.getScore();
     }
 }

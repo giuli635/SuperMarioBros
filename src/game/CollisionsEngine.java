@@ -65,10 +65,12 @@ public class CollisionsEngine {
             }
 
             for (Collider toCheck : collidersInChunkRange) {
-                collider.setColliding(true);
-                toCheck.setColliding(true);
-                checkCollision(collider, toCheck, axis);
-                toCheck.setColliding(false);
+                if (toCheck != collider){
+                    collider.setColliding(true);
+                    toCheck.setColliding(true);
+                    checkCollision(collider, toCheck, axis);
+                    toCheck.setColliding(false);
+                }
             }
             collider.setColliding(false);
         }
@@ -82,8 +84,8 @@ public class CollisionsEngine {
     }
 
     protected int[] calculateChunk(int minX, int maxX) {
-        int firstChunk = (int) Math.floor(minX / 32.0);
-        int secondChunk = (int) Math.ceil(maxX / 32.0);
+        int firstChunk = (int) Math.floor(minX / (float) LevelReader.CHUNK);
+        int secondChunk = (int) Math.ceil(maxX / (float) LevelReader.CHUNK);
         return new int[]{firstChunk, secondChunk};
     }
 

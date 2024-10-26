@@ -32,12 +32,6 @@ public class KoopaTroopaCollider extends BaseCollider implements EnemyCollider {
         c.collide(this, a);
     }
 
-    public void handleHorizontalCollision(KoopaTroopaCollision k){
-    }
-
-    public void handleVerticalCollision(KoopaTroopaCollision k){
-    }
-
     public void handleHorizontalCollision(MarioCollision m) {
         Rectangle collision = getBounds().intersection(m.getCollider().getBounds());
         if (!koopa.getShell()) {
@@ -70,6 +64,37 @@ public class KoopaTroopaCollider extends BaseCollider implements EnemyCollider {
             if (!koopa.getShell()) {
                 m.getCollider().getEntity().die();
             }
+        }
+    }
+
+    public void handleVerticalCollision(KoopaTroopaCollision k) {
+        if (!k.getCollider().getEntity().getShell() || k.getCollider().getEntity().getSpeedX() == 0) {
+            Vector2D velocity = k.getCollider().getVelocity();
+            Rectangle collision = getBounds().intersection(k.getCollider().getBounds());
+        
+            int sign = (int) -Math.signum(velocity.getYComponent());
+            k.getCollider().translate(0, sign * (int) collision.getHeight());
+            k.getCollider().getEntity().getGraphicElement().translate(0, sign * (int) collision.getHeight());
+        } else {
+            koopa.recieveDamage();
+        }
+    }
+
+    public void handleHorizontalCollision(KoopaTroopaCollision k) {
+        if(!k.getCollider().getEntity().getShell() || k.getCollider().getEntity().getSpeedX() == 0) {
+            Vector2D velocity = k.getCollider().getVelocity();
+            Rectangle collision = getBounds().intersection(k.getCollider().getBounds());
+            int otherDirection = (int) Math.signum(velocity.getXComponent());
+            int myDirection = (int) Math.signum(this.velocity.getXComponent());
+
+            int sign = (int) -Math.signum(velocity.getXComponent());
+            k.getCollider().translate(sign * (int) (collision.getWidth()), 0);
+            k.getCollider().getEntity().getGraphicElement().translate(sign * (int) (collision.getWidth()), 0);
+            if (otherDirection != myDirection) {
+                k.getCollider().getEntity().switchDirection();
+            }
+        } else {
+            koopa.recieveDamage();
         }
     }
 

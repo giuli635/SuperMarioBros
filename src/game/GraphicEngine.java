@@ -55,10 +55,7 @@ public class GraphicEngine {
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setVisible(true);
 
-        //TODO: SACAME ESTA COSA FEA;
-        StatsBar stats = new StatsBar(new LevelTimer(300), 3, 1, 60);
-        add(stats);
-        setDepth(stats, FRONT_DEPTH);
+        //setDepth(stats, FRONT_DEPTH);
     }
 
     public void initBackgrounds() {

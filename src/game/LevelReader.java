@@ -16,6 +16,7 @@ import colliders.ScreenDisplacementCollider;
 import colliders.UnloaderCollider;
 import entities.Entity;
 import graphics.GameGraphicElement;
+import graphics.StatsBar;
 import loading.BlockLoader;
 import loading.EntityLoader;
 import loading.GoombaLoader;
@@ -31,7 +32,7 @@ import loading.BrickLoader;
 import loading.BuzzyBeetleLoader;
 
 public class LevelReader  {
-    protected static int CHUNK = 32;
+    public static final int CHUNK = 32;
     protected static LevelReader uniqueInstance;
     protected Map<Character, EntityLoader> loaders;
     protected static int loadingStartingPoint = 6;
@@ -59,16 +60,21 @@ public class LevelReader  {
         return uniqueInstance;
     }
 
-    public void createLevel(String file) {
+    public LevelStats createLevel(String file, int livesMario, int levelTimer, int numberLevel) {
+        LevelStats level = null;
         try {
             BufferedReader br = new BufferedReader(new FileReader(file));
             loadEntities(br);
             br.close();
-            // TODO: level = new LevelStats(lTimer, livesMario);
+            level = new LevelStats(levelTimer, livesMario, numberLevel);
+            StatsBar statsBar = new StatsBar(level);
+            GraphicEngine.instance().add(statsBar);
+            GraphicEngine.instance().setDepth(statsBar, 100);
         } catch(IOException e) {
             e.printStackTrace();
         }
         loadScreen();
+        return level;
     }
 
     private void loadScreen() {

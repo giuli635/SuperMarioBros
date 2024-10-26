@@ -15,6 +15,9 @@ public class BuzzyBeetle extends BaseUpdatableEntity implements Enemy {
     protected boolean movingRight = true;
     protected int speedX;
 
+    protected BuzzyBeetleCollider collider;
+    protected GameGraphicElement graphicElement;
+
     public BuzzyBeetle() {
         speedX = 2;
         collider = new BuzzyBeetleCollider(this, new Rectangle());
@@ -64,5 +67,15 @@ public class BuzzyBeetle extends BaseUpdatableEntity implements Enemy {
 
         graphicElement.translate(0, -3);
         collider.translate(0, -3);
+    }
+
+    @Override
+    public GameGraphicElement getGraphicElement() {
+        return graphicElement;
+    }
+
+    @Override
+    public BuzzyBeetleCollider getCollider() {
+        return collider;
     }
 }

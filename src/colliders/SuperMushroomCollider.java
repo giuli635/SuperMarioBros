@@ -41,7 +41,7 @@ public class SuperMushroomCollider extends BaseCollider implements UpdateableEnt
     }
 
     protected void handleMarioCollision(Mario m) {
-        new SuperMario().setState(m);
+        new SuperMario().setFunctionality(m);
         getEntity().unload();
         GraphicEngine.instance().remove(getEntity().getGraphicElement());
         CollisionsEngine.instance().remove(this);
@@ -52,10 +52,6 @@ public class SuperMushroomCollider extends BaseCollider implements UpdateableEnt
     }
 
     public void handleHorizontalCollision(MarioCollision m) {
-        //m.getCollider().getEntity().getGraphicElement().setSprite(new ImageIcon("sprites/superMarioStill.png"));
-        getEntity().unload();
-        GraphicEngine.instance().remove(getEntity().getGraphicElement());
-        CollisionsEngine.instance().remove(this);
+        handleMarioCollision(m.getCollider().getEntity());
     }
-    
 }
