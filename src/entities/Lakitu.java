@@ -90,6 +90,7 @@ public class Lakitu extends BaseUpdatableEntity implements Enemy {
         int spinyColliderY = (int) collider.getPosition().getY();
 
         spiny.getCollider().setPosition(spinyColliderX, spinyColliderY -32);
+        spiny.getCollider().activate();
 
         GraphicEngine.instance().add(spiny.getGraphicElement());
         spiny.load();

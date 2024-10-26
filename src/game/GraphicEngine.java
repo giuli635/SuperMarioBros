@@ -10,7 +10,7 @@ import javax.swing.SwingUtilities;
 
 import graphics.GameGraphicElement;
 import graphics.GraphicElement;
-import graphics.StatsGraphicElement;
+import graphics.StatsBar;
 
 public class GraphicEngine {
     protected static GraphicEngine uniqueInstance;
@@ -56,12 +56,9 @@ public class GraphicEngine {
         frame.setVisible(true);
 
         //TODO: SACAME ESTA COSA FEA;
-        StatsGraphicElement stats = new StatsGraphicElement(new LevelTimer(300), 3, 1, 60);
+        StatsBar stats = new StatsBar(new LevelTimer(300), 3, 1, 60);
         add(stats);
         setDepth(stats, FRONT_DEPTH);
-
-
-
     }
 
     public void initBackgrounds() {
@@ -127,7 +124,6 @@ public class GraphicEngine {
         if (backgrounds[1].getComponent().getBounds().getMaxX() < getPanelSize().getWidth()) {
             GameGraphicElement aux = backgrounds[0];
             backgrounds[0].setPosition((int) backgrounds[1].getComponent().getBounds().getMaxX(), 480);
-            panel.moveToBack(backgrounds[0].getComponent());
             backgrounds[0] = backgrounds[1];
             backgrounds[1] = aux;
         }
