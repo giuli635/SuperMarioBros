@@ -46,7 +46,7 @@ public class Lakitu extends BaseUpdatableEntity implements Enemy {
         Timer timer = new Timer();
         TimerTask task = new TimerTask() {
             public void run(){
-                GraphicEngine.instance().removeGraphicElement(graphicElement);
+                GraphicEngine.instance().remove(graphicElement);
             }
         };
 
@@ -84,14 +84,14 @@ public class Lakitu extends BaseUpdatableEntity implements Enemy {
         int spinyGraphicX = (int) graphicElement.getPosition().getX();
         int spinyGraphicY = (int) graphicElement.getPosition().getY();
 
-        spiny.getGraphicElement().setPosition(spinyGraphicX, spinyGraphicY);
+        spiny.getGraphicElement().setPosition(spinyGraphicX, spinyGraphicY - 32);
 
         int spinyColliderX = (int) collider.getPosition().getX();
         int spinyColliderY = (int) collider.getPosition().getY();
 
-        spiny.getCollider().setPosition(spinyColliderX, spinyColliderY);
+        spiny.getCollider().setPosition(spinyColliderX, spinyColliderY -32);
 
-        GraphicEngine.instance().addGraphicElement(spiny.getGraphicElement());
+        GraphicEngine.instance().add(spiny.getGraphicElement());
         spiny.load();
     }
 

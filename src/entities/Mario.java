@@ -2,6 +2,8 @@ package entities;
 
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import colliders.Direction;
 import colliders.MarioCollider;
@@ -182,9 +184,16 @@ public class Mario extends BaseUpdatableEntity {
     public void die() {
         Game.instance().unregisterToUpdate(this);
         CollisionsEngine.instance().remove(collider);
-        graphicElement.setSprite("marioDeath");
-        //TODO: deathAnimation();
-        GraphicEngine.instance().removeGraphicElement(graphicElement);
+        graphicElement.setSprite(MARIO + "Death");
+        
+        Timer timer = new Timer();
+        TimerTask task = new TimerTask() {
+            public void run(){
+                GraphicEngine.instance().remove(graphicElement);
+            }
+        };
+
+        timer.schedule(task,1000);
         Game.instance().decreaceLives();
     }
 

@@ -43,7 +43,7 @@ public class PiranhaPlant extends BaseUpdatableEntity implements Enemy{
         Timer timer = new Timer();
         TimerTask task = new TimerTask() {
             public void run(){
-                GraphicEngine.instance().removeGraphicElement(graphicElement);
+                GraphicEngine.instance().remove(graphicElement);
             }
         };
 
@@ -82,7 +82,7 @@ public class PiranhaPlant extends BaseUpdatableEntity implements Enemy{
         }
     }
 
-    private void switchDirection() {
+    public void switchDirection() {
         movingUp = !movingUp;
     }
 

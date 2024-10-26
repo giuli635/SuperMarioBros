@@ -1,8 +1,8 @@
 package entities;
 import colliders.Collider;
-import graphics.GraphicElement;
+import graphics.GameGraphicElement;
 
 public interface Entity {
-    public GraphicElement getGraphicElement();
+    public GameGraphicElement getGraphicElement();
     public Collider getCollider();
 }

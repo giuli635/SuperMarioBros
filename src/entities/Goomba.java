@@ -36,11 +36,11 @@ public class Goomba extends BaseUpdatableEntity implements Enemy {
         Game.instance().unregisterToUpdate(this);
         CollisionsEngine.instance().remove(collider);
         graphicElement.setSprite(SPRITES_FOLDER + "Death");
-        graphicElement.translate(0, -9);
+        
         Timer timer = new Timer();
         TimerTask task = new TimerTask() {
             public void run(){
-                GraphicEngine.instance().removeGraphicElement(graphicElement);
+                GraphicEngine.instance().remove(graphicElement);
             }
         };
 
@@ -49,8 +49,7 @@ public class Goomba extends BaseUpdatableEntity implements Enemy {
 
     @Override
     public int getPoints() {
-          // TODO Auto-generated method stub
-          throw new UnsupportedOperationException("Unimplemented method 'getPoints'");
+        throw new UnsupportedOperationException("Unimplemented method 'getPoints'");
     }
 
     public void switchDirection() {

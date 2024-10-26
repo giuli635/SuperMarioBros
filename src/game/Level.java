@@ -1,35 +1,24 @@
 package game;
 import java.awt.Image;
-import java.time.Duration;
 
-import entities.Mario;
+import graphics.StatsGraphicElement;
 import graphics.MarioGraphicLives;
-import graphics.TimerGraphicElement;
 
 public class Level {
-    protected int remainingTime;
     protected int points;
     protected Image background;
     protected LevelTimer levelTimer;
-    protected TimerGraphicElement timerGraphicElement;
+    protected StatsGraphicElement timerGraphicElement;
     protected MarioGraphicLives livesGraphic;
-    protected int livesMario;
+    
     public Level(int initialTime, int initialLives) {
-        this.remainingTime = initialTime;
-        livesMario = initialLives;
-        this.points = 0;
-        initializeGraphics();
-    }
+        levelTimer = new LevelTimer(initialTime);
+        timerGraphicElement = new StatsGraphicElement(levelTimer, 3, 1, 10);
+        GraphicEngine.instance().add(timerGraphicElement);
+        GraphicEngine.instance();
+        GraphicEngine.instance().setDepth(timerGraphicElement, GraphicEngine.FRONT_DEPTH);
 
-    private void initializeGraphics() {
-        // Initialize timer
-        levelTimer = new LevelTimer(remainingTime);
-        timerGraphicElement = new TimerGraphicElement(levelTimer);
-        GraphicEngine.instance().addGraphicElement(timerGraphicElement);
-
-        // Initialize lives display
-        livesGraphic = new MarioGraphicLives(livesMario);
-        GraphicEngine.instance().addGraphicElement(livesGraphic);
+        points = 0;
     }
 
     public void decreacedLives(){

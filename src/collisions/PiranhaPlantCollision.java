@@ -19,7 +19,7 @@ import colliders.SpinyCollider;
 import colliders.SuperMushroomCollider;
 import colliders.UnloaderCollider;
 
-public class PiranhaPlantCollision implements UpdateableEntityCollision {
+public class PiranhaPlantCollision implements EnemyCollision {
     protected PiranhaPlantCollider collider;
 
     public PiranhaPlantCollision(PiranhaPlantCollider c) {

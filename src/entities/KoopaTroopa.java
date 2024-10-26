@@ -3,20 +3,18 @@ package entities;
 import java.awt.Rectangle;
 
 import colliders.KoopaTroopaCollider;
-import game.CollisionsEngine;
 import game.Game;
-import game.GraphicEngine;
 import graphics.GameGraphicElement;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class KoopaTroopa extends BaseUpdatableEntity implements Enemy {
     protected static String SPRITES_FOLDER = "koopa";
     protected boolean movingRight = true;
-    protected int speedX = 1;
+    protected int speedX;
+    protected boolean shell;
 
     public KoopaTroopa(){
         speedX = 2;
+        shell = false;
         collider = new KoopaTroopaCollider(this, new Rectangle());
         graphicElement = new GameGraphicElement(this, SPRITES_FOLDER, Game.instance().getMode());
         graphicElement.setSprite(SPRITES_FOLDER);
@@ -27,19 +25,13 @@ public class KoopaTroopa extends BaseUpdatableEntity implements Enemy {
     }
     @Override
     public void recieveDamage() {
-        Game.instance().unregisterToUpdate(this);
-        CollisionsEngine.instance().remove(collider);
-        graphicElement.setSprite(SPRITES_FOLDER + "Shell");
-        graphicElement.translate(0, -9);
-        
-        Timer timer = new Timer();
-        TimerTask task = new TimerTask() {
-            public void run(){
-                GraphicEngine.instance().removeGraphicElement(graphicElement);
-            }
-        };
-
-        timer.schedule(task,1000);
+        if (!shell) {
+            graphicElement.setSprite(SPRITES_FOLDER + "Shell");
+            speedX = 0;
+            shell = true;
+        } else {
+            speedX = 0;
+        }
     }
 
     @Override
@@ -59,10 +51,29 @@ public class KoopaTroopa extends BaseUpdatableEntity implements Enemy {
 
     @Override
     public void update() {
+        if (!shell) {
+            //TODO : Manejar los bucles de sprites
+        }
         int moveX = movingRight ? speedX : -speedX;
         graphicElement.translate(moveX, 0);
         collider.translate(moveX, 0);  
         graphicElement.translate(0, -3);
         collider.translate(0, -3);  
+    }
+
+    public void setShell(boolean b) {
+        shell = b;
+    }
+
+    public boolean getShell() {
+        return shell;
+    }
+
+    public int getSpeedX() {
+        return speedX;
+    }
+
+    public void setVelocityX(int dx) {
+        speedX += dx;
     }
 }

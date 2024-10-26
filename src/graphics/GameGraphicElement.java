@@ -41,7 +41,6 @@ public class GameGraphicElement implements GraphicElement {
         loadSprites(mode);
     }
     
-    @Override
     public Entity getEntity() {
         return entity;
     }
@@ -63,17 +62,27 @@ public class GameGraphicElement implements GraphicElement {
         bounds.setLocation(x, y);
     }
 
-    @Override
     public ImageIcon getCurrentSprite() {
         return sprite;
     }
 
-    @Override
     public void setSprite(String s) {
-        sprite = sprites.get(s + ".png");
-        toUpdate = true;
-        flipped = false;
-        bounds.setSize(sprite.getIconWidth(), sprite.getIconHeight());
+        if(sprite != null){
+            int preHeight = sprite.getIconHeight();
+            sprite = sprites.get(s + ".png");
+            toUpdate = true;
+            flipped = false;
+            bounds.setSize(sprite.getIconWidth(), sprite.getIconHeight());
+            int posHeight = sprite.getIconHeight();
+            int diff = preHeight - posHeight;
+            int sign = (int) Math.signum(diff);
+            translate(0,- sign * Math.abs(diff));
+        } else {
+            sprite = sprites.get(s + ".png");
+            toUpdate = true;
+            flipped = false;
+            bounds.setSize(sprite.getIconWidth(), sprite.getIconHeight());
+        }
     }
 
     public void flipSprite() {
@@ -118,27 +127,19 @@ public class GameGraphicElement implements GraphicElement {
     }
 
     @Override
-    public JLabel getLabel() {
+    public JLabel getComponent() {
         return label;
     }
 
-    @Override
     public void loadSprites(String mode) {
         sprites = SpriteFactory.instance().getSprites(folder);
     }
 
-    @Override
     public void setFolder(String f) {
         folder = f;
     }
 
-    @Override
     public String getFolder() {
         return folder;
-    }
-
-    @Override
-    public JLabel[] getLabels() {
-        return null;
     }
 }

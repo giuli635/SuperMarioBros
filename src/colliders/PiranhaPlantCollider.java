@@ -7,9 +7,8 @@ import collisions.Collision;
 import collisions.MarioCollision;
 import collisions.PiranhaPlantCollision;
 import entities.PiranhaPlant;
-import entities.UpdatableEntity;
 
-public class PiranhaPlantCollider extends BaseCollider implements UpdateableEntityCollider {
+public class PiranhaPlantCollider extends BaseCollider implements EnemyCollider {
     protected PiranhaPlant piranha;
 
     public PiranhaPlantCollider(PiranhaPlant p, Rectangle b) {
@@ -28,7 +27,7 @@ public class PiranhaPlantCollider extends BaseCollider implements UpdateableEnti
     }
 
     @Override
-    public UpdatableEntity getEntity() {
+    public PiranhaPlant getEntity() {
         return piranha;
     }
 

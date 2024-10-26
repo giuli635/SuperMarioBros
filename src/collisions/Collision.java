@@ -18,7 +18,6 @@ import colliders.ScreenDisplacementCollider;
 import colliders.SpinyCollider;
 import colliders.SuperMushroomCollider;
 import colliders.UnloaderCollider;
-import entities.PiranhaPlant;
 
 public interface Collision {
     public Collider getCollider();

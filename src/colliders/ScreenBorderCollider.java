@@ -9,7 +9,7 @@ import collisions.MarioCollision;
 import collisions.ScreenBorderCollision;
 import entities.Entity;
 import game.GraphicEngine;
-import graphics.GraphicElement;
+import graphics.GameGraphicElement;
 
 public class ScreenBorderCollider extends BaseCollider {
     protected Direction position;
@@ -45,7 +45,7 @@ public class ScreenBorderCollider extends BaseCollider {
 
     public void handleHorizontalCollision(Collision c) {
         GraphicEngine graphicEngine = GraphicEngine.instance();
-        GraphicElement graphicElement = c.getCollider().getEntity().getGraphicElement();
+        GameGraphicElement graphicElement = c.getCollider().getEntity().getGraphicElement();
         Direction myCollisionDirection = getVelocity().getXComponent() > 0 ? Direction.RIGHT : Direction.LEFT;
         Direction collisionDirection = c.getCollider().getVelocity().getXComponent() < 0 ? Direction.RIGHT : Direction.LEFT;
         if  (myCollisionDirection == position || collisionDirection == position) {
@@ -54,7 +54,7 @@ public class ScreenBorderCollider extends BaseCollider {
                 (int) (colliderPosition.getX() - graphicEngine.getPosition()),
                 (int) colliderPosition.getY()
             );
-            graphicEngine.addGraphicElement(graphicElement);
+            graphicEngine.add(graphicElement);
         }
     }
 }

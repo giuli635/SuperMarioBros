@@ -19,7 +19,7 @@ import colliders.SpinyCollider;
 import colliders.SuperMushroomCollider;
 import colliders.UnloaderCollider;         
 
-public class LakituCollision implements UpdateableEntityCollision {
+public class LakituCollision implements EnemyCollision {
     protected LakituCollider collider;
 
     public LakituCollision(LakituCollider c) {

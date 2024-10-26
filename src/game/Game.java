@@ -13,7 +13,7 @@ import java.util.Set;
 import entities.Mario;
 import entities.UpdatableEntity;
 import graphics.MarioGraphicLives;
-import graphics.TimerGraphicElement;
+import graphics.StatsGraphicElement;
 
 public class Game implements WindowListener, KeyListener {
     protected static int SECOND = 1000;
@@ -29,7 +29,7 @@ public class Game implements WindowListener, KeyListener {
     private boolean pauseKeyAlreadyPressed = false;
     protected String mode; 
     protected LevelTimer levelTimer; 
-    protected TimerGraphicElement timerGraphicElement;
+    protected StatsGraphicElement timerGraphicElement;
     protected MarioGraphicLives livesGraphic;
 
     protected List<UpdatableEntity> toAddList = new ArrayList<>();

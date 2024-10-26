@@ -1,14 +1,10 @@
 package entities;
 
-import java.awt.Point;
 import java.awt.Rectangle;
 
 import game.Game;
-import game.GraphicEngine;
 import graphics.GameGraphicElement;
-import graphics.GraphicElement;
 import colliders.PipeCollider;
-import colliders.PiranhaPlantCollider;
 
 
 public class Pipe extends BaseEntity {

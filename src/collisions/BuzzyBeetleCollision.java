@@ -20,7 +20,7 @@ import colliders.SuperMushroomCollider;
 import colliders.UnloaderCollider;
 
 
-public class BuzzyBeetleCollision implements UpdateableEntityCollision {
+public class BuzzyBeetleCollision implements EnemyCollision {
     protected BuzzyBeetleCollider collider;
 
     public BuzzyBeetleCollision(BuzzyBeetleCollider c) {

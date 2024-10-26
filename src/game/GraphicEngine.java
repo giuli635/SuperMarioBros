@@ -5,7 +5,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.SwingUtilities;
 
@@ -14,11 +13,14 @@ import graphics.GraphicElement;
 
 public class GraphicEngine {
     protected static GraphicEngine uniqueInstance;
+    public static final Integer BACKGROUND_DEPTH = 0;
+    public static final Integer FRONT_DEPTH = 100;
+    public static final Integer DEFAULT_DEPTH = 50;
     protected JFrame frame;
     protected JLayeredPane panel;
     protected Set<GraphicElement> onScreen;
     protected int position;
-    protected GraphicElement[] backgrounds;
+    protected GameGraphicElement[] backgrounds;
 
     public int getPosition() {
         return position;
@@ -49,10 +51,11 @@ public class GraphicEngine {
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setVisible(true);
 
-        backgrounds = new GraphicElement[]{new GameGraphicElement(null, "level", "mode1"), new GameGraphicElement(null, "level", "mode1")};
+        backgrounds = new GameGraphicElement[]{new GameGraphicElement(null, "level", "mode1"), new GameGraphicElement(null, "level", "mode1")};
         for (int i = 0; i < backgrounds.length; i++) {
             backgrounds[i].setSprite("levelBackground1");
-            addGraphicElement(backgrounds[i]);
+            add(backgrounds[i]);
+            setDepth(backgrounds[i], BACKGROUND_DEPTH);
         }
 
         backgrounds[0].setPosition(0, 480);
@@ -82,37 +85,23 @@ public class GraphicEngine {
             e.printStackTrace();
         }
     }
-    public void addGraphicElement(GraphicElement e) {
+
+    public void add(GraphicElement e) {
         onScreen.add(e);
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                javax.swing.JLabel[] panels=e.getLabels();
-                if (panels != null) {
-                    for (JLabel label : panels) {
-                        if (label != null) {
-                            panel.add(label, (Integer) onScreen.size(), 0);
-                        }
-                    }
-                }
-                else panel.add(e.getLabel(), (Integer) onScreen.size(), 0);
+                panel.add(e.getComponent(), DEFAULT_DEPTH, 0);
             }
         });
     }
 
-    public void removeGraphicElement(GraphicElement e) {
+    public void remove(GraphicElement e) {
         onScreen.remove(e);
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                javax.swing.JLabel[] panels=e.getLabels();
-                if (panels != null) {
-                    for (JLabel label : panels) {
-                        if (label != null) {
-                            panel.remove(label);
-                        }
-                    }
-                }
-                else panel.remove(e.getLabel());
-        }});
+                panel.remove(e.getComponent());
+            }
+        });
     }
 
     public Dimension getPanelSize() {
@@ -121,10 +110,10 @@ public class GraphicEngine {
 
     public void scrollScreen(int velocity) {  
         translate(-velocity);
-        if (backgrounds[1].getLabel().getBounds().getMaxX() < getPanelSize().getWidth()) {
-            GraphicElement aux = backgrounds[0];
-            backgrounds[0].setPosition((int) backgrounds[1].getLabel().getBounds().getMaxX(), 480);
-            panel.moveToBack(backgrounds[0].getLabel());
+        if (backgrounds[1].getComponent().getBounds().getMaxX() < getPanelSize().getWidth()) {
+            GameGraphicElement aux = backgrounds[0];
+            backgrounds[0].setPosition((int) backgrounds[1].getComponent().getBounds().getMaxX(), 480);
+            panel.moveToBack(backgrounds[0].getComponent());
             backgrounds[0] = backgrounds[1];
             backgrounds[1] = aux;
         }
@@ -135,6 +124,26 @@ public class GraphicEngine {
     }
 
     public void moveToBack(GraphicElement e) {
-        panel.moveToBack(e.getLabel());
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                panel.moveToBack(e.getComponent());
+            }
+        });
+    }
+
+    public void moveToFront(GraphicElement e) {
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                panel.moveToFront(e.getComponent());
+            }
+        });
+    }
+
+    public void setDepth(GraphicElement e, Integer depth) {
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                panel.setLayer(e.getComponent(), depth);
+            }
+        });
     }
 }

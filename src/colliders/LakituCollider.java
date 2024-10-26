@@ -8,7 +8,7 @@ import collisions.LakituCollision;
 import collisions.MarioCollision;
 import entities.Lakitu;
 
-public class LakituCollider extends BaseCollider implements UpdateableEntityCollider {
+public class LakituCollider extends BaseCollider implements EnemyCollider {
     protected Lakitu lakitu;
 
     public LakituCollider(Lakitu l, Rectangle b) {

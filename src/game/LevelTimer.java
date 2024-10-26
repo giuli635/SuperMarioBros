@@ -7,9 +7,9 @@ public class LevelTimer {
     private int remainingTime;
     private Timer timer;
 
-    public LevelTimer(int initialTimeInSeconds) {
-        this.remainingTime = initialTimeInSeconds;
-        this.timer = new Timer();
+    public LevelTimer(int seconds) {
+        remainingTime = seconds;
+        timer = new Timer();
         startTimer();
     }
 

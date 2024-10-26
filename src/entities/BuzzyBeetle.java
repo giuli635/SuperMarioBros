@@ -36,12 +36,11 @@ public class BuzzyBeetle extends BaseUpdatableEntity implements Enemy {
         Game.instance().unregisterToUpdate(this);
         CollisionsEngine.instance().remove(collider);
         graphicElement.setSprite(SPRITES_FOLDER + "Shell");
-        graphicElement.translate(0, -9);
         
         Timer timer = new Timer();
         TimerTask task = new TimerTask() {
             public void run(){
-                GraphicEngine.instance().removeGraphicElement(graphicElement);
+                GraphicEngine.instance().remove(graphicElement);
             }
         };
 

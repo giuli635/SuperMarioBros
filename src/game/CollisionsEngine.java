@@ -3,7 +3,6 @@ import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import java.util.Vector;
@@ -36,6 +35,14 @@ public class CollisionsEngine {
 
     public void update() {
         List<Collider> toUpdateCopy = new ArrayList<>(toUpdate);
+
+        for (Collider collider : toUpdateCopy) {
+            collider.moveY();
+        }
+
+        checkCollisions(toUpdateCopy, Axis.Y);
+
+        toUpdateCopy = new ArrayList<>(toUpdate);
         for (Collider collider : toUpdateCopy) {
             collider.setMoving(true);
             removeFromChunks(collider);
@@ -44,13 +51,6 @@ public class CollisionsEngine {
         }
 
         checkCollisions(toUpdateCopy, Axis.X);
-
-        toUpdateCopy = new ArrayList<>(toUpdate);
-        for (Collider collider : toUpdateCopy) {
-            collider.moveY();
-        }
-
-        checkCollisions(toUpdateCopy, Axis.Y);
 
         for (Collider collider : toUpdateCopy) {
             collider.setMoving(false);

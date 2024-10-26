@@ -19,7 +19,7 @@ import colliders.SpinyCollider;
 import colliders.SuperMushroomCollider;
 import colliders.UnloaderCollider;
 
-public class KoopaTroopaCollision implements UpdateableEntityCollision {
+public class KoopaTroopaCollision implements EnemyCollision {
     protected KoopaTroopaCollider collider;
 
     public KoopaTroopaCollision(KoopaTroopaCollider k) {

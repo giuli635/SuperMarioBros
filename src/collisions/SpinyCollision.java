@@ -19,7 +19,7 @@ import colliders.SpinyCollider;
 import colliders.SuperMushroomCollider;
 import colliders.UnloaderCollider;
 
-public class SpinyCollision implements UpdateableEntityCollision {
+public class SpinyCollision implements EnemyCollision {
     protected SpinyCollider collider;
 
     public SpinyCollision(SpinyCollider c) {

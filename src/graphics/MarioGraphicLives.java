@@ -1,9 +1,7 @@
 package graphics;
 
-import javax.swing.ImageIcon;
 import javax.swing.JLabel;
-import entities.Entity;
-import entities.Mario;
+import javax.swing.JPanel;
 
 import java.awt.Font;
 import java.awt.FontFormatException;
@@ -13,11 +11,13 @@ import java.io.IOException;
 import java.awt.Color;
 
 public class MarioGraphicLives implements GraphicElement {
-    private JLabel livesLabel;
-    private JLabel numberLabel;
-    private int livesMario;
+    protected JLabel livesLabel;
+    protected JLabel numberLabel;
+    protected int livesMario;
+    protected JPanel panel;
 
     public MarioGraphicLives(int LivesMario) {
+        panel = new JPanel();
         livesMario = LivesMario;
         livesLabel = new JLabel();
         numberLabel = new JLabel();
@@ -32,11 +32,13 @@ public class MarioGraphicLives implements GraphicElement {
             numberLabel.setFont(new Font("Arial", Font.BOLD, 24));
         }
         
-        livesLabel.setForeground(Color.WHITE);
-        numberLabel.setForeground(Color.WHITE);
-        livesLabel.setBounds(850, 20, 300, 50);
-        numberLabel.setBounds(850, 50, 300, 50);
+        livesLabel.setForeground(Color.BLACK);
+        numberLabel.setForeground(Color.BLACK);
         livesLabel.setText("LIVES");
+        numberLabel.setText(String.valueOf("  " + livesMario));
+        panel.add(livesLabel);
+        panel.add(numberLabel);
+        panel.setBounds(450, 10, 300, 50);
         updateLabel();
     }
 
@@ -45,23 +47,13 @@ public class MarioGraphicLives implements GraphicElement {
         updateLabel();
     }
 
-    private void updateLabel() {
+    protected void updateLabel() {
         numberLabel.setText(String.valueOf("  " + livesMario));
     }
 
     @Override
-    public JLabel[] getLabels() {
-        return new JLabel[]{livesLabel, numberLabel};
-    }
-
-    @Override
-    public JLabel getLabel() {
+    public JLabel getComponent() {
         return livesLabel;
-    }
-
-    @Override
-    public Entity getEntity() {
-        return null;
     }
 
     @Override
@@ -75,41 +67,13 @@ public class MarioGraphicLives implements GraphicElement {
         numberLabel.setLocation(x, y + 30);
     }
 
-    // Métodos no utilizados pero requeridos por la interfaz
-    @Override
-    public void translate(int dx, int dy) {}
-
-    @Override
-    public ImageIcon getCurrentSprite() {
-        return null;
-    }
-
-    @Override
-    public void setSprite(String s) {}
-
-    @Override
-    public void flipSprite() {}
-
-    @Override
-    public void loadSprites(String mode) {}
-
-    @Override
-    public void setFolder(String folder) {}
-
-    @Override
-    public String getFolder() {
-        return null;
-    }
-
-    @Override
-    public boolean isFlipped() {
-        return false;
-    }
-
-    @Override
-    public void setFlipped(boolean f) {}
-
     public void decreaceLives() {
         livesMario--;
+    }
+
+    @Override
+    public void translate(int dx, int dy) {
+        panel.setAlignmentX(dx);
+        panel.setAlignmentY(dy);
     }
 }

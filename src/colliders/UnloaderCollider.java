@@ -7,7 +7,7 @@ import collisions.Collision;
 import collisions.UnloaderCollision;
 import entities.Entity;
 import game.GraphicEngine;
-import graphics.GraphicElement;
+import graphics.GameGraphicElement;
 
 public class UnloaderCollider extends BaseCollider{
 
@@ -35,7 +35,7 @@ public class UnloaderCollider extends BaseCollider{
 
     public void handleHorizontalCollision(Collision c) {
         GraphicEngine graphicEngine = GraphicEngine.instance();
-        GraphicElement graphicElement = c.getCollider().getEntity().getGraphicElement();
-        graphicEngine.removeGraphicElement(graphicElement);
+        GameGraphicElement graphicElement = c.getCollider().getEntity().getGraphicElement();
+        graphicEngine.remove(graphicElement);
     }
 }

@@ -9,7 +9,7 @@ import collisions.UpdateableEntityCollision;
 import entities.Entity;
 import game.CollisionsEngine;
 import game.GraphicEngine;
-import graphics.GraphicElement;
+import graphics.GameGraphicElement;
 
 public class DeleterCollider extends BaseCollider{
 
@@ -37,16 +37,16 @@ public class DeleterCollider extends BaseCollider{
 
     public void handleHorizontalCollision(UpdateableEntityCollision c) {
         GraphicEngine graphicEngine = GraphicEngine.instance();
-        GraphicElement graphicElement = c.getCollider().getEntity().getGraphicElement();
+        GameGraphicElement graphicElement = c.getCollider().getEntity().getGraphicElement();
         c.getCollider().getEntity().unload();
-        graphicEngine.removeGraphicElement(graphicElement);
+        graphicEngine.remove(graphicElement);
         CollisionsEngine.instance().remove(c.getCollider());
     }
 
     public void handleHorizontalCollision(Collision c) {
         GraphicEngine graphicEngine = GraphicEngine.instance();
-        GraphicElement graphicElement = c.getCollider().getEntity().getGraphicElement();
-        graphicEngine.removeGraphicElement(graphicElement);
+        GameGraphicElement graphicElement = c.getCollider().getEntity().getGraphicElement();
+        graphicEngine.remove(graphicElement);
         CollisionsEngine.instance().remove(c.getCollider());
     }
 }

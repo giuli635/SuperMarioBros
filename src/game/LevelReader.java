@@ -14,9 +14,8 @@ import colliders.LoaderCollider;
 import colliders.ScreenBorderCollider;
 import colliders.ScreenDisplacementCollider;
 import colliders.UnloaderCollider;
-import entities.BuzzyBeetle;
 import entities.Entity;
-import graphics.GraphicElement;
+import graphics.GameGraphicElement;
 import loading.BlockLoader;
 import loading.EntityLoader;
 import loading.GoombaLoader;
@@ -26,7 +25,6 @@ import loading.MarioLoader;
 import loading.PipeBLoader;
 import loading.PipeLoader;
 import loading.PiranhaPlantLoader;
-import loading.QuestionBlockLoader;
 import loading.SpinyLoader;
 import loading.SuperMushroomLoader;
 import loading.BrickLoader;
@@ -84,10 +82,10 @@ public class LevelReader  {
         graphicEngine.setPosition(loadingStartingPoint * CHUNK);
 
         for (Collider collider : collisionsEngine.getCollidersInRange(loadingStartingPoint * CHUNK + 1, (int) graphicEngine.getPanelSize().getWidth() + CHUNK * loadingStartingPoint)) {
-            GraphicElement graphicElement = collider.getEntity().getGraphicElement();
+            GameGraphicElement graphicElement = collider.getEntity().getGraphicElement();
             Point colliderPosition = collider.getPosition();
             graphicElement.setPosition((int) colliderPosition.getX() - loadingStartingPoint * CHUNK, (int) colliderPosition.getY());
-            graphicEngine.addGraphicElement(graphicElement);
+            graphicEngine.add(graphicElement);
         }
 
         LoaderCollider loader = new LoaderCollider(new Rectangle(0, 0, CHUNK, 2 * windowHeight));

@@ -5,4 +5,5 @@ public interface Enemy extends UpdatableEntity {
     public int getPoints();
     public Entity clone();
     public void update();
+    public void switchDirection();
 }
