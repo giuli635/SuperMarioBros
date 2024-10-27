@@ -210,7 +210,9 @@ public class Mario extends BaseUpdatableEntity {
     public void die() {
         Game.instance().unregisterToUpdate(this);
         CollisionsEngine.instance().remove(collider);
+        graphicElement.setFolder("mario");
         graphicElement.setSprite(MARIO_DEATH);
+        
         
         Timer timer = new Timer();
         TimerTask task = new TimerTask() {

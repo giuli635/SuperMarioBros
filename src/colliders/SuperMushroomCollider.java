@@ -6,7 +6,7 @@ import collisions.Axis;
 import collisions.Collision;
 import collisions.MarioCollision;
 import collisions.SuperMushroomCollision;
-import entities.SuperMushroom;
+import entities.powerUp.SuperMushroom;
 import entities.UpdatableEntity;
 import entities.mario.Mario;
 import entities.mario.SuperMario;

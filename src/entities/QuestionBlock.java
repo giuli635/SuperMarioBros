@@ -7,7 +7,6 @@ import colliders.QuestionBlockCollider;
 
 public class QuestionBlock implements Entity {
     protected static String SPRITES_FOLDER = "questionBlock";
-
     protected QuestionBlockCollider collider;
     protected GameGraphicElement graphicElement;
 

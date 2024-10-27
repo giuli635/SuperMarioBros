@@ -1,6 +1,6 @@
 package loading;
 
-import entities.SuperMushroom;
+import entities.powerUp.SuperMushroom;
 
 public class SuperMushroomLoader implements EntityLoader {
     @Override

@@ -1,23 +1,26 @@
-package entities;
+package entities.powerUp;
 
 import java.awt.Rectangle;
 
-import colliders.SuperMushroomCollider;
+import colliders.powerUp.FireFlowerCollider;
+import colliders.powerUp.StarCollider;
+import entities.BaseUpdatableEntity;
+import entities.Entity;
 import graphics.GameGraphicElement;
 
-public class SuperMushroom extends BaseUpdatableEntity {
-    protected static String SPRITES_FOLDER = "superMushroom";
+public class Star extends BaseUpdatableEntity implements PowerUp {
+    protected static String SPRITES_FOLDER = "star";
     protected int points;
     protected boolean movingRight = true;
     protected int speedX;
 
-    protected SuperMushroomCollider collider;
+    protected StarCollider collider;
     protected GameGraphicElement graphicElement;
 
-    public SuperMushroom() {
+    public Star() {
         points = 100;
         speedX = 1;
-        collider = new SuperMushroomCollider(this, new Rectangle());
+        collider = new StarCollider(this, new Rectangle());
         graphicElement = new GameGraphicElement(this, SPRITES_FOLDER);
         graphicElement.setSprite(SPRITES_FOLDER);
         collider.setSize(
@@ -28,7 +31,7 @@ public class SuperMushroom extends BaseUpdatableEntity {
 
     @Override
     public Entity clone() {
-        return new SuperMushroom();
+        return new Star();
     }
 
     public void switchDirection() {
@@ -50,7 +53,19 @@ public class SuperMushroom extends BaseUpdatableEntity {
     }
 
     @Override
-    public SuperMushroomCollider getCollider() {
+    public StarCollider getCollider() {
         return collider;
+    }
+
+    @Override
+    public void disappear() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'disappear'");
+    }
+
+    @Override
+    public int getPoints() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getPoints'");
     }
 }

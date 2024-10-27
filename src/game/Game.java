@@ -12,6 +12,8 @@ import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import javax.swing.SwingUtilities;
+
 import entities.UpdatableEntity;
 
 public class Game implements WindowListener, KeyListener {
@@ -100,28 +102,20 @@ public class Game implements WindowListener, KeyListener {
     }
 
     public void resetCurrentLevel() {
-        pause = true;
-        
-        Timer timer = new Timer();
-        timer.schedule(new TimerTask() {
+
+        SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                pause = false;
+                
+                toUpdateRegistry = new HashSet<>();
+                
+                CollisionsEngine.instance().reset();
+                GraphicEngine.instance().reset();
                 GraphicEngine.instance().initBackgrounds();
                 LevelReader reader = LevelReader.instance();
                 currLevel = reader.createLevel("nivel1.txt", 10, 300, 1);
-                
+        
             }
-        } , 5000);
-        
-        List<UpdatableEntity> list = new ArrayList<>(toUpdateRegistry);
-               
-        for (UpdatableEntity entity : list) {
-            entity.unload();
-        }
-        
-        CollisionsEngine.instance().reset();
-        GraphicEngine.instance().reset();
-        
+        });
     }
 
     @Override
