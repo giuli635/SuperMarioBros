@@ -232,7 +232,7 @@ public class Mario extends BaseUpdatableEntity {
         TimerTask task = new TimerTask() {
             public void run(){
                 GraphicEngine.instance().remove(graphicElement);
-                //Game.instance().resetCurrentLevel();
+                Game.instance().resetCurrentLevel();
             }
         };
 
