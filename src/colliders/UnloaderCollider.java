@@ -26,7 +26,7 @@ public class UnloaderCollider extends BaseCollider{
     }
 
     @Override
-    public Collision getCollision() {
+    public UnloaderCollision getCollision() {
         return new UnloaderCollision(this);
     }
 

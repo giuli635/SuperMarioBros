@@ -1,6 +1,6 @@
 package loading;
 
-import entities.BuzzyBeetle;
+import entities.enemies.BuzzyBeetle;
 
 public class BuzzyBeetleLoader implements EntityLoader {
     @Override

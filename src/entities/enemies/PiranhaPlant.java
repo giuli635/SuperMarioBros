@@ -1,19 +1,20 @@
-package entities;
+package entities.enemies;
 
 import java.awt.Rectangle;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import colliders.Collider;
-import colliders.PiranhaPlantCollider;
+import colliders.enemies.PiranhaPlantCollider;
+import entities.BaseUpdatableEntity;
+import entities.Entity;
 import game.CollisionsEngine;
 import game.Game;
 import game.GraphicEngine;
 import graphics.GameGraphicElement;
 
 public class PiranhaPlant extends BaseUpdatableEntity implements Enemy{
+    protected static final float maxHeight = 1.5f;
     protected float speedY = 0f;
-    protected static final float maxHight = 1.5f;
     protected static String SPRITES_FOLDER = "piranha";
     protected boolean movingUp = false;
     protected boolean adjusted = false;
@@ -41,7 +42,6 @@ public class PiranhaPlant extends BaseUpdatableEntity implements Enemy{
     public void recieveDamage() {
         Game.instance().unregisterToUpdate(this);
         CollisionsEngine.instance().remove(collider);
-        //graphicElement.setSprite(SPRITES_FOLDER + "Death");
         graphicElement.translate(0, -9);
 
         Timer timer = new Timer();
@@ -71,7 +71,7 @@ public class PiranhaPlant extends BaseUpdatableEntity implements Enemy{
             graphicElement.translate(0, (int) speedY);
             collider.translate(0, (int) speedY);
             speedY = speedY + 0.01f;
-            if (speedY >= maxHight) {
+            if (speedY >= maxHeight) {
                 switchDirection();
                 speedY = 0;
             }
@@ -79,7 +79,7 @@ public class PiranhaPlant extends BaseUpdatableEntity implements Enemy{
             graphicElement.translate(0, (int) speedY);
             collider.translate(0, (int) speedY);
             speedY = speedY - 0.01f;
-            if (speedY <= -maxHight) {
+            if (speedY <= -maxHeight) {
                 switchDirection();
                 speedY = 0;
             }

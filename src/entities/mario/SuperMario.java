@@ -5,7 +5,6 @@ import graphics.GameGraphicElement;
 
 public class SuperMario implements MarioState {
     protected static final String SUPER_MARIO_SPRITES = "superMario";
-    protected Croucher croucher;
 
     @Override
     public void setFunctionality(Mario m) {
@@ -17,9 +16,6 @@ public class SuperMario implements MarioState {
             graphicElement.getCurrentSprite().getIconWidth(),
             graphicElement.getCurrentSprite().getIconHeight()
         );
-
-        croucher = new Croucher(m);
-        croucher.load();
     }
 
     @Override

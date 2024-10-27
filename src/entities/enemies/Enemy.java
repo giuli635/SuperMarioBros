@@ -1,4 +1,7 @@
-package entities;
+package entities.enemies;
+
+import entities.Entity;
+import entities.UpdatableEntity;
 
 public interface Enemy extends UpdatableEntity {
     public void recieveDamage();

@@ -21,7 +21,7 @@ public class MarioCollider extends BaseCollider implements UpdateableEntityColli
     }
 
     @Override
-    public Collision getCollision() {
+    public MarioCollision getCollision() {
         return new MarioCollision(this);
     }
 

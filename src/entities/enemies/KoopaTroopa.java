@@ -1,14 +1,14 @@
-package entities;
+package entities.enemies;
 
 import java.awt.Rectangle;
 
-import colliders.Collider;
-import colliders.KoopaTroopaCollider;
+import colliders.enemies.KoopaTroopaCollider;
+import entities.BaseUpdatableEntity;
+import entities.Entity;
 import graphics.GameGraphicElement;
 
 public class KoopaTroopa extends BaseUpdatableEntity implements Enemy {
     protected static String SPRITES_FOLDER = "koopa";
-    protected boolean movingRight = true;
     protected int speedX;
     protected boolean shell;
 
@@ -16,7 +16,7 @@ public class KoopaTroopa extends BaseUpdatableEntity implements Enemy {
     protected GameGraphicElement graphicElement;
 
     public KoopaTroopa(){
-        speedX = 2;
+        speedX = -2;
         shell = false;
         collider = new KoopaTroopaCollider(this, new Rectangle());
         graphicElement = new GameGraphicElement(this, SPRITES_FOLDER);
@@ -26,6 +26,7 @@ public class KoopaTroopa extends BaseUpdatableEntity implements Enemy {
             graphicElement.getCurrentSprite().getIconHeight()
         );
     }
+
     @Override
     public void recieveDamage() {
         if (!shell) {
@@ -49,7 +50,8 @@ public class KoopaTroopa extends BaseUpdatableEntity implements Enemy {
     }
 
     public void switchDirection() {
-        movingRight = !movingRight;
+        speedX = -speedX;
+        graphicElement.flipSprite();
     }
 
     @Override
@@ -57,9 +59,8 @@ public class KoopaTroopa extends BaseUpdatableEntity implements Enemy {
         if (!shell) {
             //TODO : Manejar los bucles de sprites
         }
-        int moveX = movingRight ? speedX : -speedX;
-        graphicElement.translate(moveX, 0);
-        collider.translate(moveX, 0);  
+        graphicElement.translate(speedX, 0);
+        collider.translate(speedX, 0);  
         graphicElement.translate(0, -3);
         collider.translate(0, -3);  
     }
@@ -76,8 +77,8 @@ public class KoopaTroopa extends BaseUpdatableEntity implements Enemy {
         return speedX;
     }
 
-    public void setVelocityX(int dx) {
-        speedX += dx;
+    public void setSpeedX(int x) {
+        speedX = x;
     }
 
     @Override

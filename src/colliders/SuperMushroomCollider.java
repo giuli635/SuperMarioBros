@@ -16,7 +16,7 @@ import game.GraphicEngine;
 public class SuperMushroomCollider extends BaseCollider implements UpdateableEntityCollider {
     protected SuperMushroom m;
 
-    public  SuperMushroomCollider(SuperMushroom mushroom, Rectangle b) {
+    public SuperMushroomCollider(SuperMushroom mushroom, Rectangle b) {
         super(b);
         m = mushroom;
     }
@@ -36,7 +36,7 @@ public class SuperMushroomCollider extends BaseCollider implements UpdateableEnt
     }
 
     @Override
-    public Collision getCollision() {
+    public SuperMushroomCollision getCollision() {
         return new SuperMushroomCollision(this);
     }
 

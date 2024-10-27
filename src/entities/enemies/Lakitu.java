@@ -1,8 +1,9 @@
-package entities;
+package entities.enemies;
 
 import java.awt.Rectangle;
 
-import colliders.LakituCollider;
+import entities.BaseUpdatableEntity;
+import entities.Entity;
 import game.CollisionsEngine;
 import game.Game;
 import game.GraphicEngine;
@@ -11,12 +12,13 @@ import graphics.GameGraphicElement;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import colliders.enemies.LakituCollider;
+
 public class Lakitu extends BaseUpdatableEntity implements Enemy {
     protected static final int THROW_COOLDOWN = 10000;
     protected static final int MIN_DISTANCE = 100;
     protected static String SPRITES_FOLDER = "lakitu";
-    protected boolean movingRight = true;
-    protected int speedX = 1;
+    protected int speedX;
     protected long lastThrowTime = 0;
 
     protected LakituCollider collider;
@@ -24,7 +26,7 @@ public class Lakitu extends BaseUpdatableEntity implements Enemy {
 
     public Lakitu() {
         super();
-        speedX = 2;
+        speedX = -2;
         collider = new LakituCollider(this, new Rectangle());
         graphicElement = new GameGraphicElement(this, SPRITES_FOLDER);
         graphicElement.setSprite(SPRITES_FOLDER);
@@ -62,14 +64,13 @@ public class Lakitu extends BaseUpdatableEntity implements Enemy {
     }
 
     public void switchDirection() {
-        movingRight = !movingRight;
+        speedX = -speedX;
     }
 
     @Override
     public void update() {
-        int moveX = movingRight ? speedX : -speedX;
-        graphicElement.translate(moveX, 0);
-        collider.translate(moveX, 0);
+        graphicElement.translate(speedX, 0);
+        collider.translate(speedX, 0);
 
         long currentTime = System.currentTimeMillis();
         if (currentTime - lastThrowTime >= THROW_COOLDOWN &&

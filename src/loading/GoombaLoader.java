@@ -1,6 +1,6 @@
 package loading;
 
-import entities.Goomba;
+import entities.enemies.Goomba;
 
 public class GoombaLoader implements EntityLoader {
     @Override

@@ -1,21 +1,21 @@
 package collisions;
 import colliders.Collider;
 import colliders.DeleterCollider;
-import colliders.GoombaCollider;
+import colliders.enemies.BuzzyBeetleCollider;
+import colliders.enemies.GoombaCollider;
+import colliders.enemies.KoopaTroopaCollider;
+import colliders.enemies.LakituCollider;
+import colliders.enemies.PiranhaPlantCollider;
+import colliders.enemies.SpinyCollider;
 import colliders.BlockCollider;
 import colliders.BrickCollider;
-import colliders.BuzzyBeetleCollider;
 import colliders.CoinCollider;
-import colliders.KoopaTroopaCollider;
-import colliders.LakituCollider;
 import colliders.LoaderCollider;
 import colliders.MarioCollider;
 import colliders.PipeCollider;
-import colliders.PiranhaPlantCollider;
 import colliders.QuestionBlockCollider;
 import colliders.ScreenBorderCollider;
 import colliders.ScreenDisplacementCollider;
-import colliders.SpinyCollider;
 import colliders.SuperMushroomCollider;
 import colliders.UnloaderCollider;
 
@@ -39,4 +39,6 @@ public interface Collision {
     public void collide(UnloaderCollider c, Axis a);
     public void collide(DeleterCollider c, Axis a);
     public void collide(PiranhaPlantCollider c, Axis a);
+    public boolean wasManaged();
+    public void setManaged(boolean managed);
 }

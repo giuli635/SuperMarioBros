@@ -1,6 +1,6 @@
 package loading;
 
-import entities.Spiny;
+import entities.enemies.Spiny;
 
 public class SpinyLoader implements EntityLoader {
     @Override

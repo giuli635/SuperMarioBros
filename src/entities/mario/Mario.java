@@ -2,19 +2,21 @@ package entities.mario;
 
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
+import java.util.SortedSet;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.TreeSet;
 
-import colliders.Collider;
 import colliders.Direction;
 import colliders.MarioCollider;
 import entities.BaseUpdatableEntity;
 import entities.Entity;
+import entities.mario.actions.ActionComparator;
+import entities.mario.actions.MarioAction;
 import game.CollisionsEngine;
 import game.Game;
 import game.GraphicEngine;
 import game.KeyStatus;
-import game.LevelReader;
 import graphics.GameGraphicElement;
 
 public class Mario extends BaseUpdatableEntity {
@@ -34,7 +36,7 @@ public class Mario extends BaseUpdatableEntity {
     protected static float gravity = 1.5f;
     protected static int initialSpeedY = 12;
     protected static int minSpeedY = -8;
-    protected boolean jumping;
+    protected boolean falling;
 
     protected float jumpSpeed;
     protected float speedX;
@@ -47,21 +49,13 @@ public class Mario extends BaseUpdatableEntity {
 
     protected MarioCollider collider;
     protected GameGraphicElement graphicElement;
-    protected boolean listenToKeys;
-
-    public boolean isListeningToKeys() {
-        return listenToKeys;
-    }
-
-    public void listenToKeys(boolean listenToKeys) {
-        this.listenToKeys = listenToKeys;
-    }
+    protected SortedSet<MarioAction> actions;
 
     public Mario() {
         loaded = false;
-        jumping = false;
-        listenToKeys = true;
+        falling = false;
         collider = new MarioCollider(this, new Rectangle());
+        actions = new TreeSet<>(new ActionComparator());
         graphicElement = new GameGraphicElement(this, "mario");
         graphicElement.setSprite(MARIO_STILL);
         collider.setSize(
@@ -84,12 +78,12 @@ public class Mario extends BaseUpdatableEntity {
         return new Mario();
     }
 
-    public boolean getJumping() {
-        return jumping;
+    public boolean isFalling() {
+        return falling;
     }
 
-    public void setJumping(boolean j) {
-        jumping = j;
+    public void setFalling(boolean j) {
+        falling = j;
     }
 
     public void update() {
@@ -97,29 +91,24 @@ public class Mario extends BaseUpdatableEntity {
         Direction movementDirection = Direction.NONE;
         String newSprite;
         
-        if (listenToKeys) {
-            if (Game.instance().getKeyStatus(KeyEvent.VK_D) == KeyStatus.PRESSED) {
-                movementDirection = Direction.RIGHT;
-            }
-
-            if (Game.instance().getKeyStatus(KeyEvent.VK_A) == KeyStatus.PRESSED) {
-                movementDirection = Direction.sum(movementDirection, Direction.LEFT);
-            }
-
-            handleVerticalMovement();
+        if (Game.instance().getKeyStatus(KeyEvent.VK_D) == KeyStatus.PRESSED) {
+            movementDirection = Direction.RIGHT;
         }
 
-        if (!jumping) {
+        if (Game.instance().getKeyStatus(KeyEvent.VK_A) == KeyStatus.PRESSED) {
+            movementDirection = Direction.sum(movementDirection, Direction.LEFT);
+        }
+
+        handleVerticalMovement();
+
+        if (!falling) {
             newSprite = handleGroundHorizontalMovement(movementDirection, currentDirection);
         } else {
             newSprite = handleAirHorizontalMovement(movementDirection, currentDirection);
         }
 
         resolveSpriteDirection(movementDirection, newSprite);
-
-        if (listenToKeys) {
-            jumping = true;
-        }
+        falling = true;
     }
 
     protected String handleAirHorizontalMovement(Direction movementDirection, Direction currentDirection) {
@@ -140,7 +129,7 @@ public class Mario extends BaseUpdatableEntity {
 
     protected void handleVerticalMovement() {
         if (Game.instance().getKeyStatus(KeyEvent.VK_W) == KeyStatus.PRESSED) {
-            if (jumping) {
+            if (falling) {
                 if (speedY > 0) {
                     speedY += accelerationYWithW - gravity;
                 } else if (speedY > minSpeedY){
@@ -214,7 +203,7 @@ public class Mario extends BaseUpdatableEntity {
     }
 
     public void land() {
-        jumping = false;
+        falling = false;
         speedY = -gravity;
     }
 
@@ -234,7 +223,7 @@ public class Mario extends BaseUpdatableEntity {
         timer.schedule(task,1000);
     }
 
-    public void addVelocity(int dx, int dy) {
+    public void addSpeed(int dx, int dy) {
         speedX += dx;
         speedY += dy;
     }

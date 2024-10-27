@@ -6,13 +6,9 @@ import java.awt.Rectangle;
 import collisions.Axis;
 import collisions.BrickCollision;
 import collisions.Collision;
-import collisions.EnemyCollision;
-import collisions.MarioCollision;
-import collisions.PiranhaPlantCollision;
 import entities.Brick;
-import entities.mario.Mario;
 
-public class BrickCollider extends BaseCollider {
+public class BrickCollider extends SolidCollider {
     protected Brick brick;
     protected Rectangle bounds;
     protected Point previousPosition;
@@ -33,54 +29,7 @@ public class BrickCollider extends BaseCollider {
     }
 
     @Override
-    public Collision getCollision() {
+    public BrickCollision getCollision() {
         return new BrickCollision(this);
-    }
-
-    public void handleVerticalCollision(MarioCollision m) {
-        Vector2D velocity = m.getCollider().getVelocity();
-        Rectangle collision = getBounds().intersection(m.getCollider().getBounds());
-        Mario mario = m.getCollider().getEntity();
-
-        int sign = (int) -Math.signum(velocity.getYComponent());
-        m.getCollider().translate(0, sign * (int) collision.getHeight());
-        m.getCollider().getEntity().getGraphicElement().translate(0, sign * (int) collision.getHeight());
-        if (sign == 1) {
-            mario.land();
-        }
-    }
-
-    public void handleHorizontalCollision(MarioCollision m) {
-        Vector2D velocity = m.getCollider().getVelocity();
-        Rectangle collision = getBounds().intersection(m.getCollider().getBounds());
-
-        int sign = (int) -Math.signum(velocity.getXComponent());
-        m.getCollider().translate(sign * (int) (collision.getWidth()), 0);
-        m.getCollider().getEntity().getGraphicElement().translate(sign * (int) (collision.getWidth()), 0);
-    }
-
-    public void handleVerticalCollision(EnemyCollision e) {
-        Vector2D velocity = e.getCollider().getVelocity();
-        Rectangle collision = getBounds().intersection(e.getCollider().getBounds());
-
-        int sign = (int) -Math.signum(velocity.getYComponent());
-        e.getCollider().translate(0, sign * (int) collision.getHeight());
-        e.getCollider().getEntity().getGraphicElement().translate(0, sign * (int) collision.getHeight());
-    }
-
-    public void handleHorizontalCollision(EnemyCollision e) {
-        Vector2D velocity = e.getCollider().getVelocity();
-        Rectangle collision = getBounds().intersection(e.getCollider().getBounds());
-
-        int sign = (int) -Math.signum(velocity.getXComponent());
-        e.getCollider().translate(sign * (int) (collision.getWidth()), 0);
-        e.getCollider().getEntity().getGraphicElement().translate(sign * (int) (collision.getWidth()), 0);
-        e.getCollider().getEntity().switchDirection();
-    }
-
-    public void handleVerticalCollision(PiranhaPlantCollision p) {
-    }
-
-    public void handleHorizontalCollision(PiranhaPlantCollision p) {
     }
 }

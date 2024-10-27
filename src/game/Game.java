@@ -27,7 +27,15 @@ public class Game implements WindowListener, KeyListener {
 
     protected List<UpdatableEntity> toAddList = new ArrayList<>();
     protected List<UpdatableEntity> toRemoveList = new ArrayList<>();
+    private boolean debugging;
 
+    public boolean isDebugging() {
+        return debugging;
+    }
+
+    public void setDebugging(boolean debugging) {
+        this.debugging = debugging;
+    }
 
     private Game() {
         toUpdateRegistry = new HashSet<>();
@@ -60,7 +68,9 @@ public class Game implements WindowListener, KeyListener {
         currLevel = reader.createLevel("nivel1.txt", 10, 300, 1);
         long lastUpdateTime;
         while (run) {
+            debugging = false;
             lastUpdateTime = System.currentTimeMillis();
+
             if(!pause) {
                 List<UpdatableEntity> list = new ArrayList<>(toUpdateRegistry);
                 
@@ -69,16 +79,18 @@ public class Game implements WindowListener, KeyListener {
                 }
                 CollisionsEngine.instance().update();
 
-                try {
-                    Thread.sleep(SECOND / FPS - (lastUpdateTime - System.currentTimeMillis()));
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
                 graphicEngine.drawFrame();
+
+                if (!debugging) {
+                    try {
+                        Thread.sleep(SECOND / FPS - (lastUpdateTime - System.currentTimeMillis()));
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
 
             checkPause();
-
         }
     }
 

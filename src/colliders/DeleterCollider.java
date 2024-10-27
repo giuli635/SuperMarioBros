@@ -28,7 +28,7 @@ public class DeleterCollider extends BaseCollider{
     }
 
     @Override
-    public Collision getCollision() {
+    public DeleterCollision getCollision() {
         return new DeleterCollision(this);
     }
 

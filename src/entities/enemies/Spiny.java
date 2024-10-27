@@ -1,22 +1,22 @@
-package entities;
+package entities.enemies;
 
 import java.awt.Rectangle;
 
-import colliders.Collider;
-import colliders.SpinyCollider;
+import colliders.enemies.SpinyCollider;
+import entities.BaseUpdatableEntity;
+import entities.Entity;
 import graphics.GameGraphicElement;
 
 public class Spiny extends BaseUpdatableEntity implements Enemy {
     protected static String SPRITES_FOLDER = "spiny";
-    protected boolean movingRight = true;
-    protected int speedX = 1;
+    protected int speedX;
 
     protected SpinyCollider collider;
     protected GameGraphicElement graphicElement;
 
     public Spiny() {
         super();
-        speedX = 2;
+        speedX = -2;
         collider = new SpinyCollider(this, new Rectangle());
         graphicElement = new GameGraphicElement(this, SPRITES_FOLDER);
         graphicElement.setSprite(SPRITES_FOLDER);
@@ -42,14 +42,14 @@ public class Spiny extends BaseUpdatableEntity implements Enemy {
     }
 
     public void switchDirection() {
-        movingRight  = !movingRight;
+        speedX = -speedX;
+        graphicElement.flipSprite();
     }
 
     @Override
     public void update() {
-        int moveX = movingRight ? speedX : -speedX;
-        graphicElement.translate(moveX, 0);
-        collider.translate(moveX, 0);
+        graphicElement.translate(speedX, 0);
+        collider.translate(speedX, 0);
         graphicElement.translate(0, -3);
         collider.translate(0, -3);
     }

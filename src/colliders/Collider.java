@@ -29,4 +29,6 @@ public interface Collider {
     public boolean isColliding();
     public boolean isMoving();
     public void setMoving(boolean m);
+    public int displaceX(Rectangle intersection, int coefficient);
+    public int displaceY(Rectangle intersection, int coefficient);
 }

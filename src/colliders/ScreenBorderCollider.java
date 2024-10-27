@@ -30,7 +30,7 @@ public class ScreenBorderCollider extends BaseCollider {
     }
 
     @Override
-    public Collision getCollision() {
+    public ScreenBorderCollision getCollision() {
         return new ScreenBorderCollision(this);
     }
 

@@ -11,7 +11,7 @@ import collisions.QuestionBlockCollision;
 import entities.mario.Mario;
 import entities.QuestionBlock;
 
-public class QuestionBlockCollider extends BaseCollider {
+public class QuestionBlockCollider extends SolidCollider {
     protected QuestionBlock questionBlock;
     protected Rectangle bounds;
     protected Point previousPosition;
@@ -32,7 +32,7 @@ public class QuestionBlockCollider extends BaseCollider {
     }
 
     @Override
-    public Collision getCollision() {
+    public QuestionBlockCollision getCollision() {
         return new QuestionBlockCollision(this);
     }
 

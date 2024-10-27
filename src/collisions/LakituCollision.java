@@ -2,24 +2,24 @@ package collisions;
 
 import colliders.BlockCollider;
 import colliders.BrickCollider;
-import colliders.BuzzyBeetleCollider;
 import colliders.CoinCollider;
 import colliders.DeleterCollider;
-import colliders.GoombaCollider;
-import colliders.KoopaTroopaCollider;
-import colliders.LakituCollider;
+import colliders.enemies.GoombaCollider;
+import colliders.enemies.KoopaTroopaCollider;
+import colliders.enemies.LakituCollider;
+import colliders.enemies.PiranhaPlantCollider;
+import colliders.enemies.SpinyCollider;
 import colliders.LoaderCollider;
 import colliders.MarioCollider;
 import colliders.PipeCollider;
-import colliders.PiranhaPlantCollider;
 import colliders.QuestionBlockCollider;
 import colliders.ScreenBorderCollider;
 import colliders.ScreenDisplacementCollider;
-import colliders.SpinyCollider;
 import colliders.SuperMushroomCollider;
-import colliders.UnloaderCollider;         
+import colliders.UnloaderCollider;
+import colliders.enemies.BuzzyBeetleCollider;
 
-public class LakituCollision implements EnemyCollision {
+public class LakituCollision extends BaseCollision implements EnemyCollision {
     protected LakituCollider collider;
 
     public LakituCollision(LakituCollider c) {
@@ -30,7 +30,7 @@ public class LakituCollision implements EnemyCollision {
     public LakituCollider getCollider() {
         return collider;
     }
- 
+
     @Override
     public void collide(MarioCollider c, Axis a) {
         if (a == Axis.X) {
@@ -95,7 +95,7 @@ public class LakituCollision implements EnemyCollision {
     }
 
     @Override
-    public void collide(colliders.LakituCollider c, Axis a) {
+    public void collide(colliders.enemies.LakituCollider c, Axis a) {
         if (a == Axis.X) {
             c.handleHorizontalCollision(this);
         } else {

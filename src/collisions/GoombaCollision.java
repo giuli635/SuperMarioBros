@@ -2,24 +2,24 @@ package collisions;
 
 import colliders.BlockCollider;
 import colliders.BrickCollider;
-import colliders.BuzzyBeetleCollider;
 import colliders.CoinCollider;
 import colliders.DeleterCollider;
-import colliders.GoombaCollider;
-import colliders.KoopaTroopaCollider;
-import colliders.LakituCollider;
+import colliders.enemies.BuzzyBeetleCollider;
+import colliders.enemies.GoombaCollider;
+import colliders.enemies.KoopaTroopaCollider;
+import colliders.enemies.LakituCollider;
+import colliders.enemies.PiranhaPlantCollider;
+import colliders.enemies.SpinyCollider;
 import colliders.LoaderCollider;
 import colliders.MarioCollider;
 import colliders.PipeCollider;
-import colliders.PiranhaPlantCollider;
 import colliders.QuestionBlockCollider;
 import colliders.ScreenBorderCollider;
 import colliders.ScreenDisplacementCollider;
-import colliders.SpinyCollider;
 import colliders.SuperMushroomCollider;
 import colliders.UnloaderCollider;
 
-public class GoombaCollision implements EnemyCollision {
+public class GoombaCollision extends BaseCollision implements EnemyCollision {
     protected GoombaCollider collider;
 
     public GoombaCollision(GoombaCollider c) {

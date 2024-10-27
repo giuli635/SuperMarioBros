@@ -1,6 +1,6 @@
 package loading;
 
-import entities.Lakitu;
+import entities.enemies.Lakitu;
 
 public class LakituLoader implements EntityLoader {
     @Override

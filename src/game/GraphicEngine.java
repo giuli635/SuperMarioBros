@@ -10,7 +10,6 @@ import javax.swing.SwingUtilities;
 
 import graphics.GameGraphicElement;
 import graphics.GraphicElement;
-import graphics.StatsBar;
 
 public class GraphicEngine {
     protected static GraphicEngine uniqueInstance;

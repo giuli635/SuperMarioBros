@@ -2,29 +2,28 @@ package collisions;
 
 import colliders.BlockCollider;
 import colliders.BrickCollider;
-import colliders.BuzzyBeetleCollider;
 import colliders.CoinCollider;
 import colliders.DeleterCollider;
-import colliders.GoombaCollider;
-import colliders.KoopaTroopaCollider;
+import colliders.enemies.GoombaCollider;
+import colliders.enemies.KoopaTroopaCollider;
+import colliders.enemies.PiranhaPlantCollider;
+import colliders.enemies.SpinyCollider;
 import colliders.LoaderCollider;
 import colliders.MarioCollider;
 import colliders.PipeCollider;
-import colliders.PiranhaPlantCollider;
 import colliders.QuestionBlockCollider;
 import colliders.ScreenBorderCollider;
 import colliders.ScreenDisplacementCollider;
-import colliders.SpinyCollider;
 import colliders.SuperMushroomCollider;
 import colliders.UnloaderCollider;
+import colliders.enemies.BuzzyBeetleCollider;
 
-public class UnloaderCollision implements Collision {
+public class UnloaderCollision extends BaseCollision {
     protected UnloaderCollider unloader;
 
     public UnloaderCollision(UnloaderCollider l) {
         unloader = l;
     }
-
 
     @Override
     public UnloaderCollider getCollider() {
@@ -168,7 +167,7 @@ public class UnloaderCollision implements Collision {
     }
 
     @Override
-    public void collide(colliders.LakituCollider c, Axis a) {
+    public void collide(colliders.enemies.LakituCollider c, Axis a) {
         if (a == Axis.X) {
             c.handleHorizontalCollision(this);
         } else {

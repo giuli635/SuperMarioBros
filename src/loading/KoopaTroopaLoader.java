@@ -1,6 +1,6 @@
 package loading;
 
-import entities.KoopaTroopa;
+import entities.enemies.KoopaTroopa;
 
 public class KoopaTroopaLoader implements EntityLoader {
     @Override

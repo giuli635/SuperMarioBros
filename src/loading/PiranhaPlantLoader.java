@@ -1,7 +1,7 @@
 package loading;
 
 import entities.Entity;
-import entities.PiranhaPlant;
+import entities.enemies.PiranhaPlant;
 
 public class PiranhaPlantLoader implements EntityLoader{
 

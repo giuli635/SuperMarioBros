@@ -25,7 +25,7 @@ public class LoaderCollider extends BaseCollider {
     }
 
     @Override
-    public Collision getCollision() {
+    public LoaderCollision getCollision() {
         return new LoaderCollision(this);
     }
     

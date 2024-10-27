@@ -26,8 +26,7 @@ public class CoinCollider extends BaseCollider{
     }
 
     @Override
-    public Collision getCollision() {
+    public CoinCollision getCollision() {
         return new CoinCollision(this);
     }
-    
 }

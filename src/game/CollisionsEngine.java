@@ -2,7 +2,6 @@ package game;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.Vector;
@@ -10,11 +9,13 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import colliders.Collider;
 import collisions.Axis;
+import collisions.Collision;
 
 public class CollisionsEngine {
     protected static CollisionsEngine uniqueInstance;
     protected List<List<Collider>> chunks;
     protected Set<Collider> toUpdate;
+    protected int frame;
 
     protected CollisionsEngine() {
         reset();
@@ -29,18 +30,15 @@ public class CollisionsEngine {
 
     protected void checkCollision(Collider c1, Collider c2, Axis axis) {
         if (c1.isActivated() && c2.isActivated() && c1.getBounds().intersects(c2.getBounds())) {
-            c2.sendCollision(c1.getCollision(), axis);
-            c1.sendCollision(c2.getCollision(), axis);
+            Collision first = c1.getCollision();
+            c2.sendCollision(first, axis);
+            if (!first.wasManaged()) {
+                c1.sendCollision(c2.getCollision(), axis);
+            }
         }
     }
 
     public void update() {
-        for (Collider collider : toUpdate) {
-            collider.moveY();
-        }
-
-        checkCollisions(Axis.Y);
-
         for (Collider collider : toUpdate) {
             collider.setMoving(true);
             removeFromChunks(collider.getBounds(), collider);
@@ -51,6 +49,12 @@ public class CollisionsEngine {
         checkCollisions(Axis.X);
 
         for (Collider collider : toUpdate) {
+            collider.moveY();
+        }
+
+        checkCollisions(Axis.Y);
+
+        for (Collider collider : toUpdate) {
             collider.setMoving(false);
             collider.resetVelocity();
         }
@@ -59,20 +63,24 @@ public class CollisionsEngine {
     public void checkCollisions(Axis axis) {
         for (Collider collider : toUpdate) {
             int[] chunkRange = calculateChunk(collider.getBounds());
-            Set<Collider> collidersInChunkRange = new HashSet<>();
-            for (int i = chunkRange[0]; i <= chunkRange[1] && i < chunks.size(); i++) {
-                collidersInChunkRange.addAll(chunks.get(i));
-            }
 
-            for (Collider toCheck : collidersInChunkRange) {
-                if (toCheck != collider){
-                    collider.setColliding(true);
-                    toCheck.setColliding(true);
-                    checkCollision(collider, toCheck, axis);
-                    toCheck.setColliding(false);
-                }
+            collider.setColliding(true);
+            for (int i = chunkRange[0]; i <= chunkRange[1]; i++) {
+                checkChunk(axis, collider, i);
             }
             collider.setColliding(false);
+
+        }
+    }
+
+    private void checkChunk(Axis axis, Collider collider, int i) {
+        List<Collider> chunk = new ArrayList<>(chunks.get(i));
+        for (Collider toCheck : chunk) {
+            if (toCheck != collider){
+                toCheck.setColliding(true);
+                checkCollision(collider, toCheck, axis);
+                toCheck.setColliding(false);
+            }
         }
     }
 
