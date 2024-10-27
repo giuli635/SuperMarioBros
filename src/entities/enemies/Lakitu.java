@@ -60,7 +60,11 @@ public class Lakitu extends BaseUpdatableEntity implements Enemy {
 
     @Override
     public int getPoints() {
-        throw new UnsupportedOperationException("Unimplemented method 'getPoints'");
+        return 60;
+    }
+
+    public int subtractPoints(){
+        return 0;
     }
 
     public void switchDirection() {

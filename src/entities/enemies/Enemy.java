@@ -6,6 +6,7 @@ import entities.UpdatableEntity;
 public interface Enemy extends UpdatableEntity {
     public void recieveDamage();
     public int getPoints();
+    public int subtractPoints();
     public Entity clone();
     public void update();
     public void switchDirection();

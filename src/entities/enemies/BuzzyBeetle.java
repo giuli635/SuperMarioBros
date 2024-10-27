@@ -54,10 +54,13 @@ public class BuzzyBeetle extends BaseUpdatableEntity implements Enemy {
 
     @Override
     public int getPoints() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getPoints'");
+        return 30;
     }
     
+    public int subtractPoints(){
+        return 15;
+    }
+
     public void switchDirection() {
         speedX = -speedX;
         graphicElement.flipSprite();

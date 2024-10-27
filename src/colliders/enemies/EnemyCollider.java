@@ -20,6 +20,7 @@ public abstract class EnemyCollider extends BaseCollider implements UpdateableEn
 
     public void handleHorizontalCollision(MarioCollision m) {
         m.getCollider().getEntity().die();
+        m.getCollider().getEntity().subtractPoints(getEntity().getPoints());
     }
 
     public void handleVerticalCollision(MarioCollision m) {
@@ -30,8 +31,10 @@ public abstract class EnemyCollider extends BaseCollider implements UpdateableEn
         if(collisionDirection == Direction.DOWN) {
             getEntity().recieveDamage();
             m.getCollider().getEntity().addSpeed(0, 8);
+            m.getCollider().getEntity().addPoints(getEntity().getPoints());
         } else {
             m.getCollider().getEntity().die();
+            m.getCollider().getEntity().subtractPoints(getEntity().subtractPoints());
         }
     }
 

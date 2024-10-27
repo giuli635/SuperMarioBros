@@ -37,12 +37,14 @@ public class KoopaTroopaCollider extends EnemyCollider {
         Rectangle collision = getBounds().intersection(m.getCollider().getBounds());
         if (!koopa.getShell()) {
             m.getCollider().getEntity().die();
+            m.getCollider().getEntity().subtractPoints(getEntity().subtractPoints());
         } else if(koopa.getSpeedX() == 0) {
             int displacement = m.getCollider().displaceX(collision, 3);
             m.getCollider().getEntity().getGraphicElement().translate(displacement, 0);
             koopa.setSpeedX((int) -Math.signum(displacement) * 6);
         } else {
             m.getCollider().getEntity().die();
+            m.getCollider().getEntity().subtractPoints(getEntity().subtractPoints());
         }
     }
 
@@ -52,12 +54,14 @@ public class KoopaTroopaCollider extends EnemyCollider {
         Rectangle collision = getBounds().intersection(m.getCollider().getBounds());
         if(collisionDirection == Direction.DOWN) {
             koopa.recieveDamage();
+            m.getCollider().getEntity().addPoints(getEntity().getPoints());
             int displacement = m.getCollider().displaceY(collision, 3);
             m.getCollider().getEntity().getGraphicElement().translate(0, displacement);
             m.getCollider().getEntity().addSpeed(0, 15);
         } else {
             if (!koopa.getShell()) {
                 m.getCollider().getEntity().die();
+                m.getCollider().getEntity().subtractPoints(getEntity().subtractPoints());
             }
         }
     }

@@ -61,21 +61,23 @@ public class LevelReader  {
         return uniqueInstance;
     }
 
-    public LevelStats createLevel(String file, int livesMario, int levelTimer, int numberLevel) {
+    public LevelStats createLevel(int livesMario, int levelTimer, int numberLevel) {
         LevelStats level = null;
-        try {
-            BufferedReader br = new BufferedReader(new FileReader(file));
-            loadEntities(br);
-            br.close();
             level = new LevelStats(levelTimer, livesMario, numberLevel);
             StatsBar statsBar = new StatsBar(level);
             GraphicEngine.instance().add(statsBar);
             GraphicEngine.instance().setDepth(statsBar, 100);
-        } catch(IOException e) {
+        return level;
+    }
+
+    public void readTxt(String file){
+        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+            loadEntities(br);
+            br.close();
+        } catch (IOException e) {
             e.printStackTrace();
         }
         loadScreen();
-        return level;
     }
 
     private void loadScreen() {

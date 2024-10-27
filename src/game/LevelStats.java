@@ -41,8 +41,14 @@ public class LevelStats {
     }
 
     public void subtractPoints(int p) {
-        score -= p;
-        notifyObservers();
+        if (score >= p){
+            score -= p;
+            notifyObservers();
+        }
+        else{
+            score = 0;
+            notifyObservers();
+        }
     }
 
     public int getLives() { 

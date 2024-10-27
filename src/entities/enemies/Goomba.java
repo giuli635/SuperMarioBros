@@ -51,9 +51,12 @@ public class Goomba extends BaseUpdatableEntity implements Enemy {
         timer.schedule(task,1000);
     }
 
-    @Override
     public int getPoints() {
-        throw new UnsupportedOperationException("Unimplemented method 'getPoints'");
+        return 60;
+    }
+    
+    public int subtractPoints(){
+        return 30;
     }
 
     public void switchDirection() {

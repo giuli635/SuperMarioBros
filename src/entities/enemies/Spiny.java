@@ -33,7 +33,11 @@ public class Spiny extends BaseUpdatableEntity implements Enemy {
 
     @Override
     public int getPoints() {
-        throw new UnsupportedOperationException("Unimplemented method 'getPoints'");
+        return 60;
+    }
+    
+    public int subtractPoints(){
+        return 30;
     }
 
     @Override

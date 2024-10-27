@@ -17,6 +17,8 @@ import game.CollisionsEngine;
 import game.Game;
 import game.GraphicEngine;
 import game.KeyStatus;
+import game.LevelReader;
+import game.LevelStats;
 import graphics.GameGraphicElement;
 
 public class Mario extends BaseUpdatableEntity {
@@ -50,10 +52,22 @@ public class Mario extends BaseUpdatableEntity {
     protected MarioCollider collider;
     protected GameGraphicElement graphicElement;
     protected SortedSet<MarioAction> actions;
+    protected boolean listenToKeys;
+    protected LevelStats levelStats;
 
-    public Mario() {
+    public boolean isListeningToKeys() {
+        return listenToKeys;
+    }
+
+    public void listenToKeys(boolean listenToKeys) {
+        this.listenToKeys = listenToKeys;
+    }
+
+    public Mario(LevelStats lStats) {
         loaded = false;
         falling = false;
+        listenToKeys = true;
+        levelStats = lStats;
         collider = new MarioCollider(this, new Rectangle());
         actions = new TreeSet<>(new ActionComparator());
         graphicElement = new GameGraphicElement(this, "mario");
@@ -75,7 +89,7 @@ public class Mario extends BaseUpdatableEntity {
     }
 
     public Entity clone() {
-        return new Mario();
+        return new Mario(levelStats);
     }
 
     public boolean isFalling() {
@@ -213,20 +227,28 @@ public class Mario extends BaseUpdatableEntity {
         graphicElement.setFolder("mario");
         graphicElement.setSprite(MARIO_DEATH);
         
-        
+        levelStats.decreasedLives();
         Timer timer = new Timer();
         TimerTask task = new TimerTask() {
             public void run(){
                 GraphicEngine.instance().remove(graphicElement);
-                Game.instance().resetCurrentLevel();
+                //Game.instance().resetCurrentLevel();
             }
         };
 
         timer.schedule(task,1000);
     }
 
+    public void addPoints(int points){
+        levelStats.addPoints(points);
+    } 
+
     public void addSpeed(int dx, int dy) {
         speedX += dx;
         speedY += dy;
+    }
+
+    public void subtractPoints(int i) {
+        levelStats.subtractPoints(i);
     }
 }
