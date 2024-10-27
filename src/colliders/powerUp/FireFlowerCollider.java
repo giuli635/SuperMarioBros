@@ -6,15 +6,8 @@ import colliders.BaseCollider;
 import colliders.UpdateableEntityCollider;
 import collisions.Axis;
 import collisions.Collision;
-import collisions.MarioCollision;
-import collisions.SuperMushroomCollision;
 import entities.powerUp.FireFlower;
-import entities.powerUp.SuperMushroom;
 import entities.UpdatableEntity;
-import entities.mario.Mario;
-import entities.mario.SuperMario;
-import game.CollisionsEngine;
-import game.GraphicEngine;
 
 public class FireFlowerCollider extends BaseCollider implements UpdateableEntityCollider {
     protected FireFlower f;

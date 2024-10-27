@@ -7,22 +7,23 @@ import colliders.PipeCollider;
 
 
 public class Pipe implements Entity {
-    protected static String PIPE = "pipe";
-    protected static String BASE_PIPE = "pipeB";
+    protected static String FOLDER_PATH = "pipe";
+    protected static String TOP_PIPE = "topPipe";
+    protected static String BASE_PIPE = "basePipe";
 
     protected PipeCollider collider;
     protected GameGraphicElement graphicElement;
 
     public Pipe() {
         collider = new PipeCollider(this, new Rectangle(64, 32));
-        graphicElement = new GameGraphicElement(this, PIPE);
-        graphicElement.setSprite(PIPE);
+        graphicElement = new GameGraphicElement(this, FOLDER_PATH);
+        graphicElement.setSprite(TOP_PIPE);
         
     }
 
     public Pipe(int i) {
         collider = new PipeCollider(this, new Rectangle(64, 32));
-        graphicElement = new GameGraphicElement(this, BASE_PIPE);
+        graphicElement = new GameGraphicElement(this, FOLDER_PATH);
         graphicElement.setSprite(BASE_PIPE);
     }
 

@@ -42,7 +42,7 @@ public class StatsBar implements GraphicElement, LevelStatsObserver {
         levelTimer = l.getLevelTimer();
         lives = l.getLives();
         score = l.getScore();
-        this.level = l.getNumberLevel();
+        this.level = l.getLevelNumber();
         l.addObserver(this);
 
         timeLabel = new JLabel();

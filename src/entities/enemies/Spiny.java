@@ -1,10 +1,13 @@
 package entities.enemies;
 
 import java.awt.Rectangle;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import colliders.enemies.SpinyCollider;
 import entities.BaseUpdatableEntity;
 import entities.Entity;
+import game.GraphicEngine;
 import graphics.GameGraphicElement;
 
 public class Spiny extends BaseUpdatableEntity implements Enemy {
@@ -28,7 +31,16 @@ public class Spiny extends BaseUpdatableEntity implements Enemy {
 
     @Override
     public void recieveDamage() {
-        throw new UnsupportedOperationException("Unimplemented method 'getDamage'");
+        collider.deactivate();
+
+        Timer timer = new Timer();
+        TimerTask task = new TimerTask() {
+            public void run(){
+                GraphicEngine.instance().remove(graphicElement);
+            }
+        };
+
+        timer.schedule(task,1000);
     }
 
     @Override

@@ -7,8 +7,6 @@ import java.util.TimerTask;
 import colliders.enemies.PiranhaPlantCollider;
 import entities.BaseUpdatableEntity;
 import entities.Entity;
-import game.CollisionsEngine;
-import game.Game;
 import game.GraphicEngine;
 import graphics.GameGraphicElement;
 
@@ -40,9 +38,7 @@ public class PiranhaPlant extends BaseUpdatableEntity implements Enemy{
 
     @Override
     public void recieveDamage() {
-        Game.instance().unregisterToUpdate(this);
-        CollisionsEngine.instance().remove(collider);
-        graphicElement.translate(0, -9);
+        collider.deactivate();
 
         Timer timer = new Timer();
         TimerTask task = new TimerTask() {

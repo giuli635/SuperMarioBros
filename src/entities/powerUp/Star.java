@@ -2,7 +2,6 @@ package entities.powerUp;
 
 import java.awt.Rectangle;
 
-import colliders.powerUp.FireFlowerCollider;
 import colliders.powerUp.StarCollider;
 import entities.BaseUpdatableEntity;
 import entities.Entity;

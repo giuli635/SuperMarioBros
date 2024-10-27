@@ -13,11 +13,9 @@ import entities.BaseUpdatableEntity;
 import entities.Entity;
 import entities.mario.actions.ActionComparator;
 import entities.mario.actions.MarioAction;
-import game.CollisionsEngine;
 import game.Game;
 import game.GraphicEngine;
 import game.KeyStatus;
-import game.LevelReader;
 import game.LevelStats;
 import graphics.GameGraphicElement;
 
@@ -222,12 +220,11 @@ public class Mario extends BaseUpdatableEntity {
     }
 
     public void die() {
-        Game.instance().unregisterToUpdate(this);
-        CollisionsEngine.instance().remove(collider);
+        collider.deactivate();
         graphicElement.setFolder("mario");
         graphicElement.setSprite(MARIO_DEATH);
         
-        levelStats.decreasedLives();
+        levelStats.decreaseLives();
         Timer timer = new Timer();
         TimerTask task = new TimerTask() {
             public void run(){
