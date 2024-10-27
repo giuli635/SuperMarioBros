@@ -4,50 +4,50 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LevelStats {
-    private int remainingTime;
-    private int score;
-    private int lives;
-    private int numberLevel;
-    private LevelTimer levelTimer;
-    private List<LevelStatsObserver> observers;
+    protected int remainingTime;
+    protected int score;
+    protected int lives;
+    protected int levelNumber;
+    protected LevelTimer levelTimer;
+    protected List<LevelStatsObserver> observers;
     
     public LevelStats(int initialTime, int initialLives, int numberLevel) {
-        this.remainingTime = initialTime;
-        this.lives = initialLives;
-        this.score = 0;
-        this.numberLevel = numberLevel;
-        this.levelTimer = new LevelTimer(remainingTime);
-        this.observers = new ArrayList<>();
+        remainingTime = initialTime;
+        lives = initialLives;
+        score = 0;
+        levelNumber = numberLevel;
+        levelTimer = new LevelTimer(remainingTime);
+        observers = new ArrayList<>();
     }
     
     public void addObserver(LevelStatsObserver observer) {
         observers.add(observer);
     }
     
-    private void notifyObservers() {
+    protected void notifyObserver() {
         for(LevelStatsObserver observer : observers) {
             observer.onStatsChanged();
         }
     }
     
-    public void decreasedLives() {
+    public void decreaseLives() {
         lives--;
-        notifyObservers();
+        notifyObserver();
     }
     
     public void addPoints(int points) {
         score += points;
-        notifyObservers();
+        notifyObserver();
     }
 
     public void subtractPoints(int p) {
         if (score >= p){
             score -= p;
-            notifyObservers();
+            notifyObserver();
         }
         else{
             score = 0;
-            notifyObservers();
+            notifyObserver();
         }
     }
 
@@ -67,8 +67,8 @@ public class LevelStats {
         return levelTimer;
     }
     
-    public int getNumberLevel(){
-        return numberLevel;
+    public int getLevelNumber(){
+        return levelNumber;
     }
 
 }

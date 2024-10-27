@@ -66,7 +66,7 @@ public class LevelReader  {
             level = new LevelStats(levelTimer, livesMario, numberLevel);
             StatsBar statsBar = new StatsBar(level);
             GraphicEngine.instance().add(statsBar);
-            GraphicEngine.instance().setDepth(statsBar, 100);
+            GraphicEngine.instance().setDepth(statsBar, GraphicEngine.FRONT_DEPTH);
         return level;
     }
 

@@ -2,7 +2,6 @@ package colliders;
 
 import java.awt.Rectangle;
 
-import collisions.Collision;
 import collisions.EnemyCollision;
 import collisions.MarioCollision;
 import collisions.UpdateableEntityCollision;

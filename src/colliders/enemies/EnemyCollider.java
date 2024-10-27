@@ -5,6 +5,7 @@ import java.awt.Rectangle;
 import colliders.BaseCollider;
 import colliders.Direction;
 import colliders.UpdateableEntityCollider;
+import collisions.BuzzyBeetleCollision;
 import collisions.EnemyCollision;
 import collisions.KoopaTroopaCollision;
 import collisions.MarioCollision;
@@ -78,5 +79,24 @@ public abstract class EnemyCollider extends BaseCollider implements UpdateableEn
 
         e.getEntity().switchDirection();
         getEntity().switchDirection();
+    }
+
+    public void handleVerticalCollision(BuzzyBeetleCollision b) {
+        if (!b.getCollider().getEntity().getShell() || b.getCollider().getEntity().getSpeedX() == 0) {
+            Rectangle collision = getBounds().intersection(b.getCollider().getBounds());
+
+            int displacement = b.getCollider().displaceY(collision, DISPLACEMENT_COEFFICIENT);
+            b.getCollider().getEntity().getGraphicElement().translate(0, displacement);
+        } else {
+            getEntity().recieveDamage();
+        }
+    }
+
+    public void handleHorizontalCollision(BuzzyBeetleCollision b) {
+        if(!b.getCollider().getEntity().getShell() || b.getCollider().getEntity().getSpeedX() == 0) {
+            bounce(b.getCollider());
+        } else {
+            getEntity().recieveDamage();
+        }
     }
 }

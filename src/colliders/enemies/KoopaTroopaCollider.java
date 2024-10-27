@@ -53,8 +53,10 @@ public class KoopaTroopaCollider extends EnemyCollider {
         Direction collisionDirection = m.getCollider().getVelocity().getYComponent() > 0 ? Direction.UP : Direction.DOWN;
         Rectangle collision = getBounds().intersection(m.getCollider().getBounds());
         if(collisionDirection == Direction.DOWN) {
+            if (koopa.getShell()) {
+                m.getCollider().getEntity().addPoints(getEntity().getPoints());
+            }
             koopa.recieveDamage();
-            m.getCollider().getEntity().addPoints(getEntity().getPoints());
             int displacement = m.getCollider().displaceY(collision, 3);
             m.getCollider().getEntity().getGraphicElement().translate(0, displacement);
             m.getCollider().getEntity().addSpeed(0, 15);

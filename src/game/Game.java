@@ -9,8 +9,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import javax.swing.SwingUtilities;
 
@@ -82,8 +80,6 @@ public class Game implements WindowListener, KeyListener {
                 }
                 CollisionsEngine.instance().update();
 
-                graphicEngine.drawFrame();
-
                 if (!debugging) {
                     try {
                         Thread.sleep(SECOND / FPS - (lastUpdateTime - System.currentTimeMillis()));
@@ -91,6 +87,7 @@ public class Game implements WindowListener, KeyListener {
                         e.printStackTrace();
                     }
                 }
+                graphicEngine.drawFrame();
             }
 
             checkPause();
@@ -113,7 +110,7 @@ public class Game implements WindowListener, KeyListener {
                 GraphicEngine.instance().reset();
                 GraphicEngine.instance().initBackgrounds();
                 LevelReader reader = LevelReader.instance();
-                currLevel = reader.createLevel(currLevel.getLives(), currLevel.getRemainingTime(), currLevel.getNumberLevel());
+                currLevel = reader.createLevel(currLevel.getLives(), currLevel.getRemainingTime(), currLevel.getLevelNumber());
                 reader.readTxt("nivel1.txt");
             }
         });

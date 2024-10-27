@@ -4,8 +4,6 @@ import java.awt.Rectangle;
 
 import entities.BaseUpdatableEntity;
 import entities.Entity;
-import game.CollisionsEngine;
-import game.Game;
 import game.GraphicEngine;
 import game.LevelReader;
 import graphics.GameGraphicElement;
@@ -43,10 +41,8 @@ public class Lakitu extends BaseUpdatableEntity implements Enemy {
 
     @Override
     public void recieveDamage() {
-        Game.instance().unregisterToUpdate(this);
-        CollisionsEngine.instance().remove(collider);
+        collider.deactivate();
         graphicElement.setSprite(SPRITES_FOLDER + "Hiding");
-        graphicElement.translate(0, -9);
         
         Timer timer = new Timer();
         TimerTask task = new TimerTask() {

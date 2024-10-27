@@ -1,10 +1,13 @@
 package entities.enemies;
 
 import java.awt.Rectangle;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import colliders.enemies.KoopaTroopaCollider;
 import entities.BaseUpdatableEntity;
 import entities.Entity;
+import game.GraphicEngine;
 import graphics.GameGraphicElement;
 
 public class KoopaTroopa extends BaseUpdatableEntity implements Enemy {
@@ -34,8 +37,21 @@ public class KoopaTroopa extends BaseUpdatableEntity implements Enemy {
             speedX = 0;
             shell = true;
         } else {
-            speedX = 0;
+            die();
         }
+    }
+
+    private void die() {
+        collider.deactivate();
+        
+        Timer timer = new Timer();
+        TimerTask task = new TimerTask() {
+            public void run(){
+                GraphicEngine.instance().remove(graphicElement);
+            }
+        };
+
+        timer.schedule(task,1000);
     }
 
     @Override

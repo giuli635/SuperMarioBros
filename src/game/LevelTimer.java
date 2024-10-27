@@ -4,8 +4,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class LevelTimer {
-    private int remainingTime;
-    private Timer timer;
+    protected int remainingTime;
+    protected Timer timer;
 
     public LevelTimer(int seconds) {
         remainingTime = seconds;
@@ -17,7 +17,7 @@ public class LevelTimer {
         return remainingTime;
     }
 
-    private void startTimer() {
+    protected void startTimer() {
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {

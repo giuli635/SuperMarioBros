@@ -5,8 +5,6 @@ import java.awt.Rectangle;
 import colliders.enemies.GoombaCollider;
 import entities.BaseUpdatableEntity;
 import entities.Entity;
-import game.CollisionsEngine;       
-import game.Game;
 import game.GraphicEngine;
 import graphics.GameGraphicElement;
 import java.util.Timer;
@@ -37,8 +35,7 @@ public class Goomba extends BaseUpdatableEntity implements Enemy {
 
     @Override
     public void recieveDamage() {
-        Game.instance().unregisterToUpdate(this);
-        CollisionsEngine.instance().remove(collider);
+        collider.deactivate();
         graphicElement.setSprite(SPRITES_FOLDER + "Death");
         
         Timer timer = new Timer();
