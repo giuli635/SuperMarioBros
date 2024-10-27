@@ -5,6 +5,8 @@ import java.awt.Rectangle;
 import colliders.powerUp.FireFlowerCollider;
 import entities.BaseUpdatableEntity;
 import entities.Entity;
+import entities.mario.MarioState;
+import entities.mario.SuperMario;
 import graphics.GameGraphicElement;
 
 public class FireFlower extends BaseUpdatableEntity implements PowerUp {
@@ -12,13 +14,14 @@ public class FireFlower extends BaseUpdatableEntity implements PowerUp {
     protected int points;
     protected boolean movingRight = true;
     protected int speedX;
+    protected MarioState state;
 
     protected FireFlowerCollider collider;
     protected GameGraphicElement graphicElement;
 
     public FireFlower() {
         points = 100;
-        speedX = 1;
+        state = new SuperMario(); //Cambiar
         collider = new FireFlowerCollider(this, new Rectangle());
         graphicElement = new GameGraphicElement(this, SPRITES_FOLDER);
         graphicElement.setSprite(SPRITES_FOLDER);
@@ -38,12 +41,7 @@ public class FireFlower extends BaseUpdatableEntity implements PowerUp {
     }
 
     public void update(){
-        int moveX = movingRight ? speedX : -speedX;
-        graphicElement.translate(moveX, 0);
-        collider.translate(moveX, 0);
-
-        graphicElement.translate(0, -3);
-        collider.translate(0, -3);
+        
     }
 
     @Override
@@ -57,14 +55,11 @@ public class FireFlower extends BaseUpdatableEntity implements PowerUp {
     }
 
     @Override
-    public void disappear() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'disappear'");
+    public int getPoints() {
+        return points;
     }
 
-    @Override
-    public int getPoints() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getPoints'");
+    public MarioState getState() {
+        return state;
     }
 }

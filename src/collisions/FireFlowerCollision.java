@@ -4,33 +4,33 @@ import colliders.BlockCollider;
 import colliders.BrickCollider;
 import colliders.CoinCollider;
 import colliders.DeleterCollider;
-import colliders.enemies.GoombaCollider;
-import colliders.enemies.KoopaTroopaCollider;
-import colliders.enemies.LakituCollider;
-import colliders.enemies.PiranhaPlantCollider;
-import colliders.enemies.SpinyCollider;
 import colliders.LoaderCollider;
 import colliders.MarioCollider;
 import colliders.PipeCollider;
 import colliders.QuestionBlockCollider;
 import colliders.ScreenBorderCollider;
 import colliders.ScreenDisplacementCollider;
+import colliders.UnloaderCollider;
+import colliders.enemies.BuzzyBeetleCollider;
+import colliders.enemies.GoombaCollider;
+import colliders.enemies.KoopaTroopaCollider;
+import colliders.enemies.LakituCollider;
+import colliders.enemies.PiranhaPlantCollider;
+import colliders.enemies.SpinyCollider;
 import colliders.powerUp.FireFlowerCollider;
 import colliders.powerUp.StarCollider;
 import colliders.powerUp.SuperMushroomCollider;
-import colliders.UnloaderCollider;
-import colliders.enemies.BuzzyBeetleCollider;
 
-public class CoinCollision extends BaseCollision {
-    protected CoinCollider coinCollider;
+public class FireFlowerCollision extends BaseCollision implements PowerUpCollision{
+    protected FireFlowerCollider collider;
 
-    public  CoinCollision(CoinCollider c) {
-        coinCollider = c;
+    public FireFlowerCollision(FireFlowerCollider c) {
+        collider = c;
     }
 
     @Override
-    public CoinCollider getCollider() {
-        return coinCollider;
+    public FireFlowerCollider getCollider() {
+        return collider;
     }
 
     @Override
@@ -70,6 +70,15 @@ public class CoinCollision extends BaseCollision {
     }
 
     @Override
+    public void collide(GoombaCollider c, Axis a) {
+        if (a == Axis.X) {
+            c.handleHorizontalCollision(this);
+        } else {
+            c.handleVerticalCollision(this);
+        }
+    }
+
+    @Override
     public void collide(SpinyCollider c, Axis a) {
         if (a == Axis.X) {
             c.handleHorizontalCollision(this);
@@ -97,15 +106,6 @@ public class CoinCollision extends BaseCollision {
     }
 
     @Override
-    public void collide(GoombaCollider c, Axis a) {
-        if (a == Axis.X) {
-            c.handleHorizontalCollision(this);
-        } else {
-            c.handleVerticalCollision(this);
-        }
-    }
-
-    @Override
     public void collide(LoaderCollider c, Axis a) {
         if (a == Axis.X) {
             c.handleHorizontalCollision(this);
@@ -114,6 +114,15 @@ public class CoinCollision extends BaseCollision {
         }
     }
 
+    @Override
+    public void collide(LakituCollider c, Axis a) {
+        if (a == Axis.X) {
+            c.handleHorizontalCollision(this);
+        } else {
+            c.handleVerticalCollision(this);
+        }
+    }
+    
     @Override
     public void collide(BrickCollider c, Axis a) {
         if (a == Axis.X) {
@@ -168,14 +177,6 @@ public class CoinCollision extends BaseCollision {
         }
     }
 
-    @Override
-    public void collide(LakituCollider c, Axis a) {
-        if (a == Axis.X) {
-            c.handleHorizontalCollision(this);
-        } else {
-            c.handleVerticalCollision(this);
-        }
-    }
     @Override
     public void collide(BuzzyBeetleCollider c, Axis a) {
         if (a == Axis.X) {

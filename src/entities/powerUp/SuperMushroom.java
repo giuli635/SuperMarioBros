@@ -2,9 +2,11 @@ package entities.powerUp;
 
 import java.awt.Rectangle;
 
-import colliders.SuperMushroomCollider;
+import colliders.powerUp.SuperMushroomCollider;
 import entities.BaseUpdatableEntity;
 import entities.Entity;
+import entities.mario.MarioState;
+import entities.mario.SuperMario;
 import graphics.GameGraphicElement;
 
 public class SuperMushroom extends BaseUpdatableEntity implements PowerUp {
@@ -12,6 +14,7 @@ public class SuperMushroom extends BaseUpdatableEntity implements PowerUp {
     protected int points;
     protected boolean movingRight = true;
     protected int speedX;
+    protected MarioState state;
 
     protected SuperMushroomCollider collider;
     protected GameGraphicElement graphicElement;
@@ -19,6 +22,7 @@ public class SuperMushroom extends BaseUpdatableEntity implements PowerUp {
     public SuperMushroom() {
         points = 100;
         speedX = 1;
+        state = new SuperMario();
         collider = new SuperMushroomCollider(this, new Rectangle());
         graphicElement = new GameGraphicElement(this, SPRITES_FOLDER);
         graphicElement.setSprite(SPRITES_FOLDER);
@@ -57,14 +61,12 @@ public class SuperMushroom extends BaseUpdatableEntity implements PowerUp {
     }
 
     @Override
-    public void disappear() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'disappear'");
+    public int getPoints() {
+        return points;
     }
 
     @Override
-    public int getPoints() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getPoints'");
+    public MarioState getState() {
+        return state;
     }
 }

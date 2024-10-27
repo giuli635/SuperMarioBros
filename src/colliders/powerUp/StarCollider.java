@@ -2,21 +2,13 @@ package colliders.powerUp;
 
 import java.awt.Rectangle;
 
-import colliders.BaseCollider;
-import colliders.UpdateableEntityCollider;
 import collisions.Axis;
 import collisions.Collision;
-import collisions.MarioCollision;
-import collisions.SuperMushroomCollision;
-import entities.powerUp.FireFlower;
+import collisions.StarCollision;
 import entities.powerUp.Star;
-import entities.UpdatableEntity;
-import entities.mario.Mario;
-import entities.mario.SuperMario;
-import game.CollisionsEngine;
-import game.GraphicEngine;
 
-public class StarCollider extends BaseCollider implements UpdateableEntityCollider {
+
+public class StarCollider extends PowerUpCollider {
     protected Star s;
 
     public StarCollider(Star star, Rectangle b) {
@@ -26,20 +18,17 @@ public class StarCollider extends BaseCollider implements UpdateableEntityCollid
 
     @Override
     public void sendCollision(Collision c, Axis a) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'sendCollision'");
+       c.collide(this, a);
     }
 
     @Override
     public Collision getCollision() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getCollision'");
+        return new StarCollision(this);
     }
 
     @Override
-    public UpdatableEntity getEntity() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getEntity'");
+    public Star getEntity() {
+        return s;
     }
 
 }
