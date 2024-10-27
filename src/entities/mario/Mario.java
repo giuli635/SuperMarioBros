@@ -223,7 +223,7 @@ public class Mario extends BaseUpdatableEntity {
 
     public void die() {
         Game.instance().unregisterToUpdate(this);
-        CollisionsEngine.instance().remove(collider);
+        collider.deactivate();
         graphicElement.setFolder("mario");
         graphicElement.setSprite(MARIO_DEATH);
         

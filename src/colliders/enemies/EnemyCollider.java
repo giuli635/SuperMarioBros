@@ -21,6 +21,7 @@ public abstract class EnemyCollider extends BaseCollider implements UpdateableEn
     public void handleHorizontalCollision(MarioCollision m) {
         m.getCollider().getEntity().die();
         m.getCollider().getEntity().subtractPoints(getEntity().getPoints());
+        System.out.println("llegue");
     }
 
     public void handleVerticalCollision(MarioCollision m) {
