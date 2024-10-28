@@ -20,7 +20,7 @@ public class LevelStats {
         levelTimer = new LevelTimer(remainingTime);
         observers = new ArrayList<>();
         soundManager = new SoundManager();
-        soundManager.playLoopingSound("MarioBackground.wav");
+        soundManager.playLoopingSound("marioBackground.wav");
     }
     
     public void addObserver(LevelStatsObserver observer) {

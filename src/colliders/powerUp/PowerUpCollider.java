@@ -6,6 +6,7 @@ import collisions.MarioCollision;
 import collisions.PowerUpCollision;
 import collisions.StarCollision;
 import entities.mario.Mario;
+import entities.mario.SuperMario;
 import entities.powerUp.PowerUp;
 import game.GraphicEngine;
 
@@ -21,11 +22,12 @@ public abstract class PowerUpCollider extends BaseCollider implements Updateable
     }
 
     protected void handleMarioCollision(Mario m) {
-        getEntity().getState().setFunctionality(m);
         m.setPowerUpSound();
         deactivate();
         getEntity().unload();
         GraphicEngine.instance().remove(getEntity().getGraphicElement());
+
+        m.setState(new SuperMario(m));
         m.getCollider().getEntity().addPoints(getEntity().getPoints());
     }
 

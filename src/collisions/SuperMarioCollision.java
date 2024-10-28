@@ -5,34 +5,33 @@ import colliders.BrickCollider;
 import colliders.CoinCollider;
 import colliders.DefaultMarioCollider;
 import colliders.DeleterCollider;
-import colliders.EmptyBlockCollider;
-import colliders.enemies.GoombaCollider;
-import colliders.enemies.KoopaTroopaCollider;
-import colliders.enemies.PiranhaPlantCollider;
-import colliders.enemies.SpinyCollider;
 import colliders.LoaderCollider;
 import colliders.PipeCollider;
 import colliders.QuestionBlockCollider;
 import colliders.ScreenBorderCollider;
 import colliders.ScreenDisplacementCollider;
 import colliders.SuperMarioCollider;
-import colliders.powerUp.FireFlowerCollider;
-import colliders.powerUp.GreenMushroomCollider;
-import colliders.powerUp.StarCollider;
-import colliders.powerUp.SuperMushroomCollider;
 import colliders.UnloaderCollider;
 import colliders.enemies.BuzzyBeetleCollider;
+import colliders.enemies.GoombaCollider;
+import colliders.enemies.KoopaTroopaCollider;
+import colliders.enemies.LakituCollider;
+import colliders.enemies.PiranhaPlantCollider;
+import colliders.enemies.SpinyCollider;
+import colliders.powerUp.FireFlowerCollider;
+import colliders.powerUp.StarCollider;
+import colliders.powerUp.SuperMushroomCollider;
 
-public class UnloaderCollision extends BaseCollision {
-    protected UnloaderCollider unloader;
+public class SuperMarioCollision extends BaseCollision implements MarioCollision {
+    protected SuperMarioCollider superMarioCollider;
 
-    public UnloaderCollision(UnloaderCollider l) {
-        unloader = l;
+    public  SuperMarioCollision(SuperMarioCollider c) {
+        superMarioCollider = c;
     }
 
     @Override
-    public UnloaderCollider getCollider() {
-        return unloader;
+    public SuperMarioCollider getCollider() {
+        return superMarioCollider;
     }
 
     @Override
@@ -55,15 +54,6 @@ public class UnloaderCollision extends BaseCollision {
 
     @Override
     public void collide(ScreenBorderCollider c, Axis a) {
-        if (a == Axis.X) {
-            c.handleHorizontalCollision(this);
-        } else {
-            c.handleVerticalCollision(this);
-        }
-    }
-
-    @Override
-    public void collide(GoombaCollider c, Axis a) {
         if (a == Axis.X) {
             c.handleHorizontalCollision(this);
         } else {
@@ -98,6 +88,14 @@ public class UnloaderCollision extends BaseCollision {
         }
     }
 
+    @Override
+    public void collide(GoombaCollider c, Axis a) {
+        if (a == Axis.X) {
+            c.handleHorizontalCollision(this);
+        } else {
+            c.handleVerticalCollision(this);
+        }
+    }
 
     @Override
     public void collide(LoaderCollider c, Axis a) {
@@ -163,14 +161,13 @@ public class UnloaderCollision extends BaseCollision {
     }
 
     @Override
-    public void collide(colliders.enemies.LakituCollider c, Axis a) {
+    public void collide(LakituCollider c, Axis a) {
         if (a == Axis.X) {
             c.handleHorizontalCollision(this);
         } else {
             c.handleVerticalCollision(this);
         }
     }
-
     @Override
     public void collide(BuzzyBeetleCollider c, Axis a) {
         if (a == Axis.X) {
@@ -217,24 +214,6 @@ public class UnloaderCollision extends BaseCollision {
 
     @Override
     public void collide(DefaultMarioCollider c, Axis a) {
-        if (a == Axis.X) {
-            c.handleHorizontalCollision(this);
-        } else {
-            c.handleVerticalCollision(this);
-        }
-    }
-
-    @Override
-    public void collide(GreenMushroomCollider c, Axis a) {
-        if (a == Axis.X) {
-            c.handleHorizontalCollision(this);
-        } else {
-            c.handleVerticalCollision(this);
-        }
-    }
-
-    @Override
-    public void collide(EmptyBlockCollider c, Axis a) {
         if (a == Axis.X) {
             c.handleHorizontalCollision(this);
         } else {

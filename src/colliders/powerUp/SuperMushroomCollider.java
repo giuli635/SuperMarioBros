@@ -21,10 +21,6 @@ public class SuperMushroomCollider extends PowerUpCollider {
         return m;
     }
 
-    public SuperMushroom getSuperMushroom() {
-        return (SuperMushroom) m;
-    }
-
     @Override
     public void sendCollision(Collision c, Axis a) {
         c.collide(this, a);

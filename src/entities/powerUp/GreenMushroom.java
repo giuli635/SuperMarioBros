@@ -6,7 +6,6 @@ import colliders.powerUp.GreenMushroomCollider;
 import entities.BaseUpdatableEntity;
 import entities.Entity;
 import entities.mario.MarioState;
-import entities.mario.SuperMario;
 import graphics.GameGraphicElement;
 
 public class GreenMushroom extends BaseUpdatableEntity implements PowerUp {
@@ -21,7 +20,6 @@ public class GreenMushroom extends BaseUpdatableEntity implements PowerUp {
 
     public GreenMushroom() {
         points = 100;
-        state = new SuperMario(); //Cambiar
         collider = new GreenMushroomCollider(this, new Rectangle());
         graphicElement = new GameGraphicElement(this, SPRITES_FOLDER);
         graphicElement.setSprite(SPRITES_FOLDER);
@@ -63,11 +61,4 @@ public class GreenMushroom extends BaseUpdatableEntity implements PowerUp {
     public int getPoints() {
         return points;
     }
-
-    @Override
-    public MarioState getState() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getState'");
-    }
-
 }

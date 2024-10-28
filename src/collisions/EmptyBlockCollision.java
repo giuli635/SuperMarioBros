@@ -4,6 +4,7 @@ import colliders.BlockCollider;
 import colliders.BrickCollider;
 import colliders.CoinCollider;
 import colliders.Collider;
+import colliders.DefaultMarioCollider;
 import colliders.DeleterCollider;
 import colliders.EmptyBlockCollider;
 import colliders.LoaderCollider;
@@ -12,6 +13,7 @@ import colliders.PipeCollider;
 import colliders.QuestionBlockCollider;
 import colliders.ScreenBorderCollider;
 import colliders.ScreenDisplacementCollider;
+import colliders.SuperMarioCollider;
 import colliders.UnloaderCollider;
 import colliders.enemies.BuzzyBeetleCollider;
 import colliders.enemies.GoombaCollider;
@@ -33,15 +35,6 @@ public class EmptyBlockCollision extends BaseCollision implements SolidCollision
     @Override
     public Collider getCollider() {
         return collider;
-    }
-
-    @Override
-    public void collide(MarioCollider c, Axis a) {
-        if (a == Axis.X) {
-            c.handleHorizontalCollision(this);
-        } else {
-            c.handleVerticalCollision(this);
-        }
     }
 
     @Override
@@ -223,6 +216,22 @@ public class EmptyBlockCollision extends BaseCollision implements SolidCollision
     }
     @Override
     public void collide(EmptyBlockCollider c, Axis a) {
+        if (a == Axis.X) {
+            c.handleHorizontalCollision(this);
+        } else {
+            c.handleVerticalCollision(this);
+        }
+    }
+    @Override
+    public void collide(SuperMarioCollider c, Axis a) {
+        if (a == Axis.X) {
+            c.handleHorizontalCollision(this);
+        } else {
+            c.handleVerticalCollision(this);
+        }
+    }
+    @Override
+    public void collide(DefaultMarioCollider c, Axis a) {
         if (a == Axis.X) {
             c.handleHorizontalCollision(this);
         } else {

@@ -5,8 +5,6 @@ import java.awt.Rectangle;
 import colliders.powerUp.StarCollider;
 import entities.BaseUpdatableEntity;
 import entities.Entity;
-import entities.mario.MarioState;
-import entities.mario.SuperMario;
 import graphics.GameGraphicElement;
 
 public class Star extends BaseUpdatableEntity implements PowerUp {
@@ -20,7 +18,6 @@ public class Star extends BaseUpdatableEntity implements PowerUp {
     protected boolean movingRight = true;
     protected int speedX;
     protected float speedY;
-    protected MarioState state;
 
     protected StarCollider collider;
     protected GameGraphicElement graphicElement;
@@ -29,7 +26,6 @@ public class Star extends BaseUpdatableEntity implements PowerUp {
         points = 100;
         speedX = 2;
         speedY = 0;
-        state = new SuperMario(); //Cambiar
         collider = new StarCollider(this, new Rectangle());
         graphicElement = new GameGraphicElement(this, SPRITES_FOLDER);
         graphicElement.setSprite(SPRITES_FOLDER);
@@ -66,10 +62,6 @@ public class Star extends BaseUpdatableEntity implements PowerUp {
     @Override
     public int getPoints() {
         return points;
-    }
-
-    public MarioState getState() {
-        return state;
     }
 
     public void bounce() {

@@ -1,33 +1,38 @@
 package entities.mario;
 
-import colliders.Collider;
+import colliders.MarioCollider;
+import colliders.SuperMarioCollider;
 import entities.mario.actions.Crouch;
 import graphics.GameGraphicElement;
 
-public class SuperMario implements MarioState {
+public class SuperMario extends BaseMarioState {
     protected static final String SUPER_MARIO_SPRITES = "superMario";
+    protected String previousStateSpriteFolder;
+    protected MarioCollider previousCollider;
+    protected Crouch crouch;
+
+    public SuperMario(Mario m) {
+        super(m);
+    }
 
     @Override
-    public void setFunctionality(Mario m) {
-        GameGraphicElement graphicElement = m.getGraphicElement();
-        Collider collider = m.getCollider();
+    public void setState() {
+        GameGraphicElement graphicElement = mario.getGraphicElement();
+        previousStateSpriteFolder = graphicElement.getFolder();
+        previousCollider = mario.getCollider();
         graphicElement.setFolder("superMario");
-        m.addAction(new Crouch());
-        
-        collider.setSize(
-            graphicElement.getCurrentSprite().getIconWidth(),
-            graphicElement.getCurrentSprite().getIconHeight()
-        );
+        mario.setCollider(new SuperMarioCollider(mario, previousCollider.getBounds()));
+
+        crouch = new Crouch();
+        mario.addAction(crouch);
     }
 
     @Override
-    public void setCollisions(Mario m) {
-        m.getCollider();
-    }
+    public void removeState() {
+        GameGraphicElement graphicElement = mario.getGraphicElement();
+        graphicElement.setFolder(previousStateSpriteFolder);
 
-    @Override
-    public void removeState(Mario m) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'removeState'");
+        mario.setCollider(previousCollider);
+        mario.removeAction(crouch);
     }
 }

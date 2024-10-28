@@ -1,5 +1,6 @@
 package collisions;
 import colliders.Collider;
+import colliders.DefaultMarioCollider;
 import colliders.DeleterCollider;
 import colliders.EmptyBlockCollider;
 import colliders.enemies.BuzzyBeetleCollider;
@@ -12,11 +13,11 @@ import colliders.BlockCollider;
 import colliders.BrickCollider;
 import colliders.CoinCollider;
 import colliders.LoaderCollider;
-import colliders.MarioCollider;
 import colliders.PipeCollider;
 import colliders.QuestionBlockCollider;
 import colliders.ScreenBorderCollider;
 import colliders.ScreenDisplacementCollider;
+import colliders.SuperMarioCollider;
 import colliders.powerUp.FireFlowerCollider;
 import colliders.powerUp.GreenMushroomCollider;
 import colliders.powerUp.StarCollider;
@@ -25,7 +26,8 @@ import colliders.UnloaderCollider;
 
 public interface Collision {
     public Collider getCollider();
-    public void collide(MarioCollider c, Axis a);
+    public void collide(SuperMarioCollider c, Axis a);
+    public void collide(DefaultMarioCollider c, Axis a);
     public void collide(BlockCollider c, Axis a);
     public void collide(ScreenDisplacementCollider c, Axis a);
     public void collide(ScreenBorderCollider c, Axis a);

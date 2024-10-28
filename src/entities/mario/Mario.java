@@ -1,17 +1,25 @@
 package entities.mario;
 
 import java.awt.Rectangle;
+import java.util.Iterator;
+import java.util.Queue;
 import java.util.SortedSet;
+import java.util.Stack;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.TreeSet;
 
+import colliders.DefaultMarioCollider;
+import colliders.Direction;
 import colliders.MarioCollider;
+import colliders.SuperMarioCollider;
 import entities.BaseUpdatableEntity;
 import entities.Entity;
 import entities.mario.actions.ActionComparator;
 import entities.mario.actions.HorizontalMovement;
 import entities.mario.actions.MarioAction;
+import entities.mario.actions.ResolveHorizontalMovementDirection;
+import entities.mario.actions.ResolveSprite;
 import game.Game;
 import game.GraphicEngine;
 import game.LevelStats;
@@ -27,33 +35,42 @@ public class Mario extends BaseUpdatableEntity {
     public final static String MARIO_STOPPING = "marioStopping";
 
     public static final int FIXED_BOUNCE_SPEED = 15;
-
-    protected float gravity = 1.5f;
-    protected boolean falling;
+    public static final float GRAVITY = 1.5f;
 
     protected float jumpSpeed;
     protected float speedX;
     protected float speedY;
-    protected boolean loaded;
+    protected float accelerationX;
+    protected boolean falling;
 
     protected MarioCollider collider;
     protected GameGraphicElement graphicElement;
     protected SortedSet<MarioAction> actions;
+    protected Stack<MarioState> states;
     protected LevelStats levelStats;
+    protected Direction movementDirection;
+    protected boolean overriteSprite;
+    protected boolean loaded;
 
     public Mario(LevelStats stats) {
         loaded = false;
         falling = false;
         levelStats = stats;
-        collider = new MarioCollider(this, new Rectangle());
+        states = new Stack<>();
+        collider = new DefaultMarioCollider(this, new Rectangle());
         actions = new TreeSet<>(new ActionComparator());
+        movementDirection = Direction.NONE;
+
         addAction(new VerticalMovement());
+        addAction(new ResolveHorizontalMovementDirection());
         addAction(new HorizontalMovement());
+        addAction(new ResolveSprite());
+
         graphicElement = new GameGraphicElement(this, "mario");
         graphicElement.setSprite(MARIO_STILL);
         collider.setSize(
-                graphicElement.getCurrentSprite().getIconWidth(),
-                graphicElement.getCurrentSprite().getIconHeight()
+            graphicElement.getCurrentSprite().getIconWidth(),
+            graphicElement.getCurrentSprite().getIconHeight()
         );
     }
 
@@ -71,23 +88,11 @@ public class Mario extends BaseUpdatableEntity {
         return new Mario(levelStats);
     }
 
-    public boolean isFalling() {
-        return falling;
-    }
-
-    public void setFalling(boolean j) {
-        falling = j;
-    }
-
     public void update() {
-        for (MarioAction action : actions) {
-            action.execute(this);
+        Iterator<MarioAction> actionsIterator = actions.iterator();
+        while (actionsIterator.hasNext()) {
+            actionsIterator.next().execute(this);
         }
-
-        collider.setSize(
-            graphicElement.getCurrentSprite().getIconWidth(),
-            graphicElement.getCurrentSprite().getIconHeight()
-        );
 
         graphicElement.translate((int) speedX, (int) speedY);
         collider.translate((int) speedX, (int) speedY);
@@ -96,7 +101,7 @@ public class Mario extends BaseUpdatableEntity {
 
     public void land() {
         falling = false;
-        speedY = -gravity;
+        speedY = -GRAVITY;
     }
 
     public void die() {
@@ -114,7 +119,11 @@ public class Mario extends BaseUpdatableEntity {
             }
         };
 
-        timer.schedule(task,3000);
+        timer.schedule(task, 1000);
+    }
+
+    public boolean isFalling() {
+        return falling;
     }
 
     public void setJumpSound(){
@@ -129,14 +138,18 @@ public class Mario extends BaseUpdatableEntity {
         levelStats.getSoundManager().playSound("powerup.wav");
     }
 
-    public void addPoints(int points){
-        levelStats.addPoints(points);
-    } 
+    public void setFalling(boolean j) {
+        falling = j;
+    }
 
     public void addSpeed(int dx, int dy) {
         speedX += dx;
         speedY += dy;
     }
+
+    public void addPoints(int points){
+        levelStats.addPoints(points);
+    } 
 
     public void subtractPoints(int i) {
         levelStats.subtractPoints(i);
@@ -166,11 +179,42 @@ public class Mario extends BaseUpdatableEntity {
         actions.remove(action);
     }
 
-    public float getGravity() {
-        return gravity;
+    public float getAccelerationX() {
+        return accelerationX;
     }
 
-    public void setGravity(float gravity) {
-        this.gravity = gravity;
+    public void setAccelerationX(float accelerationX) {
+        this.accelerationX = accelerationX;
+    }
+
+    public Direction getMovementDirection() {
+        return movementDirection;
+    }
+
+    public void setMovementDirection(Direction movementDirection) {
+        this.movementDirection = movementDirection;
+    }
+
+    public boolean overriteSprite() {
+        return overriteSprite;
+    }
+
+    public void setOverriteSprite(boolean overriteSprite) {
+        this.overriteSprite = overriteSprite;
+    }
+
+    public void setState(MarioState state) {
+        states.push(state);
+        state.setState();
+    }
+
+    public void removeState() {
+        if (!states.isEmpty()) {
+            states.pop().removeState();
+        }
+    }
+
+    public void setCollider(MarioCollider c) {
+        collider = c;
     }
 }

@@ -2,6 +2,7 @@ package collisions;
 import colliders.BlockCollider;
 import colliders.BrickCollider;
 import colliders.CoinCollider;
+import colliders.DefaultMarioCollider;
 import colliders.DeleterCollider;
 import colliders.EmptyBlockCollider;
 import colliders.enemies.GoombaCollider;
@@ -10,11 +11,11 @@ import colliders.enemies.LakituCollider;
 import colliders.enemies.PiranhaPlantCollider;
 import colliders.enemies.SpinyCollider;
 import colliders.LoaderCollider;
-import colliders.MarioCollider;
 import colliders.PipeCollider;
 import colliders.QuestionBlockCollider;
 import colliders.ScreenBorderCollider;
 import colliders.ScreenDisplacementCollider;
+import colliders.SuperMarioCollider;
 import colliders.powerUp.FireFlowerCollider;
 import colliders.powerUp.GreenMushroomCollider;
 import colliders.powerUp.StarCollider;
@@ -31,15 +32,6 @@ public class BrickCollision extends BaseCollision implements SolidCollision {
 
     public BrickCollider getCollider() {
         return collider;
-    }
-
-    @Override
-    public void collide(MarioCollider c, Axis a) {
-        if (a == Axis.X) {
-            c.handleHorizontalCollision(this);
-        } else {
-            c.handleVerticalCollision(this);
-        }
     }
 
     @Override
@@ -204,6 +196,24 @@ public class BrickCollision extends BaseCollision implements SolidCollision {
 
     @Override
     public void collide(StarCollider c, Axis a) {
+        if (a == Axis.X) {
+            c.handleHorizontalCollision(this);
+        } else {
+            c.handleVerticalCollision(this);
+        }
+    }
+
+    @Override
+    public void collide(SuperMarioCollider c, Axis a) {
+        if (a == Axis.X) {
+            c.handleHorizontalCollision(this);
+        } else {
+            c.handleVerticalCollision(this);
+        }
+    }
+
+    @Override
+    public void collide(DefaultMarioCollider c, Axis a) {
         if (a == Axis.X) {
             c.handleHorizontalCollision(this);
         } else {
