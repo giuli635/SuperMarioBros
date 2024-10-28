@@ -32,7 +32,7 @@ import loading.SuperMushroomLoader;
 import loading.BrickLoader;
 import loading.BuzzyBeetleLoader;
 
-public class LevelReader  {
+public class LevelReader {
     public static final int CHUNK = 32;
     protected static LevelReader uniqueInstance;
     protected Map<Character, EntityLoader> loaders;
@@ -61,9 +61,9 @@ public class LevelReader  {
         return uniqueInstance;
     }
 
-    public LevelStats createLevel(int livesMario, int levelTimer, int numberLevel) {
+    public LevelStats createLevel(int livesMario, int levelTimer, int numberLevel, int score) {
         LevelStats level = null;
-            level = new LevelStats(levelTimer, livesMario, numberLevel);
+            level = new LevelStats(levelTimer, livesMario, numberLevel, score);
             StatsBar statsBar = new StatsBar(level);
             GraphicEngine.instance().add(statsBar);
             GraphicEngine.instance().setDepth(statsBar, GraphicEngine.FRONT_DEPTH);
