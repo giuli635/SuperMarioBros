@@ -103,7 +103,8 @@ public class Mario extends BaseUpdatableEntity {
         collider.deactivate();
         graphicElement.setFolder("mario");
         graphicElement.setSprite(MARIO_DEATH);
-        
+        levelStats.getSoundManager().removeAllSounds();
+        levelStats.getSoundManager().playSound("mariodie.wav");
         levelStats.decreaseLives();
         Timer timer = new Timer();
         TimerTask task = new TimerTask() {
@@ -113,7 +114,19 @@ public class Mario extends BaseUpdatableEntity {
             }
         };
 
-        timer.schedule(task,1000);
+        timer.schedule(task,3000);
+    }
+
+    public void setJumpSound(){
+        levelStats.getSoundManager().playSound("jumpSmall.wav");
+    }
+
+    public void setKillEnemySound(){
+        levelStats.getSoundManager().playSound("kick.wav");
+    }
+
+    public void setPowerUpSound(){
+        levelStats.getSoundManager().playSound("powerup.wav");
     }
 
     public void addPoints(int points){

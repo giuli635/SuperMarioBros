@@ -71,7 +71,6 @@ public class Game implements WindowListener, KeyListener {
         while (run) {
             debugging = false;
             lastUpdateTime = System.currentTimeMillis();
-
             if(!pause) {
                 List<UpdatableEntity> list = new ArrayList<>(toUpdateRegistry);
                 
@@ -108,6 +107,7 @@ public class Game implements WindowListener, KeyListener {
                 GraphicEngine.instance().reset();
                 GraphicEngine.instance().initBackgrounds();
                 LevelReader reader = LevelReader.instance();
+                currLevel.getSoundManager().removeAllSounds();
                 currLevel = reader.createLevel(currLevel.getLives(), currLevel.getRemainingTime(), currLevel.getLevelNumber(), currLevel.getScore());
                 reader.readTxt("nivel1.txt");
             }
@@ -168,6 +168,15 @@ public class Game implements WindowListener, KeyListener {
             if (!pauseKeyAlreadyPressed) {
                 pause = !pause; // Cambiar el estado de pausa
                 pauseKeyAlreadyPressed = true; // Registrar que la tecla P ya está presionada
+                if (pause){
+                    currLevel.pauseTimer();
+                    currLevel.pauseAllSounds();
+                }
+                else{
+                    currLevel.resumeAllSounds();
+                    currLevel.resumeTimer();
+                }
+
             }
         } else {
             // Si la tecla no está presionada, restablecer la bandera

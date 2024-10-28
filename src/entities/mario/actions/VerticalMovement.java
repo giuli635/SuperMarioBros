@@ -30,6 +30,7 @@ public class VerticalMovement extends BaseMarioAction {
                 }
             } else {
                 speedY = initialSpeedY;
+                m.setJumpSound();
             }
         } else {
             if (speedY > 0) {

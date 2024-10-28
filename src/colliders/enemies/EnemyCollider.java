@@ -31,6 +31,7 @@ public abstract class EnemyCollider extends BaseCollider implements UpdateableEn
         Mario mario = m.getCollider().getEntity();
 
         if(collisionDirection == Direction.DOWN) {
+            m.getCollider().getEntity().setKillEnemySound();
             getEntity().recieveDamage();
             mario.addSpeed(0, Mario.FIXED_BOUNCE_SPEED);
             mario.addPoints(getEntity().getPoints());

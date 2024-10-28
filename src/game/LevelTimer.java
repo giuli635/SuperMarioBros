@@ -6,10 +6,12 @@ import java.util.TimerTask;
 public class LevelTimer {
     protected int remainingTime;
     protected Timer timer;
+    protected boolean isPaused;
 
     public LevelTimer(int seconds) {
         remainingTime = seconds;
         timer = new Timer();
+        isPaused = false;
         startTimer();
     }
 
@@ -21,13 +23,21 @@ public class LevelTimer {
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                if (remainingTime > 0) {
+                if (remainingTime > 0 && !isPaused) {
                     remainingTime--;
-                } else {
-                    timer.cancel();
+                } else if (remainingTime <= 0) {
+                    stopTimer();
                 }
             }
         }, 0, 1000);
+    }
+
+    public void pauseTimer() {
+        isPaused = true;
+    }
+
+    public void resumeTimer() {
+        isPaused = false;
     }
 
     public void stopTimer() {

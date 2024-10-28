@@ -37,7 +37,9 @@ public abstract class ShellEnemyCollider extends EnemyCollider{
         if(collisionDirection == Direction.DOWN) {
             if (getEntity().getShell()) {
                 mario.addPoints(getEntity().getPoints());
+                mario.setKillEnemySound();
             }
+            mario.setKillEnemySound();
             getEntity().recieveDamage();
             int displacement = m.getCollider().displaceY(collision, 3);
             mario.getGraphicElement().translate(0, displacement);

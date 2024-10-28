@@ -19,6 +19,7 @@ public abstract class PowerUpCollider extends BaseCollider implements Updateable
 
     protected void handleMarioCollision(Mario m) {
         getEntity().getState().setFunctionality(m);
+        m.setPowerUpSound();
         deactivate();
         getEntity().unload();
         GraphicEngine.instance().remove(getEntity().getGraphicElement());
