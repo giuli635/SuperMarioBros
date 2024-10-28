@@ -56,15 +56,6 @@ public class SoundManager {
         }
     }
     
-    public void removeSound(String soundFile) {
-        Clip clip = clips.get(soundFile);
-        if (clip != null) {
-            clip.stop();
-            clip.close();
-            clips.remove(soundFile);
-        }
-    }
-    
     public void removeAllSounds() {
         for (Clip clip : clips.values()) {
             if (clip != null) {
@@ -75,7 +66,5 @@ public class SoundManager {
         clips.clear();
     }
     
-    public void setSoundPath(String path) {
-        this.soundPath = path;
-    }
+
 }
