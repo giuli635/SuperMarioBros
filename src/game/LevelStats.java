@@ -11,10 +11,10 @@ public class LevelStats {
     protected LevelTimer levelTimer;
     protected List<LevelStatsObserver> observers;
     
-    public LevelStats(int initialTime, int initialLives, int numberLevel) {
+    public LevelStats(int initialTime, int initialLives, int numberLevel, int scoreLevel) {
         remainingTime = initialTime;
         lives = initialLives;
-        score = 0;
+        score = scoreLevel;
         levelNumber = numberLevel;
         levelTimer = new LevelTimer(remainingTime);
         observers = new ArrayList<>();
