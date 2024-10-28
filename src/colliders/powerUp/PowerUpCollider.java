@@ -1,7 +1,10 @@
 package colliders.powerUp;
 
 import colliders.UpdateableEntityCollider;
+import collisions.EmptyBlockCollision;
 import collisions.MarioCollision;
+import collisions.PowerUpCollision;
+import collisions.StarCollision;
 import entities.mario.Mario;
 import entities.powerUp.PowerUp;
 import game.GraphicEngine;

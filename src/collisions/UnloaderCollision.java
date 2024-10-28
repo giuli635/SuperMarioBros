@@ -4,6 +4,7 @@ import colliders.BlockCollider;
 import colliders.BrickCollider;
 import colliders.CoinCollider;
 import colliders.DeleterCollider;
+import colliders.EmptyBlockCollider;
 import colliders.enemies.GoombaCollider;
 import colliders.enemies.KoopaTroopaCollider;
 import colliders.enemies.PiranhaPlantCollider;
@@ -215,6 +216,15 @@ public class UnloaderCollision extends BaseCollision {
 
     @Override
     public void collide(GreenMushroomCollider c, Axis a) {
+        if (a == Axis.X) {
+            c.handleHorizontalCollision(this);
+        } else {
+            c.handleVerticalCollision(this);
+        }
+    }
+
+    @Override
+    public void collide(EmptyBlockCollider c, Axis a) {
         if (a == Axis.X) {
             c.handleHorizontalCollision(this);
         } else {

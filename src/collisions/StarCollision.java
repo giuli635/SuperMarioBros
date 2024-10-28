@@ -4,6 +4,7 @@ import colliders.BlockCollider;
 import colliders.BrickCollider;
 import colliders.CoinCollider;
 import colliders.DeleterCollider;
+import colliders.EmptyBlockCollider;
 import colliders.LoaderCollider;
 import colliders.MarioCollider;
 import colliders.PipeCollider;
@@ -215,6 +216,15 @@ public class StarCollision extends BaseCollision implements PowerUpCollision{
 
     @Override
     public void collide(GreenMushroomCollider c, Axis a) {
+        if (a == Axis.X) {
+            c.handleHorizontalCollision(this);
+        } else {
+            c.handleVerticalCollision(this);
+        }
+    }
+
+    @Override
+    public void collide(EmptyBlockCollider c, Axis a) {
         if (a == Axis.X) {
             c.handleHorizontalCollision(this);
         } else {

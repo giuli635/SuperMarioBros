@@ -31,6 +31,7 @@ import loading.SpinyLoader;
 import loading.SuperMushroomLoader;
 import loading.BrickLoader;
 import loading.BuzzyBeetleLoader;
+import loading.EmptyBlockLoader;
 
 public class LevelReader {
     public static final int CHUNK = 32;
@@ -52,6 +53,7 @@ public class LevelReader {
         loaders.put('?', new QuestionBlockLoader());
         loaders.put('l', new LakituLoader());
         loaders.put('r', new PiranhaPlantLoader());
+        loaders.put('>', new EmptyBlockLoader());
     }
 
     protected static LevelReader instance(){

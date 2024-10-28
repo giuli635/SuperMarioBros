@@ -1,6 +1,7 @@
 package collisions;
 import colliders.Collider;
 import colliders.DeleterCollider;
+import colliders.EmptyBlockCollider;
 import colliders.enemies.BuzzyBeetleCollider;
 import colliders.enemies.GoombaCollider;
 import colliders.enemies.KoopaTroopaCollider;
@@ -45,6 +46,7 @@ public interface Collision {
     public void collide(FireFlowerCollider c, Axis a);
     public void collide(StarCollider c, Axis a);
     public void collide(GreenMushroomCollider c, Axis a);
+    public void collide(EmptyBlockCollider c, Axis a);
     public boolean wasManaged();
     public void setManaged(boolean managed);
 }

@@ -3,6 +3,7 @@ package collisions;
 import colliders.BlockCollider;
 import colliders.BrickCollider;
 import colliders.CoinCollider;
+import colliders.Collider;
 import colliders.DeleterCollider;
 import colliders.EmptyBlockCollider;
 import colliders.LoaderCollider;
@@ -23,15 +24,14 @@ import colliders.powerUp.GreenMushroomCollider;
 import colliders.powerUp.StarCollider;
 import colliders.powerUp.SuperMushroomCollider;
 
-public class FireFlowerCollision extends BaseCollision implements PowerUpCollision{
-    protected FireFlowerCollider collider;
+public class EmptyBlockCollision extends BaseCollision implements SolidCollision {
+    protected EmptyBlockCollider collider;
 
-    public FireFlowerCollision(FireFlowerCollider c) {
+    public EmptyBlockCollision(EmptyBlockCollider c) {
         collider = c;
     }
-
     @Override
-    public FireFlowerCollider getCollider() {
+    public Collider getCollider() {
         return collider;
     }
 
@@ -72,7 +72,7 @@ public class FireFlowerCollision extends BaseCollision implements PowerUpCollisi
     }
 
     @Override
-    public void collide(GoombaCollider c, Axis a) {
+    public void collide(SpinyCollider c, Axis a) {
         if (a == Axis.X) {
             c.handleHorizontalCollision(this);
         } else {
@@ -81,7 +81,7 @@ public class FireFlowerCollision extends BaseCollision implements PowerUpCollisi
     }
 
     @Override
-    public void collide(SpinyCollider c, Axis a) {
+    public void collide(GoombaCollider c, Axis a) {
         if (a == Axis.X) {
             c.handleHorizontalCollision(this);
         } else {
@@ -116,15 +116,6 @@ public class FireFlowerCollision extends BaseCollision implements PowerUpCollisi
         }
     }
 
-    @Override
-    public void collide(LakituCollider c, Axis a) {
-        if (a == Axis.X) {
-            c.handleHorizontalCollision(this);
-        } else {
-            c.handleVerticalCollision(this);
-        }
-    }
-    
     @Override
     public void collide(BrickCollider c, Axis a) {
         if (a == Axis.X) {
@@ -180,6 +171,14 @@ public class FireFlowerCollision extends BaseCollision implements PowerUpCollisi
     }
 
     @Override
+    public void collide(LakituCollider c, Axis a) {
+        if (a == Axis.X) {
+            c.handleHorizontalCollision(this);
+        } else {
+            c.handleVerticalCollision(this);
+        }
+    }
+    @Override
     public void collide(BuzzyBeetleCollider c, Axis a) {
         if (a == Axis.X) {
             c.handleHorizontalCollision(this);
@@ -222,7 +221,6 @@ public class FireFlowerCollision extends BaseCollision implements PowerUpCollisi
             c.handleVerticalCollision(this);
         }
     }
-
     @Override
     public void collide(EmptyBlockCollider c, Axis a) {
         if (a == Axis.X) {
@@ -231,4 +229,5 @@ public class FireFlowerCollision extends BaseCollision implements PowerUpCollisi
             c.handleVerticalCollision(this);
         }
     }
+
 }

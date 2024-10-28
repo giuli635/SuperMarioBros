@@ -43,7 +43,6 @@ public class KoopaTroopa extends BaseUpdatableEntity implements ShellEnemy {
 
     private void die() {
         collider.deactivate();
-        
         Timer timer = new Timer();
         TimerTask task = new TimerTask() {
             public void run(){
