@@ -162,9 +162,12 @@ public class GraphicEngine {
     }
 
     public void reset() {
-        panel.removeAll();
-        panel.revalidate();
-        panel.repaint();
         onScreen = new HashSet<>();
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                panel.removeAll();
+            }
+        });
+        initBackgrounds();
     }
 }

@@ -1,5 +1,7 @@
 package entities.mario;
 
+import java.awt.Point;
+
 import colliders.MarioCollider;
 import colliders.SuperMarioCollider;
 import entities.mario.actions.Crouch;
@@ -17,11 +19,11 @@ public class SuperMario extends BaseMarioState {
 
     @Override
     public void setState() {
+        previousCollider = mario.getCollider();
+        mario.setCollider(new SuperMarioCollider(mario, previousCollider.getBounds()));
         GameGraphicElement graphicElement = mario.getGraphicElement();
         previousStateSpriteFolder = graphicElement.getFolder();
-        previousCollider = mario.getCollider();
         graphicElement.setFolder("superMario");
-        mario.setCollider(new SuperMarioCollider(mario, previousCollider.getBounds()));
 
         crouch = new Crouch();
         mario.addAction(crouch);
@@ -32,6 +34,8 @@ public class SuperMario extends BaseMarioState {
         GameGraphicElement graphicElement = mario.getGraphicElement();
         graphicElement.setFolder(previousStateSpriteFolder);
 
+        Point currentColliderPosition = mario.getCollider().getPosition();
+        previousCollider.setPosition((int) currentColliderPosition.getX(), (int) currentColliderPosition.getY());
         mario.setCollider(previousCollider);
         mario.removeAction(crouch);
     }

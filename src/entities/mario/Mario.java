@@ -4,8 +4,6 @@ import java.awt.Rectangle;
 import java.util.Iterator;
 import java.util.SortedSet;
 import java.util.Stack;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.TreeSet;
 
 import colliders.DefaultMarioCollider;
@@ -19,7 +17,6 @@ import entities.mario.actions.MarioAction;
 import entities.mario.actions.ResolveHorizontalMovementDirection;
 import entities.mario.actions.ResolveSprite;
 import game.Game;
-import game.GraphicEngine;
 import game.LevelStats;
 import entities.mario.actions.VerticalMovement;
 import graphics.GameGraphicElement;
@@ -106,18 +103,9 @@ public class Mario extends BaseUpdatableEntity {
         collider.deactivate();
         graphicElement.setFolder("mario");
         graphicElement.setSprite(MARIO_DEATH);
-        levelStats.getSoundManager().removeAllSounds();
         levelStats.getSoundManager().playSound("mariodie.wav");
         levelStats.decreaseLives();
-        Timer timer = new Timer();
-        TimerTask task = new TimerTask() {
-            public void run(){
-                GraphicEngine.instance().remove(graphicElement);
-                Game.instance().resetCurrentLevel();
-            }
-        };
-
-        timer.schedule(task, 1000);
+        Game.instance().resetCurrentLevel();
     }
 
     public boolean isFalling() {
@@ -213,6 +201,8 @@ public class Mario extends BaseUpdatableEntity {
     }
 
     public void setCollider(MarioCollider c) {
+        collider.deactivate();
         collider = c;
+        collider.activate();
     }
 }

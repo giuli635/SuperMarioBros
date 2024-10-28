@@ -30,6 +30,7 @@ public class Game implements WindowListener, KeyListener {
     protected List<UpdatableEntity> toAddList = new ArrayList<>();
     protected List<UpdatableEntity> toRemoveList = new ArrayList<>();
     protected boolean debugging;
+    protected boolean reset;
 
     public boolean isDebugging() {
         return debugging;
@@ -45,6 +46,7 @@ public class Game implements WindowListener, KeyListener {
         lvlStats = null;
         run = true;
         pause = false;
+        reset = false;
     }
 
     public static Game instance() {
@@ -89,6 +91,15 @@ public class Game implements WindowListener, KeyListener {
                     }
                 }
                 graphicEngine.drawFrame();
+
+                if (reset) {
+                    toUpdateRegistry = new HashSet<>();
+                    CollisionsEngine.instance().reset();
+                    graphicEngine.reset();
+                    lvlStats = reader.createLevel(lvlStats.getLives(), lvlStats.getRemainingTime(), lvlStats.getLevelNumber(), lvlStats.getScore());
+                    reader.readTxt(levels[currLevel]);
+                    reset = false;
+                }
             }
 
             checkPause();
@@ -101,18 +112,7 @@ public class Game implements WindowListener, KeyListener {
     }
 
     public void resetCurrentLevel() {
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                toUpdateRegistry = new HashSet<>();
-                
-                CollisionsEngine.instance().reset();
-                GraphicEngine.instance().reset();
-                GraphicEngine.instance().initBackgrounds();
-                LevelReader reader = LevelReader.instance();
-                lvlStats = reader.createLevel(lvlStats.getLives(), lvlStats.getRemainingTime(), lvlStats.getLevelNumber(), lvlStats.getScore());
-                reader.readTxt(levels[currLevel]);
-            }
-        });
+        reset = true;
     }
 
     public void advanceLevel() {
