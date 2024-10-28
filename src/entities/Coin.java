@@ -5,7 +5,7 @@ import java.awt.Rectangle;
 import colliders.CoinCollider;
 import graphics.GameGraphicElement;
 
-public class Coin implements Entity {
+public class Coin extends BaseUpdatableEntity {
     protected static String SPRITES_FOLDER = "coin";
 
     protected CoinCollider collider;
@@ -29,5 +29,11 @@ public class Coin implements Entity {
     @Override
     public CoinCollider getCollider() {
         return collider;
+    }
+
+    @Override
+    public void update() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'update'");
     }
 }

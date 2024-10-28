@@ -7,12 +7,18 @@ import collisions.Collision;
 import collisions.GreenMushroomCollision;
 import entities.powerUp.GreenMushroom;
 
-public class GreenMushroomCollider extends PowerUpCollider {
-    protected GreenMushroom g;
 
-    public GreenMushroomCollider(GreenMushroom greenMushroom, Rectangle b) {
+public class GreenMushroomCollider extends PowerUpCollider {
+    protected GreenMushroom m;
+
+    public GreenMushroomCollider(GreenMushroom mushroom, Rectangle b) {
         super(b);
-        g = greenMushroom;
+        m = mushroom;
+    }
+    
+    @Override
+    public GreenMushroom getEntity() {
+        return m;
     }
 
     @Override
@@ -21,13 +27,7 @@ public class GreenMushroomCollider extends PowerUpCollider {
     }
 
     @Override
-    public Collision getCollision() {
+    public GreenMushroomCollision getCollision() {
         return new GreenMushroomCollision(this);
-    }    
-
-    @Override
-    public GreenMushroom getEntity() {
-       return g;
     }
-
 }

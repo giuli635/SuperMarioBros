@@ -14,9 +14,9 @@ public class BrickCollider extends SolidCollider {
     protected Point previousPosition;
     protected boolean activated;
 
-    public BrickCollider(Brick e, Rectangle b) {
+    public BrickCollider(entities.Brick brick2, Rectangle b) {
         super(b);
-        brick = e;
+        brick = brick2;
     }
 
     public Brick getEntity() {

@@ -3,7 +3,6 @@ package entities.enemies;
 import java.awt.Rectangle;
 
 import entities.BaseUpdatableEntity;
-import entities.Entity;
 import game.GraphicEngine;
 import graphics.GameGraphicElement;
 import java.util.Timer;
@@ -32,7 +31,7 @@ public class BuzzyBeetle extends BaseUpdatableEntity implements ShellEnemy {
     }
 
     @Override
-    public Entity clone() {
+    public BuzzyBeetle clone() {
         return new BuzzyBeetle();
     }
 
@@ -47,8 +46,9 @@ public class BuzzyBeetle extends BaseUpdatableEntity implements ShellEnemy {
         }
     }
 
-    private void die() {
+    public void die() {
         collider.deactivate();
+        GraphicEngine.instance().setDepth(graphicElement, GraphicEngine.DEFAULT_DEPTH);
 
         Timer timer = new Timer();
         TimerTask task = new TimerTask() {

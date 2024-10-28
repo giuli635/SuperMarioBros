@@ -1,13 +1,14 @@
 package loading;
 
-import entities.Entity;
 import entities.enemies.PiranhaPlant;
+import game.LevelReader;
 
-public class PiranhaPlantLoader implements EntityLoader{
+public class PiranhaPlantLoader extends BaseLoader {
 
     @Override
-    public Entity load() {
-       return new PiranhaPlant();
+    public void load(LevelReader lr) {
+       PiranhaPlant piranha = new PiranhaPlant();
+       positionCollider(piranha, lr.getRow(), lr.getColumn());
     }
 
 }

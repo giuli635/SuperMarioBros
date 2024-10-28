@@ -43,6 +43,7 @@ public class Lakitu extends BaseUpdatableEntity implements Enemy {
     public void recieveDamage() {
         collider.deactivate();
         graphicElement.setSprite(SPRITES_FOLDER + "Hiding");
+        GraphicEngine.instance().setDepth(graphicElement, GraphicEngine.DEFAULT_DEPTH);
         
         Timer timer = new Timer();
         TimerTask task = new TimerTask() {

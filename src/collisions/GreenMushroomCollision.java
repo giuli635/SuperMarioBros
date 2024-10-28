@@ -6,24 +6,23 @@ import colliders.CoinCollider;
 import colliders.DefaultMarioCollider;
 import colliders.DeleterCollider;
 import colliders.EmptyBlockCollider;
-import colliders.LoaderCollider;
-import colliders.MarioCollider;
-import colliders.PipeCollider;
-import colliders.QuestionBlockCollider;
-import colliders.ScreenBorderCollider;
-import colliders.ScreenDisplacementCollider;
-import colliders.SuperMarioCollider;
-import colliders.UnloaderCollider;
-import colliders.enemies.BuzzyBeetleCollider;
 import colliders.enemies.GoombaCollider;
 import colliders.enemies.KoopaTroopaCollider;
 import colliders.enemies.LakituCollider;
 import colliders.enemies.PiranhaPlantCollider;
 import colliders.enemies.SpinyCollider;
+import colliders.LoaderCollider;
+import colliders.PipeCollider;
+import colliders.QuestionBlockCollider;
+import colliders.ScreenBorderCollider;
+import colliders.ScreenDisplacementCollider;
+import colliders.SuperMarioCollider;
 import colliders.powerUp.FireFlowerCollider;
 import colliders.powerUp.GreenMushroomCollider;
 import colliders.powerUp.StarCollider;
 import colliders.powerUp.SuperMushroomCollider;
+import colliders.UnloaderCollider;
+import colliders.enemies.BuzzyBeetleCollider;
 
 public class GreenMushroomCollision extends BaseCollision implements PowerUpCollision {
     protected GreenMushroomCollider collider;
@@ -217,15 +216,6 @@ public class GreenMushroomCollision extends BaseCollision implements PowerUpColl
     }
 
     @Override
-    public void collide(EmptyBlockCollider c, Axis a) {
-        if (a == Axis.X) {
-            c.handleHorizontalCollision(this);
-        } else {
-            c.handleVerticalCollision(this);
-        }
-    }
-
-    @Override
     public void collide(SuperMarioCollider c, Axis a) {
         if (a == Axis.X) {
             c.handleHorizontalCollision(this);
@@ -243,4 +233,12 @@ public class GreenMushroomCollision extends BaseCollision implements PowerUpColl
         }
     }
 
+    @Override
+    public void collide(EmptyBlockCollider c, Axis a) {
+        if (a == Axis.X) {
+            c.handleHorizontalCollision(this);
+        } else {
+            c.handleVerticalCollision(this);
+        }
+    }
 }

@@ -1,11 +1,13 @@
 package loading;
 
 import entities.enemies.BuzzyBeetle;
+import game.LevelReader;
 
-public class BuzzyBeetleLoader implements EntityLoader {
+public class BuzzyBeetleLoader extends BaseLoader {
     @Override
-    public BuzzyBeetle load() {
-       return new BuzzyBeetle();
+    public void load(LevelReader lr) {
+        BuzzyBeetle buzzy = new BuzzyBeetle();
+        positionCollider(buzzy, lr.getRow(), lr.getColumn());
     }
 
 }

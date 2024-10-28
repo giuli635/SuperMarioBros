@@ -32,6 +32,7 @@ public class Spiny extends BaseUpdatableEntity implements Enemy {
     @Override
     public void recieveDamage() {
         collider.deactivate();
+        GraphicEngine.instance().moveToBack(graphicElement);
 
         Timer timer = new Timer();
         TimerTask task = new TimerTask() {

@@ -46,6 +46,7 @@ public class PiranhaPlant extends BaseUpdatableEntity implements Enemy{
     @Override
     public void recieveDamage() {
         collider.deactivate();
+        GraphicEngine.instance().setDepth(graphicElement, GraphicEngine.DEFAULT_DEPTH);
 
         Timer timer = new Timer();
         TimerTask task = new TimerTask() {

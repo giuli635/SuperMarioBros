@@ -1,7 +1,7 @@
 package loading;
 
-import entities.Entity;
+import game.LevelReader;
 
 public interface EntityLoader {
-    public Entity load();
+    public void load(LevelReader lr);
 }

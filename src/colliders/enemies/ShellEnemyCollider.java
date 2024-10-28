@@ -3,6 +3,7 @@ package colliders.enemies;
 import java.awt.Rectangle;
 
 import colliders.Direction;
+import collisions.EnemyCollision;
 import collisions.MarioCollision;
 import entities.enemies.ShellEnemy;
 import entities.mario.Mario;
@@ -50,5 +51,13 @@ public abstract class ShellEnemyCollider extends EnemyCollider{
                 mario.subtractPoints(getEntity().subtractPoints());
             }
         }
+    }
+
+    @Override
+    public void handleHorizontalCollision(EnemyCollision e) {
+    }
+    
+    @Override
+    public void handleVerticalCollision(EnemyCollision e) {
     }
 }

@@ -4,7 +4,6 @@ import java.awt.Rectangle;
 
 import colliders.powerUp.StarCollider;
 import entities.BaseUpdatableEntity;
-import entities.Entity;
 import graphics.GameGraphicElement;
 
 public class Star extends BaseUpdatableEntity implements PowerUp {
@@ -36,7 +35,7 @@ public class Star extends BaseUpdatableEntity implements PowerUp {
     }
 
     @Override
-    public Entity clone() {
+    public Star clone() {
         return new Star();
     }
 

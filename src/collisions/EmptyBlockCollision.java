@@ -8,7 +8,6 @@ import colliders.DefaultMarioCollider;
 import colliders.DeleterCollider;
 import colliders.EmptyBlockCollider;
 import colliders.LoaderCollider;
-import colliders.MarioCollider;
 import colliders.PipeCollider;
 import colliders.QuestionBlockCollider;
 import colliders.ScreenBorderCollider;

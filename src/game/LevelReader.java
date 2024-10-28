@@ -14,7 +14,6 @@ import colliders.LoaderCollider;
 import colliders.ScreenBorderCollider;
 import colliders.ScreenDisplacementCollider;
 import colliders.UnloaderCollider;
-import entities.Entity;
 import graphics.GameGraphicElement;
 import graphics.StatsBar;
 import loading.BlockLoader;
@@ -23,10 +22,11 @@ import loading.GoombaLoader;
 import loading.KoopaTroopaLoader;
 import loading.LakituLoader;
 import loading.MarioLoader;
-import loading.PipeBLoader;
-import loading.PipeLoader;
+import loading.BasePipeLoader;
+import loading.TopPipeLoader;
 import loading.PiranhaPlantLoader;
 import loading.QuestionBlockLoader;
+//import loading.QuestionBlockLoader;
 import loading.SpinyLoader;
 import loading.SuperMushroomLoader;
 import loading.BrickLoader;
@@ -38,6 +38,9 @@ public class LevelReader {
     protected static LevelReader uniqueInstance;
     protected Map<Character, EntityLoader> loaders;
     protected static int loadingStartingPoint = 6;
+    protected int column;
+    protected int row;
+    protected String chunk;
 
     private LevelReader() {
         loaders = new HashMap<>();
@@ -48,8 +51,8 @@ public class LevelReader {
         loaders.put('z', new BuzzyBeetleLoader());
         loaders.put('s', new SuperMushroomLoader());
         loaders.put('b', new BrickLoader());
-        loaders.put('P', new PipeLoader());
-        loaders.put('p', new PipeBLoader());
+        loaders.put('P', new TopPipeLoader());
+        loaders.put('p', new BasePipeLoader());
         loaders.put('?', new QuestionBlockLoader());
         loaders.put('l', new LakituLoader());
         loaders.put('r', new PiranhaPlantLoader());
@@ -136,22 +139,42 @@ public class LevelReader {
     }
     
     public void loadEntities(BufferedReader br) throws IOException {
-        String chunk;
-        BlockLoader blockLoader = new BlockLoader();
         chunk = br.readLine();
-        int i = loadingStartingPoint - 1;
+        BlockLoader blockLoader = new BlockLoader();
+        row = 0;
         while (chunk != null) {
-            for (int j = 0; j < chunk.length(); j++) {
-                char character = chunk.charAt(j);
+            for (column = 0; column < chunk.length(); column++) {
+                char character = chunk.charAt(column);
                 if (character != ' ') {
-                    Entity newEntity = loaders.getOrDefault(character, blockLoader).load();
-                    Collider newEntityCollider = newEntity.getCollider();
-                    newEntityCollider.setPosition(i * CHUNK, j * CHUNK);
-                    newEntityCollider.activate();
+                    loaders.getOrDefault(character, blockLoader).load(this);
                 }
             }
-            i++;
+            row++;
             chunk = br.readLine();
         }
+    }
+
+    public void setColumn(int i) {
+        column = i;
+    }
+
+    public int getColumn() {
+        return column;
+    }
+
+    public void setRow(int i) {
+        row = i;
+    }
+
+    public int getRow() {
+        return row;
+    }
+
+    public void setChunk(String s) {
+        chunk = s;
+    }
+
+    public String getChunk() {
+        return chunk;
     }
 }

@@ -2,7 +2,6 @@ package entities.mario;
 
 import java.awt.Rectangle;
 import java.util.Iterator;
-import java.util.Queue;
 import java.util.SortedSet;
 import java.util.Stack;
 import java.util.Timer;
@@ -12,7 +11,6 @@ import java.util.TreeSet;
 import colliders.DefaultMarioCollider;
 import colliders.Direction;
 import colliders.MarioCollider;
-import colliders.SuperMarioCollider;
 import entities.BaseUpdatableEntity;
 import entities.Entity;
 import entities.mario.actions.ActionComparator;

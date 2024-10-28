@@ -4,7 +4,6 @@ import java.awt.Rectangle;
 
 import colliders.powerUp.FireFlowerCollider;
 import entities.BaseUpdatableEntity;
-import entities.Entity;
 import graphics.GameGraphicElement;
 
 public class FireFlower extends BaseUpdatableEntity implements PowerUp {
@@ -28,7 +27,7 @@ public class FireFlower extends BaseUpdatableEntity implements PowerUp {
     }
 
     @Override
-    public Entity clone() {
+    public FireFlower clone() {
         return new FireFlower();
     }
 

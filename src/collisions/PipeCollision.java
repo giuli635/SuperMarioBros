@@ -204,6 +204,15 @@ public class PipeCollision extends BaseCollision implements SolidCollision {
     }
 
     @Override
+    public void collide(GreenMushroomCollider c, Axis a) {
+        if (a == Axis.X) {
+            c.handleHorizontalCollision(this);
+        } else {
+            c.handleVerticalCollision(this);
+        }
+    }
+
+    @Override
     public void collide(SuperMarioCollider c, Axis a) {
         if (a == Axis.X) {
             c.handleHorizontalCollision(this);
@@ -220,16 +229,7 @@ public class PipeCollision extends BaseCollision implements SolidCollision {
             c.handleVerticalCollision(this);
         }
     }
-
-    @Override
-    public void collide(GreenMushroomCollider c, Axis a) {
-        if (a == Axis.X) {
-            c.handleHorizontalCollision(this);
-        } else {
-            c.handleVerticalCollision(this);
-        }
-    }
-
+    
     @Override
     public void collide(EmptyBlockCollider c, Axis a) {
         if (a == Axis.X) {

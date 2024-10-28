@@ -1,10 +1,12 @@
 package loading;
 
 import entities.enemies.Spiny;
+import game.LevelReader;
 
-public class SpinyLoader implements EntityLoader {
+public class SpinyLoader extends BaseLoader {
     @Override
-    public Spiny load() {
-        return new Spiny();
+    public void load(LevelReader lr) {
+        Spiny spiny = new Spiny();
+        positionCollider(spiny, lr.getRow(), lr.getColumn());
     }
 }

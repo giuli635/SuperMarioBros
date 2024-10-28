@@ -1,10 +1,12 @@
 package loading;
 
 import entities.enemies.Goomba;
+import game.LevelReader;
 
-public class GoombaLoader implements EntityLoader {
+public class GoombaLoader extends BaseLoader {
     @Override
-    public Goomba load() {
-        return new Goomba();
+    public void load(LevelReader lr) {
+        Goomba goomba = new Goomba();
+        positionCollider(goomba, lr.getRow(), lr.getColumn());
     }
 }

@@ -5,6 +5,7 @@ import colliders.BrickCollider;
 import colliders.CoinCollider;
 import colliders.DefaultMarioCollider;
 import colliders.DeleterCollider;
+import colliders.EmptyBlockCollider;
 import colliders.LoaderCollider;
 import colliders.PipeCollider;
 import colliders.QuestionBlockCollider;
@@ -19,6 +20,7 @@ import colliders.enemies.LakituCollider;
 import colliders.enemies.PiranhaPlantCollider;
 import colliders.enemies.SpinyCollider;
 import colliders.powerUp.FireFlowerCollider;
+import colliders.powerUp.GreenMushroomCollider;
 import colliders.powerUp.StarCollider;
 import colliders.powerUp.SuperMushroomCollider;
 
@@ -214,6 +216,24 @@ public class DefaultMarioCollision extends BaseCollision implements MarioCollisi
 
     @Override
     public void collide(DefaultMarioCollider c, Axis a) {
+        if (a == Axis.X) {
+            c.handleHorizontalCollision(this);
+        } else {
+            c.handleVerticalCollision(this);
+        }
+    }
+
+    @Override
+    public void collide(GreenMushroomCollider c, Axis a) {
+        if (a == Axis.X) {
+            c.handleHorizontalCollision(this);
+        } else {
+            c.handleVerticalCollision(this);
+        }
+    }
+
+    @Override
+    public void collide(EmptyBlockCollider c, Axis a) {
         if (a == Axis.X) {
             c.handleHorizontalCollision(this);
         } else {

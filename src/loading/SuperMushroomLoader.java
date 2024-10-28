@@ -1,10 +1,12 @@
 package loading;
 
 import entities.powerUp.SuperMushroom;
+import game.LevelReader;
 
-public class SuperMushroomLoader implements EntityLoader {
+public class SuperMushroomLoader extends BaseLoader {
     @Override
-    public SuperMushroom load() {
-        return new SuperMushroom();
+    public void load(LevelReader lr) {
+        SuperMushroom sm = new SuperMushroom();
+        positionCollider(sm, lr.getRow(), lr.getColumn());
     }
 }

@@ -20,14 +20,16 @@ public class Game implements WindowListener, KeyListener {
     protected static Game uniqueInstance;
     protected Set<UpdatableEntity> toUpdateRegistry;
     protected Map<Integer, KeyStatus> keysStatus;
-    protected LevelStats currLevel;
+    protected LevelStats lvlStats;
     protected boolean run;
     protected boolean pause;
-    private boolean pauseKeyAlreadyPressed = false;
+    protected boolean pauseKeyAlreadyPressed = false;
+    protected String[] levels = {"menu.txt", "level1.txt", "level2.txt", "level3.txt"};
+    protected int currLevel = 1;
 
     protected List<UpdatableEntity> toAddList = new ArrayList<>();
     protected List<UpdatableEntity> toRemoveList = new ArrayList<>();
-    private boolean debugging;
+    protected boolean debugging;
 
     public boolean isDebugging() {
         return debugging;
@@ -40,7 +42,7 @@ public class Game implements WindowListener, KeyListener {
     private Game() {
         toUpdateRegistry = new HashSet<>();
         keysStatus = new HashMap<>();
-        currLevel = null;
+        lvlStats = null;
         run = true;
         pause = false;
     }
@@ -65,8 +67,8 @@ public class Game implements WindowListener, KeyListener {
         GraphicEngine graphicEngine = GraphicEngine.instance();
         graphicEngine.initBackgrounds();
         LevelReader reader = LevelReader.instance();
-        currLevel = reader.createLevel(10, 300, 1, 0);
-        reader.readTxt("nivel1.txt");
+        lvlStats = reader.createLevel(10, 300, 1, 0);
+        reader.readTxt(levels[currLevel]);
         long lastUpdateTime;
         while (run) {
             debugging = false;
@@ -107,15 +109,21 @@ public class Game implements WindowListener, KeyListener {
                 GraphicEngine.instance().reset();
                 GraphicEngine.instance().initBackgrounds();
                 LevelReader reader = LevelReader.instance();
-                currLevel.getSoundManager().removeAllSounds();
-                currLevel = reader.createLevel(currLevel.getLives(), currLevel.getRemainingTime(), currLevel.getLevelNumber(), currLevel.getScore());
-                reader.readTxt("nivel1.txt");
+                lvlStats = reader.createLevel(lvlStats.getLives(), lvlStats.getRemainingTime(), lvlStats.getLevelNumber(), lvlStats.getScore());
+                reader.readTxt(levels[currLevel]);
             }
         });
     }
+
+    public void advanceLevel() {
+        if (currLevel < levels.length -1) {
+            currLevel ++;
+            resetCurrentLevel();
+        }
+    }
     
     public LevelStats getLevelStats(){
-        return currLevel;
+        return lvlStats;
     }
 
     @Override
@@ -169,12 +177,12 @@ public class Game implements WindowListener, KeyListener {
                 pause = !pause; // Cambiar el estado de pausa
                 pauseKeyAlreadyPressed = true; // Registrar que la tecla P ya está presionada
                 if (pause){
-                    currLevel.pauseTimer();
-                    currLevel.pauseAllSounds();
+                    lvlStats.pauseTimer();
+                    lvlStats.pauseAllSounds();
                 }
                 else{
-                    currLevel.resumeAllSounds();
-                    currLevel.resumeTimer();
+                    lvlStats.resumeAllSounds();
+                    lvlStats.resumeTimer();
                 }
 
             }

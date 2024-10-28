@@ -5,4 +5,5 @@ public interface ShellEnemy extends Enemy{
     public boolean getShell();
     public void setSpeedX(int s);
     public int getSpeedX();
+    public void die();
 }

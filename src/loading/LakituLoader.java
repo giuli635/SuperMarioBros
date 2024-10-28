@@ -1,10 +1,12 @@
 package loading;
 
 import entities.enemies.Lakitu;
+import game.LevelReader;
 
-public class LakituLoader implements EntityLoader {
+public class LakituLoader extends BaseLoader {
     @Override
-    public Lakitu load() {
-        return new Lakitu();
+    public void load(LevelReader lr) {
+        Lakitu lakitu = new Lakitu();
+        positionCollider(lakitu, lr.getRow(), lr.getColumn());
     }
 }

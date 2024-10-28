@@ -1,10 +1,12 @@
 package loading;
 
 import entities.Block;
+import game.LevelReader;
 
-public class BlockLoader implements EntityLoader {
+public class BlockLoader extends BaseLoader {
     @Override
-    public Block load() {
-        return new Block();
+    public void load(LevelReader lr) {
+        Block block = new Block();
+        positionCollider(block, lr.getRow(), lr.getColumn());
     }
 }
