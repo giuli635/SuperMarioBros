@@ -1,6 +1,8 @@
 package colliders;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import collisions.Axis;
 import collisions.Collision;
@@ -37,19 +39,31 @@ public class QuestionBlockCollider extends SolidCollider {
     }
 
     public void handleVerticalCollision(MarioCollision m) {
-        Vector2D velocity = m.getCollider().getVelocity();
-        Rectangle collision = getBounds().intersection(m.getCollider().getBounds());
         Mario mario = m.getCollider().getEntity();
-
-        int sign = (int) -Math.signum(velocity.getYComponent());
-        if (sign == 1) {
-            m.getCollider().translate(0, sign * (int) collision.getHeight());
-            mario.getGraphicElement().translate(0, sign * (int) collision.getHeight());
-            mario.land();
+        int displacement = displaceVertically(m.getCollider());
+        
+        if (!questionBlock.getActive()) {
+            if (displacement >= 0) {
+                mario.land();
+            }
         } else {
-            translate(0, -sign * (int) collision.getHeight());
-            getEntity().getGraphicElement().translate(0, -sign * (int) collision.getHeight());
-            questionBlock.interaction();
+            if (displacement >= 0) {
+                mario.land();
+            } else {
+                translate(0, -displacement);
+                getEntity().getGraphicElement().translate(0, -displacement);
+                questionBlock.interaction();
+                
+                Timer timer = new Timer();
+                TimerTask task = new TimerTask() {
+                    public void run(){
+                        translate(0, displacement);
+                        getEntity().getGraphicElement().translate(0, displacement);
+                    }
+                };
+
+                timer.schedule(task,300);
+            }
         }
     }
 

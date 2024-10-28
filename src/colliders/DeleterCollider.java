@@ -36,7 +36,6 @@ public class DeleterCollider extends BaseCollider{
     }
 
     public void handleHorizontalCollision(UpdateableEntityCollision c) {
-        System.out.println("Borrao");
         GraphicEngine graphicEngine = GraphicEngine.instance();
         GameGraphicElement graphicElement = c.getCollider().getEntity().getGraphicElement();
         c.getCollider().getEntity().unload();

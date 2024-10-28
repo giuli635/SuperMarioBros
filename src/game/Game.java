@@ -10,8 +10,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import javax.swing.SwingUtilities;
-
 import entities.UpdatableEntity;
 
 public class Game implements WindowListener, KeyListener {

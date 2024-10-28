@@ -18,6 +18,7 @@ public interface Collider {
     public void translate(int dx, int dy);
     public Dimension getSize();
     public void setSize(int width, int height);
+    public void adjust();
     public Vector2D getVelocity();
     public boolean isActivated();
     public void activate();

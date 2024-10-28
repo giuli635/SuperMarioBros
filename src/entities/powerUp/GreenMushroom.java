@@ -20,6 +20,7 @@ public class GreenMushroom extends BaseUpdatableEntity implements PowerUp {
 
     public GreenMushroom() {
         points = 100;
+        speedX = 1;
         collider = new GreenMushroomCollider(this, new Rectangle());
         graphicElement = new GameGraphicElement(this, SPRITES_FOLDER);
         graphicElement.setSprite(SPRITES_FOLDER);
@@ -27,6 +28,7 @@ public class GreenMushroom extends BaseUpdatableEntity implements PowerUp {
             graphicElement.getCurrentSprite().getIconWidth(),
             graphicElement.getCurrentSprite().getIconHeight()
         );
+        load();
     }
 
     @Override

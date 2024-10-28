@@ -5,7 +5,9 @@ import java.awt.Rectangle;
 import collisions.Axis;
 import collisions.CoinCollision;
 import collisions.Collision;
+import collisions.MarioCollision;
 import entities.Coin;
+import game.GraphicEngine;
 
 public class CoinCollider extends BaseCollider{
     protected Coin coin;
@@ -28,5 +30,19 @@ public class CoinCollider extends BaseCollider{
     @Override
     public CoinCollision getCollision() {
         return new CoinCollision(this);
+    }
+
+    public void handleHorizontalCollision(MarioCollision m) {
+        deactivate();
+        getEntity().unload();
+        GraphicEngine.instance().remove(getEntity().getGraphicElement());
+        m.getCollider().getEntity().addPoints(Coin.POINTS);
+    }
+
+    public void handleVerticalCollision(MarioCollision m) {
+        deactivate();
+        getEntity().unload();
+        GraphicEngine.instance().remove(getEntity().getGraphicElement());
+        m.getCollider().getEntity().addPoints(Coin.POINTS);
     }
 }

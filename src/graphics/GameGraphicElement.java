@@ -79,6 +79,7 @@ public class GameGraphicElement implements GraphicElement {
             int diff = preHeight - posHeight;
             int sign = (int) Math.signum(diff);
             translate(0,- sign * Math.abs(diff));
+            entity.getCollider().adjust();
         } else {
             sprite = sprites.get(s + ".png");
             toUpdate = true;

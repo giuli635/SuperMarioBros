@@ -15,12 +15,14 @@ public class QuestionBlock implements Entity {
     protected QuestionBlockCollider collider;
     protected GameGraphicElement graphicElement;
     protected boolean depends;
+    protected boolean active;
     protected UpdatableEntity entity;
 
     public QuestionBlock(char s) {
         collider = new QuestionBlockCollider(this, new Rectangle(32, 32));
         graphicElement = new GameGraphicElement(this, SPRITES_FOLDER);
         graphicElement.setSprite(SPRITES_FOLDER);
+        active = true;
 
         if (s == 's' || s == 'f') {
             depends = true;
@@ -53,32 +55,39 @@ public class QuestionBlock implements Entity {
 
     public void interaction() {
         releaseEntity(entity);
+        entity = null;
+        active = false;
+        graphicElement.setSprite(SPRITES_FOLDER);
     }
 
     public void interaction(PowerUp p) {
         entity = p;
         releaseEntity(entity);
+        entity = null;
+        active = false;
+        graphicElement.setSprite(SPRITES_FOLDER);
     }
 
     public void releaseEntity(UpdatableEntity e) {
-    }
+        int entityGraphicX = (int) graphicElement.getPosition().getX();
+        int entityGraphicY = (int) graphicElement.getPosition().getY();
 
-    public void releaseEntity(PowerUp p) {
-        int powerUpGraphicX = (int) graphicElement.getPosition().getX();
-        int powerUpGraphicY = (int) graphicElement.getPosition().getY();
+        e.getGraphicElement().setPosition(entityGraphicX, entityGraphicY + LevelReader.CHUNK);
 
-        p.getGraphicElement().setPosition(powerUpGraphicX, powerUpGraphicY + LevelReader.CHUNK);
+        int entityColliderX = (int) collider.getPosition().getX();
+        int entityColliderY = (int) collider.getPosition().getY();
 
-        int powerUpColliderX = (int) collider.getPosition().getX();
-        int powerUpColliderY = (int) collider.getPosition().getY();
+        e.getCollider().setPosition(entityColliderX, entityColliderY + LevelReader.CHUNK);
+        e.getCollider().activate();
 
-        p.getCollider().setPosition(powerUpColliderX, powerUpColliderY + LevelReader.CHUNK);
-        p.getCollider().activate();
-
-        GraphicEngine.instance().add(p.getGraphicElement());
-        p.load();
+        GraphicEngine.instance().add(e.getGraphicElement());
+        e.load();
     }
 
     public void releaseEntity(Coin c) {
+    }
+
+    public boolean getActive() {
+        return active;
     }
 }

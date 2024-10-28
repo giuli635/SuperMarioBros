@@ -4,6 +4,8 @@ import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.Rectangle;
 
+import javax.swing.ImageIcon;
+
 import collisions.Collision;
 import game.CollisionsEngine;
 
@@ -160,5 +162,10 @@ public abstract class BaseCollider implements Collider {
 
     public void handleVerticalCollision(Collision c) {
         c.setManaged(false);
+    }
+
+    public void adjust() {
+        ImageIcon sprite = getEntity().getGraphicElement().getCurrentSprite();
+        setSize(sprite.getIconWidth(), sprite.getIconHeight());
     }
 }

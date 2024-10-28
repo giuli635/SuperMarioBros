@@ -19,6 +19,7 @@ import graphics.StatsBar;
 import loading.BlockLoader;
 import loading.EntityLoader;
 import loading.GoombaLoader;
+import loading.GreenMushroomLoader;
 import loading.KoopaTroopaLoader;
 import loading.LakituLoader;
 import loading.MarioLoader;
@@ -57,6 +58,7 @@ public class LevelReader {
         loaders.put('l', new LakituLoader());
         loaders.put('r', new PiranhaPlantLoader());
         loaders.put('>', new EmptyBlockLoader());
+        loaders.put('v', new GreenMushroomLoader());
     }
 
     protected static LevelReader instance(){

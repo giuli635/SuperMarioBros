@@ -7,6 +7,7 @@ import graphics.GameGraphicElement;
 
 public class Coin extends BaseUpdatableEntity {
     protected static String SPRITES_FOLDER = "coin";
+    public final static int POINTS = 10;
 
     protected CoinCollider collider;
     protected GameGraphicElement graphicElement;
@@ -33,7 +34,5 @@ public class Coin extends BaseUpdatableEntity {
 
     @Override
     public void update() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'update'");
     }
 }
