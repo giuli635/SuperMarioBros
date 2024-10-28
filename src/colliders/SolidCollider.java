@@ -4,6 +4,7 @@ import java.awt.Rectangle;
 
 import collisions.EnemyCollision;
 import collisions.MarioCollision;
+import collisions.PowerUpCollision;
 import collisions.UpdateableEntityCollision;
 import entities.mario.Mario;
 
@@ -48,5 +49,18 @@ public abstract class SolidCollider extends BaseCollider {
     public void handleHorizontalCollision(EnemyCollision e) {
         displaceHorizontally(e.getCollider());
         e.getCollider().getEntity().switchDirection();
+    }
+
+    public void handleVerticalCollision(EnemyCollision e) {
+        displaceVertically(e.getCollider());
+    }
+
+    public void handleHorizontalCollision(PowerUpCollision p) {
+        displaceHorizontally(p.getCollider());
+        p.getCollider().getEntity().switchDirection();
+    }
+
+    public void handleVerticalCollision(PowerUpCollision p) {
+        displaceVertically(p.getCollider());
     }
 }

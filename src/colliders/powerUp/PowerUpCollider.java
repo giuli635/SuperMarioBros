@@ -4,7 +4,6 @@ import colliders.UpdateableEntityCollider;
 import collisions.MarioCollision;
 import entities.mario.Mario;
 import entities.powerUp.PowerUp;
-import game.CollisionsEngine;
 import game.GraphicEngine;
 
 import java.awt.Rectangle;
@@ -20,9 +19,9 @@ public abstract class PowerUpCollider extends BaseCollider implements Updateable
 
     protected void handleMarioCollision(Mario m) {
         getEntity().getState().setFunctionality(m);
+        deactivate();
         getEntity().unload();
         GraphicEngine.instance().remove(getEntity().getGraphicElement());
-        CollisionsEngine.instance().remove(this);
         m.getCollider().getEntity().addPoints(getEntity().getPoints());
     }
 

@@ -10,7 +10,7 @@ import entities.Entity;
 import game.GraphicEngine;
 import graphics.GameGraphicElement;
 
-public class KoopaTroopa extends BaseUpdatableEntity implements Enemy {
+public class KoopaTroopa extends BaseUpdatableEntity implements ShellEnemy {
     protected static String SPRITES_FOLDER = "koopa";
     protected int speedX;
     protected boolean shell;
@@ -48,6 +48,7 @@ public class KoopaTroopa extends BaseUpdatableEntity implements Enemy {
         TimerTask task = new TimerTask() {
             public void run(){
                 GraphicEngine.instance().remove(graphicElement);
+                unload();
             }
         };
 

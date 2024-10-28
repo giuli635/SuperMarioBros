@@ -5,11 +5,11 @@ import java.awt.Rectangle;
 import colliders.BaseCollider;
 import colliders.Direction;
 import colliders.UpdateableEntityCollider;
-import collisions.BuzzyBeetleCollision;
 import collisions.EnemyCollision;
-import collisions.KoopaTroopaCollision;
 import collisions.MarioCollision;
+import collisions.ShellEnemyCollision;
 import entities.enemies.Enemy;
+import entities.mario.Mario;
 
 public abstract class EnemyCollider extends BaseCollider implements UpdateableEntityCollider {
     protected static int DISPLACEMENT_COEFFICIENT = 0;
@@ -28,31 +28,32 @@ public abstract class EnemyCollider extends BaseCollider implements UpdateableEn
         Direction collisionDirection = Direction.verticalDirectionFromSign(
             (int) m.getCollider().getVelocity().getYComponent()
         );
+        Mario mario = m.getCollider().getEntity();
 
         if(collisionDirection == Direction.DOWN) {
             getEntity().recieveDamage();
-            m.getCollider().getEntity().addSpeed(0, 8);
-            m.getCollider().getEntity().addPoints(getEntity().getPoints());
+            mario.addSpeed(0, mario.fixedBounceHeight);
+            mario.addPoints(getEntity().getPoints());
         } else {
-            m.getCollider().getEntity().die();
-            m.getCollider().getEntity().subtractPoints(getEntity().subtractPoints());
+            mario.die();
+            mario.subtractPoints(getEntity().subtractPoints());
         }
     }
 
-    public void handleVerticalCollision(KoopaTroopaCollision k) {
-        if (!k.getCollider().getEntity().getShell() || k.getCollider().getEntity().getSpeedX() == 0) {
-            Rectangle collision = getBounds().intersection(k.getCollider().getBounds());
+    public void handleVerticalCollision(ShellEnemyCollision s) {
+        if (!s.getCollider().getEntity().getShell() || s.getCollider().getEntity().getSpeedX() == 0) {
+            Rectangle collision = getBounds().intersection(s.getCollider().getBounds());
 
-            int displacement = k.getCollider().displaceY(collision, DISPLACEMENT_COEFFICIENT);
-            k.getCollider().getEntity().getGraphicElement().translate(0, displacement);
+            int displacement = s.getCollider().displaceY(collision, DISPLACEMENT_COEFFICIENT);
+            s.getCollider().getEntity().getGraphicElement().translate(0, displacement);
         } else {
             getEntity().recieveDamage();
         }
     }
 
-    public void handleHorizontalCollision(KoopaTroopaCollision k) {
-        if(!k.getCollider().getEntity().getShell() || k.getCollider().getEntity().getSpeedX() == 0) {
-            bounce(k.getCollider());
+    public void handleHorizontalCollision(ShellEnemyCollision s) {
+        if(!s.getCollider().getEntity().getShell() || s.getCollider().getEntity().getSpeedX() == 0) {
+            bounce(s.getCollider());
         } else {
             getEntity().recieveDamage();
         }
@@ -60,11 +61,12 @@ public abstract class EnemyCollider extends BaseCollider implements UpdateableEn
 
     public void handleVerticalCollision(EnemyCollision e) {
         Rectangle collision = getBounds().intersection(e.getCollider().getBounds());
+        Enemy enemy = e.getCollider().getEntity();
 
         int displacement = e.getCollider().displaceY(collision, DISPLACEMENT_COEFFICIENT);
-        e.getCollider().getEntity().getGraphicElement().translate(0, displacement);
+        enemy.getGraphicElement().translate(0, displacement);
         displacement = e.getCollider().displaceX(collision, DISPLACEMENT_COEFFICIENT);
-        e.getCollider().getEntity().getGraphicElement().translate(displacement, 0);
+        enemy.getGraphicElement().translate(displacement, 0);
     }
 
     public void handleHorizontalCollision(EnemyCollision e) {
@@ -79,24 +81,5 @@ public abstract class EnemyCollider extends BaseCollider implements UpdateableEn
 
         e.getEntity().switchDirection();
         getEntity().switchDirection();
-    }
-
-    public void handleVerticalCollision(BuzzyBeetleCollision b) {
-        if (!b.getCollider().getEntity().getShell() || b.getCollider().getEntity().getSpeedX() == 0) {
-            Rectangle collision = getBounds().intersection(b.getCollider().getBounds());
-
-            int displacement = b.getCollider().displaceY(collision, DISPLACEMENT_COEFFICIENT);
-            b.getCollider().getEntity().getGraphicElement().translate(0, displacement);
-        } else {
-            getEntity().recieveDamage();
-        }
-    }
-
-    public void handleHorizontalCollision(BuzzyBeetleCollision b) {
-        if(!b.getCollider().getEntity().getShell() || b.getCollider().getEntity().getSpeedX() == 0) {
-            bounce(b.getCollider());
-        } else {
-            getEntity().recieveDamage();
-        }
     }
 }

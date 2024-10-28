@@ -100,10 +100,8 @@ public class Game implements WindowListener, KeyListener {
     }
 
     public void resetCurrentLevel() {
-
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                
                 toUpdateRegistry = new HashSet<>();
                 
                 CollisionsEngine.instance().reset();

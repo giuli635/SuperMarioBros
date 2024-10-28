@@ -36,6 +36,7 @@ public class Mario extends BaseUpdatableEntity {
     protected static float gravity = 1.5f;
     protected static int initialSpeedY = 12;
     protected static int minSpeedY = -8;
+    public  final int fixedBounceHeight = 15;
     protected boolean falling;
 
     protected float jumpSpeed;

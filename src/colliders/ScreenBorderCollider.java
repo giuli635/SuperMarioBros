@@ -40,9 +40,6 @@ public class ScreenBorderCollider extends BaseCollider {
         m.getCollider().getEntity().getGraphicElement().translate((int) collision.getWidth(), 0);
     }
 
-    public void handleHorizontalCollision(ScreenBorderCollision s){
-    }
-
     public void handleHorizontalCollision(Collision c) {
         GraphicEngine graphicEngine = GraphicEngine.instance();
         GameGraphicElement graphicElement = c.getCollider().getEntity().getGraphicElement();

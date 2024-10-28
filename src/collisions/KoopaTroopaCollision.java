@@ -21,7 +21,7 @@ import colliders.powerUp.SuperMushroomCollider;
 import colliders.UnloaderCollider;
 import colliders.enemies.BuzzyBeetleCollider;
 
-public class KoopaTroopaCollision extends BaseCollision implements EnemyCollision {
+public class KoopaTroopaCollision extends BaseCollision implements ShellEnemyCollision {
     protected KoopaTroopaCollider collider;
 
     public KoopaTroopaCollision(KoopaTroopaCollider k) {

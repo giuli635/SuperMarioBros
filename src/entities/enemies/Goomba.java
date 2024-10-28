@@ -42,6 +42,7 @@ public class Goomba extends BaseUpdatableEntity implements Enemy {
         TimerTask task = new TimerTask() {
             public void run(){
                 GraphicEngine.instance().remove(graphicElement);
+                unload();
             }
         };
 

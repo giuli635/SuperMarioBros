@@ -11,7 +11,7 @@ import java.util.TimerTask;
 
 import colliders.enemies.BuzzyBeetleCollider;
 
-public class BuzzyBeetle extends BaseUpdatableEntity implements Enemy {
+public class BuzzyBeetle extends BaseUpdatableEntity implements ShellEnemy {
     protected static String SPRITES_FOLDER = "buzzyBeetle";
     protected int speedX;
     protected boolean shell;
@@ -54,6 +54,7 @@ public class BuzzyBeetle extends BaseUpdatableEntity implements Enemy {
         TimerTask task = new TimerTask() {
             public void run(){
                 GraphicEngine.instance().remove(graphicElement);
+                unload();
             }
         };
 

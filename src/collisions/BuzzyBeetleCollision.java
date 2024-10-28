@@ -22,7 +22,7 @@ import colliders.UnloaderCollider;
 import colliders.enemies.BuzzyBeetleCollider;
 
 
-public class BuzzyBeetleCollision extends BaseCollision implements EnemyCollision {
+public class BuzzyBeetleCollision extends BaseCollision implements ShellEnemyCollision {
     protected BuzzyBeetleCollider collider;
 
     public BuzzyBeetleCollision(BuzzyBeetleCollider c) {
