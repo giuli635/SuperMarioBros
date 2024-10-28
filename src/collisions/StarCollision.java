@@ -18,6 +18,7 @@ import colliders.enemies.LakituCollider;
 import colliders.enemies.PiranhaPlantCollider;
 import colliders.enemies.SpinyCollider;
 import colliders.powerUp.FireFlowerCollider;
+import colliders.powerUp.GreenMushroomCollider;
 import colliders.powerUp.StarCollider;
 import colliders.powerUp.SuperMushroomCollider;
 
@@ -205,6 +206,15 @@ public class StarCollision extends BaseCollision implements PowerUpCollision{
 
     @Override
     public void collide(StarCollider c, Axis a) {
+        if (a == Axis.X) {
+            c.handleHorizontalCollision(this);
+        } else {
+            c.handleVerticalCollision(this);
+        }
+    }
+
+    @Override
+    public void collide(GreenMushroomCollider c, Axis a) {
         if (a == Axis.X) {
             c.handleHorizontalCollision(this);
         } else {

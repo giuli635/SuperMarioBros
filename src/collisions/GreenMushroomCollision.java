@@ -4,34 +4,33 @@ import colliders.BlockCollider;
 import colliders.BrickCollider;
 import colliders.CoinCollider;
 import colliders.DeleterCollider;
-import colliders.enemies.GoombaCollider;
-import colliders.enemies.KoopaTroopaCollider;
-import colliders.enemies.LakituCollider;
-import colliders.enemies.PiranhaPlantCollider;
-import colliders.enemies.SpinyCollider;
 import colliders.LoaderCollider;
 import colliders.MarioCollider;
 import colliders.PipeCollider;
 import colliders.QuestionBlockCollider;
 import colliders.ScreenBorderCollider;
 import colliders.ScreenDisplacementCollider;
+import colliders.UnloaderCollider;
+import colliders.enemies.BuzzyBeetleCollider;
+import colliders.enemies.GoombaCollider;
+import colliders.enemies.KoopaTroopaCollider;
+import colliders.enemies.LakituCollider;
+import colliders.enemies.PiranhaPlantCollider;
+import colliders.enemies.SpinyCollider;
 import colliders.powerUp.FireFlowerCollider;
 import colliders.powerUp.GreenMushroomCollider;
 import colliders.powerUp.StarCollider;
 import colliders.powerUp.SuperMushroomCollider;
-import colliders.UnloaderCollider;
-import colliders.enemies.BuzzyBeetleCollider;
 
+public class GreenMushroomCollision extends BaseCollision implements PowerUpCollision {
+    protected GreenMushroomCollider collider;
 
-public class BuzzyBeetleCollision extends BaseCollision implements ShellEnemyCollision {
-    protected BuzzyBeetleCollider collider;
-
-    public BuzzyBeetleCollision(BuzzyBeetleCollider c) {
+    public GreenMushroomCollision(GreenMushroomCollider c) {
         collider = c;
     }
 
     @Override
-    public BuzzyBeetleCollider getCollider() {
+    public GreenMushroomCollider getCollider() {
         return collider;
     }
 
@@ -99,15 +98,6 @@ public class BuzzyBeetleCollision extends BaseCollision implements ShellEnemyCol
     }
 
     @Override
-    public void collide(LakituCollider c, Axis a) {
-        if (a == Axis.X) {
-            c.handleHorizontalCollision(this);
-        } else {
-            c.handleVerticalCollision(this);
-        }
-    }
-
-    @Override
     public void collide(SuperMushroomCollider c, Axis a) {
         if (a == Axis.X) {
             c.handleHorizontalCollision(this);
@@ -125,6 +115,15 @@ public class BuzzyBeetleCollision extends BaseCollision implements ShellEnemyCol
         }
     }
 
+    @Override
+    public void collide(LakituCollider c, Axis a) {
+        if (a == Axis.X) {
+            c.handleHorizontalCollision(this);
+        } else {
+            c.handleVerticalCollision(this);
+        }
+    }
+    
     @Override
     public void collide(BrickCollider c, Axis a) {
         if (a == Axis.X) {
@@ -188,7 +187,6 @@ public class BuzzyBeetleCollision extends BaseCollision implements ShellEnemyCol
         }
     }
 
-    @Override
     public void collide(PiranhaPlantCollider c, Axis a) {
         if (a == Axis.X) {
             c.handleHorizontalCollision(this);
@@ -223,4 +221,5 @@ public class BuzzyBeetleCollision extends BaseCollision implements ShellEnemyCol
             c.handleVerticalCollision(this);
         }
     }
+
 }

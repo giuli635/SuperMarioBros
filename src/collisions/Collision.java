@@ -17,6 +17,7 @@ import colliders.QuestionBlockCollider;
 import colliders.ScreenBorderCollider;
 import colliders.ScreenDisplacementCollider;
 import colliders.powerUp.FireFlowerCollider;
+import colliders.powerUp.GreenMushroomCollider;
 import colliders.powerUp.StarCollider;
 import colliders.powerUp.SuperMushroomCollider;
 import colliders.UnloaderCollider;
@@ -43,6 +44,7 @@ public interface Collision {
     public void collide(PiranhaPlantCollider c, Axis a);
     public void collide(FireFlowerCollider c, Axis a);
     public void collide(StarCollider c, Axis a);
+    public void collide(GreenMushroomCollider c, Axis a);
     public boolean wasManaged();
     public void setManaged(boolean managed);
 }

@@ -16,6 +16,7 @@ import colliders.QuestionBlockCollider;
 import colliders.ScreenBorderCollider;
 import colliders.ScreenDisplacementCollider;
 import colliders.powerUp.FireFlowerCollider;
+import colliders.powerUp.GreenMushroomCollider;
 import colliders.powerUp.StarCollider;
 import colliders.powerUp.SuperMushroomCollider;
 import colliders.UnloaderCollider;
@@ -203,6 +204,15 @@ public class PiranhaPlantCollision extends BaseCollision implements EnemyCollisi
 
     @Override
     public void collide(StarCollider c, Axis a) {
+        if (a == Axis.X) {
+            c.handleHorizontalCollision(this);
+        } else {
+            c.handleVerticalCollision(this);
+        }
+    }
+
+    @Override
+    public void collide(GreenMushroomCollider c, Axis a) {
         if (a == Axis.X) {
             c.handleHorizontalCollision(this);
         } else {
