@@ -22,7 +22,7 @@ public interface Collider {
     public boolean isActivated();
     public void activate();
     public void deactivate();
-    public void resetVelocity();
+    public void updateVelocity();
     public void moveX();
     public void moveY();
     public void setColliding(boolean c);

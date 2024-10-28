@@ -9,14 +9,17 @@ import graphics.GameGraphicElement;
 
 public class Crouch extends BaseMarioAction {
     public static final int DEFAULT_CROUCH_PRIORITY = 100;
-    private static final String MARIO_CROUCHING = null;
     protected int priority;
+
+    public Crouch() {
+        priority = DEFAULT_CROUCH_PRIORITY;
+    }
 
     @Override
     public void execute(Mario mario) {
         if (Game.instance().getKeyStatus(KeyEvent.VK_S) == KeyStatus.PRESSED) {
             GameGraphicElement graphicElement = mario.getGraphicElement();
-            graphicElement.setSprite(MARIO_CROUCHING);
+            graphicElement.setSprite(Mario.MARIO_CROUCHING);
         }
     }
 }

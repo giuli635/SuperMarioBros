@@ -41,7 +41,7 @@ public abstract class ShellEnemyCollider extends EnemyCollider{
             getEntity().recieveDamage();
             int displacement = m.getCollider().displaceY(collision, 3);
             mario.getGraphicElement().translate(0, displacement);
-            mario.addSpeed(0, mario.fixedBounceHeight);
+            mario.addSpeed(0, Mario.FIXED_BOUNCE_SPEED);
         } else {
             if (!getEntity().getShell()) {
                 mario.die();

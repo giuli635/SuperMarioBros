@@ -34,5 +34,4 @@ public class SuperMushroomCollider extends PowerUpCollider {
     public SuperMushroomCollision getCollision() {
         return new SuperMushroomCollision(this);
     }
-
 }

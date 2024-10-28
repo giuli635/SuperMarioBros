@@ -2,6 +2,7 @@ package game;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.Vector;
@@ -29,7 +30,7 @@ public class CollisionsEngine {
     }
 
     protected void checkCollision(Collider c1, Collider c2, Axis axis) {
-        if (c1.isActivated() && c2.isActivated() && c1.getBounds().intersects(c2.getBounds())) {
+        if (c2.isActivated() && c1.getBounds().intersects(c2.getBounds())) {
             Collision first = c1.getCollision();
             c2.sendCollision(first, axis);
             if (!first.wasManaged()) {
@@ -56,11 +57,11 @@ public class CollisionsEngine {
 
         for (Collider collider : toUpdate) {
             collider.setMoving(false);
-            collider.resetVelocity();
+            collider.updateVelocity();
         }
     }
 
-    public void checkCollisions(Axis axis) {
+    protected void checkCollisions(Axis axis) {
         for (Collider collider : toUpdate) {
             int[] chunkRange = calculateChunk(collider.getBounds());
 
@@ -69,26 +70,27 @@ public class CollisionsEngine {
                 checkChunk(axis, collider, i);
             }
             collider.setColliding(false);
-
         }
     }
 
-    private void checkChunk(Axis axis, Collider collider, int i) {
+    protected void checkChunk(Axis axis, Collider collider, int i) {
         List<Collider> chunk = new ArrayList<>(chunks.get(i));
-        for (Collider toCheck : chunk) {
+        Collider toCheck;
+        Iterator<Collider> chunkIterator = chunk.iterator();
+        while (chunkIterator.hasNext() && collider.isActivated()) {
+            toCheck = chunkIterator.next();
             if (toCheck != collider){
                 toCheck.setColliding(true);
                 checkCollision(collider, toCheck, axis);
                 toCheck.setColliding(false);
             }
+
         }
     }
 
     public void updateColliderBounds(Rectangle previousBounds, Collider c) {
-        if (c.isActivated()) {
-            removeFromChunks(previousBounds, c);
-            add(c);
-        }
+        removeFromChunks(previousBounds, c);
+        add(c);
     }
 
     protected int[] calculateChunk(int minX, int maxX) {

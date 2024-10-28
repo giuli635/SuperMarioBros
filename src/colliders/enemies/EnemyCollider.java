@@ -32,7 +32,7 @@ public abstract class EnemyCollider extends BaseCollider implements UpdateableEn
 
         if(collisionDirection == Direction.DOWN) {
             getEntity().recieveDamage();
-            mario.addSpeed(0, mario.fixedBounceHeight);
+            mario.addSpeed(0, Mario.FIXED_BOUNCE_SPEED);
             mario.addPoints(getEntity().getPoints());
         } else {
             mario.die();

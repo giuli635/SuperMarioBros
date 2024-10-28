@@ -35,6 +35,12 @@ public class Vector2D {
         calculateComponents();
     }
 
+    public void translate(int dx, int dy) {
+        start.translate(dx, dy);
+        end.translate(dx, dy);
+        calculateComponents();
+    }
+
     public double getXComponent() {
         return xComponent;
     }

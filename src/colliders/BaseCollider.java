@@ -79,6 +79,8 @@ public abstract class BaseCollider implements Collider {
     public void deactivate() {
         activated = false;
         CollisionsEngine.instance().remove(this);
+        velocity = new Vector2D(bounds.getLocation(), bounds.getLocation());
+        nextVelocity = new Vector2D(bounds.getLocation(), bounds.getLocation());
     }
 
     @Override
@@ -88,10 +90,13 @@ public abstract class BaseCollider implements Collider {
 
     @Override
     public void translate(int dx, int dy) {
-        if (colliding) {
+        if (!activated) {
+            bounds.translate(dx, dy);
+        } else if (colliding) {
             CollisionsEngine collisionsEngine = CollisionsEngine.instance();
             Rectangle previousBounds = new Rectangle(bounds);
             bounds.translate(dx, dy);
+            nextVelocity.translate(dx, dy);
             collisionsEngine.updateColliderBounds(previousBounds, this);
         } else if (moving) {
             nextVelocity.grow(dx, dy);
@@ -113,7 +118,7 @@ public abstract class BaseCollider implements Collider {
     }
 
     @Override
-    public void resetVelocity() {
+    public void updateVelocity() {
         velocity = nextVelocity;
         nextVelocity = new Vector2D(bounds.getLocation(), bounds.getLocation());
     }
@@ -126,7 +131,9 @@ public abstract class BaseCollider implements Collider {
     @Override
     public void setSize(int width, int height) {
         bounds.setSize(width, height);
-        CollisionsEngine.instance().updateColliderBounds(bounds, this);
+        if (!activated) {
+            CollisionsEngine.instance().updateColliderBounds(bounds, this);
+        }
     }
 
     @Override
