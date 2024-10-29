@@ -9,8 +9,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import entities.updateables.UpdatableEntity;
 import utils.KeyStatus;
@@ -118,7 +116,7 @@ public class Game implements WindowListener, KeyListener {
     public void resetCurrentLevel() {
         reset=true;
     }
-    
+
     public void advanceLevel() {
         if (currLevel < levels.length -1) {
             currLevel ++;
