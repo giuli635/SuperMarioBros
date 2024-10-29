@@ -1,14 +1,18 @@
 package colliders.updateables.enemies;
 
 import java.awt.Rectangle;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import colliders.BaseCollider;
 import colliders.updateables.UpdateableEntityCollider;
 import collisions.updateables.enemies.EnemyCollision;
 import collisions.updateables.enemies.ShellEnemyCollision;
 import collisions.updateables.mario.MarioCollision;
+import collisions.updateables.mario.SuperMarioCollision;
 import entities.updateables.enemies.Enemy;
 import entities.updateables.mario.Mario;
+import game.Game;
 import utils.Direction;
 
 public abstract class EnemyCollider extends BaseCollider implements UpdateableEntityCollider {
@@ -23,6 +27,20 @@ public abstract class EnemyCollider extends BaseCollider implements UpdateableEn
         m.getCollider().getEntity().die();
     }
 
+    public void handleHorizontalCollision(SuperMarioCollision m) {
+        m.getCollider().getEntity().removeState();
+        m.getCollider().deactivate();
+        Timer timer = new Timer();
+        TimerTask task = new TimerTask() {
+            public void run(){
+                m.getCollider().activate();
+                //m.getCollider().setPosition((int)m.getCollider().getPosition().getX(),(int) m.getCollider().getPosition().getX() );
+            }
+        }; 
+        timer.schedule(task,3000);
+    }
+    
+
     public void handleVerticalCollision(MarioCollision m) {
         Direction collisionDirection = Direction.verticalDirectionFromSign(
             (int) m.getCollider().getVelocity().getYComponent()
@@ -33,9 +51,21 @@ public abstract class EnemyCollider extends BaseCollider implements UpdateableEn
             getEntity().recieveDamage();
             mario.addSpeed(0, Mario.FIXED_BOUNCE_SPEED);
         } else {
-            mario.die();
+            //mario.die();
+            m.getCollider().getEntity().removeState();
+            m.getCollider().deactivate();
+            Timer timer = new Timer();
+            TimerTask task = new TimerTask() {
+                public void run(){
+                  m.getCollider().activate();
+                //m.getCollider().setPosition((int)m.getCollider().getPosition().getX(),(int) m.getCollider().getPosition().getX() );
+                }
+        }; 
+        timer.schedule(task,3000);
         }
+
     }
+    
 
     public void handleVerticalCollision(ShellEnemyCollision s) {
         if (!s.getCollider().getEntity().getShell() || s.getCollider().getEntity().getSpeedX() == 0) {

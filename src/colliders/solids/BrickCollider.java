@@ -4,7 +4,10 @@ import java.awt.Rectangle;
 
 import collisions.Collision;
 import collisions.solids.BrickCollision;
+import collisions.updateables.mario.MarioCollision;
+import collisions.updateables.mario.SuperMarioCollision;
 import entities.solids.Brick;
+import entities.updateables.mario.Mario;
 import utils.Axis;
 
 public class BrickCollider extends SolidCollider {
@@ -27,5 +30,18 @@ public class BrickCollider extends SolidCollider {
     @Override
     public BrickCollision getCollision() {
         return new BrickCollision(this);
+    }
+
+    public void handleVerticalCollision(SuperMarioCollision m) {
+        int displacement = displaceVertically(m.getCollider());
+        Mario mario = m.getCollider().getEntity();
+        if (displacement < 0) {
+            brick.getCollider().deactivate();
+            brick.getGraphicElement().remove();
+            mario.setSpeedX(0);
+        }
+        else{
+            mario.land();
+        }
     }
 }
