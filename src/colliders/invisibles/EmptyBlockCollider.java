@@ -1,6 +1,5 @@
 package colliders.invisibles;
 
-import java.awt.Point;
 import java.awt.Rectangle;
 
 import colliders.solids.SolidCollider;

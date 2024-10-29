@@ -56,15 +56,10 @@ public class QuestionBlock extends Body {
         return depends;
     }
 
-    public void interaction() {
-        releaseEntity(entity);
-        entity = null;
-        active = false;
-        setSprite(SPRITES_FOLDER);
-    }
-
     public void interaction(PowerUp p) {
-        entity = p;
+        if (depends) {
+            entity = p;
+        }
         releaseEntity(entity);
         entity = null;
         active = false;
