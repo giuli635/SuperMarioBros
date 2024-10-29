@@ -3,29 +3,78 @@ class GameGraphicElement {
    #entity: Entity
    #label: JLabel
    #sprite: ImageIcon
+   #currentSprite: String
    #bounds: Rectangle
    #toUpdate: boolean
-   +GameGraphicElement(e: Entity)
-   +GameGraphicElement(e: Entity, s: ImageIcon)
+   #flipped: boolean
+   +isFlipped(): boolean 
+   +setFlipped(flipped: boolean)
+   #sprites: Map<String, ImageIcon>
+   #folder: String
+   +GameGraphicElement(e: Entity, folderPath: String)
    +getEntity(): Entity 
    +translate(dx: int, dy: int)
    +getPosition(): Point 
    +setPosition(x: int, y: int)
-   +getSprite(): ImageIcon 
-   +setSprite(s: ImageIcon)
+   +getCurrentSprite(): ImageIcon 
+   +setSprite(s: String)
+   +flipSprite()
+   +{static}iconToBufferedImage(icon: ImageIcon): BufferedImage 
+   +{static}flipImage(image: BufferedImage): BufferedImage 
    +draw()
-   +getLabel(): JLabel 
+   +getComponent(): JLabel 
+   +loadSprites()
+   +setFolder(f: String)
+   +getFolder(): String 
 }
 
 interface GraphicElement {
-   +getEntity(): Entity 
    +translate(dx: int, dy: int)
    +getPosition(): Point 
    +setPosition(x: int, y: int)
-   +getSprite(): ImageIcon 
-   +setSprite(s: ImageIcon)
-   +getLabel(): JLabel 
+   +getComponent(): JComponent 
    +draw()
+}
+
+class SpriteFactory {
+   #{static} uniqueInstance: SpriteFactory
+   #{static} SPRITES_DIR: String
+   #sprites: Map<String, Map<String, ImageIcon>>
+   -SpriteFactory()
+   +{static}instance(): SpriteFactory 
+   +ImageIcon> getSprites(entity: String, mode: String): Map<String, 
+   -ImageIcon> loadSprites(entity: String, mode: String): Map<String, 
+   -loadImage(file: File): ImageIcon 
+   +clearCache()
+   +hasSpritesLoaded(entity: String): boolean 
+}
+
+class StatsBar {
+   #customFont: Font
+   #levelTimer: LevelTimer
+   #lives: int
+   #level: int
+   #score: int
+   #timeLabel: JLabel
+   #livesLabel: JLabel
+   #levelLabel: JLabel
+   #scoreLabel: JLabel
+   #timePanel: JPanel
+   #livesPanel: JPanel
+   #levelPanel: JPanel
+   #scorePanel: JPanel
+   #mainPanel: JPanel
+   #levelStats: LevelStats
+   +StatsBar(l: LevelStats)
+   +createPanel(t: String, stat: JLabel,  font: Font) { : JPanel 
+   +addElement(element: JPanel)
+   +draw()
+   +translate(dx: int, dy: int)
+   +getPosition(): Point 
+   +setPosition(x: int, y: int)
+   +getComponent(): JComponent 
+   +getFont(): Font 
+   +onStatsChanged()
 }
 
 @enduml

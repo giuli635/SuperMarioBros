@@ -1,11 +1,4 @@
 @startuml
-abstract class BaseEntity {
-   #collider: Collider
-   #graphicElement: GraphicElement
-   +getCollider(): Collider 
-   +getGraphicElement(): GraphicElement 
-}
-
 abstract class BaseUpdatableEntity {
    #loaded: boolean
    +load()
@@ -14,82 +7,83 @@ abstract class BaseUpdatableEntity {
 }
 
 class Block {
+   #{static} SPRITES_FOLDER: String
+   #collider: BlockCollider
+   #graphicElement: GameGraphicElement
    +Block()
+   +getGraphicElement(): GameGraphicElement 
+   +getCollider(): BlockCollider 
 }
 
-interface Enemy {
-   +getDamage()
-   +getPoints(): int 
-   +clone(): Entity 
+abstract class Body {
+   +setSprite(s: String)
+   +adjustColliderToGraphicElement()
+   +translate(dx: int, dy: int)
+}
+
+class Brick {
+   #{static} SPRITES_FOLDER: String
+   #collider: BrickCollider
+   #graphicElement: GameGraphicElement
+   +Brick()
+   +getGraphicElement(): GameGraphicElement 
+   +getCollider(): BrickCollider 
+}
+
+class Coin {
+   #{static} SPRITES_FOLDER: String
+   +final {static} POINTS: int
+   #collider: CoinCollider
+   #graphicElement: GameGraphicElement
+   +Coin()
+   +getGraphicElement(): GameGraphicElement 
+   +getCollider(): CoinCollider 
    +update()
 }
 
+class EmptyBlock {
+   #{static} SPRITES_FOLDER: String
+   #collider: EmptyBlockCollider
+   #graphicElement: GameGraphicElement
+   +EmptyBlock()
+   +getGraphicElement(): GameGraphicElement 
+   +getCollider(): EmptyBlockCollider 
+}package entities;
+
 interface Entity {
-   +getGraphicElement(): GraphicElement 
+   +getGraphicElement(): GameGraphicElement 
    +getCollider(): Collider 
 }
 
-class Goomba {
-   -movingRight: boolean
-   -int speedX = 1 // Velocidad horizontal
-   +Goomba()
-   +clone(): Entity 
-   +getDamage()
-   +getPoints(): int 
-   +switchDirection()
-   +update()
+class Pipe {
+   #{static} FOLDER_PATH: String
+   #{static} TOP_PIPE: String
+   #{static} BASE_PIPE: String
+   #collider: PipeCollider
+   #graphicElement: GameGraphicElement
+   +Pipe()
+   +Pipe(i: int)
+   +getGraphicElement(): GameGraphicElement 
+   +getCollider(): PipeCollider 
 }
 
-class KoopaTroopa {
-   #movingRight: boolean
-   #speedX: int
-   +KoopaTroopa()
-   +getDamage()
-   +getPoints(): int 
-   +clone(): Entity 
-   +switchDirection()
-   +update()
-}
-
-class Mario {
-   #speedX: int
-   #speedY: int
-   #lifes: int
-   #loaded: boolean
-   #jumping: boolean
-   #direction: Direction
-   #gravity: float
-   #jumpForce: int
-   +Mario()
-   +clone(): Entity 
-   +getJumping(): boolean 
-   +setJumping(j: boolean)
-   +update()
-   +land()
-   #startJump()
-   #handleVerticalMovement()
-   #handleHorizontalMovement()
-}
-
-class Spiny {
-   #movingRight: boolean
-   #speedX: int
-   +Spiny()
-   +getDamage()
-   +getPoints(): int 
-   +clone(): Entity 
-   +switchDirection()
-   +update()
-}
-
-class SuperMushroom {
-   #points: int
-   #movingRight: boolean
-   #speedX: int
-   +SuperMushroom()
-   +clone(): Entity 
-   +switchDirection()
-   +update()
+class QuestionBlock {
+   #{static} SPRITES_FOLDER: String
+   #collider: QuestionBlockCollider
+   #graphicElement: GameGraphicElement
+   #depends: boolean
+   #active: boolean
+   #entity: UpdatableEntity
+   +QuestionBlock(s: char)
+   +getGraphicElement(): GameGraphicElement 
+   +getCollider(): QuestionBlockCollider 
+   +setDepends(b: boolean)
+   +getDepends(): boolean 
+   +interaction()
+   +interaction(p: PowerUp)
+   +releaseEntity(e: UpdatableEntity)
+   +releaseEntity(c: Coin)
+   +getActive(): boolean 
 }
 
 interface UpdatableEntity {

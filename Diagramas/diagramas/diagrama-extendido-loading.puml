@@ -1,30 +1,73 @@
 @startuml
+abstract class BaseLoader {
+   #positionCollider (e: Entity, row: int, column: int)
+}
+
+class BasePipeLoader {
+   +load(lr: LevelReader)
+}
+
 class BlockLoader {
-   +load(): Entity 
+   +load(lr: LevelReader)
+}
+
+class Brick {
+}
+
+class BrickLoader {
+   +load(lr: LevelReader)
+}
+
+class BuzzyBeetleLoader {
+   +load(lr: LevelReader)
+}
+
+class EmptyBlockLoader {
+   +load(lr: LevelReader)
 }
 
 interface EntityLoader {
-   +load(): Entity 
+   +load(lr: LevelReader)
 }
 
 class GoombaLoader {
-   +load(): Entity 
+   +load(lr: LevelReader)
+}
+
+class GreenMushroomLoader {
+   +load(lr: LevelReader)
 }
 
 class KoopaTroopaLoader {
-   +load(): Entity 
+   +load(lr: LevelReader)
+}
+
+class LakituLoader {
+   +load(lr: LevelReader)
 }
 
 class MarioLoader {
-   +load(): Entity 
+   +load(lr: LevelReader)
+}
+
+class PiranhaPlantLoader {
+   +load(lr: LevelReader)
+}
+
+class QuestionBlockLoader {
+   +load(lr: LevelReader)
 }
 
 class SpinyLoader {
-   +load(): Entity 
+   +load(lr: LevelReader)
 }
 
 class SuperMushroomLoader {
-   +load(): Entity 
+   +load(lr: LevelReader)
+}
+
+class TopPipeLoader {
+   +load(lr: LevelReader)
 }
 
 @enduml

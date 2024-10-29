@@ -14,17 +14,21 @@ abstract class BaseCollider {
    +getPosition(): Point 
    +setPosition(x: int, y: int)
    +getVelocity(): Vector2D 
-   +activated(): boolean 
-   +setActive(a: boolean)
-   +getBound(): Rectangle 
+   +isActivated(): boolean 
+   +activate()
+   +deactivate()
+   +getBounds(): Rectangle 
    +translate(dx: int, dy: int)
    +moveX()
    +moveY()
-   +resetVelocity()
+   +updateVelocity()
    +getSize(): Dimension 
    +setSize(width: int, height: int)
+   +displaceX(intersection: Rectangle, coefficient: int): int 
+   +displaceY(intersection: Rectangle, coefficient: int): int 
    +handleHorizontalCollision(c: Collision)
    +handleVerticalCollision(c: Collision)
+   +adjust()
 }
 
 class BlockCollider {
@@ -35,75 +39,140 @@ class BlockCollider {
    +BlockCollider(e: Block, b: Rectangle)
    +getEntity(): Block 
    +sendCollision(c: Collision, a: Axis)
-   +getCollision(): Collision 
-   +handleVerticalCollision(m: MarioCollision)
+   +getCollision(): BlockCollision 
+}
+
+class BrickCollider {
+   #brick: Brick
+   #bounds: Rectangle
+   #previousPosition: Point
+   #activated: boolean
+   +BrickCollider(brick2: entities.Brick, b: Rectangle)
+   +getEntity(): Brick 
+   +sendCollision(c: Collision, a: Axis)
+   +getCollision(): BrickCollision 
+}
+
+class CoinCollider {
+   #coin: Coin
+   +CoinCollider(c: Coin, b: Rectangle)
+   +getEntity(): Coin 
+   +sendCollision(c: Collision, a: Axis)
+   +getCollision(): CoinCollision 
    +handleHorizontalCollision(m: MarioCollision)
-   +handleVerticalCollision(g: GoombaCollision)
-   +handleHorizontalCollision(g: GoombaCollision)
-   +handleVerticalCollision(k: KoopaTroopaCollision)
-   +handleHorizontalCollision(k: KoopaTroopaCollision)
-   +handleVerticalCollision(s: SpinyCollision)
-   +handleHorizontalCollision(s: SpinyCollision)
-   +handleVerticalCollision(s: SuperMushroomCollision)
-   +handleHorizontalCollision(s: SuperMushroomCollision)
+   +handleVerticalCollision(m: MarioCollision)
 }
 
 interface Collider {
    +getEntity(): Entity 
    +sendCollision(c: Collision, a: Axis)
-   +getBound(): Rectangle 
+   +getBounds(): Rectangle 
    +getCollision(): Collision 
    +setPosition(x: int, y: int)
    +getPosition(): Point 
    +translate(dx: int, dy: int)
    +getSize(): Dimension 
    +setSize(width: int, height: int)
+   +adjust()
    +getVelocity(): Vector2D 
-   +setActive(b: boolean)
-   +activated(): boolean 
-   +resetVelocity()
+   +isActivated(): boolean 
+   +activate()
+   +deactivate()
+   +updateVelocity()
    +moveX()
    +moveY()
    +setColliding(c: boolean)
    +isColliding(): boolean 
    +isMoving(): boolean 
    +setMoving(m: boolean)
+   +displaceX(intersection: Rectangle, coefficient: int): int 
+   +displaceY(intersection: Rectangle, coefficient: int): int 
+}
+
+class DefaultMarioCollider {
+   #mario: Mario
+   +DefaultMarioCollider(m: Mario, b: Rectangle)
+   +getEntity(): Mario 
+   +getCollision(): DefaultMarioCollision 
+   +sendCollision(c: Collision, a: Axis)
+}
+
+class DeleterCollider {
+   +DeleterCollider(b: Rectangle)
+   +getEntity(): Entity 
+   +sendCollision(c: Collision, a: Axis)
+   +getCollision(): DeleterCollision 
+   +handleHorizontalCollision(c: DeleterCollision)
+   +handleHorizontalCollision(c: UpdateableEntityCollision)
+   +handleHorizontalCollision(c: Collision)
 }
 
 enum Direction {
    +{static}opposite(d1: Direction): Direction 
+   +{static}sum(d1: Direction, d2: Direction): Direction 
+   +{static}horizontalDirectionFromSign(d: int): Direction 
+   +{static}signFromDirection(d1: Direction): int 
+   +{static}verticalDirectionFromSign(d: int): Direction 
 }
 
-class GoombaCollider {
-   #goomba: Goomba
-   +GoombaCollider(g: Goomba, b: Rectangle)
-   +getEntity(): Goomba 
-   +getCollision(): Collision 
+class EmptyBlockCollider {
+   #block: EmptyBlock
+   #bounds: Rectangle
+   #previousPosition: Point
+   #activated: boolean
+   +EmptyBlockCollider(e: EmptyBlock, b: Rectangle)
+   +getEntity(): EmptyBlock 
    +sendCollision(c: Collision, a: Axis)
-}
-
-class KoopaTroopaCollider {
-   #koopa: KoopaTroopa
-   +KoopaTroopaCollider(k: KoopaTroopa, b: Rectangle)
-   +getEntity(): KoopaTroopa 
-   +getCollision(): Collision 
-   +sendCollision(c: Collision, a: Axis)
-}
+   +getCollision(): EmptyBlockCollision 
+   +handleVerticalCollision(m: MarioCollision)
+   +handleHorizontalCollision(e: EnemyCollision)
+   +handleVerticalCollision(e: EnemyCollision)
+   +handleHorizontalCollision(p: PowerUpCollision)
+   +handleVerticalCollision(p: PowerUpCollision)
+   +handleVerticalCollision(s: StarCollision)
+}package colliders;
 
 class LoaderCollider {
    +LoaderCollider(b: Rectangle)
    +getEntity(): Entity 
    +sendCollision(c: Collision, a: Axis)
-   +getCollision(): Collision 
+   +getCollision(): LoaderCollision 
    +handleHorizontalCollision(c: UpdateableEntityCollision)
 }
 
-class MarioCollider {
-   #mario: Mario
-   +MarioCollider(m: Mario, b: Rectangle)
+interface MarioCollider {
    +getEntity(): Mario 
-   +getCollision(): Collision 
+   +getCollision(): MarioCollision 
+}
+
+class PipeCollider {
+   #pipe: Pipe
+   #bounds: Rectangle
+   #previousPosition: Point
+   #activated: boolean
+   +PipeCollider(e: Pipe, b: Rectangle)
+   +getEntity(): Pipe 
    +sendCollision(c: Collision, a: Axis)
+   +getCollision(): PipeCollision 
+   +handleVerticalCollision(p: PiranhaPlantCollision)
+   +handleHorizontalCollision(p: PiranhaPlantCollision)
+}
+
+class QuestionBlockCollider {
+   #questionBlock: QuestionBlock
+   #bounds: Rectangle
+   #previousPosition: Point
+   #activated: boolean
+   +QuestionBlockCollider(e: QuestionBlock, b: Rectangle)
+   +getEntity(): QuestionBlock 
+   +sendCollision(c: Collision, a: Axis)
+   +getCollision(): QuestionBlockCollision 
+   +handleVerticalCollision(m: MarioCollision)
+   +handleHorizontalCollision(m: MarioCollision)
+   +handleVerticalCollision(e: EnemyCollision)
+   +handleHorizontalCollision(e: EnemyCollision)
+   +handleVerticalCollision(p: PiranhaPlantCollision)
+   +handleHorizontalCollision(p: PiranhaPlantCollision)
 }
 
 class ScreenBorderCollider {
@@ -111,40 +180,53 @@ class ScreenBorderCollider {
    +ScreenBorderCollider(b: Rectangle, position: Direction)
    +getEntity(): Entity 
    +sendCollision(c: Collision, a: Axis)
-   +getCollision(): Collision 
+   +getCollision(): ScreenBorderCollision 
    +handleHorizontalCollision(m: MarioCollision)
-   +handleHorizontalCollision(g: BlockCollision)
-   +handleHorizontalCollision(g: UpdateableEntityCollision)
+   +handleHorizontalCollision(c: Collision)
 }
 
 class ScreenDisplacementCollider {
    #leftBorder: ScreenBorderCollider
    #rightBorder: ScreenBorderCollider
    #loader: LoaderCollider
-   +ScreenDisplacementCollider(b: Rectangle, left: ScreenBorderCollider, right: ScreenBorderCollider, l: LoaderCollider)
+   #unloader: UnloaderCollider
+   #deleter: DeleterCollider
+   +ScreenDisplacementCollider(b: Rectangle, left: ScreenBorderCollider, right: ScreenBorderCollider, l: LoaderCollider, ul: UnloaderCollider, d: DeleterCollider)
    +getEntity(): Entity 
-   +getCollision(): Collision 
+   +getCollision(): ScreenDisplacementCollision 
    +sendCollision(c: Collision, a: Axis)
    +handleHorizontalCollision(m: MarioCollision)
 }
 
-class SpinyCollider {
-   #spiny: Spiny
-   +SpinyCollider(s: Spiny, b: Rectangle)
-   +getEntity(): Spiny 
-   +sendCollision(c: Collision, a: Axis)
-   +getCollision(): Collision 
-}
-
-class SuperMushroomCollider {
-   #m: SuperMushroom
-   +SuperMushroomCollider(mushroom: SuperMushroom, b: Rectangle):  
-   +getEntity(): UpdatableEntity 
-   +getSuperMushroom(): SuperMushroom 
-   +sendCollision(c: Collision, a: Axis)
-   +getCollision(): Collision 
+abstract class SolidCollider {
+   +SolidCollider(b: Rectangle)
+   +displaceHorizontally(c: Collider): int 
+   +displaceVertically(c: Collider): int 
+   +handleHorizontalCollision(e: UpdateableEntityCollision)
+   +handleVerticalCollision(e: UpdateableEntityCollision)
    +handleVerticalCollision(m: MarioCollision)
-   +handleHorizontalCollision(m: MarioCollision)
+   +handleHorizontalCollision(e: EnemyCollision)
+   +handleVerticalCollision(e: EnemyCollision)
+   +handleHorizontalCollision(p: PowerUpCollision)
+   +handleVerticalCollision(p: PowerUpCollision)
+   +handleVerticalCollision(s: StarCollision)
+}
+
+class SuperMarioCollider {
+   #mario: Mario
+   +SuperMarioCollider(m: Mario, b: Rectangle)
+   +getEntity(): Mario 
+   +getCollision(): SuperMarioCollision 
+   +sendCollision(c: Collision, a: Axis)
+}
+
+class UnloaderCollider {
+   +UnloaderCollider(b: Rectangle)
+   +getEntity(): Entity 
+   +sendCollision(c: Collision, a: Axis)
+   +getCollision(): UnloaderCollision 
+   +handleHorizontalCollision(c: UnloaderCollision)
+   +handleHorizontalCollision(c: Collision)
 }
 
 interface UpdateableEntityCollider {
@@ -162,6 +244,7 @@ class Vector2D {
    +getEnd(): Point 
    +sum(v: Vector2D): Vector2D 
    +grow(dx: int, dy: int)
+   +translate(dx: int, dy: int)
    +getXComponent(): double 
    +getYComponent(): double 
    #clone(): Vector2D 

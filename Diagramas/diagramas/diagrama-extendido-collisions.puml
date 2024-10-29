@@ -1,12 +1,18 @@
 @startuml
 enum Axis {
+}package collisions;
+
+abstract class BaseCollision {
+   #managed: boolean
+   +BaseCollision()
+   +wasManaged(): boolean 
+   +setManaged(managed: boolean)
 }
 
 class BlockCollision {
    #collider: BlockCollider
    +BlockCollision(c: BlockCollider)
    +getCollider(): BlockCollider 
-   +collide(c: MarioCollider, a: Axis)
    +collide(c: BlockCollider, a: Axis)
    +collide(c: ScreenDisplacementCollider, a: Axis)
    +collide(c: ScreenBorderCollider, a: Axis)
@@ -15,11 +21,172 @@ class BlockCollision {
    +collide(c: KoopaTroopaCollider, a: Axis)
    +collide(c: SuperMushroomCollider, a: Axis)
    +collide(c: LoaderCollider, a: Axis)
+   +collide(c: BrickCollider, a: Axis)
+   +collide(c: PipeCollider, a: Axis)
+   +collide(c: QuestionBlockCollider, a: Axis)
+   +collide(c: CoinCollider, a: Axis)
+   +collide(c: UnloaderCollider, a: Axis)
+   +collide(c: DeleterCollider, a: Axis)
+   +collide(c: LakituCollider, a: Axis)
+   +collide(c: BuzzyBeetleCollider, a: Axis)
+   +collide(c: PiranhaPlantCollider, a: Axis)
+   +collide(c: FireFlowerCollider, a: Axis)
+   +collide(c: StarCollider, a: Axis)
+   +collide(c: GreenMushroomCollider, a: Axis)
+   +collide(c: SuperMarioCollider, a: Axis)
+   +collide(c: DefaultMarioCollider, a: Axis)
+   +collide(c: EmptyBlockCollider, a: Axis)
+}
+
+class BrickCollision {
+   #collider: BrickCollider
+   +BrickCollision(c: BrickCollider)
+   +getCollider(): BrickCollider 
+   +collide(c: BlockCollider, a: Axis)
+   +collide(c: ScreenDisplacementCollider, a: Axis)
+   +collide(c: ScreenBorderCollider, a: Axis)
+   +collide(c: SpinyCollider, a: Axis)
+   +collide(c: GoombaCollider, a: Axis)
+   +collide(c: KoopaTroopaCollider, a: Axis)
+   +collide(c: SuperMushroomCollider, a: Axis)
+   +collide(c: LoaderCollider, a: Axis)
+   +collide(c: BrickCollider, a: Axis)
+   +collide(c: PipeCollider, a: Axis)
+   +collide(c: QuestionBlockCollider, a: Axis)
+   +collide(c: CoinCollider, a: Axis)
+   +collide(c: UnloaderCollider, a: Axis)
+   +collide(c: DeleterCollider, a: Axis)
+   +collide(c: LakituCollider, a: Axis)
+   +collide(c: BuzzyBeetleCollider, a: Axis)
+   +collide(c: PiranhaPlantCollider, a: Axis)
+   +collide(c: FireFlowerCollider, a: Axis)
+   +collide(c: StarCollider, a: Axis)
+   +collide(c: GreenMushroomCollider, a: Axis)
+   +collide(c: SuperMarioCollider, a: Axis)
+   +collide(c: DefaultMarioCollider, a: Axis)
+   +collide(c: EmptyBlockCollider, a: Axis)
+}
+
+class BuzzyBeetleCollision {
+   #collider: BuzzyBeetleCollider
+   +BuzzyBeetleCollision(c: BuzzyBeetleCollider)
+   +getCollider(): BuzzyBeetleCollider 
+   +collide(c: BlockCollider, a: Axis)
+   +collide(c: ScreenDisplacementCollider, a: Axis)
+   +collide(c: ScreenBorderCollider, a: Axis)
+   +collide(c: GoombaCollider, a: Axis)
+   +collide(c: SpinyCollider, a: Axis)
+   +collide(c: KoopaTroopaCollider, a: Axis)
+   +collide(c: LakituCollider, a: Axis)
+   +collide(c: SuperMushroomCollider, a: Axis)
+   +collide(c: LoaderCollider, a: Axis)
+   +collide(c: BrickCollider, a: Axis)
+   +collide(c: PipeCollider, a: Axis)
+   +collide(c: QuestionBlockCollider, a: Axis)
+   +collide(c: CoinCollider, a: Axis)
+   +collide(c: UnloaderCollider, a: Axis)
+   +collide(c: DeleterCollider, a: Axis)
+   +collide(c: BuzzyBeetleCollider, a: Axis)
+   +collide(c: PiranhaPlantCollider, a: Axis)
+   +collide(c: FireFlowerCollider, a: Axis)
+   +collide(c: StarCollider, a: Axis)
+   +collide(c: GreenMushroomCollider, a: Axis)
+   +collide(c: SuperMarioCollider, a: Axis)
+   +collide(c: DefaultMarioCollider, a: Axis)
+   +collide(c: EmptyBlockCollider, a: Axis)
+}
+
+class CoinCollision {
+   #coinCollider: CoinCollider
+   +CoinCollision(c: CoinCollider):  
+   +getCollider(): CoinCollider 
+   +collide(c: BlockCollider, a: Axis)
+   +collide(c: ScreenDisplacementCollider, a: Axis)
+   +collide(c: ScreenBorderCollider, a: Axis)
+   +collide(c: SpinyCollider, a: Axis)
+   +collide(c: KoopaTroopaCollider, a: Axis)
+   +collide(c: SuperMushroomCollider, a: Axis)
+   +collide(c: GoombaCollider, a: Axis)
+   +collide(c: LoaderCollider, a: Axis)
+   +collide(c: BrickCollider, a: Axis)
+   +collide(c: PipeCollider, a: Axis)
+   +collide(c: QuestionBlockCollider, a: Axis)
+   +collide(c: CoinCollider, a: Axis)
+   +collide(c: UnloaderCollider, a: Axis)
+   +collide(c: DeleterCollider, a: Axis)
+   +collide(c: LakituCollider, a: Axis)
+   +collide(c: BuzzyBeetleCollider, a: Axis)
+   +collide(c: PiranhaPlantCollider, a: Axis)
+   +collide(c: FireFlowerCollider, a: Axis)
+   +collide(c: StarCollider, a: Axis)
+   +collide(c: SuperMarioCollider, a: Axis)
+   +collide(c: DefaultMarioCollider, a: Axis)
+   +collide(c: GreenMushroomCollider, a: Axis)
+   +collide(c: EmptyBlockCollider, a: Axis)
 }
 
 interface Collision {
    +getCollider(): Collider 
-   +collide(c: MarioCollider, a: Axis)
+   +collide(c: SuperMarioCollider, a: Axis)
+   +collide(c: DefaultMarioCollider, a: Axis)
+   +collide(c: BlockCollider, a: Axis)
+   +collide(c: ScreenDisplacementCollider, a: Axis)
+   +collide(c: ScreenBorderCollider, a: Axis)
+   +collide(c: GoombaCollider, a: Axis)
+   +collide(c: SpinyCollider, a: Axis)
+   +collide(c: KoopaTroopaCollider, a: Axis)
+   +collide(c: LakituCollider, a: Axis)
+   +collide(c: BuzzyBeetleCollider, a: Axis)
+   +collide(c: SuperMushroomCollider, a: Axis)
+   +collide(c: LoaderCollider, a: Axis)
+   +collide(c: BrickCollider, a: Axis)
+   +collide(c: PipeCollider, a: Axis)
+   +collide(c: QuestionBlockCollider, a: Axis)
+   +collide(c: CoinCollider, a: Axis)
+   +collide(c: UnloaderCollider, a: Axis)
+   +collide(c: DeleterCollider, a: Axis)
+   +collide(c: PiranhaPlantCollider, a: Axis)
+   +collide(c: FireFlowerCollider, a: Axis)
+   +collide(c: StarCollider, a: Axis)
+   +collide(c: GreenMushroomCollider, a: Axis)
+   +collide(c: EmptyBlockCollider, a: Axis)
+   +wasManaged(): boolean 
+   +setManaged(managed: boolean)
+}
+
+class DefaultMarioCollision {
+   #defaultMarioCollider: DefaultMarioCollider
+   +DefaultMarioCollision(c: DefaultMarioCollider)
+   +getCollider(): DefaultMarioCollider 
+   +collide(c: BlockCollider, a: Axis)
+   +collide(c: ScreenDisplacementCollider, a: Axis)
+   +collide(c: ScreenBorderCollider, a: Axis)
+   +collide(c: SpinyCollider, a: Axis)
+   +collide(c: KoopaTroopaCollider, a: Axis)
+   +collide(c: SuperMushroomCollider, a: Axis)
+   +collide(c: GoombaCollider, a: Axis)
+   +collide(c: LoaderCollider, a: Axis)
+   +collide(c: BrickCollider, a: Axis)
+   +collide(c: PipeCollider, a: Axis)
+   +collide(c: QuestionBlockCollider, a: Axis)
+   +collide(c: CoinCollider, a: Axis)
+   +collide(c: UnloaderCollider, a: Axis)
+   +collide(c: DeleterCollider, a: Axis)
+   +collide(c: LakituCollider, a: Axis)
+   +collide(c: BuzzyBeetleCollider, a: Axis)
+   +collide(c: PiranhaPlantCollider, a: Axis)
+   +collide(c: FireFlowerCollider, a: Axis)
+   +collide(c: StarCollider, a: Axis)
+   +collide(c: SuperMarioCollider, a: Axis)
+   +collide(c: DefaultMarioCollider, a: Axis)
+   +collide(c: GreenMushroomCollider, a: Axis)
+   +collide(c: EmptyBlockCollider, a: Axis)
+}
+
+class DeleterCollision {
+   #deleter: DeleterCollider
+   +DeleterCollision(d: DeleterCollider)
+   +getCollider(): DeleterCollider 
    +collide(c: BlockCollider, a: Axis)
    +collide(c: ScreenDisplacementCollider, a: Axis)
    +collide(c: ScreenBorderCollider, a: Axis)
@@ -28,13 +195,89 @@ interface Collision {
    +collide(c: KoopaTroopaCollider, a: Axis)
    +collide(c: SuperMushroomCollider, a: Axis)
    +collide(c: LoaderCollider, a: Axis)
+   +collide(c: BrickCollider, a: Axis)
+   +collide(c: PipeCollider, a: Axis)
+   +collide(c: QuestionBlockCollider, a: Axis)
+   +collide(c: CoinCollider, a: Axis)
+   +collide(c: UnloaderCollider, a: Axis)
+   +collide(c: DeleterCollider, a: Axis)
+   +collide(c: LakituCollider, a: Axis)
+   +collide(c: BuzzyBeetleCollider, a: Axis)
+   +collide(c: PiranhaPlantCollider, a: Axis)
+   +collide(c: FireFlowerCollider, a: Axis)
+   +collide(c: StarCollider, a: Axis)
+   +collide(c: GreenMushroomCollider, a: Axis)
+   +collide(c: SuperMarioCollider, a: Axis)
+   +collide(c: DefaultMarioCollider, a: Axis)
+   +collide(c: EmptyBlockCollider, a: Axis)
+}
+
+class EmptyBlockCollision {
+   #collider: EmptyBlockCollider
+   +EmptyBlockCollision(c: EmptyBlockCollider)
+   +getCollider(): Collider 
+   +collide(c: BlockCollider, a: Axis)
+   +collide(c: ScreenDisplacementCollider, a: Axis)
+   +collide(c: ScreenBorderCollider, a: Axis)
+   +collide(c: SpinyCollider, a: Axis)
+   +collide(c: GoombaCollider, a: Axis)
+   +collide(c: KoopaTroopaCollider, a: Axis)
+   +collide(c: SuperMushroomCollider, a: Axis)
+   +collide(c: LoaderCollider, a: Axis)
+   +collide(c: BrickCollider, a: Axis)
+   +collide(c: PipeCollider, a: Axis)
+   +collide(c: QuestionBlockCollider, a: Axis)
+   +collide(c: CoinCollider, a: Axis)
+   +collide(c: UnloaderCollider, a: Axis)
+   +collide(c: DeleterCollider, a: Axis)
+   +collide(c: LakituCollider, a: Axis)
+   +collide(c: BuzzyBeetleCollider, a: Axis)
+   +collide(c: PiranhaPlantCollider, a: Axis)
+   +collide(c: FireFlowerCollider, a: Axis)
+   +collide(c: StarCollider, a: Axis)
+   +collide(c: GreenMushroomCollider, a: Axis)
+   +collide(c: EmptyBlockCollider, a: Axis)
+   +collide(c: SuperMarioCollider, a: Axis)
+   +collide(c: DefaultMarioCollider, a: Axis)
+}
+
+interface EnemyCollision {
+   +getCollider(): EnemyCollider 
+}
+
+class FireFlowerCollision {
+   #collider: FireFlowerCollider
+   +FireFlowerCollision(c: FireFlowerCollider)
+   +getCollider(): FireFlowerCollider 
+   +collide(c: BlockCollider, a: Axis)
+   +collide(c: ScreenDisplacementCollider, a: Axis)
+   +collide(c: ScreenBorderCollider, a: Axis)
+   +collide(c: GoombaCollider, a: Axis)
+   +collide(c: SpinyCollider, a: Axis)
+   +collide(c: KoopaTroopaCollider, a: Axis)
+   +collide(c: SuperMushroomCollider, a: Axis)
+   +collide(c: LoaderCollider, a: Axis)
+   +collide(c: LakituCollider, a: Axis)
+   +collide(c: BrickCollider, a: Axis)
+   +collide(c: PipeCollider, a: Axis)
+   +collide(c: QuestionBlockCollider, a: Axis)
+   +collide(c: CoinCollider, a: Axis)
+   +collide(c: UnloaderCollider, a: Axis)
+   +collide(c: DeleterCollider, a: Axis)
+   +collide(c: BuzzyBeetleCollider, a: Axis)
+   +collide(c: PiranhaPlantCollider, a: Axis)
+   +collide(c: FireFlowerCollider, a: Axis)
+   +collide(c: StarCollider, a: Axis)
+   +collide(c: GreenMushroomCollider, a: Axis)
+   +collide(c: SuperMarioCollider, a: Axis)
+   +collide(c: DefaultMarioCollider, a: Axis)
+   +collide(c: EmptyBlockCollider, a: Axis)
 }
 
 class GoombaCollision {
    #collider: GoombaCollider
    +GoombaCollision(c: GoombaCollider)
    +getCollider(): GoombaCollider 
-   +collide(c: MarioCollider, a: Axis)
    +collide(c: BlockCollider, a: Axis)
    +collide(c: ScreenDisplacementCollider, a: Axis)
    +collide(c: ScreenBorderCollider, a: Axis)
@@ -43,13 +286,56 @@ class GoombaCollision {
    +collide(c: SuperMushroomCollider, a: Axis)
    +collide(c: GoombaCollider, a: Axis)
    +collide(c: LoaderCollider, a: Axis)
+   +collide(c: BrickCollider, a: Axis)
+   +collide(c: PipeCollider, a: Axis)
+   +collide(c: QuestionBlockCollider, a: Axis)
+   +collide(c: CoinCollider, a: Axis)
+   +collide(c: UnloaderCollider, a: Axis)
+   +collide(c: DeleterCollider, a: Axis)
+   +collide(c: LakituCollider, a: Axis)
+   +collide(c: BuzzyBeetleCollider, a: Axis)
+   +collide(c: PiranhaPlantCollider, a: Axis)
+   +collide(c: FireFlowerCollider, a: Axis)
+   +collide(c: StarCollider, a: Axis)
+   +collide(c: GreenMushroomCollider, a: Axis)
+   +collide(c: SuperMarioCollider, a: Axis)
+   +collide(c: DefaultMarioCollider, a: Axis)
+   +collide(c: EmptyBlockCollider, a: Axis)
+}
+
+class GreenMushroomCollision {
+   #collider: GreenMushroomCollider
+   +GreenMushroomCollision(c: GreenMushroomCollider)
+   +getCollider(): GreenMushroomCollider 
+   +collide(c: BlockCollider, a: Axis)
+   +collide(c: ScreenDisplacementCollider, a: Axis)
+   +collide(c: ScreenBorderCollider, a: Axis)
+   +collide(c: GoombaCollider, a: Axis)
+   +collide(c: SpinyCollider, a: Axis)
+   +collide(c: KoopaTroopaCollider, a: Axis)
+   +collide(c: SuperMushroomCollider, a: Axis)
+   +collide(c: LoaderCollider, a: Axis)
+   +collide(c: LakituCollider, a: Axis)
+   +collide(c: BrickCollider, a: Axis)
+   +collide(c: PipeCollider, a: Axis)
+   +collide(c: QuestionBlockCollider, a: Axis)
+   +collide(c: CoinCollider, a: Axis)
+   +collide(c: UnloaderCollider, a: Axis)
+   +collide(c: DeleterCollider, a: Axis)
+   +collide(c: BuzzyBeetleCollider, a: Axis)
+   +collide(c: PiranhaPlantCollider, a: Axis)
+   +collide(c: FireFlowerCollider, a: Axis)
+   +collide(c: StarCollider, a: Axis)
+   +collide(c: GreenMushroomCollider, a: Axis)
+   +collide(c: SuperMarioCollider, a: Axis)
+   +collide(c: DefaultMarioCollider, a: Axis)
+   +collide(c: EmptyBlockCollider, a: Axis)
 }
 
 class KoopaTroopaCollision {
    #collider: KoopaTroopaCollider
    +KoopaTroopaCollision(k: KoopaTroopaCollider)
    +getCollider(): KoopaTroopaCollider 
-   +collide(c: MarioCollider, a: Axis)
    +collide(c: BlockCollider, a: Axis)
    +collide(c: ScreenDisplacementCollider, a: Axis)
    +collide(c: ScreenBorderCollider, a: Axis)
@@ -58,13 +344,56 @@ class KoopaTroopaCollision {
    +collide(c: SuperMushroomCollider, a: Axis)
    +collide(c: GoombaCollider, a: Axis)
    +collide(c: LoaderCollider, a: Axis)
+   +collide(c: BrickCollider, a: Axis)
+   +collide(c: PipeCollider, a: Axis)
+   +collide(c: QuestionBlockCollider, a: Axis)
+   +collide(c: CoinCollider, a: Axis)
+   +collide(c: UnloaderCollider, a: Axis)
+   +collide(c: DeleterCollider, a: Axis)
+   +collide(c: LakituCollider, a: Axis)
+   +collide(c: BuzzyBeetleCollider, a: Axis)
+   +collide(c: PiranhaPlantCollider, a: Axis)
+   +collide(c: FireFlowerCollider, a: Axis)
+   +collide(c: StarCollider, a: Axis)
+   +collide(c: GreenMushroomCollider, a: Axis)
+   +collide(c: SuperMarioCollider, a: Axis)
+   +collide(c: DefaultMarioCollider, a: Axis)
+   +collide(c: EmptyBlockCollider, a: Axis)
+}
+
+class LakituCollision {
+   #collider: LakituCollider
+   +LakituCollision(c: LakituCollider)
+   +getCollider(): LakituCollider 
+   +collide(c: BlockCollider, a: Axis)
+   +collide(c: ScreenDisplacementCollider, a: Axis)
+   +collide(c: ScreenBorderCollider, a: Axis)
+   +collide(c: GoombaCollider, a: Axis)
+   +collide(c: SpinyCollider, a: Axis)
+   +collide(c: KoopaTroopaCollider, a: Axis)
+   +collide(c: colliders.enemies.LakituCollider, a: Axis)
+   +collide(c: SuperMushroomCollider, a: Axis)
+   +collide(c: LoaderCollider, a: Axis)
+   +collide(c: BrickCollider, a: Axis)
+   +collide(c: PipeCollider, a: Axis)
+   +collide(c: QuestionBlockCollider, a: Axis)
+   +collide(c: CoinCollider, a: Axis)
+   +collide(c: UnloaderCollider, a: Axis)
+   +collide(c: DeleterCollider, a: Axis)
+   +collide(c: BuzzyBeetleCollider, a: Axis)
+   +collide(c: PiranhaPlantCollider, a: Axis)
+   +collide(c: FireFlowerCollider, a: Axis)
+   +collide(c: StarCollider, a: Axis)
+   +collide(c: GreenMushroomCollider, a: Axis)
+   +collide(c: SuperMarioCollider, a: Axis)
+   +collide(c: DefaultMarioCollider, a: Axis)
+   +collide(c: EmptyBlockCollider, a: Axis)
 }
 
 class LoaderCollision {
    #loader: LoaderCollider
    +LoaderCollision(l: LoaderCollider)
-   +getCollider(): Collider 
-   +collide(c: MarioCollider, a: Axis)
+   +getCollider(): LoaderCollider 
    +collide(c: BlockCollider, a: Axis)
    +collide(c: ScreenDisplacementCollider, a: Axis)
    +collide(c: ScreenBorderCollider, a: Axis)
@@ -73,13 +402,60 @@ class LoaderCollision {
    +collide(c: KoopaTroopaCollider, a: Axis)
    +collide(c: SuperMushroomCollider, a: Axis)
    +collide(c: LoaderCollider, a: Axis)
+   +collide(c: BrickCollider, a: Axis)
+   +collide(c: PipeCollider, a: Axis)
+   +collide(c: QuestionBlockCollider, a: Axis)
+   +collide(c: CoinCollider, a: Axis)
+   +collide(c: UnloaderCollider, a: Axis)
+   +collide(c: DeleterCollider, a: Axis)
+   +collide(c: LakituCollider, a: Axis)
+   +collide(c: BuzzyBeetleCollider, a: Axis)
+   +collide(c: PiranhaPlantCollider, a: Axis)
+   +collide(c: FireFlowerCollider, a: Axis)
+   +collide(c: StarCollider, a: Axis)
+   +collide(c: GreenMushroomCollider, a: Axis)
+   +collide(c: SuperMarioCollider, a: Axis)
+   +collide(c: DefaultMarioCollider, a: Axis)
+   +collide(c: EmptyBlockCollider, a: Axis)
 }
 
-class MarioCollision {
-   #collider: MarioCollider
-   +MarioCollision(m: MarioCollider)
+interface MarioCollision {
    +getCollider(): MarioCollider 
-   +collide(c: MarioCollider, a: Axis)
+}
+
+class PipeCollision {
+   #collider: PipeCollider
+   +PipeCollision(c: PipeCollider)
+   +getCollider(): PipeCollider 
+   +collide(c: BlockCollider, a: Axis)
+   +collide(c: ScreenDisplacementCollider, a: Axis)
+   +collide(c: ScreenBorderCollider, a: Axis)
+   +collide(c: SpinyCollider, a: Axis)
+   +collide(c: GoombaCollider, a: Axis)
+   +collide(c: KoopaTroopaCollider, a: Axis)
+   +collide(c: SuperMushroomCollider, a: Axis)
+   +collide(c: LoaderCollider, a: Axis)
+   +collide(c: BrickCollider, a: Axis)
+   +collide(c: PipeCollider, a: Axis)
+   +collide(c: QuestionBlockCollider, a: Axis)
+   +collide(c: CoinCollider, a: Axis)
+   +collide(c: UnloaderCollider, a: Axis)
+   +collide(c: DeleterCollider, a: Axis)
+   +collide(c: colliders.enemies.LakituCollider, a: Axis)
+   +collide(c: BuzzyBeetleCollider, a: Axis)
+   +collide(c: PiranhaPlantCollider, a: Axis)
+   +collide(c: FireFlowerCollider, a: Axis)
+   +collide(c: StarCollider, a: Axis)
+   +collide(c: GreenMushroomCollider, a: Axis)
+   +collide(c: SuperMarioCollider, a: Axis)
+   +collide(c: DefaultMarioCollider, a: Axis)
+   +collide(c: EmptyBlockCollider, a: Axis)
+}
+
+class PiranhaPlantCollision {
+   #collider: PiranhaPlantCollider
+   +PiranhaPlantCollision(c: PiranhaPlantCollider)
+   +getCollider(): PiranhaPlantCollider 
    +collide(c: BlockCollider, a: Axis)
    +collide(c: ScreenDisplacementCollider, a: Axis)
    +collide(c: ScreenBorderCollider, a: Axis)
@@ -88,13 +464,60 @@ class MarioCollision {
    +collide(c: GoombaCollider, a: Axis)
    +collide(c: KoopaTroopaCollider, a: Axis)
    +collide(c: LoaderCollider, a: Axis)
+   +collide(c: BrickCollider, a: Axis)
+   +collide(c: PipeCollider, a: Axis)
+   +collide(c: QuestionBlockCollider, a: Axis)
+   +collide(c: CoinCollider, a: Axis)
+   +collide(c: UnloaderCollider, a: Axis)
+   +collide(c: DeleterCollider, a: Axis)
+   +collide(c: LakituCollider, a: Axis)
+   +collide(c: PiranhaPlantCollider, a: Axis)
+   +collide(c: BuzzyBeetleCollider, a: Axis)
+   +collide(c: FireFlowerCollider, a: Axis)
+   +collide(c: StarCollider, a: Axis)
+   +collide(c: GreenMushroomCollider, a: Axis)
+   +collide(c: SuperMarioCollider, a: Axis)
+   +collide(c: DefaultMarioCollider, a: Axis)
+   +collide(c: EmptyBlockCollider, a: Axis)
+}
+
+interface PowerUpCollision {
+   +getCollider(): PowerUpCollider 
+}
+
+class QuestionBlockCollision {
+   #collider: QuestionBlockCollider
+   +QuestionBlockCollision(c: QuestionBlockCollider)
+   +getCollider(): QuestionBlockCollider 
+   +collide(c: BlockCollider, a: Axis)
+   +collide(c: ScreenDisplacementCollider, a: Axis)
+   +collide(c: ScreenBorderCollider, a: Axis)
+   +collide(c: SpinyCollider, a: Axis)
+   +collide(c: GoombaCollider, a: Axis)
+   +collide(c: KoopaTroopaCollider, a: Axis)
+   +collide(c: SuperMushroomCollider, a: Axis)
+   +collide(c: LoaderCollider, a: Axis)
+   +collide(c: BrickCollider, a: Axis)
+   +collide(c: PipeCollider, a: Axis)
+   +collide(c: QuestionBlockCollider, a: Axis)
+   +collide(c: CoinCollider, a: Axis)
+   +collide(c: UnloaderCollider, a: Axis)
+   +collide(c: DeleterCollider, a: Axis)
+   +collide(c: colliders.enemies.LakituCollider, a: Axis)
+   +collide(c: BuzzyBeetleCollider, a: Axis)
+   +collide(c: PiranhaPlantCollider, a: Axis)
+   +collide(c: FireFlowerCollider, a: Axis)
+   +collide(c: StarCollider, a: Axis)
+   +collide(c: GreenMushroomCollider, a: Axis)
+   +collide(c: SuperMarioCollider, a: Axis)
+   +collide(c: DefaultMarioCollider, a: Axis)
+   +collide(c: EmptyBlockCollider, a: Axis)
 }
 
 class ScreenBorderCollision {
    #collider: ScreenBorderCollider
    +ScreenBorderCollision(c: ScreenBorderCollider)
    +getCollider(): ScreenBorderCollider 
-   +collide(c: MarioCollider, a: Axis)
    +collide(c: BlockCollider, a: Axis)
    +collide(c: ScreenDisplacementCollider, a: Axis)
    +collide(c: ScreenBorderCollider, a: Axis)
@@ -103,13 +526,27 @@ class ScreenBorderCollision {
    +collide(c: GoombaCollider, a: Axis)
    +collide(c: KoopaTroopaCollider, a: Axis)
    +collide(c: LoaderCollider, a: Axis)
+   +collide(c: BrickCollider, a: Axis)
+   +collide(c: PipeCollider, a: Axis)
+   +collide(c: QuestionBlockCollider, a: Axis)
+   +collide(c: CoinCollider, a: Axis)
+   +collide(c: UnloaderCollider, a: Axis)
+   +collide(c: DeleterCollider, a: Axis)
+   +collide(c: LakituCollider, a: Axis)
+   +collide(c: BuzzyBeetleCollider, a: Axis)
+   +collide(c: PiranhaPlantCollider, a: Axis)
+   +collide(c: FireFlowerCollider, a: Axis)
+   +collide(c: StarCollider, a: Axis)
+   +collide(c: GreenMushroomCollider, a: Axis)
+   +collide(c: SuperMarioCollider, a: Axis)
+   +collide(c: DefaultMarioCollider, a: Axis)
+   +collide(c: EmptyBlockCollider, a: Axis)
 }
 
 class ScreenDisplacementCollision {
    #collider: ScreenDisplacementCollider
    +ScreenDisplacementCollision(c: ScreenDisplacementCollider)
    +getCollider(): ScreenDisplacementCollider 
-   +collide(c: MarioCollider, a: Axis)
    +collide(c: BlockCollider, a: Axis)
    +collide(c: ScreenDisplacementCollider, a: Axis)
    +collide(c: ScreenBorderCollider, a: Axis)
@@ -118,13 +555,34 @@ class ScreenDisplacementCollision {
    +collide(c: GoombaCollider, a: Axis)
    +collide(c: KoopaTroopaCollider, a: Axis)
    +collide(c: LoaderCollider, a: Axis)
+   +collide(c: BrickCollider, a: Axis)
+   +collide(c: PipeCollider, a: Axis)
+   +collide(c: QuestionBlockCollider, a: Axis)
+   +collide(c: CoinCollider, a: Axis)
+   +collide(c: UnloaderCollider, a: Axis)
+   +collide(c: DeleterCollider, a: Axis)
+   +collide(c: LakituCollider, a: Axis)
+   +collide(c: BuzzyBeetleCollider, a: Axis)
+   +collide(c: PiranhaPlantCollider, a: Axis)
+   +collide(c: FireFlowerCollider, a: Axis)
+   +collide(c: StarCollider, a: Axis)
+   +collide(c: GreenMushroomCollider, a: Axis)
+   +collide(c: SuperMarioCollider, a: Axis)
+   +collide(c: DefaultMarioCollider, a: Axis)
+   +collide(c: EmptyBlockCollider, a: Axis)
+}
+
+interface ShellEnemyCollision {
+   +getCollider(): ShellEnemyCollider 
+}
+
+interface SolidCollision {
 }
 
 class SpinyCollision {
    #collider: SpinyCollider
    +SpinyCollision(c: SpinyCollider)
    +getCollider(): SpinyCollider 
-   +collide(c: MarioCollider, a: Axis)
    +collide(c: BlockCollider, a: Axis)
    +collide(c: ScreenDisplacementCollider, a: Axis)
    +collide(c: ScreenBorderCollider, a: Axis)
@@ -133,13 +591,85 @@ class SpinyCollision {
    +collide(c: GoombaCollider, a: Axis)
    +collide(c: KoopaTroopaCollider, a: Axis)
    +collide(c: LoaderCollider, a: Axis)
+   +collide(c: BrickCollider, a: Axis)
+   +collide(c: PipeCollider, a: Axis)
+   +collide(c: QuestionBlockCollider, a: Axis)
+   +collide(c: CoinCollider, a: Axis)
+   +collide(c: UnloaderCollider, a: Axis)
+   +collide(c: DeleterCollider, a: Axis)
+   +collide(c: LakituCollider, a: Axis)
+   +collide(c: BuzzyBeetleCollider, a: Axis)
+   +collide(c: PiranhaPlantCollider, a: Axis)
+   +collide(c: FireFlowerCollider, a: Axis)
+   +collide(c: StarCollider, a: Axis)
+   +collide(c: GreenMushroomCollider, a: Axis)
+   +collide(c: SuperMarioCollider, a: Axis)
+   +collide(c: DefaultMarioCollider, a: Axis)
+   +collide(c: EmptyBlockCollider, a: Axis)
+}
+
+class StarCollision {
+   #collider: StarCollider
+   +StarCollision(c: StarCollider)
+   +getCollider(): StarCollider 
+   +collide(c: BlockCollider, a: Axis)
+   +collide(c: ScreenDisplacementCollider, a: Axis)
+   +collide(c: ScreenBorderCollider, a: Axis)
+   +collide(c: GoombaCollider, a: Axis)
+   +collide(c: SpinyCollider, a: Axis)
+   +collide(c: KoopaTroopaCollider, a: Axis)
+   +collide(c: SuperMushroomCollider, a: Axis)
+   +collide(c: LoaderCollider, a: Axis)
+   +collide(c: LakituCollider, a: Axis)
+   +collide(c: BrickCollider, a: Axis)
+   +collide(c: PipeCollider, a: Axis)
+   +collide(c: QuestionBlockCollider, a: Axis)
+   +collide(c: CoinCollider, a: Axis)
+   +collide(c: UnloaderCollider, a: Axis)
+   +collide(c: DeleterCollider, a: Axis)
+   +collide(c: BuzzyBeetleCollider, a: Axis)
+   +collide(c: PiranhaPlantCollider, a: Axis)
+   +collide(c: FireFlowerCollider, a: Axis)
+   +collide(c: StarCollider, a: Axis)
+   +collide(c: GreenMushroomCollider, a: Axis)
+   +collide(c: SuperMarioCollider, a: Axis)
+   +collide(c: DefaultMarioCollider, a: Axis)
+   +collide(c: EmptyBlockCollider, a: Axis)
+}
+
+class SuperMarioCollision {
+   #superMarioCollider: SuperMarioCollider
+   +SuperMarioCollision(c: SuperMarioCollider):  
+   +getCollider(): SuperMarioCollider 
+   +collide(c: BlockCollider, a: Axis)
+   +collide(c: ScreenDisplacementCollider, a: Axis)
+   +collide(c: ScreenBorderCollider, a: Axis)
+   +collide(c: SpinyCollider, a: Axis)
+   +collide(c: KoopaTroopaCollider, a: Axis)
+   +collide(c: SuperMushroomCollider, a: Axis)
+   +collide(c: GoombaCollider, a: Axis)
+   +collide(c: LoaderCollider, a: Axis)
+   +collide(c: BrickCollider, a: Axis)
+   +collide(c: PipeCollider, a: Axis)
+   +collide(c: QuestionBlockCollider, a: Axis)
+   +collide(c: CoinCollider, a: Axis)
+   +collide(c: UnloaderCollider, a: Axis)
+   +collide(c: DeleterCollider, a: Axis)
+   +collide(c: LakituCollider, a: Axis)
+   +collide(c: BuzzyBeetleCollider, a: Axis)
+   +collide(c: PiranhaPlantCollider, a: Axis)
+   +collide(c: FireFlowerCollider, a: Axis)
+   +collide(c: StarCollider, a: Axis)
+   +collide(c: SuperMarioCollider, a: Axis)
+   +collide(c: DefaultMarioCollider, a: Axis)
+   +collide(c: GreenMushroomCollider, a: Axis)
+   +collide(c: EmptyBlockCollider, a: Axis)
 }
 
 class SuperMushroomCollision {
    #collider: SuperMushroomCollider
    +SuperMushroomCollision(c: SuperMushroomCollider)
    +getCollider(): SuperMushroomCollider 
-   +collide(c: MarioCollider, a: Axis)
    +collide(c: BlockCollider, a: Axis)
    +collide(c: ScreenDisplacementCollider, a: Axis)
    +collide(c: ScreenBorderCollider, a: Axis)
@@ -148,6 +678,50 @@ class SuperMushroomCollision {
    +collide(c: KoopaTroopaCollider, a: Axis)
    +collide(c: SuperMushroomCollider, a: Axis)
    +collide(c: LoaderCollider, a: Axis)
+   +collide(c: LakituCollider, a: Axis)
+   +collide(c: BrickCollider, a: Axis)
+   +collide(c: PipeCollider, a: Axis)
+   +collide(c: QuestionBlockCollider, a: Axis)
+   +collide(c: CoinCollider, a: Axis)
+   +collide(c: UnloaderCollider, a: Axis)
+   +collide(c: DeleterCollider, a: Axis)
+   +collide(c: BuzzyBeetleCollider, a: Axis)
+   +collide(c: PiranhaPlantCollider, a: Axis)
+   +collide(c: FireFlowerCollider, a: Axis)
+   +collide(c: StarCollider, a: Axis)
+   +collide(c: GreenMushroomCollider, a: Axis)
+   +collide(c: SuperMarioCollider, a: Axis)
+   +collide(c: DefaultMarioCollider, a: Axis)
+   +collide(c: EmptyBlockCollider, a: Axis)
+}
+
+class UnloaderCollision {
+   #unloader: UnloaderCollider
+   +UnloaderCollision(l: UnloaderCollider)
+   +getCollider(): UnloaderCollider 
+   +collide(c: BlockCollider, a: Axis)
+   +collide(c: ScreenDisplacementCollider, a: Axis)
+   +collide(c: ScreenBorderCollider, a: Axis)
+   +collide(c: GoombaCollider, a: Axis)
+   +collide(c: SpinyCollider, a: Axis)
+   +collide(c: KoopaTroopaCollider, a: Axis)
+   +collide(c: SuperMushroomCollider, a: Axis)
+   +collide(c: LoaderCollider, a: Axis)
+   +collide(c: BrickCollider, a: Axis)
+   +collide(c: PipeCollider, a: Axis)
+   +collide(c: QuestionBlockCollider, a: Axis)
+   +collide(c: CoinCollider, a: Axis)
+   +collide(c: UnloaderCollider, a: Axis)
+   +collide(c: DeleterCollider, a: Axis)
+   +collide(c: colliders.enemies.LakituCollider, a: Axis)
+   +collide(c: BuzzyBeetleCollider, a: Axis)
+   +collide(c: PiranhaPlantCollider, a: Axis)
+   +collide(c: FireFlowerCollider, a: Axis)
+   +collide(c: StarCollider, a: Axis)
+   +collide(c: GreenMushroomCollider, a: Axis)
+   +collide(c: SuperMarioCollider, a: Axis)
+   +collide(c: DefaultMarioCollider, a: Axis)
+   +collide(c: EmptyBlockCollider, a: Axis)
 }
 
 interface UpdateableEntityCollision {
