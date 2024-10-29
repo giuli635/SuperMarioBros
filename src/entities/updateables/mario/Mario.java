@@ -4,6 +4,8 @@ import java.awt.Rectangle;
 import java.util.Iterator;
 import java.util.SortedSet;
 import java.util.Stack;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.TreeSet;
 
 import colliders.updateables.mario.DefaultMarioCollider;
@@ -99,8 +101,15 @@ public class Mario extends UpdateableBody {
         SoundManager.instance().removeAllSounds();
         SoundManager.instance().playSound("mariodie.wav");
         levelStats.decreaseLives();
-        Game.instance().resetCurrentLevel();
+        Timer timer = new Timer();
+        TimerTask task = new TimerTask() {
+            public void run(){
+                Game.instance().resetCurrentLevel();
+            }
+        }; 
+        timer.schedule(task,3000);
     }
+    
 
     public boolean isFalling() {
         return falling;

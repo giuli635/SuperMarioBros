@@ -116,15 +116,9 @@ public class Game implements WindowListener, KeyListener {
     }
 
     public void resetCurrentLevel() {
-        Timer timer = new Timer();
-        TimerTask task = new TimerTask() {
-            public void run(){
-                reset = true;
-            }
-        }; 
-        timer.schedule(task,3000);
+        reset=true;
     }
-
+    
     public void advanceLevel() {
         if (currLevel < levels.length -1) {
             currLevel ++;
