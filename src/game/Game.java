@@ -9,6 +9,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import entities.updateables.UpdatableEntity;
 import utils.KeyStatus;
@@ -99,6 +101,7 @@ public class Game implements WindowListener, KeyListener {
                     graphicEngine.reset();
                     lvlStats = reader.createLevel(lvlStats.getLives(), lvlStats.getRemainingTime(), lvlStats.getLevelNumber(), lvlStats.getScore());
                     reader.readTxt(levels[currLevel]);
+                    soundManager.playLoopingSound("marioBackground.wav");
                     reset = false;
                 }
             }
@@ -113,7 +116,13 @@ public class Game implements WindowListener, KeyListener {
     }
 
     public void resetCurrentLevel() {
-        reset = true;
+        Timer timer = new Timer();
+        TimerTask task = new TimerTask() {
+            public void run(){
+                reset = true;
+            }
+        }; 
+        timer.schedule(task,3000);
     }
 
     public void advanceLevel() {
