@@ -38,7 +38,7 @@ public class BrickCollider extends SolidCollider {
         if (displacement < 0) {
             brick.getCollider().deactivate();
             brick.getGraphicElement().remove();
-            mario.setSpeedX(0);
+            mario.setSpeedY(0);
         }
         else{
             mario.land();
