@@ -1,28 +1,12 @@
 package collisions;
-import colliders.Collider;
-import colliders.DefaultMarioCollider;
-import colliders.DeleterCollider;
-import colliders.EmptyBlockCollider;
-import colliders.enemies.BuzzyBeetleCollider;
-import colliders.enemies.GoombaCollider;
-import colliders.enemies.KoopaTroopaCollider;
-import colliders.enemies.LakituCollider;
-import colliders.enemies.PiranhaPlantCollider;
-import colliders.enemies.SpinyCollider;
-import colliders.BlockCollider;
-import colliders.BrickCollider;
-import colliders.CoinCollider;
-import colliders.LoaderCollider;
-import colliders.PipeCollider;
-import colliders.QuestionBlockCollider;
-import colliders.ScreenBorderCollider;
-import colliders.ScreenDisplacementCollider;
-import colliders.SuperMarioCollider;
-import colliders.powerUp.FireFlowerCollider;
-import colliders.powerUp.GreenMushroomCollider;
-import colliders.powerUp.StarCollider;
-import colliders.powerUp.SuperMushroomCollider;
-import colliders.UnloaderCollider;
+
+import colliders.*;
+import colliders.invisibles.*;
+import colliders.solids.*;
+import colliders.updateables.enemies.*;
+import colliders.updateables.mario.*;
+import colliders.updateables.powerups.*;
+import utils.Axis;
 
 public interface Collision {
     public Collider getCollider();
@@ -42,7 +26,7 @@ public interface Collision {
     public void collide(PipeCollider c, Axis a);
     public void collide(QuestionBlockCollider c, Axis a);
     public void collide(CoinCollider c, Axis a);
-    public void collide(UnloaderCollider c, Axis a);
+    public void collide(GraphicUnloaderCollider c, Axis a);
     public void collide(DeleterCollider c, Axis a);
     public void collide(PiranhaPlantCollider c, Axis a);
     public void collide(FireFlowerCollider c, Axis a);

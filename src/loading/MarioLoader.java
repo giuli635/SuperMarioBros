@@ -1,6 +1,6 @@
 package loading;
 
-import entities.mario.Mario;
+import entities.updateables.mario.Mario;
 import game.Game;
 import game.LevelReader;
 

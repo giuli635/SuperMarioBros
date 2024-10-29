@@ -20,7 +20,7 @@ import java.io.IOException;
 import java.awt.Color;
 import java.awt.Component;
 
-public class StatsBar implements GraphicElement, LevelStatsObserver {
+public class StatsBar extends BaseGraphicElement implements LevelStatsObserver {
     protected Font customFont;
     protected LevelTimer levelTimer;
     protected int lives;

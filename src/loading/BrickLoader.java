@@ -1,6 +1,6 @@
 package loading;
 
-import entities.Brick;
+import entities.solids.Brick;
 import game.LevelReader;
 
 public class BrickLoader extends BaseLoader {

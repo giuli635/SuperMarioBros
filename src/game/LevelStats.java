@@ -10,7 +10,6 @@ public class LevelStats {
     protected int levelNumber;
     protected LevelTimer levelTimer;
     protected List<LevelStatsObserver> observers;
-    protected SoundManager soundManager;
     
     public LevelStats(int initialTime, int initialLives, int numberLevel, int scoreLevel) {
         remainingTime = initialTime;
@@ -19,8 +18,6 @@ public class LevelStats {
         levelNumber = numberLevel;
         levelTimer = new LevelTimer(remainingTime);
         observers = new ArrayList<>();
-        soundManager = new SoundManager();
-        soundManager.playLoopingSound("marioBackground.wav");
     }
     
     public void addObserver(LevelStatsObserver observer) {
@@ -31,14 +28,6 @@ public class LevelStats {
         for(LevelStatsObserver observer : observers) {
             observer.onStatsChanged();
         }
-    }
-
-    public void pauseAllSounds(){
-        soundManager.pauseAllSounds();
-    }
-
-    public void resumeAllSounds(){
-        soundManager.resumeAllSounds();
     }
 
     public void pauseTimer(){
@@ -88,9 +77,5 @@ public class LevelStats {
     
     public int getLevelNumber(){
         return levelNumber;
-    }
-
-    public SoundManager getSoundManager(){
-        return soundManager;
     }
 }

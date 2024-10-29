@@ -1,6 +1,6 @@
 package loading;
 
-import entities.enemies.KoopaTroopa;
+import entities.updateables.enemies.KoopaTroopa;
 import game.LevelReader;
 
 public class KoopaTroopaLoader extends BaseLoader {

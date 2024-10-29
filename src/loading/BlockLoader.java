@@ -1,6 +1,6 @@
 package loading;
 
-import entities.Block;
+import entities.solids.Block;
 import game.LevelReader;
 
 public class BlockLoader extends BaseLoader {

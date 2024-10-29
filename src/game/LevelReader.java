@@ -7,32 +7,16 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import loading.*;
 import colliders.Collider;
-import colliders.DeleterCollider;
-import colliders.Direction;
-import colliders.LoaderCollider;
-import colliders.ScreenBorderCollider;
-import colliders.ScreenDisplacementCollider;
-import colliders.UnloaderCollider;
+import colliders.invisibles.DeleterCollider;
+import colliders.invisibles.LoaderCollider;
+import colliders.invisibles.ScreenBorderCollider;
+import colliders.invisibles.ScreenDisplacementCollider;
+import colliders.invisibles.GraphicUnloaderCollider;
 import graphics.GameGraphicElement;
 import graphics.StatsBar;
-import loading.BlockLoader;
-import loading.EntityLoader;
-import loading.GoombaLoader;
-import loading.GreenMushroomLoader;
-import loading.KoopaTroopaLoader;
-import loading.LakituLoader;
-import loading.MarioLoader;
-import loading.BasePipeLoader;
-import loading.TopPipeLoader;
-import loading.PiranhaPlantLoader;
-import loading.QuestionBlockLoader;
-//import loading.QuestionBlockLoader;
-import loading.SpinyLoader;
-import loading.SuperMushroomLoader;
-import loading.BrickLoader;
-import loading.BuzzyBeetleLoader;
-import loading.EmptyBlockLoader;
+import utils.Direction;
 
 public class LevelReader {
     public static final int CHUNK = 32;
@@ -70,10 +54,10 @@ public class LevelReader {
 
     public LevelStats createLevel(int livesMario, int levelTimer, int numberLevel, int score) {
         LevelStats level = null;
-            level = new LevelStats(levelTimer, livesMario, numberLevel, score);
-            StatsBar statsBar = new StatsBar(level);
-            GraphicEngine.instance().add(statsBar);
-            GraphicEngine.instance().setDepth(statsBar, GraphicEngine.FRONT_DEPTH);
+        level = new LevelStats(levelTimer, livesMario, numberLevel, score);
+        StatsBar statsBar = new StatsBar(level);
+        GraphicEngine.instance().add(statsBar);
+        GraphicEngine.instance().setDepth(statsBar, GraphicEngine.FRONT_DEPTH);
         return level;
     }
 
@@ -95,12 +79,23 @@ public class LevelReader {
         int windowHeight = (int) graphicEngine.getPanelSize().getHeight();
         graphicEngine.setPosition(loadingStartingPoint * CHUNK);
 
-        for (Collider collider : collisionsEngine.getCollidersInRange(loadingStartingPoint * CHUNK + 1, (int) graphicEngine.getPanelSize().getWidth() + CHUNK * loadingStartingPoint)) {
+        Iterable<Collider> chunksToLoad = collisionsEngine.getCollidersInRange(
+            loadingStartingPoint * CHUNK + 1,
+            (int) graphicEngine.getPanelSize().getWidth() + CHUNK * loadingStartingPoint
+        );
+
+        for (Collider collider : chunksToLoad) {
             GameGraphicElement graphicElement = collider.getEntity().getGraphicElement();
-            Point colliderPosition = collider.getPosition();
-            int heightDifference = graphicElement.getCurrentSprite().getIconHeight() - CHUNK;
-            graphicElement.setPosition((int) colliderPosition.getX() - loadingStartingPoint * CHUNK, (int) colliderPosition.getY() + heightDifference);
-            graphicEngine.add(graphicElement);
+            if (graphicElement != null) {
+                Point colliderPosition = collider.getPosition();
+
+                int heightDifference = graphicElement.getSprite().getIconHeight() - CHUNK;
+                graphicElement.setPosition(
+                (int) colliderPosition.getX() - loadingStartingPoint * CHUNK,
+                (int) colliderPosition.getY() + heightDifference
+                );
+                graphicElement.add();
+            }
         }
 
         LoaderCollider loader = new LoaderCollider(new Rectangle(0, 0, CHUNK, 2 * windowHeight));
@@ -111,7 +106,7 @@ public class LevelReader {
             collisionsEngine.update();
         }
 
-        UnloaderCollider unloader = new UnloaderCollider(new Rectangle((loadingStartingPoint - 2) * CHUNK, 0, CHUNK, 2 * windowHeight));
+        GraphicUnloaderCollider unloader = new GraphicUnloaderCollider(new Rectangle((loadingStartingPoint - 2) * CHUNK, 0, CHUNK, 2 * windowHeight));
         unloader.activate();
 
         DeleterCollider deleter = new DeleterCollider(new Rectangle((loadingStartingPoint - 6) * CHUNK, 0, CHUNK, 2 * windowHeight));

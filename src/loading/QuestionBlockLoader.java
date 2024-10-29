@@ -1,6 +1,6 @@
 package loading;
 
-import entities.QuestionBlock;
+import entities.solids.QuestionBlock;
 import game.LevelReader;
 
 public class QuestionBlockLoader extends BaseLoader {

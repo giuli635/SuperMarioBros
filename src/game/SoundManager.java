@@ -6,11 +6,19 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class SoundManager {
+    protected static SoundManager uniqueInstance;
     private Map<String, Clip> clips;
     private String soundPath = "sound/";
     
-    public SoundManager() {
+    private SoundManager() {
         clips = new HashMap<>();
+    }
+
+    public static SoundManager instance() {
+        if (uniqueInstance == null) {
+            uniqueInstance = new SoundManager();
+        }
+        return uniqueInstance;
     }
     
     public void playSound(String soundFile) {
@@ -26,7 +34,6 @@ public class SoundManager {
         }
     }
 
-    
     public void playLoopingSound(String soundFile) {
         try {
             File file = new File(soundPath + soundFile);
@@ -64,6 +71,4 @@ public class SoundManager {
         }
         clips.clear();
     }
-    
-
 }

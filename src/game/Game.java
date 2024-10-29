@@ -10,7 +10,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import entities.UpdatableEntity;
+import entities.updateables.UpdatableEntity;
+import utils.KeyStatus;
 
 public class Game implements WindowListener, KeyListener {
     protected static int SECOND = 1000;
@@ -66,9 +67,11 @@ public class Game implements WindowListener, KeyListener {
     private void loop() {
         GraphicEngine graphicEngine = GraphicEngine.instance();
         graphicEngine.initBackgrounds();
+        SoundManager soundManager = SoundManager.instance();
         LevelReader reader = LevelReader.instance();
         lvlStats = reader.createLevel(10, 300, 1, 0);
         reader.readTxt(levels[currLevel]);
+        soundManager.playLoopingSound("marioBackground.wav");
         long lastUpdateTime;
         while (run) {
             debugging = false;
@@ -176,10 +179,8 @@ public class Game implements WindowListener, KeyListener {
                 pauseKeyAlreadyPressed = true; // Registrar que la tecla P ya está presionada
                 if (pause){
                     lvlStats.pauseTimer();
-                    lvlStats.pauseAllSounds();
                 }
                 else{
-                    lvlStats.resumeAllSounds();
                     lvlStats.resumeTimer();
                 }
 

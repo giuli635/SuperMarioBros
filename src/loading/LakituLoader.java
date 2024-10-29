@@ -1,6 +1,6 @@
 package loading;
 
-import entities.enemies.Lakitu;
+import entities.updateables.enemies.Lakitu;
 import game.LevelReader;
 
 public class LakituLoader extends BaseLoader {

@@ -1,21 +1,20 @@
 package entities;
 
-
 import java.awt.Rectangle;
 
+import colliders.invisibles.EmptyBlockCollider;
 import graphics.GameGraphicElement;
-import colliders.EmptyBlockCollider;
 
-public class EmptyBlock implements Entity {
+public class EmptyBlock extends Body {
     protected static String SPRITES_FOLDER = "EmptyBlock";
 
     protected EmptyBlockCollider collider;
     protected GameGraphicElement graphicElement;
 
     public EmptyBlock() {
-        collider = new EmptyBlockCollider(this, new Rectangle(32, 32));
+        collider = new EmptyBlockCollider(this, new Rectangle());
         graphicElement = new GameGraphicElement(this, SPRITES_FOLDER);
-        graphicElement.setSprite(SPRITES_FOLDER);
+        setSprite(SPRITES_FOLDER);
     }
 
     @Override

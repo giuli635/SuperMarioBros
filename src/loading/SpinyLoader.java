@@ -1,6 +1,6 @@
 package loading;
 
-import entities.enemies.Spiny;
+import entities.updateables.enemies.Spiny;
 import game.LevelReader;
 
 public class SpinyLoader extends BaseLoader {

@@ -5,8 +5,9 @@ import java.awt.Point;
 import java.awt.Rectangle;
 
 import collisions.Collision;
-import collisions.Axis;
 import entities.Entity;
+import utils.Axis;
+import utils.Vector2D;
 
 public interface Collider {
     public Entity getEntity();
@@ -18,9 +19,9 @@ public interface Collider {
     public void translate(int dx, int dy);
     public Dimension getSize();
     public void setSize(int width, int height);
-    public void adjust();
     public Vector2D getVelocity();
     public boolean isActivated();
+    public void setActivated(boolean status);
     public void activate();
     public void deactivate();
     public void updateVelocity();

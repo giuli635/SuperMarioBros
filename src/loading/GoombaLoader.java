@@ -1,6 +1,6 @@
 package loading;
 
-import entities.enemies.Goomba;
+import entities.updateables.enemies.Goomba;
 import game.LevelReader;
 
 public class GoombaLoader extends BaseLoader {

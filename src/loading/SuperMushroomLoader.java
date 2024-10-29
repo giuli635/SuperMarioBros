@@ -1,6 +1,6 @@
 package loading;
 
-import entities.powerUp.SuperMushroom;
+import entities.updateables.powerups.SuperMushroom;
 import game.LevelReader;
 
 public class SuperMushroomLoader extends BaseLoader {

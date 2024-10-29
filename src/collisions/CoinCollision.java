@@ -1,28 +1,12 @@
 package collisions;
 
-import colliders.BlockCollider;
-import colliders.BrickCollider;
-import colliders.CoinCollider;
-import colliders.DefaultMarioCollider;
-import colliders.DeleterCollider;
-import colliders.EmptyBlockCollider;
-import colliders.enemies.GoombaCollider;
-import colliders.enemies.KoopaTroopaCollider;
-import colliders.enemies.LakituCollider;
-import colliders.enemies.PiranhaPlantCollider;
-import colliders.enemies.SpinyCollider;
-import colliders.LoaderCollider;
-import colliders.PipeCollider;
-import colliders.QuestionBlockCollider;
-import colliders.ScreenBorderCollider;
-import colliders.ScreenDisplacementCollider;
-import colliders.SuperMarioCollider;
-import colliders.powerUp.FireFlowerCollider;
-import colliders.powerUp.GreenMushroomCollider;
-import colliders.powerUp.StarCollider;
-import colliders.powerUp.SuperMushroomCollider;
-import colliders.UnloaderCollider;
-import colliders.enemies.BuzzyBeetleCollider;
+import colliders.*;
+import colliders.invisibles.*;
+import colliders.solids.*;
+import colliders.updateables.enemies.*;
+import colliders.updateables.mario.*;
+import colliders.updateables.powerups.*;
+import utils.Axis;
 
 public class CoinCollision extends BaseCollision {
     protected CoinCollider coinCollider;
@@ -145,7 +129,7 @@ public class CoinCollision extends BaseCollision {
     }
 
     @Override
-    public void collide(UnloaderCollider c, Axis a) {
+    public void collide(GraphicUnloaderCollider c, Axis a) {
         if (a == Axis.X) {
             c.handleHorizontalCollision(this);
         } else {

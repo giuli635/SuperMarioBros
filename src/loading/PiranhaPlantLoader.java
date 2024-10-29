@@ -1,6 +1,6 @@
 package loading;
 
-import entities.enemies.PiranhaPlant;
+import entities.updateables.enemies.PiranhaPlant;
 import game.LevelReader;
 
 public class PiranhaPlantLoader extends BaseLoader {

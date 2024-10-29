@@ -1,6 +1,6 @@
 package loading;
 
-import entities.enemies.BuzzyBeetle;
+import entities.updateables.enemies.BuzzyBeetle;
 import game.LevelReader;
 
 public class BuzzyBeetleLoader extends BaseLoader {

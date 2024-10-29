@@ -1,6 +1,6 @@
 package loading;
 
-import entities.Pipe;
+import entities.solids.Pipe;
 import game.LevelReader;
 
 public class TopPipeLoader extends BaseLoader {

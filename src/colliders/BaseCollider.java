@@ -4,10 +4,9 @@ import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.Rectangle;
 
-import javax.swing.ImageIcon;
-
 import collisions.Collision;
 import game.CollisionsEngine;
+import utils.Vector2D;
 
 public abstract class BaseCollider implements Collider {
     protected Rectangle bounds;
@@ -71,15 +70,17 @@ public abstract class BaseCollider implements Collider {
         return activated;
     }
 
+    public void setActivated(boolean status) {
+        activated = status;
+    }
+
     @Override
     public void activate() {
-        activated = true;
         CollisionsEngine.instance().add(this);
     }
 
     @Override
     public void deactivate() {
-        activated = false;
         CollisionsEngine.instance().remove(this);
         velocity = new Vector2D(bounds.getLocation(), bounds.getLocation());
         nextVelocity = new Vector2D(bounds.getLocation(), bounds.getLocation());
@@ -105,6 +106,7 @@ public abstract class BaseCollider implements Collider {
             CollisionsEngine.instance().addToUpdate(this);
         } else {
             velocity.grow(dx, dy);
+            nextVelocity.translate(dx, dy);
             CollisionsEngine.instance().addToUpdate(this);
         }
     }
@@ -133,9 +135,7 @@ public abstract class BaseCollider implements Collider {
     @Override
     public void setSize(int width, int height) {
         bounds.setSize(width, height);
-        if (!activated) {
-            CollisionsEngine.instance().updateColliderBounds(bounds, this);
-        }
+        CollisionsEngine.instance().updateColliderBounds(bounds, this);
     }
 
     @Override
@@ -162,10 +162,5 @@ public abstract class BaseCollider implements Collider {
 
     public void handleVerticalCollision(Collision c) {
         c.setManaged(false);
-    }
-
-    public void adjust() {
-        ImageIcon sprite = getEntity().getGraphicElement().getCurrentSprite();
-        setSize(sprite.getIconWidth(), sprite.getIconHeight());
     }
 }

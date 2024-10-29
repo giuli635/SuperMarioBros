@@ -9,8 +9,8 @@ import java.util.Vector;
 import java.util.concurrent.ConcurrentHashMap;
 
 import colliders.Collider;
-import collisions.Axis;
 import collisions.Collision;
+import utils.Axis;
 
 public class CollisionsEngine {
     protected static CollisionsEngine uniqueInstance;
@@ -89,8 +89,10 @@ public class CollisionsEngine {
     }
 
     public void updateColliderBounds(Rectangle previousBounds, Collider c) {
-        removeFromChunks(previousBounds, c);
-        add(c);
+        if (c.isActivated()) {
+            removeFromChunks(previousBounds, c);
+            add(c);
+        }
     }
 
     protected int[] calculateChunk(int minX, int maxX) {
@@ -119,6 +121,8 @@ public class CollisionsEngine {
             chunks.add(new Vector<>());
             chunks.get(i).add(collider);
         }
+
+        collider.setActivated(true);
     }
 
     protected void removeFromChunks(Rectangle bounds, Collider c) {
@@ -128,9 +132,10 @@ public class CollisionsEngine {
         }
     }
 
-    public void remove(Collider c) {
-        removeFromChunks(c.getBounds(), c);
-        toUpdate.remove(c);
+    public void remove(Collider collider) {
+        removeFromChunks(collider.getBounds(), collider);
+        toUpdate.remove(collider);
+        collider.setActivated(false);
     }
 
     public Iterable<Collider> getCollidersInRange(int lowerBound, int higherBound) {

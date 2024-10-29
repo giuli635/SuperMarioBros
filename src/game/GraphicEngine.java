@@ -66,7 +66,7 @@ public class GraphicEngine {
         }
 
         backgrounds[0].setPosition(0, 480);
-        backgrounds[1].setPosition((int) backgrounds[1].getCurrentSprite().getIconWidth(), 480);
+        backgrounds[1].setPosition((int) backgrounds[1].getSprite().getIconWidth(), 480);
     }
 
     public static GraphicEngine instance() {
@@ -94,21 +94,27 @@ public class GraphicEngine {
     }
 
     public void add(GraphicElement e) {
-        onScreen.add(e);
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                panel.add(e.getComponent(), DEFAULT_DEPTH, 0);
-            }
-        });
+        if (!e.added()) {
+            e.setAdded(true);
+            onScreen.add(e);
+            SwingUtilities.invokeLater(new Runnable() {
+                public void run() {
+                    panel.add(e.getComponent(), DEFAULT_DEPTH, 0);
+                }
+            });
+        }
     }
 
     public void remove(GraphicElement e) {
-        onScreen.remove(e);
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                panel.remove(e.getComponent());
-            }
-        });
+        if (e.added()) {
+            e.setAdded(false);
+            onScreen.remove(e);
+            SwingUtilities.invokeLater(new Runnable() {
+                public void run() {
+                    panel.remove(e.getComponent());
+                }
+            });
+        }
     }
 
     public Dimension getPanelSize() {

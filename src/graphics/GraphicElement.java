@@ -9,4 +9,8 @@ public interface GraphicElement {
     public void setPosition(int x, int y);
     public JComponent getComponent();
     public void draw();
+    public void setAdded(boolean status);
+    public boolean added();
+    public void add();
+    public void remove();
 }

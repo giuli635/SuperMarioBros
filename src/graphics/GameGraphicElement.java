@@ -12,7 +12,7 @@ import javax.swing.JLabel;
 import entities.Entity;
 import game.GraphicEngine;
 
-public class GameGraphicElement implements GraphicElement {
+public class GameGraphicElement extends BaseGraphicElement {
     protected Entity entity;
     protected JLabel label;
     protected ImageIcon sprite;
@@ -20,14 +20,6 @@ public class GameGraphicElement implements GraphicElement {
     protected Rectangle bounds;
     protected boolean toUpdate;
     protected boolean flipped;
-
-    public boolean isFlipped() {
-        return flipped;
-    }
-
-    public void setFlipped(boolean flipped) {
-        this.flipped = flipped;
-    }
 
     protected Map<String, ImageIcon> sprites;
     protected String folder;
@@ -63,29 +55,20 @@ public class GameGraphicElement implements GraphicElement {
         bounds.setLocation(x, y);
     }
 
-    public ImageIcon getCurrentSprite() {
+    public String getSpriteName() {
+        return currentSprite;
+    }
+
+    public ImageIcon getSprite() {
         return sprite;
     }
 
     public void setSprite(String s) {
         currentSprite = s;
-        if (sprite != null) {
-            int preHeight = sprite.getIconHeight();
-            sprite = sprites.get(s + ".png");
-            toUpdate = true;
-            flipped = false;
-            bounds.setSize(sprite.getIconWidth(), sprite.getIconHeight());
-            int posHeight = sprite.getIconHeight();
-            int diff = preHeight - posHeight;
-            int sign = (int) Math.signum(diff);
-            translate(0,- sign * Math.abs(diff));
-            entity.getCollider().adjust();
-        } else {
-            sprite = sprites.get(s + ".png");
-            toUpdate = true;
-            flipped = false;
-            bounds.setSize(sprite.getIconWidth(), sprite.getIconHeight());
-        }
+        toUpdate = true;
+        flipped = false;
+        sprite = sprites.get(s + ".png");
+        bounds.setSize(sprite.getIconWidth(), sprite.getIconHeight());
     }
 
     public void flipSprite() {
@@ -141,10 +124,17 @@ public class GameGraphicElement implements GraphicElement {
     public void setFolder(String f) {
         folder = f;
         loadSprites();
-        setSprite(currentSprite);
     }
 
     public String getFolder() {
         return folder;
+    }
+
+    public boolean isFlipped() {
+        return flipped;
+    }
+
+    public void setFlipped(boolean flipped) {
+        this.flipped = flipped;
     }
 }
