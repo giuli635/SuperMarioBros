@@ -5,4 +5,6 @@ import entities.updateables.UpdatableEntity;
 
 public interface Enemy extends UpdatableEntity, MovableEntity {
     public void recieveDamage();
+    public int pointsToAdd();
+    public int pointsToSubtract();
 }

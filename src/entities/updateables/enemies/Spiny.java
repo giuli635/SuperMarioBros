@@ -8,6 +8,7 @@ import graphics.GameGraphicElement;
 public class Spiny extends BaseEnemy {
     protected static String SPRITES_FOLDER = "spiny";
     protected int speedX;
+    public final static int POINTS = 60;
 
     protected SpinyCollider collider;
     protected GameGraphicElement graphicElement;
@@ -32,5 +33,15 @@ public class Spiny extends BaseEnemy {
     @Override
     public SpinyCollider getCollider() {
         return collider;
+    }
+
+    @Override
+    public int pointsToAdd() {
+        return POINTS;
+    }
+
+    @Override
+    public int pointsToSubtract() {
+        return -(POINTS/2);
     }
 }

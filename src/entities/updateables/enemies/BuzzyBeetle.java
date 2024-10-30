@@ -9,6 +9,7 @@ import colliders.updateables.enemies.BuzzyBeetleCollider;
 public class BuzzyBeetle extends BaseEnemy implements ShellEnemy {
     protected static String SPRITES_FOLDER = "buzzyBeetle";
     protected boolean shell;
+    public final static int POINTS = 30; 
 
     protected BuzzyBeetleCollider collider;
     protected GameGraphicElement graphicElement;
@@ -59,5 +60,15 @@ public class BuzzyBeetle extends BaseEnemy implements ShellEnemy {
     @Override
     public BuzzyBeetleCollider getCollider() {
         return collider;
+    }
+
+    @Override
+    public int pointsToAdd() {
+        return POINTS;
+    }
+
+    @Override
+    public int pointsToSubtract() {
+        return -(POINTS/2);
     }
 }

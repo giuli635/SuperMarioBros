@@ -125,14 +125,6 @@ public class Mario extends UpdateableBody {
         speedY += dy;
     }
 
-    public void addPoints(int points){
-        levelStats.addPoints(points);
-    } 
-
-    public void subtractPoints(int i) {
-        levelStats.subtractPoints(i);
-    }
-
     public float getSpeedY() {
         return speedY;
     }
@@ -207,5 +199,9 @@ public class Mario extends UpdateableBody {
         collider.deactivate();
         collider = new InvulnerableCollider(this);
         collider.activate();
+    }
+
+    public void modifyPoints(int points) {
+        levelStats.modifyPoints(points);
     }
 }

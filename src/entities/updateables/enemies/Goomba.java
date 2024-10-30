@@ -8,6 +8,7 @@ import colliders.updateables.enemies.GoombaCollider;
 
 public class Goomba extends BaseEnemy {
     protected static String SPRITES_FOLDER = "goomba";
+    public final static int POINTS = 60;
     protected int speedX;
 
     protected GoombaCollider collider;
@@ -33,6 +34,16 @@ public class Goomba extends BaseEnemy {
     @Override
     public GoombaCollider getCollider() {
         return collider;
+    }
+
+    @Override
+    public int pointsToAdd() {
+        return POINTS;
+    }
+
+    @Override
+    public int pointsToSubtract() {
+        return -(POINTS/2);
     }
     
 }

@@ -12,6 +12,7 @@ import graphics.GameGraphicElement;
 public class PiranhaPlant extends BaseEnemy {
     protected static final float maxHeight = 1.5f;
     protected float speedY = 0f;
+    public final static int POINTS = 30;
     
     protected static String SPRITES_FOLDER = "piranha";
     public final static String[] PIRANHA_EATING = {"piranhaOpen", "piranhaClosed"};
@@ -105,5 +106,15 @@ public class PiranhaPlant extends BaseEnemy {
     @Override
     public PiranhaPlantCollider getCollider() {
         return collider;
+    }
+
+    @Override
+    public int pointsToAdd() {
+        return POINTS;
+    }
+
+    @Override
+    public int pointsToSubtract() {
+        return -(POINTS);
     }
 }

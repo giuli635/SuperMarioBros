@@ -25,7 +25,7 @@ public class Game implements WindowListener, KeyListener {
     protected boolean pause;
     protected boolean pauseKeyAlreadyPressed = false;
     protected String[] levels = {"menu.txt", "level1.txt", "level2.txt", "level3.txt"};
-    protected int currLevel = 1;
+    protected int currLevel = 0;
     protected long frames = 0;
 
     protected List<UpdatableEntity> toAddList = new ArrayList<>();
@@ -102,7 +102,7 @@ public class Game implements WindowListener, KeyListener {
                     CollisionsEngine.instance().reset();
                     graphicEngine.reset();
                     if (!checkGameOver(graphicEngine, soundManager, reader)){
-                        lvlStats = reader.createLevel(lvlStats.getLives(), lvlStats.getRemainingTime(), lvlStats.getLevelNumber(), lvlStats.getScore());
+                        lvlStats = reader.createLevel(lvlStats.getLives(), lvlStats.getRemainingTime(), lvlStats.getLevelNumber(), 0);
                         reader.readTxt(levels[currLevel]);
                         soundManager.playLoopingSound("marioBackground.wav");
                         reset = false;

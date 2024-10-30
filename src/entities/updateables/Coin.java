@@ -7,7 +7,7 @@ import graphics.GameGraphicElement;
 
 public class Coin extends UpdateableBody {
     protected static String SPRITES_FOLDER = "coin";
-    public final static int POINTS = 10;
+    public final static int POINTS = 5;
 
     protected CoinCollider collider;
     protected GameGraphicElement graphicElement;
