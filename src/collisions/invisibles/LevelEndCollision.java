@@ -1,6 +1,6 @@
-package collisions.solids;
+package collisions.invisibles;
 
-import colliders.*;
+import colliders.CoinCollider;
 import colliders.invisibles.*;
 import colliders.solids.*;
 import colliders.updateables.enemies.*;
@@ -9,14 +9,15 @@ import colliders.updateables.powerups.*;
 import collisions.BaseCollision;
 import utils.Axis;
 
-public class QuestionBlockCollision extends BaseCollision implements SolidCollision {
-    protected QuestionBlockCollider collider;
+public class LevelEndCollision extends BaseCollision{
+    protected LevelEndCollider collider;
 
-    public QuestionBlockCollision(QuestionBlockCollider c) {
-        collider = c;
+    public LevelEndCollision(LevelEndCollider l) {
+        collider = l;
     }
-
-    public QuestionBlockCollider getCollider() {
+    
+    @Override
+    public LevelEndCollider getCollider() {
         return collider;
     }
 
@@ -147,14 +148,13 @@ public class QuestionBlockCollision extends BaseCollision implements SolidCollis
     }
 
     @Override
-    public void collide(colliders.updateables.enemies.LakituCollider c, Axis a) {
+    public void collide(LakituCollider c, Axis a) {
         if (a == Axis.X) {
             c.handleHorizontalCollision(this);
         } else {
             c.handleVerticalCollision(this);
         }
     }
-
     @Override
     public void collide(BuzzyBeetleCollider c, Axis a) {
         if (a == Axis.X) {
@@ -198,7 +198,14 @@ public class QuestionBlockCollision extends BaseCollision implements SolidCollis
             c.handleVerticalCollision(this);
         }
     }
-
+    @Override
+    public void collide(EmptyBlockCollider c, Axis a) {
+        if (a == Axis.X) {
+            c.handleHorizontalCollision(this);
+        } else {
+            c.handleVerticalCollision(this);
+        }
+    }
     @Override
     public void collide(SuperMarioCollider c, Axis a) {
         if (a == Axis.X) {
@@ -207,18 +214,8 @@ public class QuestionBlockCollision extends BaseCollision implements SolidCollis
             c.handleVerticalCollision(this);
         }
     }
-
     @Override
     public void collide(DefaultMarioCollider c, Axis a) {
-        if (a == Axis.X) {
-            c.handleHorizontalCollision(this);
-        } else {
-            c.handleVerticalCollision(this);
-        }
-    }
-
-    @Override
-    public void collide(EmptyBlockCollider c, Axis a) {
         if (a == Axis.X) {
             c.handleHorizontalCollision(this);
         } else {

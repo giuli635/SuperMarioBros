@@ -224,4 +224,13 @@ public class CoinCollision extends BaseCollision {
             c.handleVerticalCollision(this);
         }
     }
+
+    @Override
+    public void collide(LevelEndCollider c, Axis a) {
+        if (a == Axis.X) {
+            c.handleHorizontalCollision(this);
+        } else {
+            c.handleVerticalCollision(this);
+        }
+    }
 }

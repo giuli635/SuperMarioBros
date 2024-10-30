@@ -33,6 +33,7 @@ public interface Collision {
     public void collide(StarCollider c, Axis a);
     public void collide(GreenMushroomCollider c, Axis a);
     public void collide(EmptyBlockCollider c, Axis a);
+    public void collide(LevelEndCollider c, Axis a);
     public boolean wasManaged();
     public void setManaged(boolean managed);
 }

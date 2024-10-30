@@ -12,7 +12,6 @@ import collisions.updateables.mario.MarioCollision;
 import collisions.updateables.mario.SuperMarioCollision;
 import entities.updateables.enemies.Enemy;
 import entities.updateables.mario.Mario;
-import game.Game;
 import utils.Direction;
 
 public abstract class EnemyCollider extends BaseCollider implements UpdateableEntityCollider {

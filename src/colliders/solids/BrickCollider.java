@@ -1,6 +1,8 @@
 package colliders.solids;
 
 import java.awt.Rectangle;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import collisions.Collision;
 import collisions.solids.BrickCollision;
@@ -30,6 +32,28 @@ public class BrickCollider extends SolidCollider {
     @Override
     public BrickCollision getCollision() {
         return new BrickCollision(this);
+    }
+
+    public void handleVerticalCollision(MarioCollision m) {
+        Mario mario = m.getCollider().getEntity();
+        int displacement = displaceVertically(m.getCollider());
+        
+        if (displacement >= 0) {
+            mario.land();
+        } else {
+            translate(0, -displacement);
+            getEntity().getGraphicElement().translate(0, -displacement);
+                    
+            Timer timer = new Timer();
+            TimerTask task = new TimerTask() {
+                public void run(){
+                    translate(0, displacement);
+                    getEntity().getGraphicElement().translate(0, displacement);
+                }
+            };
+
+            timer.schedule(task,300);
+        }
     }
 
     public void handleVerticalCollision(SuperMarioCollision m) {

@@ -14,6 +14,7 @@ import colliders.invisibles.LoaderCollider;
 import colliders.invisibles.ScreenBorderCollider;
 import colliders.invisibles.ScreenDisplacementCollider;
 import colliders.invisibles.GraphicUnloaderCollider;
+import colliders.invisibles.LevelEndCollider;
 import graphics.GameGraphicElement;
 import graphics.StatsBar;
 import utils.Direction;
@@ -133,6 +134,10 @@ public class LevelReader {
             unloader,
             deleter
         ).activate();
+
+        int halfScreen = (int) Math.ceil(GraphicEngine.instance().getPanelSize().getWidth() / 2 );
+        LevelEndCollider le = new LevelEndCollider(new Rectangle(row * CHUNK - halfScreen, 0,  CHUNK, 2 * windowHeight));
+        le.activate();
     }
     
     public void loadEntities(BufferedReader br) throws IOException {
@@ -149,6 +154,7 @@ public class LevelReader {
             row++;
             chunk = br.readLine();
         }
+
     }
 
     public void setColumn(int i) {

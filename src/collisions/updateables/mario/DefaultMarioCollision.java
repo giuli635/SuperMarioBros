@@ -225,4 +225,13 @@ public class DefaultMarioCollision extends BaseCollision implements MarioCollisi
             c.handleVerticalCollision(this);
         }
     }
+
+    @Override
+    public void collide(LevelEndCollider c, Axis a) {
+        if (a == Axis.X) {
+            c.handleHorizontalCollision(this);
+        } else {
+            c.handleVerticalCollision(this);
+        }
+    }
 }

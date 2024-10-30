@@ -66,7 +66,7 @@ public class CollisionsEngine {
             int[] chunkRange = calculateChunk(collider.getBounds());
 
             collider.setColliding(true);
-            for (int i = chunkRange[0]; i <= chunkRange[1]; i++) {
+            for (int i = chunkRange[0]; i <= chunkRange[1] && i < chunks.size(); i++) {
                 checkChunk(axis, collider, i);
             }
             collider.setColliding(false);
