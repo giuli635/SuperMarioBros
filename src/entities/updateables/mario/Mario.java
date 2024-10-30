@@ -13,7 +13,6 @@ import colliders.updateables.mario.InvulnerableCollider;
 import colliders.updateables.mario.MarioCollider;
 import entities.updateables.UpdateableBody;
 import entities.updateables.mario.actions.ActionComparator;
-import entities.updateables.mario.actions.DisappearSprite;
 import entities.updateables.mario.actions.HorizontalMovement;
 import entities.updateables.mario.actions.MarioAction;
 import entities.updateables.mario.actions.ResolveHorizontalMovementDirection;

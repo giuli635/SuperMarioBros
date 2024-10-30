@@ -5,7 +5,6 @@ import java.awt.Rectangle;
 
 import colliders.BaseCollider;
 import colliders.updateables.UpdateableEntityCollider;
-import colliders.updateables.mario.InvulnerableCollider;
 import collisions.updateables.enemies.EnemyCollision;
 import collisions.updateables.enemies.ShellEnemyCollision;
 import collisions.updateables.mario.InvulnerableCollision;

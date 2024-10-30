@@ -1,6 +1,7 @@
 package collisions.invisibles;
 
 import colliders.CoinCollider;
+import colliders.FlagPoleCollider;
 import colliders.invisibles.*;
 import colliders.solids.*;
 import colliders.updateables.enemies.*;
@@ -234,6 +235,15 @@ public class LevelEndCollision extends BaseCollision{
 
     @Override
     public void collide(InvulnerableCollider c, Axis a) {
+        if (a == Axis.X) {
+            c.handleHorizontalCollision(this);
+        } else {
+            c.handleVerticalCollision(this);
+        }
+    }
+
+    @Override
+    public void collide(FlagPoleCollider c, Axis a) {
         if (a == Axis.X) {
             c.handleHorizontalCollision(this);
         } else {

@@ -44,6 +44,9 @@ public class LevelReader {
         loaders.put('r', new PiranhaPlantLoader());
         loaders.put('>', new EmptyBlockLoader());
         loaders.put('v', new GreenMushroomLoader());
+        loaders.put('C', new CastleLoader());
+        loaders.put('c', new CastleLoader());
+        loaders.put('e', new FlagPoleLoader());
     }
 
     protected static LevelReader instance(){

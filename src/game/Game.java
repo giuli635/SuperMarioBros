@@ -206,12 +206,10 @@ public class Game implements WindowListener, KeyListener {
     }
 
     public void checkPause() {
-        // Verificar si la tecla P está presionada
         if (Game.instance().getKeyStatus(KeyEvent.VK_P) == KeyStatus.PRESSED) {
-            // Solo cambiar el estado de pausa si la tecla P no estaba previamente presionada
             if (!pauseKeyAlreadyPressed) {
-                pause = !pause; // Cambiar el estado de pausa
-                pauseKeyAlreadyPressed = true; // Registrar que la tecla P ya está presionada
+                pause = !pause;
+                pauseKeyAlreadyPressed = true;
                 if (pause){
                     lvlStats.pauseTimer();
                     SoundManager.instance().pauseAllSounds();
@@ -223,7 +221,6 @@ public class Game implements WindowListener, KeyListener {
 
             }
         } else {
-            // Si la tecla no está presionada, restablecer la bandera
             pauseKeyAlreadyPressed = false;
         }
     }
