@@ -120,7 +120,7 @@ public class LevelReader {
         leftBorder.activate();
 
         ScreenBorderCollider rightBorder = new ScreenBorderCollider(
-            new Rectangle(lastChunkInScreen * CHUNK, 0, CHUNK, 2 * windowHeight),
+            new Rectangle(lastChunkInScreen * CHUNK - CHUNK / 2, 0, CHUNK, 2 * windowHeight),
             Direction.RIGHT
         );
         rightBorder.activate();

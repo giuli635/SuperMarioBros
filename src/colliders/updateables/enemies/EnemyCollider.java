@@ -1,8 +1,6 @@
 package colliders.updateables.enemies;
 
 import java.awt.Rectangle;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import colliders.BaseCollider;
 import colliders.updateables.UpdateableEntityCollider;

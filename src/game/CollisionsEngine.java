@@ -9,7 +9,6 @@ import java.util.Vector;
 import java.util.concurrent.ConcurrentHashMap;
 
 import colliders.Collider;
-import colliders.invisibles.ScreenDisplacementCollider;
 import collisions.Collision;
 import utils.Axis;
 
