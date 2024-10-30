@@ -41,6 +41,11 @@ public abstract class SolidCollider extends BaseCollider {
         displaceVertically(e.getCollider());
     }
 
+    public void handleHorizontalCollision(MarioCollision m) {
+        displaceHorizontally(m.getCollider());
+        m.getCollider().getEntity().setSpeedX(0);
+    }
+
     public void handleVerticalCollision(MarioCollision m) {
         int displacement = displaceVertically(m.getCollider());
         Mario mario = m.getCollider().getEntity();

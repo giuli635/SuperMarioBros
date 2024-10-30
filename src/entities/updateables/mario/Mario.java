@@ -48,8 +48,10 @@ public class Mario extends UpdateableBody {
     protected Direction movementDirection;
     protected boolean overriteSprite;
     protected boolean loaded;
+    protected boolean invulnerable;
 
     public Mario(LevelStats stats) {
+        invulnerable = false;
         loaded = false;
         falling = false;
         levelStats = stats;
@@ -83,8 +85,7 @@ public class Mario extends UpdateableBody {
             actionsIterator.next().execute(this);
         }
 
-        graphicElement.translate((int) speedX, (int) speedY);
-        collider.translate((int) speedX, (int) speedY);
+        translate((int) speedX, (int) speedY);
         falling = true;
     }
 
@@ -94,20 +95,22 @@ public class Mario extends UpdateableBody {
     }
 
     public void die() {
-        unload();
-        collider.deactivate();
-        setSpritesFolder("mario");
-        setSprite(MARIO_DEATH);
-        SoundManager.instance().removeAllSounds();
-        SoundManager.instance().playSound("mariodie.wav");
-        levelStats.decreaseLives();
-        Timer timer = new Timer();
-        TimerTask task = new TimerTask() {
-            public void run(){
-                Game.instance().resetCurrentLevel();
-            }
-        }; 
-        timer.schedule(task,3000);
+        if (!invulnerable) {
+            unload();
+            collider.deactivate();
+            setSpritesFolder("mario");
+            setSprite(MARIO_DEATH);
+            SoundManager.instance().removeAllSounds();
+            SoundManager.instance().playSound("mariodie.wav");
+            levelStats.decreaseLives();
+            Timer timer = new Timer();
+            TimerTask task = new TimerTask() {
+                public void run(){
+                    Game.instance().resetCurrentLevel();
+                }
+            }; 
+            timer.schedule(task,3000);
+        }
     }
     
 
@@ -195,5 +198,13 @@ public class Mario extends UpdateableBody {
         collider.deactivate();
         collider = c;
         collider.activate();
+    }
+
+    public boolean isInvulnerable() {
+        return invulnerable;
+    }
+
+    public void setInvulnerable(boolean invulnerable) {
+        this.invulnerable = invulnerable;
     }
 }

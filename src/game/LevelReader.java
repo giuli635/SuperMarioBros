@@ -92,8 +92,8 @@ public class LevelReader {
 
                 int heightDifference = graphicElement.getSprite().getIconHeight() - CHUNK;
                 graphicElement.setPosition(
-                (int) colliderPosition.getX() - loadingStartingPoint * CHUNK,
-                (int) colliderPosition.getY() + heightDifference
+                    (int) colliderPosition.getX() - loadingStartingPoint * CHUNK,
+                    (int) colliderPosition.getY() + heightDifference
                 );
                 graphicElement.add();
             }
@@ -125,9 +125,9 @@ public class LevelReader {
         );
         rightBorder.activate();
 
-        int middleChunk = lastChunkInScreen / 2;
+        int halfScreen = (int) Math.ceil(GraphicEngine.instance().getPanelSize().getWidth() / 2);
         new ScreenDisplacementCollider(
-            new Rectangle(CHUNK * middleChunk, 0, CHUNK, 2 * windowHeight),
+            new Rectangle(halfScreen + loadingStartingPoint * CHUNK, 0, CHUNK, 2 * windowHeight),
             leftBorder,
             rightBorder,
             loader,
@@ -135,7 +135,6 @@ public class LevelReader {
             deleter
         ).activate();
 
-        int halfScreen = (int) Math.ceil(GraphicEngine.instance().getPanelSize().getWidth() / 2 );
         LevelEndCollider le = new LevelEndCollider(new Rectangle(row * CHUNK - halfScreen, 0,  CHUNK, 2 * windowHeight));
         le.activate();
     }

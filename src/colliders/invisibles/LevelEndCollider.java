@@ -31,7 +31,6 @@ public class LevelEndCollider extends BaseCollider{
     }
 
     public void handleHorizontalCollision(ScreenDisplacementCollision c) {
-        System.out.println("Never Gonna Give you up, never gonna let u down... U r down");
         c.getCollider().deactivate();
     }
 }

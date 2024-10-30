@@ -112,6 +112,10 @@ public class GameGraphicElement extends BaseGraphicElement {
         }
     }
 
+    public void removeSprite() {
+        label.setIcon(null);
+    }
+
     @Override
     public JLabel getComponent() {
         return label;

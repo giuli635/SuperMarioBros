@@ -16,6 +16,7 @@ import utils.Direction;
 
 public abstract class EnemyCollider extends BaseCollider implements UpdateableEntityCollider {
     protected static int DISPLACEMENT_COEFFICIENT = 0;
+
     public abstract Enemy getEntity();
 
     public EnemyCollider(Rectangle b) {
@@ -28,43 +29,21 @@ public abstract class EnemyCollider extends BaseCollider implements UpdateableEn
 
     public void handleHorizontalCollision(SuperMarioCollision m) {
         m.getCollider().getEntity().removeState();
-        m.getCollider().deactivate();
-        Timer timer = new Timer();
-        TimerTask task = new TimerTask() {
-            public void run(){
-                m.getCollider().activate();
-                //m.getCollider().setPosition((int)m.getCollider().getPosition().getX(),(int) m.getCollider().getPosition().getX() );
-            }
-        }; 
-        timer.schedule(task,3000);
     }
-    
 
     public void handleVerticalCollision(MarioCollision m) {
         Direction collisionDirection = Direction.verticalDirectionFromSign(
-            (int) m.getCollider().getVelocity().getYComponent()
+                (int) m.getCollider().getVelocity().getYComponent()
         );
         Mario mario = m.getCollider().getEntity();
 
-        if(collisionDirection == Direction.DOWN) {
+        if (collisionDirection == Direction.DOWN) {
             getEntity().recieveDamage();
             mario.addSpeed(0, Mario.FIXED_BOUNCE_SPEED);
         } else {
-            //mario.die();
-            m.getCollider().getEntity().removeState();
-            m.getCollider().deactivate();
-            Timer timer = new Timer();
-            TimerTask task = new TimerTask() {
-                public void run(){
-                  m.getCollider().activate();
-                //m.getCollider().setPosition((int)m.getCollider().getPosition().getX(),(int) m.getCollider().getPosition().getX() );
-                }
-        }; 
-        timer.schedule(task,3000);
+            mario.die();
         }
-
     }
-    
 
     public void handleVerticalCollision(ShellEnemyCollision s) {
         if (!s.getCollider().getEntity().getShell() || s.getCollider().getEntity().getSpeedX() == 0) {
@@ -78,7 +57,7 @@ public abstract class EnemyCollider extends BaseCollider implements UpdateableEn
     }
 
     public void handleHorizontalCollision(ShellEnemyCollision s) {
-        if(!s.getCollider().getEntity().getShell() || s.getCollider().getEntity().getSpeedX() == 0) {
+        if (!s.getCollider().getEntity().getShell() || s.getCollider().getEntity().getSpeedX() == 0) {
             bounce(s.getCollider());
         } else {
             getEntity().recieveDamage();

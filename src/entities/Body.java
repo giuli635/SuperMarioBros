@@ -5,6 +5,7 @@ import java.awt.Rectangle;
 import javax.swing.ImageIcon;
 
 import colliders.Collider;
+import entities.updateables.mario.Mario;
 import graphics.GameGraphicElement;
 
 public abstract class Body implements Entity {

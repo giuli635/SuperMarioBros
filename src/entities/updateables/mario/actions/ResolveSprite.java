@@ -32,6 +32,12 @@ public class ResolveSprite extends BaseMarioAction {
             }
         }
 
+        if (m.isInvulnerable()) {
+            if (System.currentTimeMillis() % 20 == 0) {
+                graphicElement.removeSprite();
+            }
+        }
+
         if (movementDirection == Direction.LEFT || movementDirection == Direction.NONE && flipped) {
             graphicElement.flipSprite();
         }

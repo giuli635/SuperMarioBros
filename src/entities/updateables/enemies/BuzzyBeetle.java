@@ -33,7 +33,7 @@ public class BuzzyBeetle extends BaseEnemy implements ShellEnemy {
             speedX = 0;
             shell = true;
         } else {
-            die(SPRITES_FOLDER);
+            die(SPRITES_FOLDER + "Shell");
         }
     }
 

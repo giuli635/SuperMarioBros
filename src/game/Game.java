@@ -24,7 +24,7 @@ public class Game implements WindowListener, KeyListener {
     protected boolean pause;
     protected boolean pauseKeyAlreadyPressed = false;
     protected String[] levels = {"menu.txt", "level1.txt", "level2.txt", "level3.txt"};
-    protected int currLevel = 0;
+    protected int currLevel = 1;
 
     protected List<UpdatableEntity> toAddList = new ArrayList<>();
     protected List<UpdatableEntity> toRemoveList = new ArrayList<>();
