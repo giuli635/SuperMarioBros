@@ -3,6 +3,7 @@ package game;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class LevelStats {
     protected int remainingTime;
     protected int score;
@@ -40,7 +41,14 @@ public class LevelStats {
     
     public void decreaseLives() {
         lives--;
+        checkGameOver();
         notifyObserver();
+    }
+
+    public void checkGameOver(){
+        if (lives == 0){
+            notifyObserver();
+        }
     }
     
     public void addPoints(int points) {

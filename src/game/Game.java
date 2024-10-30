@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.Set;
 
 import entities.updateables.UpdatableEntity;
+import graphics.GameOverScreen;
 import utils.KeyStatus;
 
 public class Game implements WindowListener, KeyListener {
@@ -30,6 +31,7 @@ public class Game implements WindowListener, KeyListener {
     protected List<UpdatableEntity> toRemoveList = new ArrayList<>();
     protected boolean debugging;
     protected boolean reset;
+    protected GameOverScreen gameOverScreen;
 
     public boolean isDebugging() {
         return debugging;
@@ -69,7 +71,7 @@ public class Game implements WindowListener, KeyListener {
         graphicEngine.initBackgrounds();
         SoundManager soundManager = SoundManager.instance();
         LevelReader reader = LevelReader.instance();
-        lvlStats = reader.createLevel(10, 300, 1, 0);
+        lvlStats = reader.createLevel(3, 300, 1, 0);
         reader.readTxt(levels[currLevel]);
         soundManager.playLoopingSound("marioBackground.wav");
         long lastUpdateTime;
@@ -97,14 +99,40 @@ public class Game implements WindowListener, KeyListener {
                     toUpdateRegistry = new HashSet<>();
                     CollisionsEngine.instance().reset();
                     graphicEngine.reset();
-                    lvlStats = reader.createLevel(lvlStats.getLives(), lvlStats.getRemainingTime(), lvlStats.getLevelNumber(), lvlStats.getScore());
-                    reader.readTxt(levels[currLevel]);
-                    soundManager.playLoopingSound("marioBackground.wav");
-                    reset = false;
+                    if (!checkGameOver(graphicEngine, soundManager, reader)){
+                        lvlStats = reader.createLevel(lvlStats.getLives(), lvlStats.getRemainingTime(), lvlStats.getLevelNumber(), lvlStats.getScore());
+                        reader.readTxt(levels[currLevel]);
+                        soundManager.playLoopingSound("marioBackground.wav");
+                        reset = false;
+                    }
                 }
             }
 
             checkPause();
+        }
+    }
+
+    public boolean checkGameOver(GraphicEngine graphicEngine, SoundManager soundManager, LevelReader reader){
+        if (lvlStats.getLives() == 0){
+            gameOverScreen = new GameOverScreen();
+            gameOverScreen.add();
+            graphicEngine.setDepth(gameOverScreen, GraphicEngine.FRONT_DEPTH + 1);
+            graphicEngine.drawFrame();
+            soundManager.playSound("gameover.wav");
+            graphicEngine.remove(gameOverScreen);
+            try {
+                Thread.sleep(4000); 
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            lvlStats = reader.createLevel(3, 300, 1, 0);
+            reader.readTxt(levels[currLevel]);
+            soundManager.playLoopingSound("marioBackground.wav");
+            reset = false;
+            return true;
+        }
+        else{
+            return false;
         }
     }
 
@@ -180,9 +208,11 @@ public class Game implements WindowListener, KeyListener {
                 pauseKeyAlreadyPressed = true; // Registrar que la tecla P ya está presionada
                 if (pause){
                     lvlStats.pauseTimer();
+                    SoundManager.instance().pauseAllSounds();
                 }
                 else{
                     lvlStats.resumeTimer();
+                    SoundManager.instance().resumeAllSounds();
                 }
 
             }
