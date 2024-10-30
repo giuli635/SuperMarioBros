@@ -9,9 +9,11 @@ import java.util.TimerTask;
 import java.util.TreeSet;
 
 import colliders.updateables.mario.DefaultMarioCollider;
+import colliders.updateables.mario.InvulnerableCollider;
 import colliders.updateables.mario.MarioCollider;
 import entities.updateables.UpdateableBody;
 import entities.updateables.mario.actions.ActionComparator;
+import entities.updateables.mario.actions.DisappearSprite;
 import entities.updateables.mario.actions.HorizontalMovement;
 import entities.updateables.mario.actions.MarioAction;
 import entities.updateables.mario.actions.ResolveHorizontalMovementDirection;
@@ -48,10 +50,8 @@ public class Mario extends UpdateableBody {
     protected Direction movementDirection;
     protected boolean overriteSprite;
     protected boolean loaded;
-    protected boolean invulnerable;
 
     public Mario(LevelStats stats) {
-        invulnerable = false;
         loaded = false;
         falling = false;
         levelStats = stats;
@@ -95,22 +95,20 @@ public class Mario extends UpdateableBody {
     }
 
     public void die() {
-        if (!invulnerable) {
-            unload();
-            collider.deactivate();
-            setSpritesFolder("mario");
-            setSprite(MARIO_DEATH);
-            SoundManager.instance().removeAllSounds();
-            SoundManager.instance().playSound("mariodie.wav");
-            levelStats.decreaseLives();
-            Timer timer = new Timer();
-            TimerTask task = new TimerTask() {
-                public void run(){
-                    Game.instance().resetCurrentLevel();
-                }
-            }; 
-            timer.schedule(task,3000);
-        }
+        unload();
+        collider.deactivate();
+        setSpritesFolder("mario");
+        setSprite(MARIO_DEATH);
+        SoundManager.instance().removeAllSounds();
+        SoundManager.instance().playSound("mariodie.wav");
+        levelStats.decreaseLives();
+        Timer timer = new Timer();
+        TimerTask task = new TimerTask() {
+            public void run(){
+                Game.instance().resetCurrentLevel();
+            }
+        }; 
+        timer.schedule(task,3000);
     }
     
 
@@ -195,16 +193,19 @@ public class Mario extends UpdateableBody {
     }
 
     public void setCollider(MarioCollider c) {
+        if (collider.getBaseCollider() != null) {
+            c.deactivate();
+            collider.setBaseCollider(c);
+        } else {
+            collider.deactivate();
+            collider = c;
+            collider.activate();
+        }
+    }
+
+    public void setCollider(InvulnerableCollider c) {
         collider.deactivate();
-        collider = c;
+        collider = new InvulnerableCollider(this);
         collider.activate();
-    }
-
-    public boolean isInvulnerable() {
-        return invulnerable;
-    }
-
-    public void setInvulnerable(boolean invulnerable) {
-        this.invulnerable = invulnerable;
     }
 }

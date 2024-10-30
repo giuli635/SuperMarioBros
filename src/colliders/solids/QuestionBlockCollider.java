@@ -27,7 +27,7 @@ public class QuestionBlockCollider extends SolidCollider {
     }
 
     @Override
-    public void sendCollision(Collision c, Axis a) {
+    public void recieveCollision(Collision c, Axis a) {
         c.collide(this, a);
     }
 

@@ -26,7 +26,7 @@ public class GoombaCollider extends EnemyCollider {
     }
 
     @Override
-    public void sendCollision(Collision c, Axis a) {
+    public void recieveCollision(Collision c, Axis a) {
         c.collide(this, a);
     }
 }

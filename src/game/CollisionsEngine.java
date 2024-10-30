@@ -32,9 +32,9 @@ public class CollisionsEngine {
     protected void checkCollision(Collider c1, Collider c2, Axis axis) {
         if (c2.isActivated() && c1.getBounds().intersects(c2.getBounds())) {
             Collision first = c1.getCollision();
-            c2.sendCollision(first, axis);
+            c2.recieveCollision(first, axis);
             if (!first.wasManaged()) {
-                c1.sendCollision(c2.getCollision(), axis);
+                c1.recieveCollision(c2.getCollision(), axis);
             }
         }
     }

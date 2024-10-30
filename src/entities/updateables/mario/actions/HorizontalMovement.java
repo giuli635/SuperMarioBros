@@ -7,7 +7,7 @@ public class HorizontalMovement extends BaseMarioAction {
     public static final int DEFAULT_PRIORITY = 100;
 
     public static final int MAX_SPEEDX = 6;
-    public static final float DEFAULT_ACCELERATIONX = 0.1f;
+    public static final float DEFAULT_ACCELERATIONX = 0.15f;
     public static final float DEFAULT_DECELERATIONX = 0.18f;
     public static final int MIN_SPEEDX = 2;
 
@@ -36,7 +36,7 @@ public class HorizontalMovement extends BaseMarioAction {
             speedX = MIN_SPEEDX;
         }
 
-        if (movementDirection == currentDirection) {
+        if (movementDirection == currentDirection || currentDirection == Direction.NONE) {
             speedX = Direction.signFromDirection(movementDirection) * Math.abs(speedX);
         } else {
             speedX = 0;

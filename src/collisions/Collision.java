@@ -34,6 +34,7 @@ public interface Collision {
     public void collide(GreenMushroomCollider c, Axis a);
     public void collide(EmptyBlockCollider c, Axis a);
     public void collide(LevelEndCollider c, Axis a);
+    public void collide(InvulnerableCollider c, Axis a);
     public boolean wasManaged();
     public void setManaged(boolean managed);
 }

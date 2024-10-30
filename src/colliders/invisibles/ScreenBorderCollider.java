@@ -28,7 +28,7 @@ public class ScreenBorderCollider extends BaseCollider {
     }
 
     @Override
-    public void sendCollision(Collision c, Axis a) {
+    public void recieveCollision(Collision c, Axis a) {
         c.collide(this, a);
     }
 

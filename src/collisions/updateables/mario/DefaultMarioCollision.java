@@ -10,15 +10,20 @@ import collisions.BaseCollision;
 import utils.Axis;
 
 public class DefaultMarioCollision extends BaseCollision implements MarioCollision {
-    protected DefaultMarioCollider defaultMarioCollider;
+    protected MarioCollider marioCollider;
 
-    public DefaultMarioCollision(DefaultMarioCollider c) {
-        defaultMarioCollider = c;
+    public DefaultMarioCollision(MarioCollider c) {
+        marioCollider = c;
     }
 
     @Override
-    public DefaultMarioCollider getCollider() {
-        return defaultMarioCollider;
+    public MarioCollider getCollider() {
+        return marioCollider;
+    }
+
+    @Override
+    public void setCollider(MarioCollider m) {
+        marioCollider = m;
     }
 
     @Override
@@ -228,6 +233,15 @@ public class DefaultMarioCollision extends BaseCollision implements MarioCollisi
 
     @Override
     public void collide(LevelEndCollider c, Axis a) {
+        if (a == Axis.X) {
+            c.handleHorizontalCollision(this);
+        } else {
+            c.handleVerticalCollision(this);
+        }
+    }
+
+    @Override
+    public void collide(InvulnerableCollider c, Axis a) {
         if (a == Axis.X) {
             c.handleHorizontalCollision(this);
         } else {

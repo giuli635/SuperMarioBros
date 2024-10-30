@@ -11,7 +11,7 @@ import utils.Vector2D;
 
 public interface Collider {
     public Entity getEntity();
-    public void sendCollision(Collision c, Axis a);
+    public void recieveCollision(Collision c, Axis a);
     public Rectangle getBounds();
     public Collision getCollision();
     public void setPosition(int x, int y);
@@ -33,4 +33,6 @@ public interface Collider {
     public void setMoving(boolean m);
     public int displaceX(Rectangle intersection, int coefficient);
     public int displaceY(Rectangle intersection, int coefficient);
+    public Collider getBaseCollider();
+    public void setBaseCollider(Collider c);
 }
