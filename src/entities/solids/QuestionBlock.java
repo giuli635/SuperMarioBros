@@ -16,7 +16,6 @@ import game.LevelReader;
 public class QuestionBlock extends BaseAnimatedEntity {
     protected static String SPRITES_FOLDER = "questionBlock";
     public final static String[] ANIMATED_SPRITES = {"questionBlock", "questionBlock2"};
-    protected static String[] HIT = {"questionBlockHit", "questionBlockHit"};
     protected QuestionBlockCollider collider;
     protected GameGraphicElement graphicElement;
     protected boolean depends;
@@ -39,7 +38,7 @@ public class QuestionBlock extends BaseAnimatedEntity {
         } else if (s == 'v') {
             entity = new GreenMushroom();
         }
-        //load();
+        load();
     }
 
     @Override
@@ -67,8 +66,8 @@ public class QuestionBlock extends BaseAnimatedEntity {
         releaseEntity(entity);
         entity = null;
         active = false;
+        animatedSprites = null;
         setSprite("questionBlockHit");
-        animatedSprites = HIT;
     }
 
     public void releaseEntity(UpdatableEntity e) {

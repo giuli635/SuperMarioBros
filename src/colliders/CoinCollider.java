@@ -6,7 +6,9 @@ import collisions.CoinCollision;
 import collisions.Collision;
 import collisions.updateables.mario.MarioCollision;
 import entities.updateables.Coin;
+import entities.updateables.powerups.PowerUp;
 import game.GraphicEngine;
+import game.SoundManager;
 import utils.Axis;
 
 public class CoinCollider extends BaseCollider {
@@ -37,6 +39,7 @@ public class CoinCollider extends BaseCollider {
         getEntity().unload();
         GraphicEngine.instance().remove(getEntity().getGraphicElement());
         m.getCollider().getEntity().modifyPoints(Coin.POINTS);
+        SoundManager.instance().playSound(Coin.SOUND);
     }
 
     public void handleVerticalCollision(MarioCollision m) {
@@ -44,5 +47,6 @@ public class CoinCollider extends BaseCollider {
         getEntity().unload();
         GraphicEngine.instance().remove(getEntity().getGraphicElement());
         m.getCollider().getEntity().modifyPoints(Coin.POINTS);
+        SoundManager.instance().playSound(Coin.SOUND);
     }
 }
