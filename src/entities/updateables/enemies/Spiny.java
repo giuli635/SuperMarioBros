@@ -7,13 +7,14 @@ import graphics.GameGraphicElement;
 
 public class Spiny extends BaseEnemy {
     protected static String SPRITES_FOLDER = "spiny";
-    protected int speedX;
+    public final static String[] ANIMATED_SPRITES = {"spiny", "spinyWalking"};
 
     protected SpinyCollider collider;
     protected GameGraphicElement graphicElement;
 
     public Spiny() {
         super();
+        animatedSprites = ANIMATED_SPRITES;
         collider = new SpinyCollider(this, new Rectangle());
         graphicElement = new GameGraphicElement(this, SPRITES_FOLDER);
         setSprite(SPRITES_FOLDER);

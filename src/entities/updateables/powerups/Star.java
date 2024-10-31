@@ -8,13 +8,13 @@ import graphics.GameGraphicElement;
 
 public class Star extends BaseMovableEntity implements PowerUp {
     protected static String SPRITES_FOLDER = "star";
-    public final static String[] STAR = {"star", "star2"};
+    public final static String[] ANIMATED_SPRITES = {"star", "star2"};
     protected int animationFrameCounter = 0;
     protected int framesPerSprite = 10;
     protected int changingSprite;
     
-    protected int speedX;
-    protected float speedY;
+    //protected int speedX;
+    //protected float speedY;
 
     protected StarCollider collider;
     protected GameGraphicElement graphicElement;
@@ -22,17 +22,15 @@ public class Star extends BaseMovableEntity implements PowerUp {
     public Star() {
         speedX = 2;
         speedY = 0;
+        animatedSprites = ANIMATED_SPRITES;
         collider = new StarCollider(this, new Rectangle());
         graphicElement = new GameGraphicElement(this, SPRITES_FOLDER);
         setSprite(SPRITES_FOLDER);
     }
 
     public void update(){
-        speedY = speedY - 0.5f;
-        
-        graphicElement.translate(speedX, (int) speedY);
-        collider.translate(speedX, (int) speedY);
-        setChangeableSprites();
+        speedY--;
+        super.update();
     }
 
     @Override
@@ -46,13 +44,7 @@ public class Star extends BaseMovableEntity implements PowerUp {
     }
 
     public void startBounce() {
-        speedY = 8;
+        speedY = 13;
     }
 
-    private void setChangeableSprites() {
-        changingSprite += (animationFrameCounter %= framesPerSprite) == 0 ? 1 : 0;
-        changingSprite %= 2;
-        animationFrameCounter++;
-        setSprite(STAR[changingSprite]);
-    }
 }
