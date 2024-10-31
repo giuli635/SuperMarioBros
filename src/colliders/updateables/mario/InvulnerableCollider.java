@@ -1,13 +1,13 @@
 package colliders.updateables.mario;
 
-import colliders.BaseCollider;
+import colliders.Collider;
 import collisions.Collision;
 import collisions.updateables.mario.MarioCollision;
 import collisions.updateables.mario.InvulnerableCollision;
 import entities.updateables.mario.Mario;
 import utils.Axis;
 
-public class InvulnerableCollider extends BaseCollider implements MarioCollider {
+public class InvulnerableCollider extends MarioCollider {
     protected Mario mario;
     protected MarioCollider marioCollider;
 

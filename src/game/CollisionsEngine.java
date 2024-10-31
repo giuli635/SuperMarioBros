@@ -16,9 +16,11 @@ public class CollisionsEngine {
     protected static CollisionsEngine uniqueInstance;
     protected List<List<Collider>> chunks;
     protected Set<Collider> toUpdate;
-    protected int frame;
+    protected Collider swap;
+    protected Collider currentCollider;
 
     protected CollisionsEngine() {
+        swap = null;
         reset();
     }
 
@@ -62,29 +64,36 @@ public class CollisionsEngine {
     }
 
     protected void checkCollisions(Axis axis) {
-        for (Collider collider : toUpdate) {
-            int[] chunkRange = calculateChunk(collider.getBounds());
+        Iterator<Collider> toUpdateIterator = toUpdate.iterator();
+        while (toUpdateIterator.hasNext()) {
+            currentCollider = toUpdateIterator.next();
+            int[] chunkRange = calculateChunk(currentCollider.getBounds());
 
-            collider.setColliding(true);
+            currentCollider.setColliding(true);
             for (int i = chunkRange[0]; i <= chunkRange[1] && i < chunks.size(); i++) {
-                checkChunk(axis, collider, i);
+                checkChunk(axis, i);
             }
-            collider.setColliding(false);
+            currentCollider.setColliding(false);
         }
     }
 
-    protected void checkChunk(Axis axis, Collider collider, int i) {
+    protected void checkChunk(Axis axis, int i) {
         List<Collider> chunk = new ArrayList<>(chunks.get(i));
         Collider toCheck;
         Iterator<Collider> chunkIterator = chunk.iterator();
-        while (chunkIterator.hasNext() && collider.isActivated()) {
+        while (chunkIterator.hasNext() && currentCollider.isActivated()) {
             toCheck = chunkIterator.next();
-            if (toCheck != collider){
+            if (toCheck != currentCollider){
                 toCheck.setColliding(true);
-                checkCollision(collider, toCheck, axis);
+                checkCollision(currentCollider, toCheck, axis);
+                if (swap != null) {
+                    currentCollider.deactivate();
+                    currentCollider = swap;
+                    addToUpdate(currentCollider);
+                    swap = null;
+                }
                 toCheck.setColliding(false);
             }
-
         }
     }
 
@@ -155,5 +164,9 @@ public class CollisionsEngine {
     public void reset(){
         chunks = new Vector<List<Collider>>();
         toUpdate = ConcurrentHashMap.newKeySet();
+    }
+
+    public void swap(Collider c) {
+        swap = c;
     }
 }

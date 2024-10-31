@@ -1,6 +1,8 @@
 package entities.updateables.mario;
 
-import java.awt.Point;
+import java.awt.Rectangle;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import colliders.updateables.mario.InvulnerableCollider;
 import colliders.updateables.mario.MarioCollider;
@@ -22,8 +24,10 @@ public class SuperMario extends BaseMarioState {
     @Override
     public void setState() {
         previousCollider = mario.getCollider();
-        MarioCollider newCollider = new SuperMarioCollider(mario, previousCollider.getBounds());
-        mario.setCollider(newCollider);
+        MarioCollider newCollider = new SuperMarioCollider(mario, new Rectangle());
+        newCollider.copy(previousCollider);
+        previousCollider.track(newCollider);
+        mario.setUnderlyingCollider(newCollider);
 
         GameGraphicElement graphicElement = mario.getGraphicElement();
         previousStateSpriteFolder = graphicElement.getFolder();
@@ -37,11 +41,25 @@ public class SuperMario extends BaseMarioState {
     public void removeState() {
         mario.setSpritesFolder(previousStateSpriteFolder);
 
-        Point currentColliderPosition = mario.getCollider().getPosition();
-        previousCollider.setPosition((int) currentColliderPosition.getX(), (int) currentColliderPosition.getY());
-        mario.setCollider(new InvulnerableCollider(mario));
-        mario.setCollider(previousCollider);
+        MarioCollider newCollider = new InvulnerableCollider(mario);
+        newCollider.copy(mario.getCollider());
+        mario.setCollider(newCollider);
+        mario.setUnderlyingCollider(previousCollider);
+        mario.setSpritesFolder("mario");
         mario.addAction(new DisappearSprite());
+
+        Timer timer = new Timer();
+        TimerTask task = new TimerTask() {
+            public void run() {
+                MarioCollider collider = mario.getCollider().getBaseCollider();
+                collider.copy(mario.getCollider());
+                mario.setCollider(collider);
+                mario.removeAction(new DisappearSprite());
+            }
+        };
+
+        timer.schedule(task, 3000);
+
         mario.removeAction(crouch);
     }
 }

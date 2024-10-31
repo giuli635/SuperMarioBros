@@ -9,23 +9,12 @@ import game.CollisionsEngine;
 import utils.Vector2D;
 
 public abstract class BaseCollider implements Collider {
-    private Rectangle bounds;
-    private boolean activated;
-    private Vector2D velocity;
-    private boolean colliding;
-    private boolean moving;
-    private Vector2D nextVelocity;
-    private Collider baseCollider;
-
-    public BaseCollider(Collider c) {
-        colliding = false;
-        moving = false;
-        activated = false;
-        baseCollider = c;
-        bounds = c.getBounds();
-        velocity = new Vector2D(bounds.getLocation(), bounds.getLocation());
-        nextVelocity = new Vector2D(bounds.getLocation(), bounds.getLocation());
-    }
+    protected Rectangle bounds;
+    protected boolean activated;
+    protected Vector2D velocity;
+    protected boolean colliding;
+    protected boolean moving;
+    protected Vector2D nextVelocity;
 
     public BaseCollider(Rectangle b) {
         colliding = false;
@@ -34,7 +23,6 @@ public abstract class BaseCollider implements Collider {
         bounds = b;
         velocity = new Vector2D(bounds.getLocation(), bounds.getLocation());
         nextVelocity = new Vector2D(bounds.getLocation(), bounds.getLocation());
-        baseCollider = null;
     }
 
     @Override
@@ -77,6 +65,10 @@ public abstract class BaseCollider implements Collider {
         return velocity.clone();
     }
 
+    public Vector2D getNextVelocity() {
+        return nextVelocity.clone();
+    }
+
     @Override
     public boolean isActivated() {
         return activated;
@@ -96,6 +88,8 @@ public abstract class BaseCollider implements Collider {
         CollisionsEngine.instance().remove(this);
         velocity = new Vector2D(bounds.getLocation(), bounds.getLocation());
         nextVelocity = new Vector2D(bounds.getLocation(), bounds.getLocation());
+        moving = false;
+        colliding = false;
     }
 
     @Override
@@ -168,28 +162,25 @@ public abstract class BaseCollider implements Collider {
         return displacement;
     }
 
+    @Override
+    public void copy(Collider c) {
+        bounds = c.getBounds();
+        velocity = c.getVelocity();
+        nextVelocity = c.getNextVelocity();
+        moving = c.isMoving();
+        colliding = c.isColliding();
+    }
+
+    @Override
+    public void track(Collider c) {
+        bounds = c.getBounds();
+    }
+
     public void handleHorizontalCollision(Collision c) {
         c.setManaged(false);
     }
 
     public void handleVerticalCollision(Collision c) {
         c.setManaged(false);
-    }
-
-    public Collider getBaseCollider() {
-        return baseCollider;
-    }
-
-    public void setBaseCollider(Collider c) {
-        Rectangle previousBounds = bounds;
-
-        baseCollider = c;
-        if (c != null) {
-            bounds = baseCollider.getBounds();
-        } else {
-            bounds = new Rectangle(bounds);
-        }
-
-        CollisionsEngine.instance().updateColliderBounds(previousBounds, this);
     }
 }

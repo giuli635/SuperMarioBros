@@ -2,12 +2,15 @@ package entities.updateables.mario;
 
 import java.awt.Rectangle;
 import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.SortedSet;
 import java.util.Stack;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.TreeSet;
 
+import colliders.Collider;
 import colliders.updateables.mario.DefaultMarioCollider;
 import colliders.updateables.mario.InvulnerableCollider;
 import colliders.updateables.mario.MarioCollider;
@@ -18,6 +21,7 @@ import entities.updateables.mario.actions.MarioAction;
 import entities.updateables.mario.actions.ResolveHorizontalMovementDirection;
 import entities.updateables.mario.actions.ResolveSprite;
 import entities.updateables.mario.actions.VerticalMovement;
+import game.CollisionsEngine;
 import game.Game;
 import game.LevelStats;
 import game.SoundManager;
@@ -45,6 +49,7 @@ public class Mario extends UpdateableBody {
     protected GameGraphicElement graphicElement;
     protected SortedSet<MarioAction> actions;
     protected Stack<MarioState> states;
+    protected Queue<Runnable> toDo;
     protected LevelStats levelStats;
     protected Direction movementDirection;
     protected boolean overriteSprite;
@@ -55,6 +60,7 @@ public class Mario extends UpdateableBody {
         falling = false;
         levelStats = stats;
         states = new Stack<>();
+        toDo = new LinkedList<>();
         collider = new DefaultMarioCollider(this, new Rectangle());
         actions = new TreeSet<>(new ActionComparator());
         movementDirection = Direction.NONE;
@@ -79,6 +85,10 @@ public class Mario extends UpdateableBody {
     }
 
     public void update() {
+        for (Runnable task : toDo) {
+            task.run();
+        }
+
         Iterator<MarioAction> actionsIterator = actions.iterator();
         while (actionsIterator.hasNext()) {
             actionsIterator.next().execute(this);
@@ -98,7 +108,7 @@ public class Mario extends UpdateableBody {
         collider.deactivate();
         setSpritesFolder("mario");
         setSprite(MARIO_DEATH);
-        SoundManager.instance().removeAllSounds();
+        // SoundManager.instance().removeAllSounds();
         SoundManager.instance().playSound("mariodie.wav");
         levelStats.decreaseLives();
         Timer timer = new Timer();
@@ -183,20 +193,28 @@ public class Mario extends UpdateableBody {
         }
     }
 
-    public void setCollider(MarioCollider c) {
+    public void setUnderlyingCollider(MarioCollider c) {
         if (collider.getBaseCollider() != null) {
             c.deactivate();
             collider.setBaseCollider(c);
         } else {
-            collider.deactivate();
-            collider = c;
-            collider.activate();
+            setCollider(c);
         }
     }
 
-    public void setCollider(InvulnerableCollider c) {
+    public void setCollider(MarioCollider c) {
         collider.deactivate();
-        collider = new InvulnerableCollider(this);
+        collider = c;
+        if (collider.isColliding()) {
+            CollisionsEngine.instance().swap(c);
+        }
+        collider.activate();
+    }
+
+    public void setCollider(InvulnerableCollider c) {
+        Mario mario = this;
+        collider.deactivate();
+        collider = new InvulnerableCollider(mario);
         collider.activate();
     }
 

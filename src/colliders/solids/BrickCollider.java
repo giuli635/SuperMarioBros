@@ -42,6 +42,7 @@ public class BrickCollider extends SolidCollider {
             mario.land();
         } else {
             translate(0, -displacement);
+            mario.setSpeedY(0);
             getEntity().getGraphicElement().translate(0, -displacement);
                     
             Timer timer = new Timer();
