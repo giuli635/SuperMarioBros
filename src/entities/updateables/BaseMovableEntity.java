@@ -1,6 +1,6 @@
 package entities.updateables;
 
-public abstract class BaseMovableEntity extends BaseAnimatedEntity  implements MovableEntity{
+public abstract class BaseMovableEntity extends BaseAnimatedEntity implements MovableEntity{
     public static final int GRAVITY = 3;
     protected int speedX;
     protected int speedY;
@@ -8,7 +8,6 @@ public abstract class BaseMovableEntity extends BaseAnimatedEntity  implements M
     public void switchDirection() {
         speedX = -speedX;
         getGraphicElement().flipSprite();
-        //getGraphicElement().setFlipped(!getGraphicElement().isFlipped());
     }
 
     public int getSpeedX() {

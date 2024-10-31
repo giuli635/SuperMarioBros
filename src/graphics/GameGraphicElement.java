@@ -87,7 +87,7 @@ public class GameGraphicElement extends BaseGraphicElement {
 
     public void flipSprite() {
         toUpdate = true;
-        flipped = true;
+        flipped = !flipped;
         sprite = new ImageIcon(flipImage(iconToBufferedImage(sprite)));
         bounds.setSize(sprite.getIconWidth(), sprite.getIconHeight());
     }
