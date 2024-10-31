@@ -4,11 +4,12 @@ import java.awt.Rectangle;
 
 import colliders.BaseCollider;
 import colliders.Collider;
+import collisions.updateables.BouncerCollision;
+import collisions.updateables.FireBallCollision;
 import collisions.updateables.UpdateableEntityCollision;
 import collisions.updateables.enemies.EnemyCollision;
 import collisions.updateables.mario.MarioCollision;
 import collisions.updateables.powerups.PowerUpCollision;
-import collisions.updateables.powerups.StarCollision;
 import entities.updateables.mario.Mario;
 
 public abstract class SolidCollider extends BaseCollider {
@@ -68,12 +69,12 @@ public abstract class SolidCollider extends BaseCollider {
         p.getCollider().getEntity().switchDirection();
     }
 
-    public void handleVerticalCollision(PowerUpCollision p) {
-        displaceVertically(p.getCollider());
+    public void handleVerticalCollision(BouncerCollision s) {
+        displaceVertically(s.getCollider());
+        s.getCollider().getEntity().bounce();
     }
 
-    public void handleVerticalCollision(StarCollision s) {
-        displaceVertically(s.getCollider());
-        s.getCollider().getEntity().startBounce();
+    public void handleHorizontalCollision(FireBallCollision p) {
+        p.getCollider().getEntity().destroy();
     }
 }

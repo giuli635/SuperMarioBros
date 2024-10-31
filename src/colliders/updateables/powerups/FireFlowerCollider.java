@@ -3,7 +3,11 @@ package colliders.updateables.powerups;
 import java.awt.Rectangle;
 
 import collisions.Collision;
+import collisions.updateables.mario.MarioCollision;
+import collisions.updateables.mario.SuperMarioCollision;
 import collisions.updateables.powerups.FireFlowerCollision;
+import entities.updateables.mario.FireMario;
+import entities.updateables.mario.Mario;
 import entities.updateables.powerups.FireFlower;
 import utils.Axis;
 
@@ -28,5 +32,23 @@ public class FireFlowerCollider extends PowerUpCollider {
     @Override
     public FireFlower getEntity() {
        return f;
+    }
+
+    // @Override
+    // public void handleCollision(FireMarioCollision m) {
+    // }
+
+    @Override
+    public void handleCollision(SuperMarioCollision m) {
+        Mario mario = m.getCollider().getEntity();
+        super.handleCollision(m);
+        mario.setState(new FireMario(mario));
+    }
+
+    @Override
+    public void handleCollision(MarioCollision m) {
+        Mario mario = m.getCollider().getEntity();
+        super.handleCollision(m);
+        mario.setState(new FireMario(mario));
     }
 }

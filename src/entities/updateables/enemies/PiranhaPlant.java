@@ -5,7 +5,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import colliders.updateables.enemies.PiranhaPlantCollider;
-import entities.Entity;
 import game.GraphicEngine;
 import graphics.GameGraphicElement;
 
@@ -20,30 +19,24 @@ public class PiranhaPlant extends BaseEnemy {
     protected int framesPerSprite = 10;
     protected int changingSprite;
     
-    protected boolean movingUp = false;
-    protected boolean adjusted = false;
+    protected boolean movingUp;
     
 
     protected PiranhaPlantCollider collider;
     protected GameGraphicElement graphicElement;
 
     public PiranhaPlant() {
+        movingUp = true;
         collider = new PiranhaPlantCollider(this, new Rectangle());
         graphicElement = new GameGraphicElement(this, SPRITES_FOLDER);
         setSprite("piranhaOpen");
         speedX = 0;
         speedY = 0f;
-        GraphicEngine.instance().moveToBack(graphicElement);
-    }
-
-    public Entity clone() {
-        return new PiranhaPlant();
     }
 
     @Override
     public void recieveDamage() {
         collider.deactivate();
-        GraphicEngine.instance().setDepth(graphicElement, GraphicEngine.DEFAULT_DEPTH);
 
         Timer timer = new Timer();
         TimerTask task = new TimerTask() {
@@ -59,12 +52,10 @@ public class PiranhaPlant extends BaseEnemy {
     @Override
     public void update() {
         handleVerticalMovement();
-        adjustPiranha();
         setChangeableSprites();
     }
 
     private void handleVerticalMovement() {
-
         if (movingUp) {
             speedY = speedY + 0.01f;
             if (speedY >= maxHeight) {
@@ -85,13 +76,6 @@ public class PiranhaPlant extends BaseEnemy {
 
     public void switchDirection() {
         movingUp = !movingUp;
-    }
-
-    private void adjustPiranha() {
-        if (!adjusted) {
-            translate(22, 30);
-            adjusted = true;
-        }
     }
 
     private void setChangeableSprites() {

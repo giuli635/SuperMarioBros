@@ -11,7 +11,7 @@ import utils.Axis;
 public class CoinCollision extends BaseCollision {
     protected CoinCollider coinCollider;
 
-    public  CoinCollision(CoinCollider c) {
+    public CoinCollision(CoinCollider c) {
         coinCollider = c;
     }
 
@@ -245,6 +245,24 @@ public class CoinCollision extends BaseCollision {
 
     @Override
     public void collide(FlagPoleCollider c, Axis a) {
+        if (a == Axis.X) {
+            c.handleHorizontalCollision(this);
+        } else {
+            c.handleVerticalCollision(this);
+        }
+    }
+
+    @Override
+    public void collide(FireMarioCollider c, Axis a) {
+        if (a == Axis.X) {
+            c.handleHorizontalCollision(this);
+        } else {
+            c.handleVerticalCollision(this);
+        }
+    }
+
+    @Override
+    public void collide(FireBallCollider c, Axis a) {
         if (a == Axis.X) {
             c.handleHorizontalCollision(this);
         } else {

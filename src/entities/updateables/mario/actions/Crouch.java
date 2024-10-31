@@ -8,12 +8,12 @@ import utils.Direction;
 import utils.KeyStatus;
 
 public class Crouch extends BaseMarioAction {
-    public static final int DEFAULT_CROUCH_PRIORITY = 200;
+    public static final int DEFAULT_PRIORITY = 200;
     protected boolean crouched;
 
     public Crouch() {
         crouched = false;
-        priority = DEFAULT_CROUCH_PRIORITY;
+        priority = DEFAULT_PRIORITY;
     }
 
     @Override

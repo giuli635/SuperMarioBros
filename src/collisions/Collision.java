@@ -36,6 +36,8 @@ public interface Collision {
     public void collide(LevelEndCollider c, Axis a);
     public void collide(InvulnerableCollider c, Axis a);
     public void collide(FlagPoleCollider c, Axis a);
+    public void collide(FireMarioCollider c, Axis a);
+    public void collide(FireBallCollider c, Axis a);
     public boolean wasManaged();
     public void setManaged(boolean managed);
 }

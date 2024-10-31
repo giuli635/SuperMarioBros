@@ -2,13 +2,13 @@ package colliders.updateables.powerups;
 
 import java.awt.Rectangle;
 
+import colliders.updateables.BouncerCollider;
 import collisions.Collision;
 import collisions.updateables.powerups.StarCollision;
 import entities.updateables.powerups.Star;
 import utils.Axis;
 
-
-public class StarCollider extends PowerUpCollider {
+public class StarCollider extends PowerUpCollider implements BouncerCollider {
     protected Star s;
 
     public StarCollider(Star star, Rectangle b) {
@@ -22,7 +22,7 @@ public class StarCollider extends PowerUpCollider {
     }
 
     @Override
-    public Collision getCollision() {
+    public StarCollision getCollision() {
         return new StarCollision(this);
     }
 

@@ -7,9 +7,10 @@ import colliders.updateables.enemies.*;
 import colliders.updateables.mario.*;
 import colliders.updateables.powerups.*;
 import collisions.BaseCollision;
+import collisions.updateables.BouncerCollision;
 import utils.Axis;
 
-public class StarCollision extends BaseCollision implements PowerUpCollision{
+public class StarCollision extends BaseCollision implements PowerUpCollision, BouncerCollision {
     protected StarCollider collider;
 
     public StarCollision(StarCollider c) {
@@ -247,6 +248,24 @@ public class StarCollision extends BaseCollision implements PowerUpCollision{
 
     @Override
     public void collide(FlagPoleCollider c, Axis a) {
+        if (a == Axis.X) {
+            c.handleHorizontalCollision(this);
+        } else {
+            c.handleVerticalCollision(this);
+        }
+    }
+
+    @Override
+    public void collide(FireMarioCollider c, Axis a) {
+        if (a == Axis.X) {
+            c.handleHorizontalCollision(this);
+        } else {
+            c.handleVerticalCollision(this);
+        }
+    }
+
+    @Override
+    public void collide(FireBallCollider c, Axis a) {
         if (a == Axis.X) {
             c.handleHorizontalCollision(this);
         } else {

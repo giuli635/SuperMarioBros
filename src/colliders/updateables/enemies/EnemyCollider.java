@@ -5,6 +5,7 @@ import java.awt.Rectangle;
 
 import colliders.BaseCollider;
 import colliders.updateables.UpdateableEntityCollider;
+import collisions.updateables.FireBallCollision;
 import collisions.updateables.enemies.EnemyCollision;
 import collisions.updateables.enemies.ShellEnemyCollision;
 import collisions.updateables.mario.InvulnerableCollision;
@@ -114,5 +115,13 @@ public abstract class EnemyCollider extends BaseCollider implements UpdateableEn
 
         e.getEntity().switchDirection();
         getEntity().switchDirection();
+    }
+
+    public void handleHorizontalCollision(FireBallCollision f) {
+        getEntity().recieveDamage();
+    }
+
+    public void handleVerticalCollision(FireBallCollision f) {
+        getEntity().recieveDamage();
     }
 }

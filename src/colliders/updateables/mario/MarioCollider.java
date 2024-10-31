@@ -9,6 +9,7 @@ import entities.updateables.mario.Mario;
 import game.CollisionsEngine;
 
 public abstract class MarioCollider extends BaseCollider implements UpdateableEntityCollider {
+    protected Mario mario;
     protected MarioCollider baseCollider;
 
     public MarioCollider(MarioCollider c) {
@@ -20,7 +21,11 @@ public abstract class MarioCollider extends BaseCollider implements UpdateableEn
         super(b);
     }
 
-    public abstract Mario getEntity();
+    @Override
+    public Mario getEntity() {
+        return mario;
+    }
+
     public abstract MarioCollision getCollision();
 
     public MarioCollider getBaseCollider() {

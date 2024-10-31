@@ -201,6 +201,15 @@ public class InvulnerableCollision extends BaseCollision implements MarioCollisi
     }
 
     @Override
+    public void collide(FireMarioCollider c, Axis a) {
+        if (a == Axis.X) {
+            c.handleHorizontalCollision(baseCollision);
+        } else {
+            c.handleVerticalCollision(baseCollision);
+        }
+    }
+
+    @Override
     public void collide(SpinyCollider c, Axis a) {
         if (a == Axis.X) {
             c.handleHorizontalCollision(this);
@@ -254,6 +263,15 @@ public class InvulnerableCollision extends BaseCollision implements MarioCollisi
 
     @Override
     public void collide(FlagPoleCollider c, Axis a) {
+        if (a == Axis.X) {
+            c.handleHorizontalCollision(this);
+        } else {
+            c.handleVerticalCollision(this);
+        }
+    }
+
+    @Override
+    public void collide(FireBallCollider c, Axis a) {
         if (a == Axis.X) {
             c.handleHorizontalCollision(this);
         } else {

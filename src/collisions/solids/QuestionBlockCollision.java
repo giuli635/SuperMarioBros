@@ -252,4 +252,22 @@ public class QuestionBlockCollision extends BaseCollision implements SolidCollis
             c.handleVerticalCollision(this);
         }
     }
+
+    @Override
+    public void collide(FireMarioCollider c, Axis a) {
+        if (a == Axis.X) {
+            c.handleHorizontalCollision(this);
+        } else {
+            c.handleVerticalCollision(this);
+        }
+    }
+
+    @Override
+    public void collide(FireBallCollider c, Axis a) {
+        if (a == Axis.X) {
+            c.handleHorizontalCollision(this);
+        } else {
+            c.handleVerticalCollision(this);
+        }
+    }
 }

@@ -1,7 +1,6 @@
 package collisions.invisibles;
 
-import colliders.CoinCollider;
-import colliders.FlagPoleCollider;
+import colliders.*;
 import colliders.invisibles.*;
 import colliders.solids.*;
 import colliders.updateables.enemies.*;
@@ -10,7 +9,7 @@ import colliders.updateables.powerups.*;
 import collisions.BaseCollision;
 import utils.Axis;
 
-public class LevelEndCollision extends BaseCollision{
+public class LevelEndCollision extends BaseCollision {
     protected LevelEndCollider collider;
 
     public LevelEndCollision(LevelEndCollider l) {
@@ -244,6 +243,24 @@ public class LevelEndCollision extends BaseCollision{
 
     @Override
     public void collide(FlagPoleCollider c, Axis a) {
+        if (a == Axis.X) {
+            c.handleHorizontalCollision(this);
+        } else {
+            c.handleVerticalCollision(this);
+        }
+    }
+
+    @Override
+    public void collide(FireMarioCollider c, Axis a) {
+        if (a == Axis.X) {
+            c.handleHorizontalCollision(this);
+        } else {
+            c.handleVerticalCollision(this);
+        }
+    }
+
+    @Override
+    public void collide(FireBallCollider c, Axis a) {
         if (a == Axis.X) {
             c.handleHorizontalCollision(this);
         } else {

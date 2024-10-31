@@ -48,6 +48,7 @@ public class QuestionBlockCollider extends SolidCollider {
             if (displacement >= 0) {
                 mario.land();
             } else {
+                mario.setSpeedY(0);
                 translate(0, -displacement);
                 getEntity().getGraphicElement().translate(0, -displacement);
                 questionBlock.interaction(new SuperMushroom());
