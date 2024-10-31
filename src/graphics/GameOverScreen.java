@@ -23,7 +23,7 @@ public class GameOverScreen extends BaseGraphicElement {
         gameOverLabel.setHorizontalAlignment(SwingConstants.CENTER);
         
         try {
-            customFont = Font.createFont(Font.TRUETYPE_FONT, new File("font/CozetteVector.ttf")).deriveFont(55f);
+            customFont = Font.createFont(Font.TRUETYPE_FONT, new File("font/LanaPixel.ttf")).deriveFont(60f);
             gameOverLabel.setFont(customFont);
         } catch (FontFormatException | IOException e) {
             e.printStackTrace();

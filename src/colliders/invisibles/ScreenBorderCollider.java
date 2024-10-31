@@ -5,6 +5,7 @@ import java.awt.Rectangle;
 
 import colliders.BaseCollider;
 import collisions.Collision;
+import collisions.invisibles.LevelEndCollision;
 import collisions.invisibles.ScreenBorderCollision;
 import collisions.updateables.mario.MarioCollision;
 import entities.Entity;
@@ -63,5 +64,13 @@ public class ScreenBorderCollider extends BaseCollider {
                 graphicElement.add();
             }
         }
+    }
+    
+    public void handleHorizontalCollision(LevelEndCollision c){
+
+    }
+
+    public void handleVerticalCollision(LevelEndCollision c){
+        
     }
 }

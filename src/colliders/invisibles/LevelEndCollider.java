@@ -32,5 +32,6 @@ public class LevelEndCollider extends BaseCollider{
 
     public void handleHorizontalCollision(ScreenDisplacementCollision c) {
         c.getCollider().deactivate();
+        deactivate();
     }
 }
