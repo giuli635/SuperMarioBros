@@ -5,7 +5,7 @@ import java.awt.Rectangle;
 import colliders.FlagPoleCollider;
 import graphics.GameGraphicElement;
 
-public class FlagPole extends Body{
+public class FlagPole extends Body {
     protected static String SPRITES_FOLDER = "flagPole";
 
     protected FlagPoleCollider collider;

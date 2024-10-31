@@ -2,13 +2,12 @@ package colliders.updateables.mario;
 
 import java.awt.Rectangle;
 
-import colliders.BaseCollider;
 import collisions.Collision;
 import collisions.updateables.mario.DefaultMarioCollision;
 import entities.updateables.mario.Mario;
 import utils.Axis;
 
-public class DefaultMarioCollider extends BaseCollider implements MarioCollider {
+public class DefaultMarioCollider extends MarioCollider {
     protected Mario mario;
 
     public DefaultMarioCollider(Mario m, Rectangle b) {

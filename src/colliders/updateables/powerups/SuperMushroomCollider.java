@@ -2,10 +2,11 @@ package colliders.updateables.powerups;
 
 import java.awt.Rectangle;
 
-import colliders.updateables.mario.MarioCollider;
-import colliders.updateables.mario.SuperMarioCollider;
 import collisions.Collision;
+import collisions.updateables.mario.MarioCollision;
+import collisions.updateables.mario.SuperMarioCollision;
 import collisions.updateables.powerups.SuperMushroomCollision;
+import entities.updateables.mario.Mario;
 import entities.updateables.mario.SuperMario;
 import entities.updateables.powerups.SuperMushroom;
 import utils.Axis;
@@ -34,14 +35,16 @@ public class SuperMushroomCollider extends PowerUpCollider {
     }
 
     @Override
-    public void handleCollision(SuperMarioCollider m) {
+    public void handleCollision(SuperMarioCollision m) {
+        Mario mario = m.getCollider().getEntity();
         super.handleCollision(m);
-        m.getEntity().modifyPoints(SuperMushroom.POINTS_SUPER_MARIO);
+        mario.modifyPoints(SuperMushroom.POINTS_SUPER_MARIO);
     }
 
     @Override
-    public void handleCollision(MarioCollider m) {
+    public void handleCollision(MarioCollision m) {
+        Mario mario = m.getCollider().getEntity();
         super.handleCollision(m);
-        m.getEntity().setState(new SuperMario(m.getEntity()));
+        mario.setState(new SuperMario(mario));
     }
 }

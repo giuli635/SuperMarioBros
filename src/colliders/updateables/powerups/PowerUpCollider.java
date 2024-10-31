@@ -10,8 +10,6 @@ import java.awt.Rectangle;
 
 import colliders.BaseCollider;
 import colliders.updateables.UpdateableEntityCollider;
-import colliders.updateables.mario.MarioCollider;
-import colliders.updateables.mario.SuperMarioCollider;
 
 public abstract class PowerUpCollider extends BaseCollider implements UpdateableEntityCollider {
     public abstract PowerUp getEntity();
@@ -27,27 +25,27 @@ public abstract class PowerUpCollider extends BaseCollider implements Updateable
         GraphicEngine.instance().remove(getEntity().getGraphicElement());
     }
 
-    public void handleCollision(MarioCollider m) {
+    public void handleCollision(MarioCollision m) {
         remove();
     }
 
-    public void handleCollision(SuperMarioCollider m) {
+    public void handleCollision(SuperMarioCollision m) {
         remove();
     }
 
     public void handleVerticalCollision(MarioCollision m) {
-        handleCollision(m.getCollider());
+        handleCollision(m);
     }
 
     public void handleHorizontalCollision(MarioCollision m) {
-        handleCollision(m.getCollider());
+        handleCollision(m);
     }
 
     public void handleVerticalCollision(SuperMarioCollision m) {
-        handleCollision(m.getCollider());
+        handleCollision(m);
     }
 
     public void handleHorizontalCollision(SuperMarioCollision m) {
-        handleCollision(m.getCollider());
+        handleCollision(m);
     }
 }

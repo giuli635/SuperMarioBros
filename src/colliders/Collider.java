@@ -20,6 +20,7 @@ public interface Collider {
     public Dimension getSize();
     public void setSize(int width, int height);
     public Vector2D getVelocity();
+    public Vector2D getNextVelocity();
     public boolean isActivated();
     public void setActivated(boolean status);
     public void activate();
@@ -33,6 +34,6 @@ public interface Collider {
     public void setMoving(boolean m);
     public int displaceX(Rectangle intersection, int coefficient);
     public int displaceY(Rectangle intersection, int coefficient);
-    public Collider getBaseCollider();
-    public void setBaseCollider(Collider c);
+    public void copy(Collider c);
+    public void track(Collider c);
 }
