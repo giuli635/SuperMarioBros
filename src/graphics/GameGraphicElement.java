@@ -17,6 +17,7 @@ public class GameGraphicElement extends BaseGraphicElement {
     protected JLabel label;
     protected ImageIcon sprite;
     protected String currentSprite;
+    protected String lastNotNullSprite;
     protected Rectangle bounds;
     protected boolean toUpdate;
     protected boolean flipped;
@@ -63,12 +64,25 @@ public class GameGraphicElement extends BaseGraphicElement {
         return sprite;
     }
 
+    public String lastNotNullSpriteName() {
+        return lastNotNullSprite;
+    }
+
     public void setSprite(String s) {
-        currentSprite = s;
         toUpdate = true;
         flipped = false;
-        sprite = sprites.get(s + ".png");
-        bounds.setSize(sprite.getIconWidth(), sprite.getIconHeight());
+        if (s != null) {
+            if (currentSprite != null) {
+                lastNotNullSprite = currentSprite;
+            }
+            sprite = sprites.get(s + ".png");
+            bounds.setSize(sprite.getIconWidth(), sprite.getIconHeight());
+        } else {
+            sprite = null;
+            bounds.setSize(0, 0);
+        }
+
+        currentSprite = s;
     }
 
     public void flipSprite() {

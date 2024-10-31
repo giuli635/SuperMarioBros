@@ -9,12 +9,33 @@ import game.CollisionsEngine;
 import utils.Vector2D;
 
 public abstract class BaseCollider implements Collider {
-    protected Rectangle bounds;
-    protected boolean activated;
-    protected Vector2D velocity;
-    protected boolean colliding;
-    protected boolean moving;
-    protected Vector2D nextVelocity;
+    private Rectangle bounds;
+    private boolean activated;
+    private Vector2D velocity;
+    private boolean colliding;
+    private boolean moving;
+    private Vector2D nextVelocity;
+    private Collider baseCollider;
+
+    public BaseCollider(Collider c) {
+        colliding = false;
+        moving = false;
+        activated = false;
+        baseCollider = c;
+        bounds = c.getBounds();
+        velocity = new Vector2D(bounds.getLocation(), bounds.getLocation());
+        nextVelocity = new Vector2D(bounds.getLocation(), bounds.getLocation());
+    }
+
+    public BaseCollider(Rectangle b) {
+        colliding = false;
+        moving = false;
+        activated = false;
+        bounds = b;
+        velocity = new Vector2D(bounds.getLocation(), bounds.getLocation());
+        nextVelocity = new Vector2D(bounds.getLocation(), bounds.getLocation());
+        baseCollider = null;
+    }
 
     @Override
     public boolean isMoving() {
@@ -34,15 +55,6 @@ public abstract class BaseCollider implements Collider {
     @Override
     public void setColliding(boolean c) {
         colliding = c;
-    }
-
-    public BaseCollider(Rectangle b) {
-        colliding = false;
-        moving = false;
-        activated = false;
-        bounds = b;
-        velocity = new Vector2D(bounds.getLocation(), bounds.getLocation());
-        nextVelocity = new Vector2D(bounds.getLocation(), bounds.getLocation());
     }
 
     @Override
@@ -162,5 +174,22 @@ public abstract class BaseCollider implements Collider {
 
     public void handleVerticalCollision(Collision c) {
         c.setManaged(false);
+    }
+
+    public Collider getBaseCollider() {
+        return baseCollider;
+    }
+
+    public void setBaseCollider(Collider c) {
+        Rectangle previousBounds = bounds;
+
+        baseCollider = c;
+        if (c != null) {
+            bounds = baseCollider.getBounds();
+        } else {
+            bounds = new Rectangle(bounds);
+        }
+
+        CollisionsEngine.instance().updateColliderBounds(previousBounds, this);
     }
 }

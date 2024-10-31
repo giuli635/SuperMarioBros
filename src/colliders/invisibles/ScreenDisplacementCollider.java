@@ -7,6 +7,7 @@ import collisions.Collision;
 import collisions.invisibles.ScreenDisplacementCollision;
 import collisions.updateables.mario.MarioCollision;
 import entities.Entity;
+import game.CollisionsEngine;
 import game.GraphicEngine;
 import utils.Axis;
 
@@ -39,13 +40,14 @@ public class ScreenDisplacementCollider extends BaseCollider {
     }
 
     @Override
-    public void sendCollision(Collision c, Axis a) {
+    public void recieveCollision(Collision c, Axis a) {
         c.collide(this, a);
     }
 
     public void handleHorizontalCollision(MarioCollision m) {
         Rectangle collision = getBounds().intersection(m.getCollider().getBounds());
         translate((int) collision.getWidth(), 0);
+        CollisionsEngine.instance().addToUpdate(this);
         leftBorder.translate((int) collision.getWidth(), 0);
         rightBorder.translate((int) collision.getWidth(), 0);
         loader.translate((int) collision.getWidth(), 0);

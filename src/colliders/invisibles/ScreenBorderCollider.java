@@ -28,7 +28,7 @@ public class ScreenBorderCollider extends BaseCollider {
     }
 
     @Override
-    public void sendCollision(Collision c, Axis a) {
+    public void recieveCollision(Collision c, Axis a) {
         c.collide(this, a);
     }
 
@@ -44,7 +44,6 @@ public class ScreenBorderCollider extends BaseCollider {
     }
 
     public void handleHorizontalCollision(Collision c) {
-
         GraphicEngine graphicEngine = GraphicEngine.instance();
         GameGraphicElement graphicElement = c.getCollider().getEntity().getGraphicElement();
 

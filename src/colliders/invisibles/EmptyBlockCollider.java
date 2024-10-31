@@ -1,6 +1,5 @@
 package colliders.invisibles;
 
-import java.awt.Point;
 import java.awt.Rectangle;
 
 import colliders.solids.SolidCollider;
@@ -28,7 +27,7 @@ public class EmptyBlockCollider extends SolidCollider {
     }
 
     @Override
-    public void sendCollision(Collision c, Axis a) {
+    public void recieveCollision(Collision c, Axis a) {
         c.collide(this, a);
     }
 

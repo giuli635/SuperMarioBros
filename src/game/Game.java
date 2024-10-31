@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.Set;
 
 import entities.updateables.UpdatableEntity;
+import graphics.GameOverScreen;
 import utils.KeyStatus;
 
 public class Game implements WindowListener, KeyListener {
@@ -24,12 +25,14 @@ public class Game implements WindowListener, KeyListener {
     protected boolean pause;
     protected boolean pauseKeyAlreadyPressed = false;
     protected String[] levels = {"menu.txt", "level1.txt", "level2.txt", "level3.txt"};
-    protected int currLevel = 1;
+    protected int currLevel = 0;
+    protected long frames = 0;
 
     protected List<UpdatableEntity> toAddList = new ArrayList<>();
     protected List<UpdatableEntity> toRemoveList = new ArrayList<>();
     protected boolean debugging;
     protected boolean reset;
+    protected GameOverScreen gameOverScreen;
 
     public boolean isDebugging() {
         return debugging;
@@ -69,7 +72,7 @@ public class Game implements WindowListener, KeyListener {
         graphicEngine.initBackgrounds();
         SoundManager soundManager = SoundManager.instance();
         LevelReader reader = LevelReader.instance();
-        lvlStats = reader.createLevel(10, 300, 1, 0);
+        lvlStats = reader.createLevel(3, 300, 1, 0);
         reader.readTxt(levels[currLevel]);
         soundManager.playLoopingSound("marioBackground.wav");
         long lastUpdateTime;
@@ -92,18 +95,46 @@ public class Game implements WindowListener, KeyListener {
                     }
                 }
                 graphicEngine.drawFrame();
+                frames++;
 
                 if (reset) {
                     toUpdateRegistry = new HashSet<>();
                     CollisionsEngine.instance().reset();
                     graphicEngine.reset();
-                    lvlStats = reader.createLevel(lvlStats.getLives(), lvlStats.getRemainingTime(), lvlStats.getLevelNumber(), lvlStats.getScore());
-                    reader.readTxt(levels[currLevel]);
-                    reset = false;
+                    if (!checkGameOver(graphicEngine, soundManager, reader)){
+                        lvlStats = reader.createLevel(lvlStats.getLives(), lvlStats.getRemainingTime(), lvlStats.getLevelNumber(), 0);
+                        reader.readTxt(levels[currLevel]);
+                        soundManager.playLoopingSound("marioBackground.wav");
+                        reset = false;
+                    }
                 }
             }
 
             checkPause();
+        }
+    }
+
+    public boolean checkGameOver(GraphicEngine graphicEngine, SoundManager soundManager, LevelReader reader){
+        if (lvlStats.getLives() == 0){
+            gameOverScreen = new GameOverScreen();
+            gameOverScreen.add();
+            graphicEngine.setDepth(gameOverScreen, GraphicEngine.FRONT_DEPTH + 1);
+            graphicEngine.drawFrame();
+            soundManager.playSound("gameover.wav");
+            graphicEngine.remove(gameOverScreen);
+            try {
+                Thread.sleep(4000); 
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            lvlStats = reader.createLevel(3, 300, 1, 0);
+            reader.readTxt(levels[currLevel]);
+            soundManager.playLoopingSound("marioBackground.wav");
+            reset = false;
+            return true;
+        }
+        else{
+            return false;
         }
     }
 
@@ -113,7 +144,7 @@ public class Game implements WindowListener, KeyListener {
     }
 
     public void resetCurrentLevel() {
-        reset = true;
+        reset=true;
     }
 
     public void advanceLevel() {
@@ -125,6 +156,10 @@ public class Game implements WindowListener, KeyListener {
     
     public LevelStats getLevelStats(){
         return lvlStats;
+    }
+
+    public long getFrames() {
+        return frames;
     }
 
     @Override
@@ -171,22 +206,21 @@ public class Game implements WindowListener, KeyListener {
     }
 
     public void checkPause() {
-        // Verificar si la tecla P está presionada
         if (Game.instance().getKeyStatus(KeyEvent.VK_P) == KeyStatus.PRESSED) {
-            // Solo cambiar el estado de pausa si la tecla P no estaba previamente presionada
             if (!pauseKeyAlreadyPressed) {
-                pause = !pause; // Cambiar el estado de pausa
-                pauseKeyAlreadyPressed = true; // Registrar que la tecla P ya está presionada
+                pause = !pause;
+                pauseKeyAlreadyPressed = true;
                 if (pause){
                     lvlStats.pauseTimer();
+                    SoundManager.instance().pauseAllSounds();
                 }
                 else{
                     lvlStats.resumeTimer();
+                    SoundManager.instance().resumeAllSounds();
                 }
 
             }
         } else {
-            // Si la tecla no está presionada, restablecer la bandera
             pauseKeyAlreadyPressed = false;
         }
     }

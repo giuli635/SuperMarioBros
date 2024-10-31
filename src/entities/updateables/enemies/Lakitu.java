@@ -11,6 +11,7 @@ import colliders.updateables.enemies.LakituCollider;
 public class Lakitu extends BaseEnemy {
     protected static final int THROW_COOLDOWN = 10000;
     protected static final int MIN_DISTANCE = 100;
+    public final static int POINTS = 60;
     protected static String SPRITES_FOLDER = "lakitu";
     protected long lastThrowTime = 0;
 
@@ -70,5 +71,16 @@ public class Lakitu extends BaseEnemy {
     @Override
     public LakituCollider getCollider() {
         return collider;
+    }
+
+    @Override
+    public int pointsToAdd() {
+        return POINTS;
+    }
+
+    @Override
+    public int pointsToSubtract() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'pointsToSubtract'");
     }
 }

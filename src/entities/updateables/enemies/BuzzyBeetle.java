@@ -10,6 +10,7 @@ public class BuzzyBeetle extends BaseEnemy implements ShellEnemy {
     protected static String SPRITES_FOLDER = "buzzyBeetle";
     public final static String[] ANIMATED_SPRITES = {"buzzyBeetle", "buzzyBeetleWalking"};
     protected boolean shell;
+    public final static int POINTS = 30; 
 
     protected BuzzyBeetleCollider collider;
     protected GameGraphicElement graphicElement;
@@ -35,7 +36,7 @@ public class BuzzyBeetle extends BaseEnemy implements ShellEnemy {
             speedX = 0;
             shell = true;
         } else {
-            die(SPRITES_FOLDER);
+            die(SPRITES_FOLDER + "Shell");
         }
     }
 
@@ -61,5 +62,15 @@ public class BuzzyBeetle extends BaseEnemy implements ShellEnemy {
     @Override
     public BuzzyBeetleCollider getCollider() {
         return collider;
+    }
+
+    @Override
+    public int pointsToAdd() {
+        return POINTS;
+    }
+
+    @Override
+    public int pointsToSubtract() {
+        return -(POINTS/2);
     }
 }

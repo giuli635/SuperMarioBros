@@ -10,12 +10,13 @@ import graphics.GameGraphicElement;
 public abstract class Body implements Entity {
     public void setSpritesFolder(String folder) {
         GameGraphicElement graphicElement = getGraphicElement();
-        ImageIcon previousSprite = graphicElement.getSprite();
-        String previousSpriteName = graphicElement.getSpriteName();
+        String previousSprite = graphicElement.lastNotNullSpriteName();
+        graphicElement.setSprite(previousSprite);
+        ImageIcon previousSpriteIcon = graphicElement.getSprite();
         graphicElement.setFolder(folder);
-        graphicElement.setSprite(previousSpriteName);
+        graphicElement.setSprite(previousSprite);
         ImageIcon newSprite = graphicElement.getSprite();
-        adjustGraphicElementOnChange(newSprite, previousSprite);
+        adjustGraphicElementOnChange(newSprite, previousSpriteIcon);
     }
 
     public void setSprite(String s) {
@@ -34,7 +35,9 @@ public abstract class Body implements Entity {
             getGraphicElement().translate(0, -diff);
         }
 
-        adjustColliderToGraphicElement();
+        if (newSprite != null) {
+            adjustColliderToGraphicElement();
+        }
     }
 
     public void adjustColliderToGraphicElement() {

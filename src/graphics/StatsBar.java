@@ -26,10 +26,12 @@ public class StatsBar extends BaseGraphicElement implements LevelStatsObserver {
     protected int lives;
     protected int level;
     protected int score;
+
     protected JLabel timeLabel;
     protected JLabel livesLabel;
     protected JLabel levelLabel;
     protected JLabel scoreLabel;
+
     protected JPanel timePanel;
     protected JPanel livesPanel;
     protected JPanel levelPanel;

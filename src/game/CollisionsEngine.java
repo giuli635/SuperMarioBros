@@ -32,9 +32,9 @@ public class CollisionsEngine {
     protected void checkCollision(Collider c1, Collider c2, Axis axis) {
         if (c2.isActivated() && c1.getBounds().intersects(c2.getBounds())) {
             Collision first = c1.getCollision();
-            c2.sendCollision(first, axis);
+            c2.recieveCollision(first, axis);
             if (!first.wasManaged()) {
-                c1.sendCollision(c2.getCollision(), axis);
+                c1.recieveCollision(c2.getCollision(), axis);
             }
         }
     }
@@ -66,7 +66,7 @@ public class CollisionsEngine {
             int[] chunkRange = calculateChunk(collider.getBounds());
 
             collider.setColliding(true);
-            for (int i = chunkRange[0]; i <= chunkRange[1]; i++) {
+            for (int i = chunkRange[0]; i <= chunkRange[1] && i < chunks.size(); i++) {
                 checkChunk(axis, collider, i);
             }
             collider.setColliding(false);

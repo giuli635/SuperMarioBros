@@ -1,17 +1,19 @@
 package entities.updateables.mario.actions;
 
 import entities.updateables.mario.Mario;
+import game.Game;
 import graphics.GameGraphicElement;
 import utils.Direction;
 
 public class ResolveSprite extends BaseMarioAction {
     public static final int DEFAULT_PRIORITY = 0;
+    protected static final int FRAMES_PER_SPRITE = 10;
 
-    protected int animationFrameCounter = 0;
-    protected int framesPerSprite = 10;
     protected int walkingSprite;
+    protected boolean flipped;
 
     public ResolveSprite() {
+        walkingSprite = 0;
         priority = DEFAULT_PRIORITY;
     }
 
@@ -19,7 +21,10 @@ public class ResolveSprite extends BaseMarioAction {
     public void execute(Mario m) {
         GameGraphicElement graphicElement = m.getGraphicElement();
         Direction movementDirection = m.getMovementDirection();
-        boolean flipped = graphicElement.isFlipped();
+        if (graphicElement.getSprite() != null) {
+            flipped = graphicElement.isFlipped();
+        }
+
         if (!m.overriteSprite()){
             if (m.isFalling()) {
                 m.setSprite(Mario.MARIO_JUMP);
@@ -32,15 +37,15 @@ public class ResolveSprite extends BaseMarioAction {
             }
         }
 
-        if (movementDirection == Direction.LEFT || movementDirection == Direction.NONE && flipped) {
+        if ((movementDirection == Direction.LEFT || movementDirection == Direction.NONE
+                && flipped) && graphicElement.getSprite() != null) {
             graphicElement.flipSprite();
         }
     }
 
     protected String getWalkingSprites() {
-        walkingSprite += (animationFrameCounter %= framesPerSprite) == 0 ? 1 : 0;
-        walkingSprite %= 2;
-        animationFrameCounter++;
+        walkingSprite += (Game.instance().getFrames() % FRAMES_PER_SPRITE) == 0 ? 1 : 0;
+        walkingSprite %= Mario.MARIO_WALKING.length;
         return Mario.MARIO_WALKING[walkingSprite];
     }
 }

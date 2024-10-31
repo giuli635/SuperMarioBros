@@ -8,6 +8,8 @@ import graphics.GameGraphicElement;
 public class KoopaTroopa extends BaseEnemy implements ShellEnemy {
     protected static String SPRITES_FOLDER = "koopa";
     public final static String[] ANIMATED_SPRITES = {"koopa", "koopaWalking"};
+    public final static int POINTS = 90;
+    protected int speedX;
     protected boolean shell;
 
     protected KoopaTroopaCollider collider;
@@ -57,5 +59,15 @@ public class KoopaTroopa extends BaseEnemy implements ShellEnemy {
     @Override
     public KoopaTroopaCollider getCollider() {
         return collider;
+    }
+
+    @Override
+    public int pointsToAdd() {
+        return POINTS;
+    }
+
+    @Override
+    public int pointsToSubtract() {
+        return -(POINTS/2);
     }
 }

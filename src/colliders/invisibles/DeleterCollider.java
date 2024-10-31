@@ -5,9 +5,7 @@ import java.awt.Rectangle;
 import colliders.BaseCollider;
 import collisions.Collision;
 import collisions.invisibles.DeleterCollision;
-import collisions.invisibles.EmptyBlockCollision;
 import collisions.updateables.UpdateableEntityCollision;
-import entities.EmptyBlock;
 import entities.Entity;
 import game.GraphicEngine;
 import graphics.GameGraphicElement;
@@ -24,7 +22,7 @@ public class DeleterCollider extends BaseCollider {
     }
 
     @Override
-    public void sendCollision(Collision c, Axis a) {
+    public void recieveCollision(Collision c, Axis a) {
         c.collide(this, a);
     }
 

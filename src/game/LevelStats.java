@@ -40,23 +40,22 @@ public class LevelStats {
     
     public void decreaseLives() {
         lives--;
-        notifyObserver();
-    }
-    
-    public void addPoints(int points) {
-        score += points;
+        checkGameOver();
         notifyObserver();
     }
 
-    public void subtractPoints(int p) {
-        if (score >= p){
-            score -= p;
+    public void checkGameOver(){
+        if (lives == 0){
             notifyObserver();
         }
-        else{
+    }
+
+    public void modifyPoints(int points){
+        score += points;
+        if (score < 0){
             score = 0;
-            notifyObserver();
         }
+        notifyObserver();
     }
 
     public int getLives() { 

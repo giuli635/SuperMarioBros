@@ -14,6 +14,7 @@ import colliders.invisibles.LoaderCollider;
 import colliders.invisibles.ScreenBorderCollider;
 import colliders.invisibles.ScreenDisplacementCollider;
 import colliders.invisibles.GraphicUnloaderCollider;
+import colliders.invisibles.LevelEndCollider;
 import graphics.GameGraphicElement;
 import graphics.StatsBar;
 import utils.Direction;
@@ -43,6 +44,9 @@ public class LevelReader {
         loaders.put('r', new PiranhaPlantLoader());
         loaders.put('>', new EmptyBlockLoader());
         loaders.put('v', new GreenMushroomLoader());
+        loaders.put('C', new CastleLoader());
+        loaders.put('c', new CastleLoader());
+        loaders.put('e', new FlagPoleLoader());
     }
 
     protected static LevelReader instance(){
@@ -91,8 +95,8 @@ public class LevelReader {
 
                 int heightDifference = graphicElement.getSprite().getIconHeight() - CHUNK;
                 graphicElement.setPosition(
-                (int) colliderPosition.getX() - loadingStartingPoint * CHUNK,
-                (int) colliderPosition.getY() + heightDifference
+                    (int) colliderPosition.getX() - loadingStartingPoint * CHUNK,
+                    (int) colliderPosition.getY() + heightDifference
                 );
                 graphicElement.add();
             }
@@ -119,20 +123,23 @@ public class LevelReader {
         leftBorder.activate();
 
         ScreenBorderCollider rightBorder = new ScreenBorderCollider(
-            new Rectangle(lastChunkInScreen * CHUNK, 0, CHUNK, 2 * windowHeight),
+            new Rectangle(lastChunkInScreen * CHUNK - CHUNK / 2, 0, CHUNK, 2 * windowHeight),
             Direction.RIGHT
         );
         rightBorder.activate();
 
-        int middleChunk = lastChunkInScreen / 2;
+        int halfScreen = (int) Math.ceil(GraphicEngine.instance().getPanelSize().getWidth() / 2);
         new ScreenDisplacementCollider(
-            new Rectangle(CHUNK * middleChunk, 0, CHUNK, 2 * windowHeight),
+            new Rectangle(halfScreen + loadingStartingPoint * CHUNK, 0, CHUNK, 2 * windowHeight),
             leftBorder,
             rightBorder,
             loader,
             unloader,
             deleter
         ).activate();
+
+        LevelEndCollider le = new LevelEndCollider(new Rectangle(row * CHUNK - halfScreen, 0,  CHUNK, 2 * windowHeight));
+        le.activate();
     }
     
     public void loadEntities(BufferedReader br) throws IOException {
@@ -149,6 +156,7 @@ public class LevelReader {
             row++;
             chunk = br.readLine();
         }
+
     }
 
     public void setColumn(int i) {

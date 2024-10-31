@@ -7,9 +7,12 @@ import collisions.Collision;
 import collisions.solids.QuestionBlockCollision;
 import collisions.updateables.enemies.PiranhaPlantCollision;
 import collisions.updateables.mario.MarioCollision;
+import collisions.updateables.mario.SuperMarioCollision;
 import utils.Axis;
 import entities.solids.QuestionBlock;
 import entities.updateables.mario.Mario;
+import entities.updateables.powerups.FireFlower;
+import entities.updateables.powerups.SuperMushroom;
 
 public class QuestionBlockCollider extends SolidCollider {
     protected QuestionBlock questionBlock;
@@ -24,7 +27,7 @@ public class QuestionBlockCollider extends SolidCollider {
     }
 
     @Override
-    public void sendCollision(Collision c, Axis a) {
+    public void recieveCollision(Collision c, Axis a) {
         c.collide(this, a);
     }
 
@@ -47,7 +50,36 @@ public class QuestionBlockCollider extends SolidCollider {
             } else {
                 translate(0, -displacement);
                 getEntity().getGraphicElement().translate(0, -displacement);
-                questionBlock.interaction();
+                questionBlock.interaction(new SuperMushroom());
+                
+                Timer timer = new Timer();
+                TimerTask task = new TimerTask() {
+                    public void run(){
+                        translate(0, displacement);
+                        getEntity().getGraphicElement().translate(0, displacement);
+                    }
+                };
+
+                timer.schedule(task,300);
+            }
+        }
+    }
+
+    public void handleVerticalCollision(SuperMarioCollision m) {
+        Mario mario = m.getCollider().getEntity();
+        int displacement = displaceVertically(m.getCollider());
+        
+        if (!questionBlock.getActive()) {
+            if (displacement >= 0) {
+                mario.land();
+            }
+        } else {
+            if (displacement >= 0) {
+                mario.land();
+            } else {
+                translate(0, -displacement);
+                getEntity().getGraphicElement().translate(0, -displacement);
+                questionBlock.interaction(new FireFlower());
                 
                 Timer timer = new Timer();
                 TimerTask task = new TimerTask() {

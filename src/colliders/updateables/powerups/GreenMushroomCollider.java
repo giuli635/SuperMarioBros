@@ -21,7 +21,7 @@ public class GreenMushroomCollider extends PowerUpCollider {
     }
 
     @Override
-    public void sendCollision(Collision c, Axis a) {
+    public void recieveCollision(Collision c, Axis a) {
         c.collide(this, a);
     }
 

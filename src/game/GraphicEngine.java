@@ -83,7 +83,6 @@ public class GraphicEngine {
                     for (GraphicElement element : onScreen) {
                         element.draw();
                     }
-
                     panel.revalidate();
                     panel.paintImmediately(panel.getBounds());
                 }

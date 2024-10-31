@@ -23,7 +23,7 @@ public class CoinCollider extends BaseCollider {
     }
 
     @Override
-    public void sendCollision(Collision c, Axis a) {
+    public void recieveCollision(Collision c, Axis a) {
         c.collide(this, a);
     }
 
@@ -36,13 +36,13 @@ public class CoinCollider extends BaseCollider {
         deactivate();
         getEntity().unload();
         GraphicEngine.instance().remove(getEntity().getGraphicElement());
-        m.getCollider().getEntity().addPoints(Coin.POINTS);
+        m.getCollider().getEntity().modifyPoints(Coin.POINTS);
     }
 
     public void handleVerticalCollision(MarioCollision m) {
         deactivate();
         getEntity().unload();
         GraphicEngine.instance().remove(getEntity().getGraphicElement());
-        m.getCollider().getEntity().addPoints(Coin.POINTS);
+        m.getCollider().getEntity().modifyPoints(Coin.POINTS);
     }
 }

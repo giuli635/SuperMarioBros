@@ -19,7 +19,7 @@ public class Crouch extends BaseMarioAction {
     @Override
     public void execute(Mario mario) {
         if (Game.instance().getKeyStatus(KeyEvent.VK_S) == KeyStatus.PRESSED && (!mario.isFalling() || crouched)) {
-            mario.getGraphicElement().setSprite(Mario.MARIO_CROUCHING);
+            mario.setSprite(Mario.MARIO_CROUCHING);
             mario.setMovementDirection(Direction.NONE);
             mario.setOverriteSprite(true);
             crouched = true;

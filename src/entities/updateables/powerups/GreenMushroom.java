@@ -8,7 +8,8 @@ import graphics.GameGraphicElement;
 
 public class GreenMushroom extends BaseMovableEntity implements PowerUp {
     protected static String SPRITES_FOLDER = "greenMushroom";
-
+    public final static int POINTS = 100;
+    
     protected GreenMushroomCollider collider;
     protected GameGraphicElement graphicElement;
 

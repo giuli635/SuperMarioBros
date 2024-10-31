@@ -10,15 +10,20 @@ import collisions.BaseCollision;
 import utils.Axis;
 
 public class SuperMarioCollision extends BaseCollision implements MarioCollision {
-    protected SuperMarioCollider superMarioCollider;
+    protected MarioCollider marioCollider;
 
-    public  SuperMarioCollision(SuperMarioCollider c) {
-        superMarioCollider = c;
+    public SuperMarioCollision(MarioCollider c) {
+        marioCollider = c;
     }
 
     @Override
-    public SuperMarioCollider getCollider() {
-        return superMarioCollider;
+    public MarioCollider getCollider() {
+        return marioCollider;
+    }
+
+    @Override
+    public void setCollider(MarioCollider m) {
+        marioCollider = m;
     }
 
     @Override
@@ -219,6 +224,33 @@ public class SuperMarioCollision extends BaseCollision implements MarioCollision
 
     @Override
     public void collide(EmptyBlockCollider c, Axis a) {
+        if (a == Axis.X) {
+            c.handleHorizontalCollision(this);
+        } else {
+            c.handleVerticalCollision(this);
+        }
+    }
+
+    @Override
+    public void collide(LevelEndCollider c, Axis a) {
+        if (a == Axis.X) {
+            c.handleHorizontalCollision(this);
+        } else {
+            c.handleVerticalCollision(this);
+        }
+    }
+
+    @Override
+    public void collide(InvulnerableCollider c, Axis a) {
+        if (a == Axis.X) {
+            c.handleHorizontalCollision(this);
+        } else {
+            c.handleVerticalCollision(this);
+        }
+    }
+
+    @Override
+    public void collide(FlagPoleCollider c, Axis a) {
         if (a == Axis.X) {
             c.handleHorizontalCollision(this);
         } else {

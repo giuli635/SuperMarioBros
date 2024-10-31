@@ -20,12 +20,14 @@ public abstract class ShellEnemyCollider extends EnemyCollider{
         Mario mario = m.getCollider().getEntity();
         if (!getEntity().getShell()) {
             mario.die();
+            mario.modifyPoints(getEntity().pointsToSubtract());
         } else if(getEntity().getSpeedX() == 0) {
             int displacement = m.getCollider().displaceX(collision, 3);
             mario.getGraphicElement().translate(displacement, 0);
             getEntity().setSpeedX((int) -Math.signum(displacement) * 6);
         } else {
             mario.die();
+            mario.modifyPoints(getEntity().pointsToSubtract());
         }
     }
 
@@ -35,12 +37,14 @@ public abstract class ShellEnemyCollider extends EnemyCollider{
         Mario mario = m.getCollider().getEntity();
         if(collisionDirection == Direction.DOWN) {
             getEntity().recieveDamage();
+            mario.modifyPoints(getEntity().pointsToAdd()/2);
             int displacement = m.getCollider().displaceY(collision, 3);
             mario.getGraphicElement().translate(0, displacement);
             mario.addSpeed(0, Mario.FIXED_BOUNCE_SPEED);
         } else {
             if (!getEntity().getShell()) {
                 mario.die();
+                mario.modifyPoints(getEntity().pointsToSubtract());
             }
         }
     }

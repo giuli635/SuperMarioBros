@@ -4,9 +4,12 @@ import java.awt.Rectangle;
 import java.util.Iterator;
 import java.util.SortedSet;
 import java.util.Stack;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.TreeSet;
 
 import colliders.updateables.mario.DefaultMarioCollider;
+import colliders.updateables.mario.InvulnerableCollider;
 import colliders.updateables.mario.MarioCollider;
 import entities.updateables.UpdateableBody;
 import entities.updateables.mario.actions.ActionComparator;
@@ -81,8 +84,7 @@ public class Mario extends UpdateableBody {
             actionsIterator.next().execute(this);
         }
 
-        graphicElement.translate((int) speedX, (int) speedY);
-        collider.translate((int) speedX, (int) speedY);
+        translate((int) speedX, (int) speedY);
         falling = true;
     }
 
@@ -96,10 +98,18 @@ public class Mario extends UpdateableBody {
         collider.deactivate();
         setSpritesFolder("mario");
         setSprite(MARIO_DEATH);
+        SoundManager.instance().removeAllSounds();
         SoundManager.instance().playSound("mariodie.wav");
         levelStats.decreaseLives();
-        Game.instance().resetCurrentLevel();
+        Timer timer = new Timer();
+        TimerTask task = new TimerTask() {
+            public void run(){
+                Game.instance().resetCurrentLevel();
+            }
+        }; 
+        timer.schedule(task,3000);
     }
+    
 
     public boolean isFalling() {
         return falling;
@@ -112,14 +122,6 @@ public class Mario extends UpdateableBody {
     public void addSpeed(int dx, int dy) {
         speedX += dx;
         speedY += dy;
-    }
-
-    public void addPoints(int points){
-        levelStats.addPoints(points);
-    } 
-
-    public void subtractPoints(int i) {
-        levelStats.subtractPoints(i);
     }
 
     public float getSpeedY() {
@@ -182,8 +184,23 @@ public class Mario extends UpdateableBody {
     }
 
     public void setCollider(MarioCollider c) {
+        if (collider.getBaseCollider() != null) {
+            c.deactivate();
+            collider.setBaseCollider(c);
+        } else {
+            collider.deactivate();
+            collider = c;
+            collider.activate();
+        }
+    }
+
+    public void setCollider(InvulnerableCollider c) {
         collider.deactivate();
-        collider = c;
+        collider = new InvulnerableCollider(this);
         collider.activate();
+    }
+
+    public void modifyPoints(int points) {
+        levelStats.modifyPoints(points);
     }
 }
