@@ -8,7 +8,15 @@ public abstract class BaseAnimatedEntity extends UpdateableBody {
     protected int changingSprite;
     
     public void update() {
-        manageChangeableSprites();
+        
+        if (animatedSprites != null) {
+            boolean flipped = getGraphicElement().isFlipped();
+            manageChangeableSprites();
+            if (flipped) {
+                getGraphicElement().flipSprite();
+            }
+        }
+        
     }
 
     private void manageChangeableSprites() {
@@ -17,4 +25,6 @@ public abstract class BaseAnimatedEntity extends UpdateableBody {
         animationFrameCounter++;
         getGraphicElement().setSprite(animatedSprites[changingSprite]);
     }
+
+
 }

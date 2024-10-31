@@ -30,6 +30,7 @@ public class KoopaTroopa extends BaseEnemy implements ShellEnemy {
             setSprite(SPRITES_FOLDER + "Shell");
             speedX = 0;
             shell = true;
+            animatedSprites = null;
         } else {
             die(SPRITES_FOLDER);
         }

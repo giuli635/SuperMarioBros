@@ -25,6 +25,7 @@ public class Spiny extends BaseEnemy {
     @Override
     public void recieveDamage() {
         die(SPRITES_FOLDER);
+        animatedSprites = null;
     }
 
     @Override

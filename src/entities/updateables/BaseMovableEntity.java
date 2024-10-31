@@ -8,6 +8,7 @@ public abstract class BaseMovableEntity extends BaseAnimatedEntity  implements M
     public void switchDirection() {
         speedX = -speedX;
         getGraphicElement().flipSprite();
+        //getGraphicElement().setFlipped(!getGraphicElement().isFlipped());
     }
 
     public int getSpeedX() {
@@ -32,9 +33,7 @@ public abstract class BaseMovableEntity extends BaseAnimatedEntity  implements M
     }
 
     public void update() {
-        if (animatedSprites != null) {
-            super.update();
-        }
+        super.update();
         getGraphicElement().translate(speedX, speedY);
         getCollider().translate(speedX, speedY);
         applyGravity();
