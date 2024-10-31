@@ -1,8 +1,9 @@
 package entities.updateables;
 
-public abstract class BaseMovableEntity extends UpdateableBody implements MovableEntity {
+public abstract class BaseMovableEntity extends BaseAnimatedEntity  implements MovableEntity{
     public static final int GRAVITY = 3;
     protected int speedX;
+    protected int speedY;
 
     public void switchDirection() {
         speedX = -speedX;
@@ -17,14 +18,25 @@ public abstract class BaseMovableEntity extends UpdateableBody implements Movabl
         speedX = x;
     }
 
+    public int getSpeedY() {
+        return speedY;
+    }
+
+    public void setSpeedY(int y) {
+        speedY = y;
+    }
+
     public void applyGravity() {
         getGraphicElement().translate(0, -GRAVITY);
         getCollider().translate(0, -GRAVITY);
     }
 
     public void update() {
-        getGraphicElement().translate(speedX, 0);
-        getCollider().translate(speedX, 0);
+        if (animatedSprites != null) {
+            super.update();
+        }
+        getGraphicElement().translate(speedX, speedY);
+        getCollider().translate(speedX, speedY);
         applyGravity();
     }
 }

@@ -8,6 +8,7 @@ import colliders.updateables.enemies.BuzzyBeetleCollider;
 
 public class BuzzyBeetle extends BaseEnemy implements ShellEnemy {
     protected static String SPRITES_FOLDER = "buzzyBeetle";
+    public final static String[] ANIMATED_SPRITES = {"buzzyBeetle", "buzzyBeetleWalking"};
     protected boolean shell;
     public final static int POINTS = 30; 
 
@@ -16,6 +17,7 @@ public class BuzzyBeetle extends BaseEnemy implements ShellEnemy {
 
     public BuzzyBeetle() {
         super();
+        animatedSprites = ANIMATED_SPRITES;
         shell = false;
         collider = new BuzzyBeetleCollider(this, new Rectangle());
         graphicElement = new GameGraphicElement(this, SPRITES_FOLDER);

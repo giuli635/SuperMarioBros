@@ -11,8 +11,8 @@ import graphics.GameGraphicElement;
 
 public class PiranhaPlant extends BaseEnemy {
     protected static final float maxHeight = 1.5f;
-    protected float speedY = 0f;
     public final static int POINTS = 30;
+    protected float speedY;
     
     protected static String SPRITES_FOLDER = "piranha";
     public final static String[] PIRANHA_EATING = {"piranhaOpen", "piranhaClosed"};
@@ -31,6 +31,8 @@ public class PiranhaPlant extends BaseEnemy {
         collider = new PiranhaPlantCollider(this, new Rectangle());
         graphicElement = new GameGraphicElement(this, SPRITES_FOLDER);
         setSprite("piranhaOpen");
+        speedX = 0;
+        speedY = 0f;
         GraphicEngine.instance().moveToBack(graphicElement);
     }
 
@@ -58,9 +60,11 @@ public class PiranhaPlant extends BaseEnemy {
     public void update() {
         handleVerticalMovement();
         adjustPiranha();
+        setChangeableSprites();
     }
 
     private void handleVerticalMovement() {
+
         if (movingUp) {
             speedY = speedY + 0.01f;
             if (speedY >= maxHeight) {
@@ -74,9 +78,9 @@ public class PiranhaPlant extends BaseEnemy {
                 speedY = 0;
             }
         }
-        graphicElement.translate(0, (int) speedY);
-        collider.translate(0, (int) speedY);
+        translate(speedX, (int) speedY);
         setChangeableSprites();
+        
     }
 
     public void switchDirection() {
@@ -85,8 +89,7 @@ public class PiranhaPlant extends BaseEnemy {
 
     private void adjustPiranha() {
         if (!adjusted) {
-            graphicElement.translate(22, 0);
-            collider.translate(22, 0);
+            translate(22, 30);
             adjusted = true;
         }
     }

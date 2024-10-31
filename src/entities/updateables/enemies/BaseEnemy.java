@@ -9,9 +9,11 @@ import graphics.GameGraphicElement;
 
 public abstract class BaseEnemy extends BaseMovableEntity implements Enemy {
     public static final int DEFAULT_SPEEDX = -2;
+    public static final int DEFAULT_SPEEDY = 0;
 
     public BaseEnemy() {
         speedX = DEFAULT_SPEEDX;
+        speedY = DEFAULT_SPEEDY;
     }
 
     public void die(String sprite) {

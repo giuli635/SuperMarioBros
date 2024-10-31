@@ -7,6 +7,7 @@ import graphics.GameGraphicElement;
 
 public class KoopaTroopa extends BaseEnemy implements ShellEnemy {
     protected static String SPRITES_FOLDER = "koopa";
+    public final static String[] ANIMATED_SPRITES = {"koopa", "koopaWalking"};
     public final static int POINTS = 90;
     protected int speedX;
     protected boolean shell;
@@ -16,6 +17,7 @@ public class KoopaTroopa extends BaseEnemy implements ShellEnemy {
 
     public KoopaTroopa(){
         super();
+        animatedSprites = ANIMATED_SPRITES;
         shell = false;
         collider = new KoopaTroopaCollider(this, new Rectangle());
         graphicElement = new GameGraphicElement(this, SPRITES_FOLDER);

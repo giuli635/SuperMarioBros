@@ -8,6 +8,7 @@ import colliders.updateables.enemies.GoombaCollider;
 
 public class Goomba extends BaseEnemy {
     protected static String SPRITES_FOLDER = "goomba";
+    public final static String[] ANIMATED_SPRITES = {"goomba", "goombaWalking"};
     public final static int POINTS = 60;
     protected int speedX;
 
@@ -16,6 +17,7 @@ public class Goomba extends BaseEnemy {
 
     public Goomba() {
         super();
+        animatedSprites = ANIMATED_SPRITES;
         collider = new GoombaCollider(this, new Rectangle());
         graphicElement = new GameGraphicElement(this, SPRITES_FOLDER);
         setSprite(SPRITES_FOLDER);
