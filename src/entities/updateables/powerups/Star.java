@@ -27,7 +27,9 @@ public class Star extends BaseMovableEntity implements PowerUp, Bouncer {
     }
 
     public void update(){
-        speedY--;
+        if (speedY > -2 * BaseMovableEntity.GRAVITY) {
+            speedY--;
+        }
         super.update();
     }
 

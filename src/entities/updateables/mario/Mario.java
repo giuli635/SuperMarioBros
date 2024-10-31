@@ -183,8 +183,8 @@ public class Mario extends UpdateableBody {
     }
 
     public void setState(MarioState state) {
-        states.push(state);
         state.setState();
+        states.push(state);
     }
 
     public void removeState() {

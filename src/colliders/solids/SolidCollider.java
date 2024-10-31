@@ -75,6 +75,7 @@ public abstract class SolidCollider extends BaseCollider {
     }
 
     public void handleHorizontalCollision(FireBallCollision p) {
+        displaceVertically(p.getCollider());
         p.getCollider().getEntity().destroy();
     }
 }

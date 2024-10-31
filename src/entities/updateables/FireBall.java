@@ -28,7 +28,9 @@ public class FireBall extends BaseMovableEntity implements Bouncer {
     }
 
     public void update(){
-        speedY--;
+        if (speedY > -2 * BaseMovableEntity.GRAVITY) {
+            speedY--;
+        }
         super.update();
     }
 

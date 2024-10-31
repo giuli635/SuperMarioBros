@@ -19,9 +19,10 @@ public class FireMario extends BaseMarioState {
 
     @Override
     public void setState() {
+        mario.removeState();
         MarioCollider newCollider = new FireMarioCollider(mario, new Rectangle());
 
-        swapState(newCollider);
+        swapCollider(newCollider);
         
         crouch = new Crouch();
         fireBallThrower = new ThrowFireBall();

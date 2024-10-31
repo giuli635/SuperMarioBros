@@ -19,7 +19,7 @@ public class SuperMario extends BaseMarioState {
     public void setState() {
         MarioCollider newCollider = new SuperMarioCollider(mario, new Rectangle());
 
-        swapState(newCollider);
+        swapCollider(newCollider);
         
         crouch = new Crouch();
         mario.addAction(crouch);

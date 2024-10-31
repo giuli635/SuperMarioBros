@@ -18,7 +18,7 @@ public abstract class BaseMarioState implements MarioState {
         mario = m;
     }
 
-    protected void swapState(MarioCollider newCollider) {
+    protected void swapCollider(MarioCollider newCollider) {
         previousCollider = mario.getCollider();
         newCollider.copy(previousCollider);
         previousCollider.track(newCollider);

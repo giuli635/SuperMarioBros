@@ -8,7 +8,6 @@ public abstract class BaseAnimatedEntity extends UpdateableBody {
     protected int changingSprite;
     
     public void update() {
-        
         if (animatedSprites != null) {
             boolean flipped = getGraphicElement().isFlipped();
             manageChangeableSprites();
@@ -16,7 +15,6 @@ public abstract class BaseAnimatedEntity extends UpdateableBody {
                 getGraphicElement().flipSprite();
             }
         }
-        
     }
 
     private void manageChangeableSprites() {
