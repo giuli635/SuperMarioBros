@@ -7,9 +7,10 @@ import colliders.updateables.enemies.*;
 import colliders.updateables.mario.*;
 import colliders.updateables.powerups.*;
 import collisions.BaseCollision;
+import collisions.updateables.UpdateableEntityCollision;
 import utils.Axis;
 
-public class QuestionBlockCollision extends BaseCollision implements SolidCollision {
+public class QuestionBlockCollision extends BaseCollision implements SolidCollision, UpdateableEntityCollision {
     protected QuestionBlockCollider collider;
 
     public QuestionBlockCollision(QuestionBlockCollider c) {

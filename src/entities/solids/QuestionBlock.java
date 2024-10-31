@@ -38,7 +38,6 @@ public class QuestionBlock extends BaseAnimatedEntity {
         } else if (s == 'v') {
             entity = new GreenMushroom();
         }
-        load();
     }
 
     @Override

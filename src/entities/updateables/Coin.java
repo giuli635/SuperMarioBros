@@ -19,7 +19,6 @@ public class Coin extends BaseAnimatedEntity {
         collider = new CoinCollider(this, new Rectangle());
         graphicElement = new GameGraphicElement(this, SPRITES_FOLDER);
         setSprite(SPRITES_FOLDER);
-        load();
     }
 
     @Override

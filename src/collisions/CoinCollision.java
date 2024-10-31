@@ -6,9 +6,10 @@ import colliders.solids.*;
 import colliders.updateables.enemies.*;
 import colliders.updateables.mario.*;
 import colliders.updateables.powerups.*;
+import collisions.updateables.UpdateableEntityCollision;
 import utils.Axis;
 
-public class CoinCollision extends BaseCollision {
+public class CoinCollision extends BaseCollision implements UpdateableEntityCollision {
     protected CoinCollider coinCollider;
 
     public CoinCollision(CoinCollider c) {

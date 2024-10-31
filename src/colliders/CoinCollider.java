@@ -2,16 +2,16 @@ package colliders;
 
 import java.awt.Rectangle;
 
+import colliders.updateables.UpdateableEntityCollider;
 import collisions.CoinCollision;
 import collisions.Collision;
 import collisions.updateables.mario.MarioCollision;
 import entities.updateables.Coin;
-import entities.updateables.powerups.PowerUp;
 import game.GraphicEngine;
 import game.SoundManager;
 import utils.Axis;
 
-public class CoinCollider extends BaseCollider {
+public class CoinCollider extends BaseCollider implements UpdateableEntityCollider {
     protected Coin coin;
 
     public CoinCollider(Coin c, Rectangle b) {

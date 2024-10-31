@@ -3,6 +3,7 @@ import java.awt.Rectangle;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import colliders.updateables.UpdateableEntityCollider;
 import collisions.Collision;
 import collisions.solids.QuestionBlockCollision;
 import collisions.updateables.enemies.PiranhaPlantCollision;
@@ -14,7 +15,7 @@ import entities.updateables.mario.Mario;
 import entities.updateables.powerups.FireFlower;
 import entities.updateables.powerups.SuperMushroom;
 
-public class QuestionBlockCollider extends SolidCollider {
+public class QuestionBlockCollider extends SolidCollider implements UpdateableEntityCollider {
     protected QuestionBlock questionBlock;
 
     public QuestionBlockCollider(QuestionBlock e, Rectangle b) {
