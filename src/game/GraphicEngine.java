@@ -43,7 +43,7 @@ public class GraphicEngine {
         onScreen = new HashSet<>();
         frame = new JFrame("Super Mario Bros. - Comisión 02 TDP");
 
-        mode = "mode1";
+        mode = "mode2";
 
         panel = new JLayeredPane();
         panel.setPreferredSize(new Dimension(1000, 480));
