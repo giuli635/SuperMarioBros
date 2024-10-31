@@ -1,6 +1,9 @@
 package graphics;
 
 import javax.swing.*;
+
+import game.LanguageConfiguration;
+
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
@@ -16,11 +19,11 @@ public class GameOverScreen extends BaseGraphicElement {
         mainPanel.setPreferredSize(new Dimension(1000, 480)); 
         mainPanel.setBackground(new Color(0, 0, 0, 255)); 
         
-        gameOverLabel = new JLabel("GAME OVER");
+        gameOverLabel = new JLabel(LanguageConfiguration.instance().get("gameOver"));
         gameOverLabel.setHorizontalAlignment(SwingConstants.CENTER);
         
         try {
-            customFont = Font.createFont(Font.TRUETYPE_FONT, new File("font/SuperMario256.ttf")).deriveFont(55f);
+            customFont = Font.createFont(Font.TRUETYPE_FONT, new File("font/CozetteVector.ttf")).deriveFont(55f);
             gameOverLabel.setFont(customFont);
         } catch (FontFormatException | IOException e) {
             e.printStackTrace();

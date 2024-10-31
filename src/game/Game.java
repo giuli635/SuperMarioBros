@@ -72,7 +72,7 @@ public class Game implements WindowListener, KeyListener {
         graphicEngine.initBackgrounds();
         SoundManager soundManager = SoundManager.instance();
         LevelReader reader = LevelReader.instance();
-        lvlStats = reader.createLevel(3, 300, 1, 0);
+        lvlStats = reader.createLevel(3, 300, currLevel, 0);
         reader.readTxt(levels[currLevel]);
         soundManager.playLoopingSound("marioBackground.wav");
         long lastUpdateTime;
@@ -150,7 +150,10 @@ public class Game implements WindowListener, KeyListener {
     public void advanceLevel() {
         if (currLevel < levels.length -1) {
             currLevel ++;
+            SoundManager.instance().removeAllSounds();
+            LevelStats stash = new LevelStats(300, lvlStats.getLives(), currLevel, lvlStats.getScore());
             resetCurrentLevel();
+            lvlStats = stash;
         }
     }
     

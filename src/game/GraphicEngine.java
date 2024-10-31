@@ -1,9 +1,13 @@
 package game;
 import java.awt.Dimension;
+import java.io.File;
 import java.lang.reflect.InvocationTargetException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLayeredPane;
 import javax.swing.SwingUtilities;
@@ -37,7 +41,7 @@ public class GraphicEngine {
 
     private GraphicEngine() {
         onScreen = new HashSet<>();
-        frame = new JFrame();
+        frame = new JFrame("Super Mario Bros. - Comisión 02 TDP");
 
         mode = "mode1";
 
@@ -53,8 +57,13 @@ public class GraphicEngine {
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setVisible(true);
+        frame.setResizable(false);
 
-        //setDepth(stats, FRONT_DEPTH);
+        Path spritePath = Paths.get("sprites", "questionBlock", "mode1");
+        File spriteDir = spritePath.toFile();
+        File[] spriteFiles = spriteDir.listFiles();
+
+        frame.setIconImage(new ImageIcon(spriteFiles[0].getAbsolutePath()).getImage());
     }
 
     public void initBackgrounds() {

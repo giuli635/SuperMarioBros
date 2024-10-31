@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import game.GraphicEngine;
+import game.LanguageConfiguration;
 import game.LevelStats;
 import game.LevelStatsObserver;
 import game.LevelTimer;
@@ -60,17 +61,18 @@ public class StatsBar extends BaseGraphicElement implements LevelStatsObserver {
         mainPanel = new JPanel();
 
         try {
-            customFont = Font.createFont(Font.TRUETYPE_FONT, new File("font/SuperMario256.ttf")).deriveFont(38f);
+            customFont = Font.createFont(Font.TRUETYPE_FONT, new File("font/LanaPixel.ttf")).deriveFont(38f);
+            customFont = customFont.deriveFont(Font.BOLD);
         } catch (FontFormatException | IOException e) {
             e.printStackTrace();
         }
         
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                timePanel = createPanel("TIME", timeLabel, customFont);
-                livesPanel = createPanel("LIVES", livesLabel, customFont);
-                levelPanel = createPanel("LEVEL", levelLabel, customFont);
-                scorePanel = createPanel("SCORE", scoreLabel, customFont);
+                timePanel = createPanel(LanguageConfiguration.instance().get("time"), timeLabel, customFont);
+                livesPanel = createPanel(LanguageConfiguration.instance().get("lives"), livesLabel, customFont);
+                levelPanel = createPanel(LanguageConfiguration.instance().get("level"), levelLabel, customFont);
+                scorePanel = createPanel(LanguageConfiguration.instance().get("score"), scoreLabel, customFont);
                 
                 mainPanel.setLayout(new BoxLayout(mainPanel,BoxLayout.LINE_AXIS));
                 mainPanel.setBounds(0,0,(int) GraphicEngine.instance().getPanelSize().getWidth(),100);

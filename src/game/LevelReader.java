@@ -66,7 +66,7 @@ public class LevelReader {
     }
 
     public void readTxt(String file){
-        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+        try (BufferedReader br = new BufferedReader(new FileReader("levels/" + file))) {
             loadEntities(br);
             br.close();
         } catch (IOException e) {
