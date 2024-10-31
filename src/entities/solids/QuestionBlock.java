@@ -3,7 +3,7 @@ package entities.solids;
 import java.awt.Rectangle;
 
 import colliders.solids.QuestionBlockCollider;
-import entities.Body;
+import entities.updateables.BaseAnimatedEntity;
 import entities.updateables.Coin;
 import entities.updateables.UpdatableEntity;
 import entities.updateables.powerups.GreenMushroom;
@@ -13,8 +13,10 @@ import graphics.GameGraphicElement;
 import game.GraphicEngine;
 import game.LevelReader;
 
-public class QuestionBlock extends Body {
+public class QuestionBlock extends BaseAnimatedEntity {
     protected static String SPRITES_FOLDER = "questionBlock";
+    public final static String[] ANIMATED_SPRITES = {"questionBlock", "questionBlock2"};
+    protected static String[] HIT = {"questionBlockHit", "questionBlockHit"};
     protected QuestionBlockCollider collider;
     protected GameGraphicElement graphicElement;
     protected boolean depends;
@@ -22,6 +24,7 @@ public class QuestionBlock extends Body {
     protected UpdatableEntity entity;
 
     public QuestionBlock(char s) {
+        animatedSprites = ANIMATED_SPRITES;
         collider = new QuestionBlockCollider(this, new Rectangle());
         graphicElement = new GameGraphicElement(this, SPRITES_FOLDER);
         setSprite(SPRITES_FOLDER);
@@ -36,6 +39,7 @@ public class QuestionBlock extends Body {
         } else if (s == 'v') {
             entity = new GreenMushroom();
         }
+        //load();
     }
 
     @Override
@@ -63,7 +67,8 @@ public class QuestionBlock extends Body {
         releaseEntity(entity);
         entity = null;
         active = false;
-        setSprite(SPRITES_FOLDER);
+        setSprite("questionBlockHit");
+        animatedSprites = HIT;
     }
 
     public void releaseEntity(UpdatableEntity e) {

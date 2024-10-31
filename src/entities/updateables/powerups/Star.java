@@ -13,8 +13,6 @@ public class Star extends BaseMovableEntity implements PowerUp {
     protected int framesPerSprite = 10;
     protected int changingSprite;
     
-    //protected int speedX;
-    //protected float speedY;
 
     protected StarCollider collider;
     protected GameGraphicElement graphicElement;

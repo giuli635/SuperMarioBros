@@ -47,6 +47,8 @@ public class LevelReader {
         loaders.put('C', new CastleLoader());
         loaders.put('c', new CastleLoader());
         loaders.put('e', new FlagPoleLoader());
+        loaders.put('$', new CoinLoader());
+        loaders.put('f', new FireFlowerLoader());
     }
 
     protected static LevelReader instance(){
