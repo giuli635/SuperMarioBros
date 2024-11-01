@@ -79,7 +79,12 @@ public class TextLabel extends BaseGraphicElement {
     public void reload() {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
+                String string = LanguageConfiguration.instance().get(data);
                 label.setText(LanguageConfiguration.instance().get(data));
+                label.setText(string);
+                int width = label.getFontMetrics(customFont).stringWidth(string);
+                int height = label.getFontMetrics(customFont).getHeight();
+                label.setBounds((int) getPosition().getX(), (int) getPosition().getY(), width, height);
             }
         });
     }

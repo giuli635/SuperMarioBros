@@ -9,21 +9,21 @@ import colliders.updateables.UpdateableEntityCollider;
 import collisions.Collision;
 import collisions.ModeSwitcherCollision;
 import collisions.updateables.mario.MarioCollision;
-import entities.solids.QuestionBlock;
+import entities.ConfigurationBlock;
 import entities.updateables.mario.Mario;
 import game.GraphicEngine;
 import utils.Axis;
 
 public class ModeSwitcherCollider extends SolidCollider implements UpdateableEntityCollider {
-    protected QuestionBlock block;
+    protected ConfigurationBlock block;
 
-    public ModeSwitcherCollider(QuestionBlock q, Rectangle b) {
+    public ModeSwitcherCollider(ConfigurationBlock q, Rectangle b) {
         super(b);
         block = q;
     }
 
     @Override
-    public QuestionBlock getEntity() {
+    public ConfigurationBlock getEntity() {
         return block;
     }
 
