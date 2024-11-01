@@ -2,7 +2,10 @@ package entities.solids;
 
 import java.awt.Rectangle;
 
+import colliders.LanguageSwitcherCollider;
+import colliders.ModeSwitcherCollider;
 import colliders.solids.QuestionBlockCollider;
+import colliders.solids.SolidCollider;
 import entities.updateables.BaseAnimatedEntity;
 import entities.updateables.Coin;
 import entities.updateables.UpdatableEntity;
@@ -16,7 +19,7 @@ import game.LevelReader;
 public class QuestionBlock extends BaseAnimatedEntity {
     protected static String SPRITES_FOLDER = "questionBlock";
     public final static String[] ANIMATED_SPRITES = {"questionBlock", "questionBlock2"};
-    protected QuestionBlockCollider collider;
+    protected SolidCollider collider;
     protected GameGraphicElement graphicElement;
     protected boolean depends;
     protected boolean active;
@@ -31,12 +34,16 @@ public class QuestionBlock extends BaseAnimatedEntity {
 
         if (s == 's' || s == 'f') {
             depends = true;
-        } else if (s == '1') {
+        } else if (s == '$') {
             entity = new Coin();
         } else if (s == 'S') {
             entity = new Star();
         } else if (s == 'v') {
             entity = new GreenMushroom();
+        } else if (s == 'm') {
+            collider = new ModeSwitcherCollider(this, collider.getBounds());
+        } else if (s == 'l') {
+            collider = new LanguageSwitcherCollider(this, collider.getBounds());
         }
     }
 
@@ -46,7 +53,7 @@ public class QuestionBlock extends BaseAnimatedEntity {
     }
 
     @Override
-    public QuestionBlockCollider getCollider() {
+    public SolidCollider getCollider() {
         return collider;
     }
 

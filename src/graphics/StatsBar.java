@@ -8,7 +8,8 @@ import javax.swing.SwingUtilities;
 
 import game.GraphicEngine;
 import game.LanguageConfiguration;
-import game.LevelStats;
+import game.Stats;
+import game.StatsPanel;
 import game.LevelStatsObserver;
 import game.LevelTimer;
 
@@ -18,7 +19,6 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.io.File;
 import java.io.IOException;
-import java.awt.Color;
 import java.awt.Component;
 
 public class StatsBar extends BaseGraphicElement implements LevelStatsObserver {
@@ -33,30 +33,20 @@ public class StatsBar extends BaseGraphicElement implements LevelStatsObserver {
     protected JLabel levelLabel;
     protected JLabel scoreLabel;
 
-    protected JPanel timePanel;
-    protected JPanel livesPanel;
-    protected JPanel levelPanel;
-    protected JPanel scorePanel;
+    protected StatsPanel timePanel;
+    protected StatsPanel livesPanel;
+    protected StatsPanel levelPanel;
+    protected StatsPanel scorePanel;
     protected JPanel mainPanel;
-    protected LevelStats levelStats;
+    protected Stats levelStats;
 
-    public StatsBar(LevelStats l) {
+    public StatsBar(Stats l) {
         levelStats=l;
         levelTimer = l.getLevelTimer();
         lives = l.getLives();
         score = l.getScore();
         this.level = l.getLevelNumber();
         l.addObserver(this);
-
-        timeLabel = new JLabel();
-        livesLabel = new JLabel();
-        levelLabel = new JLabel();
-        scoreLabel = new JLabel();
-
-        levelPanel = new JPanel();
-        scorePanel = new JPanel();
-        timePanel = new JPanel();
-        livesPanel  = new JPanel();
         
         mainPanel = new JPanel();
 
@@ -69,10 +59,10 @@ public class StatsBar extends BaseGraphicElement implements LevelStatsObserver {
         
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                timePanel = createPanel(LanguageConfiguration.instance().get("time"), timeLabel, customFont);
-                livesPanel = createPanel(LanguageConfiguration.instance().get("lives"), livesLabel, customFont);
-                levelPanel = createPanel(LanguageConfiguration.instance().get("level"), levelLabel, customFont);
-                scorePanel = createPanel(LanguageConfiguration.instance().get("score"), scoreLabel, customFont);
+                timePanel = createPanel(LanguageConfiguration.instance().get("time"), levelTimer.getRemainingTime(), customFont);
+                livesPanel = createPanel(LanguageConfiguration.instance().get("lives"), lives, customFont);
+                levelPanel = createPanel(LanguageConfiguration.instance().get("level"), level, customFont);
+                scorePanel = createPanel(LanguageConfiguration.instance().get("score"), score, customFont);
                 
                 mainPanel.setLayout(new BoxLayout(mainPanel,BoxLayout.LINE_AXIS));
                 mainPanel.setBounds(0,0,(int) GraphicEngine.instance().getPanelSize().getWidth(),100);
@@ -86,20 +76,9 @@ public class StatsBar extends BaseGraphicElement implements LevelStatsObserver {
         });
     }
 
-    public JPanel createPanel(String t, JLabel stat, Font  font) { 
-        JLabel text = new JLabel();
-        JPanel panel = new JPanel();
+    public StatsPanel createPanel(String t, int i, Font  font) { 
+        StatsPanel panel = new StatsPanel(t, i, font);
 
-        text.setText(t);
-        text.setFont(customFont);
-        text.setAlignmentX(Component.CENTER_ALIGNMENT);
-        text.setForeground(Color.WHITE);
-        stat.setFont(customFont);
-        stat.setAlignmentX(Component.CENTER_ALIGNMENT);
-        stat.setForeground(Color.WHITE);
-                
-        panel.add(text);
-        panel.add(stat);
         panel.setLayout(new BoxLayout(panel,BoxLayout.PAGE_AXIS));
         panel.setAlignmentX(Component.RIGHT_ALIGNMENT);
         panel.setOpaque(false);
@@ -107,16 +86,16 @@ public class StatsBar extends BaseGraphicElement implements LevelStatsObserver {
         return panel;
     }
 
-    public void addElement(JPanel element) {
+    public void addElement(StatsPanel element) {
         mainPanel.add(element);
         mainPanel.add(Box.createHorizontalGlue());
     }
 
     public void draw() {
-        timeLabel.setText("" + levelTimer.getRemainingTime());
-        livesLabel.setText("" + lives);
-        levelLabel.setText("" + level);
-        scoreLabel.setText("" + score);
+        timePanel.setStat(levelTimer.getRemainingTime());
+        livesPanel.setStat(lives);
+        levelPanel.setStat(level);
+        scorePanel.setStat(score);
     }
 
     @Override
@@ -152,5 +131,13 @@ public class StatsBar extends BaseGraphicElement implements LevelStatsObserver {
     public void onStatsChanged() {
         lives = levelStats.getLives();
         score = levelStats.getScore();
+    }
+
+    @Override
+    public void reload() {
+        timePanel.setText(LanguageConfiguration.instance().get("time"));
+        livesPanel.setText(LanguageConfiguration.instance().get("lives"));
+        levelPanel.setText(LanguageConfiguration.instance().get("level"));
+        scorePanel.setText(LanguageConfiguration.instance().get("score"));
     }
 }

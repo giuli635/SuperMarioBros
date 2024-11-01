@@ -21,7 +21,8 @@ public class GraphicEngine {
     public static final Integer FRONT_DEPTH = 100;
     public static final Integer DEFAULT_DEPTH = 50;
     protected JFrame frame;
-    protected String mode;
+    protected static final String[] modes = {"mode1", "mode2"};
+    protected int mode;
     protected JLayeredPane panel;
     protected Set<GraphicElement> onScreen;
     protected int position;
@@ -43,7 +44,7 @@ public class GraphicEngine {
         onScreen = new HashSet<>();
         frame = new JFrame("Super Mario Bros. - Comisión 02 TDP");
 
-        mode = "mode1";
+        mode = 0;
 
         panel = new JLayeredPane();
         panel.setPreferredSize(new Dimension(1000, 480));
@@ -59,7 +60,7 @@ public class GraphicEngine {
         frame.setVisible(true);
         frame.setResizable(false);
 
-        Path spritePath = Paths.get("sprites", "questionBlock", "mode1");
+        Path spritePath = Paths.get("sprites", "questionBlock", modes[mode]);
         File spriteDir = spritePath.toFile();
         File[] spriteFiles = spriteDir.listFiles();
 
@@ -107,6 +108,7 @@ public class GraphicEngine {
             onScreen.add(e);
             SwingUtilities.invokeLater(new Runnable() {
                 public void run() {
+                    e.reload(); //TODO: Rework del GraphicElement;
                     panel.add(e.getComponent(), DEFAULT_DEPTH, 0);
                 }
             });
@@ -167,14 +169,6 @@ public class GraphicEngine {
         });
     }
 
-    public void setMode(String s) {
-        mode = s;
-    }
-
-    public String getMode() {
-        return mode;
-    }
-
     public void reset() {
         onScreen = new HashSet<>();
         SwingUtilities.invokeLater(new Runnable() {
@@ -183,5 +177,20 @@ public class GraphicEngine {
             }
         });
         initBackgrounds();
+    }
+
+    public void nextMode() {
+        mode = (mode + 1) % modes.length;
+        reload();
+    }
+
+    public void reload() {
+        for (GraphicElement g :  onScreen) {
+            g.reload();
+        }
+    }
+
+    public String getMode() {
+        return modes[mode];
     }
 }

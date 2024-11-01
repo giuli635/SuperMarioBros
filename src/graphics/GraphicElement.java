@@ -13,4 +13,5 @@ public interface GraphicElement {
     public boolean added();
     public void add();
     public void remove();
+    public void reload();
 }

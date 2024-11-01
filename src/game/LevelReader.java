@@ -58,9 +58,9 @@ public class LevelReader {
         return uniqueInstance;
     }
 
-    public LevelStats createLevel(int livesMario, int levelTimer, int numberLevel, int score) {
-        LevelStats level = null;
-        level = new LevelStats(levelTimer, livesMario, numberLevel, score);
+    public Stats createLevel(int livesMario, int levelTimer, int numberLevel, int score) {
+        Stats level = null;
+        level = new Stats(levelTimer, livesMario, numberLevel, score);
         StatsBar statsBar = new StatsBar(level);
         GraphicEngine.instance().add(statsBar);
         GraphicEngine.instance().setDepth(statsBar, GraphicEngine.FRONT_DEPTH);

@@ -272,4 +272,22 @@ public class StarCollision extends BaseCollision implements PowerUpCollision, Bo
             c.handleVerticalCollision(this);
         }
     }
+
+    @Override
+    public void collide(ModeSwitcherCollider c, Axis a) {
+        if (a == Axis.X) {
+            c.handleHorizontalCollision(this);
+        } else {
+            c.handleVerticalCollision(this);
+        }
+    }
+
+    @Override
+    public void collide(LanguageSwitcherCollider c, Axis a) {
+        if (a == Axis.X) {
+            c.handleHorizontalCollision(this);
+        } else {
+            c.handleVerticalCollision(this);
+        }
+    }
 }

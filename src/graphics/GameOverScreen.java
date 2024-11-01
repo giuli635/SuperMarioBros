@@ -67,4 +67,10 @@ public class GameOverScreen extends BaseGraphicElement {
     public void setPosition(int x, int y) {
         mainPanel.setLocation(x, y);
     }
+
+    @Override
+    public void reload() {
+        gameOverLabel = new JLabel(LanguageConfiguration.instance().get("gameOver"));
+        mainPanel.repaint();
+    }
 }

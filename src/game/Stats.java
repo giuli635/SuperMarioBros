@@ -3,7 +3,7 @@ package game;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LevelStats {
+public class Stats {
     protected int remainingTime;
     protected int score;
     protected int lives;
@@ -11,7 +11,7 @@ public class LevelStats {
     protected LevelTimer levelTimer;
     protected List<LevelStatsObserver> observers;
     
-    public LevelStats(int initialTime, int initialLives, int numberLevel, int scoreLevel) {
+    public Stats(int initialTime, int initialLives, int numberLevel, int scoreLevel) {
         remainingTime = initialTime;
         lives = initialLives;
         score = scoreLevel;

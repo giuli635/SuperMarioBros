@@ -1,6 +1,5 @@
 package colliders.updateables.mario;
 
-import colliders.Collider;
 import collisions.Collision;
 import collisions.updateables.mario.MarioCollision;
 import collisions.updateables.mario.InvulnerableCollision;

@@ -20,12 +20,12 @@ public class Game implements WindowListener, KeyListener {
     protected static Game uniqueInstance;
     protected Set<UpdatableEntity> toUpdateRegistry;
     protected Map<Integer, KeyStatus> keysStatus;
-    protected LevelStats lvlStats;
+    protected Stats lvlStats;
     protected boolean run;
     protected boolean pause;
     protected boolean pauseKeyAlreadyPressed = false;
     protected String[] levels = {"menu.txt", "level1.txt", "level2.txt", "level3.txt"};
-    protected int currLevel = 1;
+    protected int currLevel = 0;
     protected long frames = 0;
 
     protected List<UpdatableEntity> toAddList = new ArrayList<>();
@@ -151,13 +151,13 @@ public class Game implements WindowListener, KeyListener {
         if (currLevel < levels.length -1) {
             currLevel ++;
             SoundManager.instance().removeAllSounds();
-            LevelStats stash = new LevelStats(300, lvlStats.getLives(), currLevel, lvlStats.getScore());
+            Stats stash = new Stats(300, lvlStats.getLives(), currLevel, lvlStats.getScore());
             resetCurrentLevel();
             lvlStats = stash;
         }
     }
     
-    public LevelStats getLevelStats(){
+    public Stats getLevelStats(){
         return lvlStats;
     }
 

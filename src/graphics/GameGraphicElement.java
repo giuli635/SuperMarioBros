@@ -133,6 +133,8 @@ public class GameGraphicElement extends BaseGraphicElement {
 
     public void loadSprites() {
         sprites = SpriteFactory.instance().getSprites(folder, GraphicEngine.instance().getMode());
+        setSprite(currentSprite);
+        toUpdate = true;
     }
 
     public void setFolder(String f) {
@@ -150,5 +152,10 @@ public class GameGraphicElement extends BaseGraphicElement {
 
     public void setFlipped(boolean flipped) {
         this.flipped = flipped;
+    }
+
+    @Override
+    public void reload() {
+        loadSprites();
     }
 }

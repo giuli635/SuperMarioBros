@@ -10,7 +10,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.TreeSet;
 
-import colliders.Collider;
 import colliders.updateables.mario.DefaultMarioCollider;
 import colliders.updateables.mario.InvulnerableCollider;
 import colliders.updateables.mario.MarioCollider;
@@ -23,7 +22,7 @@ import entities.updateables.mario.actions.ResolveSprite;
 import entities.updateables.mario.actions.VerticalMovement;
 import game.CollisionsEngine;
 import game.Game;
-import game.LevelStats;
+import game.Stats;
 import game.SoundManager;
 import graphics.GameGraphicElement;
 import utils.Direction;
@@ -50,12 +49,12 @@ public class Mario extends UpdateableBody {
     protected SortedSet<MarioAction> actions;
     protected Stack<MarioState> states;
     protected Queue<Runnable> toDo;
-    protected LevelStats levelStats;
+    protected Stats levelStats;
     protected Direction movementDirection;
     protected boolean overriteSprite;
     protected boolean loaded;
 
-    public Mario(LevelStats stats) {
+    public Mario(Stats stats) {
         loaded = false;
         falling = false;
         levelStats = stats;

@@ -52,6 +52,7 @@ public class QuestionBlockCollider extends SolidCollider implements UpdateableEn
                 mario.setSpeedY(0);
                 translate(0, -displacement);
                 getEntity().getGraphicElement().translate(0, -displacement);
+                mario.setSpeedY(0);
                 questionBlock.interaction(new SuperMushroom());
                 
                 Timer timer = new Timer();
@@ -81,6 +82,7 @@ public class QuestionBlockCollider extends SolidCollider implements UpdateableEn
             } else {
                 translate(0, -displacement);
                 getEntity().getGraphicElement().translate(0, -displacement);
+                mario.setSpeedY(0);
                 questionBlock.interaction(new FireFlower());
                 
                 Timer timer = new Timer();

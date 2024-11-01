@@ -8,11 +8,14 @@ import java.util.Properties;
 public class LanguageConfiguration {
     protected static LanguageConfiguration uniqueInstance;
     protected Properties configuration;
+    protected static final String[] supportedLanguages = {"english", "spanish", "japanese"};
+    protected int currLanguage;
     protected Properties language;
 
     protected LanguageConfiguration() {
         configuration = new Properties();
         language = new Properties();
+        currLanguage = 0;
         try {
             InputStream input = new FileInputStream("configuration.properties");
             configuration.load(input);
@@ -21,7 +24,7 @@ public class LanguageConfiguration {
             e.printStackTrace();
         }
 
-        setLanguage("english");
+        setLanguage(supportedLanguages[currLanguage]);
     }
 
 
@@ -45,5 +48,11 @@ public class LanguageConfiguration {
 
     public String get(String s) {
         return language.getProperty(s);
+    }
+
+    public void nextLanguage() {
+        currLanguage = (currLanguage + 1) % supportedLanguages.length;
+        setLanguage(supportedLanguages[currLanguage]);
+        GraphicEngine.instance().reload();
     }
 }
