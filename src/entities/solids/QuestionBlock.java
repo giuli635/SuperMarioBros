@@ -13,9 +13,9 @@ import entities.updateables.powerups.GreenMushroom;
 import entities.updateables.powerups.PowerUp;
 import entities.updateables.powerups.Star;
 import graphics.GameGraphicElement;
+import graphics.TextLabel;
 import game.GraphicEngine;
 import game.LevelReader;
-import game.TextLabel;
 
 public class QuestionBlock extends BaseAnimatedEntity {
     protected static String SPRITES_FOLDER = "questionBlock";
@@ -45,14 +45,18 @@ public class QuestionBlock extends BaseAnimatedEntity {
         } else if (s == 'm') {
             collider = new ModeSwitcherCollider(this, collider.getBounds());
             text = new TextLabel("modeChange");
-            text.setPosition(500, 100);
-            text.add();
-            GraphicEngine.instance().setDepth(text, GraphicEngine.FRONT_DEPTH);
         } else if (s == 'l') {
             collider = new LanguageSwitcherCollider(this, collider.getBounds());
             text = new TextLabel("languageChange");
-            text.setPosition((int) graphicElement.getPosition().getX(), (int) graphicElement.getPosition().getY() + 20);
+        }
+    }
+
+    @Override
+    public void load() {
+        super.load();
+        if (text != null) {
             text.add();
+            text.setPosition((int) graphicElement.getPosition().getX() - text.getComponent().getWidth() / 2 + LevelReader.CHUNK, (int) graphicElement.getPosition().getY() + 50);
         }
     }
 

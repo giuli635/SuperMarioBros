@@ -30,9 +30,10 @@ import colliders.updateables.powerups.FireFlowerCollider;
 import colliders.updateables.powerups.GreenMushroomCollider;
 import colliders.updateables.powerups.StarCollider;
 import colliders.updateables.powerups.SuperMushroomCollider;
+import collisions.updateables.UpdateableEntityCollision;
 import utils.Axis;
 
-public class LanguageSwitcherCollision extends BaseCollision{
+public class LanguageSwitcherCollision extends BaseCollision implements UpdateableEntityCollision {
     protected LanguageSwitcherCollider collider;
 
     public LanguageSwitcherCollision(LanguageSwitcherCollider c) {

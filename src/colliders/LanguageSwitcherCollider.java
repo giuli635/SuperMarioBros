@@ -5,6 +5,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import colliders.solids.SolidCollider;
+import colliders.updateables.UpdateableEntityCollider;
 import collisions.Collision;
 import collisions.LanguageSwitcherCollision;
 import collisions.updateables.mario.MarioCollision;
@@ -13,7 +14,7 @@ import entities.updateables.mario.Mario;
 import game.LanguageConfiguration;
 import utils.Axis;
 
-public class LanguageSwitcherCollider extends SolidCollider{
+public class LanguageSwitcherCollider extends SolidCollider implements UpdateableEntityCollider {
     protected QuestionBlock block;
 
     public LanguageSwitcherCollider(QuestionBlock e, Rectangle b) {

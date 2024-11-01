@@ -12,8 +12,8 @@ public class StatsPanel extends JPanel{
     protected JLabel stat;
 
     public StatsPanel(String s, int t, Font f){
-        text = new JLabel(s);
-        stat = new JLabel("" + t);
+        text = new JLabel();
+        stat = new JLabel();
         text.setFont(f);
         stat.setFont(f);
         text.setAlignmentX(Component.CENTER_ALIGNMENT);
