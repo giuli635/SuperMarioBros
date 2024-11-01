@@ -107,7 +107,7 @@ public class Mario extends UpdateableBody {
         collider.deactivate();
         setSpritesFolder("mario");
         setSprite(MARIO_DEATH);
-        // SoundManager.instance().removeAllSounds();
+        SoundManager.instance().removeAllSounds();
         SoundManager.instance().playSound("mariodie.wav");
         levelStats.decreaseLives();
         Timer timer = new Timer();

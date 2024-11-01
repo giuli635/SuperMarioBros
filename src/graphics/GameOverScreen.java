@@ -2,7 +2,9 @@ package graphics;
 
 import javax.swing.*;
 
+import game.GraphicEngine;
 import game.LanguageConfiguration;
+import game.SoundManager;
 
 import java.awt.*;
 import java.io.File;
@@ -12,6 +14,9 @@ public class GameOverScreen extends BaseGraphicElement {
     private JPanel mainPanel;
     private JLabel gameOverLabel;
     private Font customFont;
+    private static final int DISPLAY_DURATION_MS = 4000; // Duración en ms
+    private boolean isDisplayed = false;
+
 
     public GameOverScreen() {
         mainPanel = new JPanel();
@@ -42,6 +47,23 @@ public class GameOverScreen extends BaseGraphicElement {
         mainPanel.setVisible(true);
     }
 
+    public void showGameOverScreen(GraphicEngine graphicEngine, SoundManager soundManager) {
+        if (!isDisplayed) {
+            add();
+            graphicEngine.setDepth(this, GraphicEngine.FRONT_DEPTH + 1);
+            soundManager.playSound("gameover.wav");
+            isDisplayed = true;
+            try {
+                Thread.sleep(DISPLAY_DURATION_MS); 
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            remove();
+            isDisplayed = false;
+        }
+    }
+
+
     @Override
     public JComponent getComponent() {
         return mainPanel;
@@ -71,6 +93,5 @@ public class GameOverScreen extends BaseGraphicElement {
     @Override
     public void reload() {
         gameOverLabel = new JLabel(LanguageConfiguration.instance().get("gameOver"));
-        mainPanel.repaint();
     }
 }
