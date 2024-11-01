@@ -38,7 +38,7 @@ public class KoopaTroopa extends BaseEnemy implements ShellEnemy {
     @Override
     public void update() {
         if (!shell) {
-            //TODO : Manejar los bucles de sprites
+            //TODO : Manejar los bucles de sprites  
         }
         super.update();
     }

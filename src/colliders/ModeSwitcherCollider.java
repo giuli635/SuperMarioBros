@@ -5,16 +5,16 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import colliders.solids.SolidCollider;
+import colliders.updateables.UpdateableEntityCollider;
 import collisions.Collision;
 import collisions.ModeSwitcherCollision;
 import collisions.updateables.mario.MarioCollision;
-import entities.Entity;
 import entities.solids.QuestionBlock;
 import entities.updateables.mario.Mario;
 import game.GraphicEngine;
 import utils.Axis;
 
-public class ModeSwitcherCollider extends SolidCollider {
+public class ModeSwitcherCollider extends SolidCollider implements UpdateableEntityCollider {
     protected QuestionBlock block;
 
     public ModeSwitcherCollider(QuestionBlock q, Rectangle b) {
@@ -23,7 +23,7 @@ public class ModeSwitcherCollider extends SolidCollider {
     }
 
     @Override
-    public Entity getEntity() {
+    public QuestionBlock getEntity() {
         return block;
     }
 

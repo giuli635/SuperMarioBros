@@ -6,9 +6,10 @@ import colliders.solids.*;
 import colliders.updateables.enemies.*;
 import colliders.updateables.mario.*;
 import colliders.updateables.powerups.*;
+import collisions.updateables.UpdateableEntityCollision;
 import utils.Axis;
 
-public class ModeSwitcherCollision extends BaseCollision{
+public class ModeSwitcherCollision extends BaseCollision implements UpdateableEntityCollision{
     protected ModeSwitcherCollider collider;
 
     public ModeSwitcherCollision(ModeSwitcherCollider c) {

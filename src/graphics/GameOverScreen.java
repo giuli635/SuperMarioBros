@@ -70,7 +70,6 @@ public class GameOverScreen extends BaseGraphicElement {
 
     @Override
     public void reload() {
-        gameOverLabel = new JLabel(LanguageConfiguration.instance().get("gameOver"));
-        mainPanel.repaint();
+        gameOverLabel.setText(LanguageConfiguration.instance().get("gameOver"));
     }
 }

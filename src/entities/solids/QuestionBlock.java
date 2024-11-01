@@ -15,12 +15,14 @@ import entities.updateables.powerups.Star;
 import graphics.GameGraphicElement;
 import game.GraphicEngine;
 import game.LevelReader;
+import game.TextLabel;
 
 public class QuestionBlock extends BaseAnimatedEntity {
     protected static String SPRITES_FOLDER = "questionBlock";
     public final static String[] ANIMATED_SPRITES = {"questionBlock", "questionBlock2"};
     protected SolidCollider collider;
     protected GameGraphicElement graphicElement;
+    protected TextLabel text;
     protected boolean depends;
     protected boolean active;
     protected UpdatableEntity entity;
@@ -42,8 +44,15 @@ public class QuestionBlock extends BaseAnimatedEntity {
             entity = new GreenMushroom();
         } else if (s == 'm') {
             collider = new ModeSwitcherCollider(this, collider.getBounds());
+            text = new TextLabel("modeChange");
+            text.setPosition(500, 100);
+            text.add();
+            GraphicEngine.instance().setDepth(text, GraphicEngine.FRONT_DEPTH);
         } else if (s == 'l') {
             collider = new LanguageSwitcherCollider(this, collider.getBounds());
+            text = new TextLabel("languageChange");
+            text.setPosition((int) graphicElement.getPosition().getX(), (int) graphicElement.getPosition().getY() + 20);
+            text.add();
         }
     }
 
