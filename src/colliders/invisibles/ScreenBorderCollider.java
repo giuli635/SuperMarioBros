@@ -71,6 +71,6 @@ public class ScreenBorderCollider extends BaseCollider {
     }
 
     public void handleVerticalCollision(LevelEndCollision c){
-        
+
     }
 }
