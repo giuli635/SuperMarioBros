@@ -1,15 +1,18 @@
 package graphics;
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.util.Map;
+import java.util.zip.Inflater;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 import entities.Entity;
+import game.Game;
 import game.GraphicEngine;
 
 public class GameGraphicElement extends BaseGraphicElement {
@@ -109,6 +112,21 @@ public class GameGraphicElement extends BaseGraphicElement {
         g2d.dispose();
 
         return flippedImage;
+    }
+
+    public void remapSpriteColor(Map<Color, Color> mask) {
+        Game.instance().setDebugging(true);
+        BufferedImage bufferedImage = iconToBufferedImage(sprite);
+        for (int x = 0; x < bufferedImage.getWidth(); x++) {          
+            for (int y = 0; y < bufferedImage.getHeight(); y++) {   
+                Color newColor = mask.get(new Color(bufferedImage.getRGB(x, y), true));
+                if (newColor != null) {
+                    bufferedImage.setRGB(x, y, newColor.getRGB());
+                }
+            }
+        }
+
+        sprite = new ImageIcon(bufferedImage);
     }
 
     public void draw() {

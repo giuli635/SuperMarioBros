@@ -1,6 +1,7 @@
 package entities.updateables;
 
 import java.awt.Rectangle;
+import java.util.List;
 
 import colliders.FireBallCollider;
 import entities.updateables.mario.Mario;
@@ -9,17 +10,19 @@ import graphics.GameGraphicElement;
 
 public class FireBall extends BaseMovableEntity implements Bouncer {
     protected static String SPRITES_FOLDER = "fireBall";
-    public final static String[] ANIMATED_SPRITES = {"fireBall", "fireBall2"};
-    public static final int FRAMES_PER_SPRITE = 10;
+    public final static List<String> ANIMATED_SPRITES = List.of(
+        "fireBall", "fireBall2"
+    );
+    public final static int FRAMES_PER_SPRITE = 10;
     protected ThrowFireBall thrower;
     
     protected FireBallCollider collider;
     protected GameGraphicElement graphicElement;
-    protected Animator animator;
+    protected MovementAnimator animator;
     protected Mario mario;
 
     public FireBall(ThrowFireBall t, Mario m) {
-        animator = new Animator(ANIMATED_SPRITES, FRAMES_PER_SPRITE, this);
+        animator = new MovementAnimator(ANIMATED_SPRITES, FRAMES_PER_SPRITE, this);
         thrower = t;
         speedX = 4;
         speedY = 0;

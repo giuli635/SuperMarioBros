@@ -1,8 +1,10 @@
 package entities.updateables.mario;
 
+import java.awt.Color;
 import java.awt.Rectangle;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.SortedSet;
 import java.util.Timer;
@@ -27,6 +29,19 @@ import utils.Direction;
 import utils.PriorityComparator;
 
 public class Mario extends UpdateableBody {
+    protected static final Map<Color, Color> INITIAL_COLOR_STAR_MARIO = initStarColor();
+
+    protected static Map<Color, Color> initStarColor() {
+        Map<Color, Color> colorMapping = Map.of(
+            new Color(0, 0, 0, 255), new Color(12, 147, 0, 255),
+            new Color(107, 109, 0, 255), new Color(234, 158, 34, 255),
+            new Color(181, 49, 32, 255), new Color(12, 147, 0, 255),
+            new Color(234, 158, 34, 255), new Color(255, 254, 255, 255)
+        );
+
+        return colorMapping;
+    }
+
     public static final String MARIO_DEATH = "marioDeath";
     public static final String MARIO_CROUCHING = "marioCrouching";
     public final static String MARIO_STILL = "marioStill";
@@ -43,6 +58,7 @@ public class Mario extends UpdateableBody {
     protected float accelerationX;
     protected boolean falling;
 
+    protected Map<Color, Color> initialColorStarMario;
     protected MarioCollider collider;
     protected GameGraphicElement graphicElement;
     protected SortedSet<MarioAction> actions;
@@ -60,6 +76,7 @@ public class Mario extends UpdateableBody {
         actions = new TreeSet<>(new PriorityComparator());
         states = new HashMap<>();
         movementDirection = Direction.NONE;
+        initialColorStarMario = INITIAL_COLOR_STAR_MARIO;
 
         addAction(new VerticalMovement());
         addAction(new ResolveHorizontalMovementDirection());
@@ -174,6 +191,14 @@ public class Mario extends UpdateableBody {
         this.overriteSprite = overriteSprite;
     }
 
+    public Map<Color, Color> getInitialColorStarMario() {
+        return initialColorStarMario;
+    }
+
+    public void setInitialColorStarMario(Map<Color, Color> initialColorStarMario) {
+        this.initialColorStarMario = initialColorStarMario;
+    }
+
     public void setState(MarioState state) {
         MarioState previousState = states.put(state.getPriority(), state);
         if (previousState != null) {
@@ -189,7 +214,6 @@ public class Mario extends UpdateableBody {
     }
 
     public MarioCollider setCollider(MarioCollider colliderToSet) {
-        Game.instance().setDebugging(true);
         MarioCollider nextCollider = collider;
         while (nextCollider.getPriority() > colliderToSet.getPriority()) {
             nextCollider = nextCollider.getBaseCollider();
@@ -199,21 +223,29 @@ public class Mario extends UpdateableBody {
         if (nextCollider.getPriority() == colliderToSet.getPriority()) {
             swapCollider(nextCollider, colliderToSet);
         } else {
-            colliderToSet.setBaseCollider(nextCollider);
-            colliderToSet.setColliderOnTop(nextCollider.getColliderOnTop());
-        }
-
-        if (collider == nextCollider) {
-            replaceCollider(colliderToSet);
+            putColliderOnTop(colliderToSet, nextCollider);
         }
 
         return nextCollider;
+    }
+
+    protected void putColliderOnTop(MarioCollider newTopCollider, MarioCollider bottomCollider) {
+        MarioCollider previousTopCollider = bottomCollider.getColliderOnTop();
+        if (previousTopCollider == null) {
+            newTopCollider.setBaseCollider(bottomCollider);
+            replaceCollider(newTopCollider);
+        } else {
+            newTopCollider.setBaseCollider(bottomCollider);
+            newTopCollider.setColliderOnTop(previousTopCollider);
+        }
     }
 
     protected void swapCollider(MarioCollider oldCollider, MarioCollider newCollider) {
         newCollider.setBaseCollider(oldCollider.getBaseCollider());
         if (oldCollider.getColliderOnTop() != null) {
             oldCollider.getColliderOnTop().setBaseCollider(newCollider);
+        } else {
+            replaceCollider(newCollider);
         }
     }
 
@@ -237,9 +269,11 @@ public class Mario extends UpdateableBody {
         }
 
         if (currentCollider != null) {
-            colliderToRemove.getBaseCollider().setColliderOnTop(colliderToRemove.getColliderOnTop());
-            if (colliderToRemove == collider) {
+            MarioCollider topCollider = colliderToRemove.getColliderOnTop();
+            if (topCollider == null) {
                 replaceCollider(collider.getBaseCollider());
+            } else {
+                colliderToRemove.getBaseCollider().setColliderOnTop(topCollider);
             }
         }
     }

@@ -1,12 +1,13 @@
 package entities;
 
 import java.awt.Rectangle;
+import java.util.List;
 
 import colliders.LanguageSwitcherCollider;
 import colliders.ModeSwitcherCollider;
 import colliders.RankingShowCollider;
 import colliders.solids.SolidCollider;
-import entities.updateables.Animator;
+import entities.updateables.MovementAnimator;
 import entities.updateables.UpdateableBody;
 import game.LevelReader;
 import graphics.GameGraphicElement;
@@ -14,16 +15,18 @@ import graphics.TextLabel;
 
 public class ConfigurationBlock extends UpdateableBody {
     protected static String SPRITES_FOLDER = "configurationBlock";
-    public final static String[] ANIMATED_SPRITES = {"configurationBlock", "configurationBlock2", "configurationBlock3"};
+    public final static List<String> ANIMATED_SPRITES = List.of(
+        "configurationBlock", "configurationBlock2", "configurationBlock3"
+    );
     public static final int FRAMES_PER_SPRITE = 10;
 
     protected SolidCollider collider;
     protected GameGraphicElement graphicElement;
     protected TextLabel text;
-    protected Animator animator;
+    protected MovementAnimator animator;
 
     public ConfigurationBlock(char s) {
-        animator = new Animator(ANIMATED_SPRITES, FRAMES_PER_SPRITE, this);
+        animator = new MovementAnimator(ANIMATED_SPRITES, FRAMES_PER_SPRITE, this);
         graphicElement = new GameGraphicElement(this, SPRITES_FOLDER);
 
         if (s == 'm') {

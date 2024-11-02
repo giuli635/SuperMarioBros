@@ -1,26 +1,29 @@
 package entities.updateables.enemies;
 
 import java.awt.Rectangle;
+import java.util.List;
 
 import graphics.GameGraphicElement;
 
 import colliders.updateables.enemies.BuzzyBeetleCollider;
-import entities.updateables.Animator;
+import entities.updateables.MovementAnimator;
 
 public class BuzzyBeetle extends BaseEnemy implements ShellEnemy {
     protected static String SPRITES_FOLDER = "buzzyBeetle";
-    public final static String[] ANIMATED_SPRITES = {"buzzyBeetle", "buzzyBeetleWalking"};
-    public static final int FRAMES_PER_SPRITE = 10;
-    protected boolean shell;
+    public final static List<String> ANIMATED_SPRITES = List.of(
+        "buzzyBeetle", "buzzyBeetleWalking"
+    );
+    public final static int FRAMES_PER_SPRITE = 10;
     public final static int POINTS = 30; 
 
+    protected boolean shell;
     protected BuzzyBeetleCollider collider;
     protected GameGraphicElement graphicElement;
-    protected Animator animator;
+    protected MovementAnimator animator;
 
     public BuzzyBeetle() {
         super();
-        animator = new Animator(ANIMATED_SPRITES, FRAMES_PER_SPRITE, this);
+        animator = new MovementAnimator(ANIMATED_SPRITES, FRAMES_PER_SPRITE, this);
         shell = false;
         collider = new BuzzyBeetleCollider(this, new Rectangle());
         graphicElement = new GameGraphicElement(this, SPRITES_FOLDER);

@@ -15,7 +15,6 @@ public class StarMarioCollision extends BaseCollision implements MarioCollision 
 
     public StarMarioCollision(MarioCollider c, MarioCollision m) {
         baseCollision = m;
-        baseCollision.setCollider(c);
         collider = c;
     }
 
@@ -31,106 +30,127 @@ public class StarMarioCollision extends BaseCollision implements MarioCollision 
     
     @Override
     public void collide(BlockCollider c, Axis a) {
+        baseCollision.setCollider(collider);
         baseCollision.collide(c, a);
     }
 
     @Override
     public void collide(ScreenDisplacementCollider c, Axis a) {
+        baseCollision.setCollider(collider);
         baseCollision.collide(c, a);
     }
 
     @Override
     public void collide(ScreenBorderCollider c, Axis a) {
+        baseCollision.setCollider(collider);
         baseCollision.collide(c, a);
     }
 
     @Override
     public void collide(SuperMushroomCollider c, Axis a) {
+        baseCollision.setCollider(collider);
         baseCollision.collide(c, a);
     }
 
     @Override
     public void collide(LoaderCollider c, Axis a) {
+        baseCollision.setCollider(collider);
         baseCollision.collide(c, a);
     }
 
     @Override
     public void collide(BrickCollider c, Axis a) {
+        baseCollision.setCollider(collider);
         baseCollision.collide(c, a);
     }
 
     @Override
     public void collide(PipeCollider c, Axis a) {
+        baseCollision.setCollider(collider);
         baseCollision.collide(c, a);
     }
 
     @Override
     public void collide(QuestionBlockCollider c, Axis a) {
+        baseCollision.setCollider(collider);
         baseCollision.collide(c, a);
     }
 
     @Override
     public void collide(CoinCollider c, Axis a) {
+        baseCollision.setCollider(collider);
         baseCollision.collide(c, a);
     }
 
     @Override
     public void collide(GraphicUnloaderCollider c, Axis a) {
+        baseCollision.setCollider(collider);
         baseCollision.collide(c, a);
     }
 
     @Override
     public void collide(DeleterCollider c, Axis a) {
+        baseCollision.setCollider(collider);
         baseCollision.collide(c, a);
     }
 
     @Override
     public void collide(FireFlowerCollider c, Axis a) {
+        baseCollision.setCollider(collider);
         baseCollision.collide(c, a);
     }
 
     @Override
     public void collide(StarMarioCollider c, Axis a) {
+        baseCollision.setCollider(collider);
         baseCollision.collide(c, a);
     }
 
     @Override
     public void collide(SuperMarioCollider c, Axis a) {
+        baseCollision.setCollider(collider);
         baseCollision.collide(c, a);
     }
 
     @Override
     public void collide(DefaultMarioCollider c, Axis a) {
+        baseCollision.setCollider(collider);
         baseCollision.collide(c, a);
     }
 
     @Override
     public void collide(GreenMushroomCollider c, Axis a) {
+        baseCollision.setCollider(collider);
         baseCollision.collide(c, a);
     }
 
     @Override
     public void collide(EmptyBlockCollider c, Axis a) {
+        baseCollision.setCollider(collider);
         baseCollision.collide(c, a);
     }
 
     @Override
     public void collide(LevelEndCollider c, Axis a) {
+        baseCollision.setCollider(collider);
         baseCollision.collide(c, a);
     }
 
     @Override
     public void collide(InvulnerableCollider c, Axis a) {
+        baseCollision.setCollider(collider);
         baseCollision.collide(c, a);
     }
 
     @Override
     public void collide(FireMarioCollider c, Axis a) {
+        baseCollision.setCollider(collider);
         baseCollision.collide(c, a);
     }
 
     @Override
     public void collide(StarCollider c, Axis a) {
+        baseCollision.setCollider(collider);
         baseCollision.collide(c, a);
     }
 

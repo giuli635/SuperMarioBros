@@ -1,9 +1,10 @@
 package entities.solids;
 
 import java.awt.Rectangle;
+import java.util.List;
 
 import colliders.solids.QuestionBlockCollider;
-import entities.updateables.Animator;
+import entities.updateables.MovementAnimator;
 import entities.updateables.Coin;
 import entities.updateables.UpdatableEntity;
 import entities.updateables.UpdateableBody;
@@ -15,7 +16,9 @@ import game.LevelReader;
 
 public class QuestionBlock extends UpdateableBody {
     protected static String SPRITES_FOLDER = "questionBlock";
-    public final static String[] ANIMATED_SPRITES = {"questionBlock", "questionBlock2"};
+    public static final List<String> ANIMATED_SPRITES = List.of(
+        "questionBlock", "questionBlock2"
+    );
     public static final int FRAMES_PER_SPRITE = 10;
 
     protected QuestionBlockCollider collider;
@@ -23,10 +26,10 @@ public class QuestionBlock extends UpdateableBody {
     protected boolean depends;
     protected boolean active;
     protected UpdatableEntity entity;
-    protected Animator animator;
+    protected MovementAnimator animator;
 
     public QuestionBlock(char s) {
-        animator = new Animator(ANIMATED_SPRITES, FRAMES_PER_SPRITE, this);
+        animator = new MovementAnimator(ANIMATED_SPRITES, FRAMES_PER_SPRITE, this);
         collider = new QuestionBlockCollider(this, new Rectangle());
         graphicElement = new GameGraphicElement(this, SPRITES_FOLDER);
         setSprite(SPRITES_FOLDER);
