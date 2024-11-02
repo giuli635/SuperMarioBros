@@ -9,11 +9,11 @@ import colliders.updateables.powerups.*;
 import collisions.BaseCollision;
 import utils.Axis;
 
-public class InvulnerableCollision extends BaseCollision implements MarioCollision {
+public class StarMarioCollision extends BaseCollision implements MarioCollision {
     protected MarioCollision baseCollision;
     protected MarioCollider collider;
 
-    public InvulnerableCollision(MarioCollider c, MarioCollision m) {
+    public StarMarioCollision(MarioCollider c, MarioCollision m) {
         baseCollision = m;
         baseCollision.setCollider(c);
         collider = c;

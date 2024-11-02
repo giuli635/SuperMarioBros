@@ -6,7 +6,7 @@ import colliders.BaseCollider;
 import colliders.updateables.UpdateableEntityCollider;
 import collisions.updateables.mario.MarioCollision;
 import entities.updateables.mario.Mario;
-import entities.updateables.mario.MarioState;
+import entities.updateables.mario.states.MarioState;
 import game.CollisionsEngine;
 import utils.Prioritizable;
 

@@ -7,7 +7,7 @@ import collisions.updateables.mario.MarioCollision;
 import collisions.updateables.mario.SuperMarioCollision;
 import collisions.updateables.powerups.SuperMushroomCollision;
 import entities.updateables.mario.Mario;
-import entities.updateables.mario.SuperMario;
+import entities.updateables.mario.states.SuperMario;
 import entities.updateables.powerups.SuperMushroom;
 import utils.Axis;
 

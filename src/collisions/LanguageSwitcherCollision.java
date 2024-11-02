@@ -1,35 +1,11 @@
 package collisions;
 
-import colliders.CoinCollider;
-import colliders.FireBallCollider;
-import colliders.FlagPoleCollider;
-import colliders.LanguageSwitcherCollider;
-import colliders.ModeSwitcherCollider;
-import colliders.invisibles.DeleterCollider;
-import colliders.invisibles.EmptyBlockCollider;
-import colliders.invisibles.GraphicUnloaderCollider;
-import colliders.invisibles.LevelEndCollider;
-import colliders.invisibles.LoaderCollider;
-import colliders.invisibles.ScreenBorderCollider;
-import colliders.invisibles.ScreenDisplacementCollider;
-import colliders.solids.BlockCollider;
-import colliders.solids.BrickCollider;
-import colliders.solids.PipeCollider;
-import colliders.solids.QuestionBlockCollider;
-import colliders.updateables.enemies.BuzzyBeetleCollider;
-import colliders.updateables.enemies.GoombaCollider;
-import colliders.updateables.enemies.KoopaTroopaCollider;
-import colliders.updateables.enemies.LakituCollider;
-import colliders.updateables.enemies.PiranhaPlantCollider;
-import colliders.updateables.enemies.SpinyCollider;
-import colliders.updateables.mario.DefaultMarioCollider;
-import colliders.updateables.mario.FireMarioCollider;
-import colliders.updateables.mario.InvulnerableCollider;
-import colliders.updateables.mario.SuperMarioCollider;
-import colliders.updateables.powerups.FireFlowerCollider;
-import colliders.updateables.powerups.GreenMushroomCollider;
-import colliders.updateables.powerups.StarCollider;
-import colliders.updateables.powerups.SuperMushroomCollider;
+import colliders.*;
+import colliders.invisibles.*;
+import colliders.solids.*;
+import colliders.updateables.enemies.*;
+import colliders.updateables.mario.*;
+import colliders.updateables.powerups.*;
 import collisions.updateables.UpdateableEntityCollision;
 import utils.Axis;
 
@@ -306,6 +282,15 @@ public class LanguageSwitcherCollision extends BaseCollision implements Updateab
 
     @Override
     public void collide(LanguageSwitcherCollider c, Axis a) {
+        if (a == Axis.X) {
+            c.handleHorizontalCollision(this);
+        } else {
+            c.handleVerticalCollision(this);
+        }
+    }
+
+    @Override
+    public void collide(StarMarioCollider c, Axis a) {
         if (a == Axis.X) {
             c.handleHorizontalCollision(this);
         } else {

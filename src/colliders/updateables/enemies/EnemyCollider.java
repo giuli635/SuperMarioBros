@@ -12,8 +12,8 @@ import collisions.updateables.mario.InvulnerableCollision;
 import collisions.updateables.mario.MarioCollision;
 import collisions.updateables.mario.SuperMarioCollision;
 import entities.updateables.enemies.Enemy;
-import entities.updateables.mario.InvulnerableState;
 import entities.updateables.mario.Mario;
+import entities.updateables.mario.states.InvulnerableState;
 import utils.Direction;
 
 public abstract class EnemyCollider extends BaseCollider implements UpdateableEntityCollider {

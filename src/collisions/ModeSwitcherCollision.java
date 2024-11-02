@@ -182,7 +182,7 @@ public class ModeSwitcherCollision extends BaseCollision implements UpdateableEn
     }
 
     @Override
-    public void collide(StarCollider c, Axis a) {
+    public void collide(StarMarioCollider c, Axis a) {
         if (a == Axis.X) {
             c.handleHorizontalCollision(this);
         } else {
@@ -282,6 +282,15 @@ public class ModeSwitcherCollision extends BaseCollision implements UpdateableEn
 
     @Override
     public void collide(LanguageSwitcherCollider c, Axis a) {
+        if (a == Axis.X) {
+            c.handleHorizontalCollision(this);
+        } else {
+            c.handleVerticalCollision(this);
+        }
+    }
+
+    @Override
+    public void collide(StarCollider c, Axis a) {
         if (a == Axis.X) {
             c.handleHorizontalCollision(this);
         } else {

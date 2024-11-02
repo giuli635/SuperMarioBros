@@ -1,9 +1,10 @@
-package entities.updateables.mario;
+package entities.updateables.mario.states;
 
 import java.awt.Rectangle;
 
 import colliders.updateables.mario.MarioCollider;
 import colliders.updateables.mario.SuperMarioCollider;
+import entities.updateables.mario.Mario;
 import entities.updateables.mario.actions.Crouch;
 
 public class SuperMario extends BaseMarioState {

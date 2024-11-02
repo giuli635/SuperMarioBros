@@ -6,8 +6,8 @@ import collisions.Collision;
 import collisions.updateables.mario.MarioCollision;
 import collisions.updateables.mario.SuperMarioCollision;
 import collisions.updateables.powerups.FireFlowerCollision;
-import entities.updateables.mario.FireMario;
 import entities.updateables.mario.Mario;
+import entities.updateables.mario.states.FireMario;
 import entities.updateables.powerups.FireFlower;
 import utils.Axis;
 

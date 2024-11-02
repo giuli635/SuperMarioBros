@@ -4,8 +4,8 @@ import java.awt.Rectangle;
 
 import collisions.Collision;
 import collisions.updateables.mario.FireMarioCollision;
-import entities.updateables.mario.FireMario;
 import entities.updateables.mario.Mario;
+import entities.updateables.mario.states.FireMario;
 import utils.Axis;
 
 public class FireMarioCollider extends SuperMarioCollider {

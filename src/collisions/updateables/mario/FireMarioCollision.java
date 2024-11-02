@@ -174,7 +174,7 @@ public class FireMarioCollision extends SuperMarioCollision {
     }
 
     @Override
-    public void collide(StarCollider c, Axis a) {
+    public void collide(StarMarioCollider c, Axis a) {
         if (a == Axis.X) {
             c.handleHorizontalCollision(this);
         } else {
@@ -256,6 +256,15 @@ public class FireMarioCollision extends SuperMarioCollision {
 
     @Override
     public void collide(FireBallCollider c, Axis a) {
+        if (a == Axis.X) {
+            c.handleHorizontalCollision(this);
+        } else {
+            c.handleVerticalCollision(this);
+        }
+    }
+
+    @Override
+    public void collide(StarCollider c, Axis a) {
         if (a == Axis.X) {
             c.handleHorizontalCollision(this);
         } else {

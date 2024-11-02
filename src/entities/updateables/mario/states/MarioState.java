@@ -1,4 +1,4 @@
-package entities.updateables.mario;
+package entities.updateables.mario.states;
 
 import utils.Prioritizable;
 

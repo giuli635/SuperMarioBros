@@ -1,6 +1,7 @@
-package entities.updateables.mario;
+package entities.updateables.mario.states;
 
 import colliders.updateables.mario.MarioCollider;
+import entities.updateables.mario.Mario;
 import graphics.GameGraphicElement;
 import utils.BasePrioritizable;
 

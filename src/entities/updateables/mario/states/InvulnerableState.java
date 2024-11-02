@@ -1,11 +1,12 @@
 
-package entities.updateables.mario;
+package entities.updateables.mario.states;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
 import colliders.updateables.mario.InvulnerableCollider;
 import colliders.updateables.mario.MarioCollider;
+import entities.updateables.mario.Mario;
 import entities.updateables.mario.actions.DisappearSprite;
 
 public class InvulnerableState extends BaseMarioState {

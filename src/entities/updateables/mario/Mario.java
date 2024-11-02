@@ -17,6 +17,7 @@ import entities.updateables.mario.actions.MarioAction;
 import entities.updateables.mario.actions.ResolveHorizontalMovementDirection;
 import entities.updateables.mario.actions.ResolveSprite;
 import entities.updateables.mario.actions.VerticalMovement;
+import entities.updateables.mario.states.MarioState;
 import game.CollisionsEngine;
 import game.Game;
 import game.Stats;

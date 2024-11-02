@@ -30,6 +30,7 @@ public interface Collision {
     public void collide(DeleterCollider c, Axis a);
     public void collide(PiranhaPlantCollider c, Axis a);
     public void collide(FireFlowerCollider c, Axis a);
+    public void collide(StarMarioCollider c, Axis a);
     public void collide(StarCollider c, Axis a);
     public void collide(GreenMushroomCollider c, Axis a);
     public void collide(EmptyBlockCollider c, Axis a);

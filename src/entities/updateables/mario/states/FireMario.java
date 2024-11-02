@@ -1,9 +1,10 @@
-package entities.updateables.mario;
+package entities.updateables.mario.states;
 
 import java.awt.Rectangle;
 
 import colliders.updateables.mario.FireMarioCollider;
 import colliders.updateables.mario.MarioCollider;
+import entities.updateables.mario.Mario;
 import entities.updateables.mario.actions.Crouch;
 import entities.updateables.mario.actions.ThrowFireBall;
 
