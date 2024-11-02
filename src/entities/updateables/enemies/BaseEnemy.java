@@ -8,8 +8,8 @@ import game.GraphicEngine;
 import graphics.GameGraphicElement;
 
 public abstract class BaseEnemy extends BaseMovableEntity implements Enemy {
-    public static final int DEFAULT_SPEEDX = -2;
-    public static final int DEFAULT_SPEEDY = 0;
+    public static final float DEFAULT_SPEEDX = -2f;
+    public static final float DEFAULT_SPEEDY = 0f;
 
     public BaseEnemy() {
         speedX = DEFAULT_SPEEDX;

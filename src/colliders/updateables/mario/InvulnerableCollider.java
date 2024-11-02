@@ -1,5 +1,7 @@
 package colliders.updateables.mario;
 
+import java.awt.Rectangle;
+
 import collisions.Collision;
 import collisions.updateables.mario.MarioCollision;
 import collisions.updateables.mario.InvulnerableCollision;
@@ -8,12 +10,12 @@ import utils.Axis;
 
 public class InvulnerableCollider extends MarioCollider {
     protected Mario mario;
-    protected MarioCollider marioCollider;
+    public static final int PRIORITY = 1;
 
     public InvulnerableCollider(Mario m) {
-        super(m.getCollider());
-        marioCollider = m.getCollider();
+        super(new Rectangle());
         mario = m;
+        priority = PRIORITY;
     }
 
     @Override
@@ -28,7 +30,7 @@ public class InvulnerableCollider extends MarioCollider {
 
     @Override
     public InvulnerableCollision getCollision() {
-        MarioCollision collision = marioCollider.getCollision();
+        MarioCollision collision = baseCollider.getCollision();
         collision.setCollider(this);
         return new InvulnerableCollision(this, collision);
     }

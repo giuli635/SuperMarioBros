@@ -9,9 +9,10 @@ import game.Game;
 import game.GraphicEngine;
 import game.LevelReader;
 import graphics.GameGraphicElement;
+import utils.BasePrioritizable;
 import utils.KeyStatus;
 
-public class ThrowFireBall extends BaseMarioAction {
+public class ThrowFireBall extends BasePrioritizable implements MarioAction {
     public static final int DEFAULT_PRIORITY = 1000;
     public static final int MAX_FIRE_BALL = 2;
     public static final int COOLDOWN = 1000;

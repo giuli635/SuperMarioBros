@@ -9,19 +9,18 @@ import graphics.GameGraphicElement;
 public class FireBall extends BaseMovableEntity implements Bouncer {
     protected static String SPRITES_FOLDER = "fireBall";
     public final static String[] ANIMATED_SPRITES = {"fireBall", "fireBall2"};
+    public static final int FRAMES_PER_SPRITE = 10;
     protected ThrowFireBall thrower;
-    protected int animationFrameCounter = 0;
-    protected int framesPerSprite = 10;
-    protected int changingSprite;
     
     protected FireBallCollider collider;
     protected GameGraphicElement graphicElement;
+    protected Animator animator;
 
     public FireBall(ThrowFireBall t) {
+        animator = new Animator(ANIMATED_SPRITES, FRAMES_PER_SPRITE, this);
         thrower = t;
         speedX = 4;
         speedY = 0;
-        animatedSprites = ANIMATED_SPRITES;
         collider = new FireBallCollider(this, new Rectangle());
         graphicElement = new GameGraphicElement(this, SPRITES_FOLDER);
         setSprite(SPRITES_FOLDER);

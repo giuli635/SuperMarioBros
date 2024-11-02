@@ -12,6 +12,7 @@ import collisions.updateables.mario.InvulnerableCollision;
 import collisions.updateables.mario.MarioCollision;
 import collisions.updateables.mario.SuperMarioCollision;
 import entities.updateables.enemies.Enemy;
+import entities.updateables.mario.InvulnerableState;
 import entities.updateables.mario.Mario;
 import utils.Direction;
 
@@ -34,7 +35,9 @@ public abstract class EnemyCollider extends BaseCollider implements UpdateableEn
     }
 
     public void handleHorizontalCollision(SuperMarioCollision m) {
-        m.getCollider().getEntity().removeState();
+        Mario mario = m.getCollider().getEntity();
+        mario.removeState(m.getCollider().getAssociatedState());
+        mario.setState(new InvulnerableState(mario));
     }
 
     public Direction calculateCollisionDirection(MarioCollision m) {

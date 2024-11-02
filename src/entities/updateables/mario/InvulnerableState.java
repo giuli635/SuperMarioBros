@@ -1,0 +1,45 @@
+
+package entities.updateables.mario;
+
+import java.util.Timer;
+import java.util.TimerTask;
+
+import colliders.updateables.mario.InvulnerableCollider;
+import colliders.updateables.mario.MarioCollider;
+import entities.updateables.mario.actions.DisappearSprite;
+
+public class InvulnerableState extends BaseMarioState {
+    protected static final int PRIORITY = 1;
+    protected MarioCollider invulnerableCollider;
+
+    public InvulnerableState(Mario m) {
+        super(m);
+        priority = PRIORITY;
+        invulnerableCollider = null;
+    }
+
+    @Override
+    public void setState() {
+        invulnerableCollider = new InvulnerableCollider(mario);
+
+        mario.setCollider(invulnerableCollider);
+
+        mario.addAction(new DisappearSprite());
+
+        InvulnerableState thisState = this;
+        Timer timer = new Timer();
+        TimerTask task = new TimerTask() {
+            public void run() {
+                mario.removeState(thisState);
+            }
+        };
+
+        timer.schedule(task, 3000);
+    }
+
+    @Override
+    public void removeState() {
+        mario.removeCollider(invulnerableCollider);
+        mario.removeAction(new DisappearSprite());
+    }
+}

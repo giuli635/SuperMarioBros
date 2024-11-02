@@ -5,20 +5,24 @@ import java.awt.Rectangle;
 import colliders.LanguageSwitcherCollider;
 import colliders.ModeSwitcherCollider;
 import colliders.solids.SolidCollider;
-import entities.updateables.BaseAnimatedEntity;
+import entities.updateables.Animator;
+import entities.updateables.UpdateableBody;
 import game.LevelReader;
 import graphics.GameGraphicElement;
 import graphics.TextLabel;
 
-public class ConfigurationBlock extends BaseAnimatedEntity{
+public class ConfigurationBlock extends UpdateableBody {
     protected static String SPRITES_FOLDER = "configurationBlock";
     public final static String[] ANIMATED_SPRITES = {"configurationBlock", "configurationBlock2", "configurationBlock3"};
+    public static final int FRAMES_PER_SPRITE = 10;
+
     protected SolidCollider collider;
     protected GameGraphicElement graphicElement;
     protected TextLabel text;
+    protected Animator animator;
 
     public ConfigurationBlock(char s) {
-        animatedSprites = ANIMATED_SPRITES;
+        animator = new Animator(ANIMATED_SPRITES, FRAMES_PER_SPRITE, this);
         graphicElement = new GameGraphicElement(this, SPRITES_FOLDER);
 
         if (s == 'm') {
@@ -50,6 +54,11 @@ public class ConfigurationBlock extends BaseAnimatedEntity{
     @Override
     public SolidCollider getCollider() {
         return collider;
+    }
+
+    @Override
+    public void update() {
+        animator.animate();
     }
     
 }

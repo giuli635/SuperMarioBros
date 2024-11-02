@@ -3,9 +3,10 @@ package entities.solids;
 import java.awt.Rectangle;
 
 import colliders.solids.QuestionBlockCollider;
-import entities.updateables.BaseAnimatedEntity;
+import entities.updateables.Animator;
 import entities.updateables.Coin;
 import entities.updateables.UpdatableEntity;
+import entities.updateables.UpdateableBody;
 import entities.updateables.powerups.GreenMushroom;
 import entities.updateables.powerups.PowerUp;
 import entities.updateables.powerups.Star;
@@ -13,17 +14,20 @@ import graphics.GameGraphicElement;
 import game.GraphicEngine;
 import game.LevelReader;
 
-public class QuestionBlock extends BaseAnimatedEntity {
+public class QuestionBlock extends UpdateableBody {
     protected static String SPRITES_FOLDER = "questionBlock";
-    public final static String[] ANIMATED_SPRITES = {"questionBlock", "questionBlock2", "questionBlock3"};
+    public final static String[] ANIMATED_SPRITES = {"questionBlock", "questionBlock2"};
+    public static final int FRAMES_PER_SPRITE = 10;
+
     protected QuestionBlockCollider collider;
     protected GameGraphicElement graphicElement;
     protected boolean depends;
     protected boolean active;
     protected UpdatableEntity entity;
+    protected Animator animator;
 
     public QuestionBlock(char s) {
-        animatedSprites = ANIMATED_SPRITES;
+        animator = new Animator(ANIMATED_SPRITES, FRAMES_PER_SPRITE, this);
         collider = new QuestionBlockCollider(this, new Rectangle());
         graphicElement = new GameGraphicElement(this, SPRITES_FOLDER);
         setSprite(SPRITES_FOLDER);
@@ -65,7 +69,6 @@ public class QuestionBlock extends BaseAnimatedEntity {
         releaseEntity(entity);
         entity = null;
         active = false;
-        animatedSprites = null;
         setSprite("questionBlockHit");
     }
 
@@ -90,5 +93,12 @@ public class QuestionBlock extends BaseAnimatedEntity {
 
     public boolean getActive() {
         return active;
+    }
+
+    @Override
+    public void update() {
+        if (active) {
+            animator.animate();
+        }
     }
 }

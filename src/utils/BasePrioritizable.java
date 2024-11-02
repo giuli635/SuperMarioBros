@@ -1,6 +1,6 @@
-package entities.updateables.mario.actions;
+package utils;
 
-public abstract class BaseMarioAction implements MarioAction {
+public abstract class BasePrioritizable implements Prioritizable {
     protected int priority;
 
     @Override

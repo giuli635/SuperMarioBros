@@ -149,7 +149,7 @@ public class Game implements WindowListener, KeyListener {
     }
 
     public void resetCurrentLevel() {
-        reset=true;
+        reset = true;
     }
 
     public void advanceLevel() {

@@ -2,8 +2,9 @@ package entities.updateables.mario.actions;
 
 import entities.updateables.mario.Mario;
 import game.Game;
+import utils.BasePrioritizable;
 
-public class DisappearSprite extends BaseMarioAction {
+public class DisappearSprite extends BasePrioritizable implements MarioAction {
     public static final int DEFAULT_PRIORITY = -100;
     protected static final int FRAMES_DISAPPEARING = 8;
     protected int disappear;

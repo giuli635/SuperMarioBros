@@ -49,7 +49,7 @@ public class LevelReader {
         loaders.put('e', new FlagPoleLoader());
         loaders.put('$', new CoinLoader());
         loaders.put('f', new FireFlowerLoader());
-        loaders.put('z', new ConfigurationBlockLoader());
+        loaders.put('*', new ConfigurationBlockLoader());
     }
 
     protected static LevelReader instance(){

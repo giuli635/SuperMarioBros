@@ -1,9 +1,10 @@
 package entities.updateables.mario.actions;
 
 import entities.updateables.mario.Mario;
+import utils.BasePrioritizable;
 import utils.Direction;
 
-public class HorizontalMovement extends BaseMarioAction {
+public class HorizontalMovement extends BasePrioritizable implements MarioAction {
     public static final int DEFAULT_PRIORITY = 100;
 
     public static final int MAX_SPEEDX = 6;

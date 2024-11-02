@@ -72,9 +72,7 @@ public class GameGraphicElement extends BaseGraphicElement {
         toUpdate = true;
         flipped = false;
         if (s != null) {
-            if (currentSprite != null) {
-                lastNotNullSprite = currentSprite;
-            }
+            lastNotNullSprite = s;
             sprite = sprites.get(s + ".png");
             bounds.setSize(sprite.getIconWidth(), sprite.getIconHeight());
         } else {

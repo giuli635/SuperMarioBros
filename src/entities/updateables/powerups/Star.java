@@ -3,24 +3,24 @@ package entities.updateables.powerups;
 import java.awt.Rectangle;
 
 import colliders.updateables.powerups.StarCollider;
+import entities.updateables.Animator;
 import entities.updateables.BaseMovableEntity;
 import entities.updateables.Bouncer;
 import graphics.GameGraphicElement;
 
 public class Star extends BaseMovableEntity implements PowerUp, Bouncer {
-    protected static String SPRITES_FOLDER = "star";
-    public final static String[] ANIMATED_SPRITES = {"star", "star2"};
-    protected int animationFrameCounter = 0;
-    protected int framesPerSprite = 10;
-    protected int changingSprite;
+    public static final String SPRITES_FOLDER = "star";
+    public static final String[] ANIMATED_SPRITES = {"star", "star2"};
+    public static final int FRAMES_PER_SPRITE = 10;
     
     protected StarCollider collider;
     protected GameGraphicElement graphicElement;
+    protected Animator animator;
 
     public Star() {
         speedX = 4;
         speedY = 0;
-        animatedSprites = ANIMATED_SPRITES;
+        animator = new Animator(ANIMATED_SPRITES, FRAMES_PER_SPRITE, this);
         collider = new StarCollider(this, new Rectangle());
         graphicElement = new GameGraphicElement(this, SPRITES_FOLDER);
         setSprite(SPRITES_FOLDER);
@@ -31,6 +31,7 @@ public class Star extends BaseMovableEntity implements PowerUp, Bouncer {
             speedY--;
         }
         super.update();
+        animator.animate();
     }
 
     @Override

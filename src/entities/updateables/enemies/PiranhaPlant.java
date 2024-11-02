@@ -5,33 +5,31 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import colliders.updateables.enemies.PiranhaPlantCollider;
+import entities.updateables.Animator;
 import game.GraphicEngine;
 import graphics.GameGraphicElement;
 
 public class PiranhaPlant extends BaseEnemy {
-    protected static final float maxHeight = 1.5f;
+    public static final float MAX_HEIGHT = 1.5f;
+    public static String SPRITES_FOLDER = "piranha";
+    public final static String[] ANIMATED_SPRITES = {"piranhaOpen", "piranhaClosed"};
+    public static final int FRAMES_PER_SPRITE = 10;
     public final static int POINTS = 30;
-    protected float speedY;
-    
-    protected static String SPRITES_FOLDER = "piranha";
-    public final static String[] PIRANHA_EATING = {"piranhaOpen", "piranhaClosed"};
-    protected int animationFrameCounter = 0;
-    protected int framesPerSprite = 10;
-    protected int changingSprite;
-    
+
     protected boolean movingUp;
-    
 
     protected PiranhaPlantCollider collider;
     protected GameGraphicElement graphicElement;
+    protected Animator animator;
 
     public PiranhaPlant() {
-        movingUp = true;
+        super();
+        animator = new Animator(ANIMATED_SPRITES, FRAMES_PER_SPRITE, this);
         collider = new PiranhaPlantCollider(this, new Rectangle());
         graphicElement = new GameGraphicElement(this, SPRITES_FOLDER);
+        movingUp = true;
         setSprite("piranhaOpen");
         speedX = 0;
-        speedY = 0f;
     }
 
     @Override
@@ -52,37 +50,28 @@ public class PiranhaPlant extends BaseEnemy {
     @Override
     public void update() {
         handleVerticalMovement();
-        setChangeableSprites();
+        translate((int) speedX, (int) speedY);
+        animator.animate();
     }
 
     private void handleVerticalMovement() {
         if (movingUp) {
             speedY = speedY + 0.01f;
-            if (speedY >= maxHeight) {
+            if (speedY >= MAX_HEIGHT) {
                 switchDirection();
                 speedY = 0;
             }
         } else {
             speedY = speedY - 0.01f;
-            if (speedY <= -maxHeight) {
+            if (speedY <= -MAX_HEIGHT) {
                 switchDirection();
                 speedY = 0;
             }
         }
-        translate(speedX, (int) speedY);
-        setChangeableSprites();
-        
     }
 
     public void switchDirection() {
         movingUp = !movingUp;
-    }
-
-    private void setChangeableSprites() {
-        changingSprite += (animationFrameCounter %= framesPerSprite) == 0 ? 1 : 0;
-        changingSprite %= 2;
-        animationFrameCounter++;
-        setSprite(PIRANHA_EATING[changingSprite]);
     }
 
     @Override

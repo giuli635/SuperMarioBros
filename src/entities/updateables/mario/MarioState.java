@@ -1,6 +1,8 @@
 package entities.updateables.mario;
 
-public interface MarioState {
+import utils.Prioritizable;
+
+public interface MarioState extends Prioritizable {
     public void setState();
     public void removeState();
 }

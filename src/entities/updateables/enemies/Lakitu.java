@@ -41,8 +41,7 @@ public class Lakitu extends BaseEnemy {
             lastThrowTime = currentTime;
         }
 
-        graphicElement.translate(speedX, 0);
-        collider.translate(speedX, 0);
+        super.update();
     }
 
     public void throwEnemy() {

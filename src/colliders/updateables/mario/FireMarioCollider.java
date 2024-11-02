@@ -4,13 +4,17 @@ import java.awt.Rectangle;
 
 import collisions.Collision;
 import collisions.updateables.mario.FireMarioCollision;
+import entities.updateables.mario.FireMario;
 import entities.updateables.mario.Mario;
 import utils.Axis;
 
 public class FireMarioCollider extends SuperMarioCollider {
-    public FireMarioCollider(Mario m, Rectangle b) {
-        super(m, b);
+    public static final int PRIORITY = 0;
+
+    public FireMarioCollider(Mario m, Rectangle b, FireMario f) {
+        super(m, b, f);
         mario = m;
+        priority = PRIORITY;
     }
 
     @Override

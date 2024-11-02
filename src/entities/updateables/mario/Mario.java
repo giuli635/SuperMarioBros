@@ -1,20 +1,17 @@
 package entities.updateables.mario;
 
 import java.awt.Rectangle;
+import java.util.HashMap;
 import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.Map;
 import java.util.SortedSet;
-import java.util.Stack;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.TreeSet;
 
 import colliders.updateables.mario.DefaultMarioCollider;
-import colliders.updateables.mario.InvulnerableCollider;
 import colliders.updateables.mario.MarioCollider;
 import entities.updateables.UpdateableBody;
-import entities.updateables.mario.actions.ActionComparator;
 import entities.updateables.mario.actions.HorizontalMovement;
 import entities.updateables.mario.actions.MarioAction;
 import entities.updateables.mario.actions.ResolveHorizontalMovementDirection;
@@ -26,6 +23,7 @@ import game.Stats;
 import game.SoundManager;
 import graphics.GameGraphicElement;
 import utils.Direction;
+import utils.PriorityComparator;
 
 public class Mario extends UpdateableBody {
     public static final String MARIO_DEATH = "marioDeath";
@@ -47,21 +45,19 @@ public class Mario extends UpdateableBody {
     protected MarioCollider collider;
     protected GameGraphicElement graphicElement;
     protected SortedSet<MarioAction> actions;
-    protected Stack<MarioState> states;
-    protected Queue<Runnable> toDo;
-    protected Stats levelStats;
+    protected Map<Integer, MarioState> states;
+    protected Stats stats;
     protected Direction movementDirection;
     protected boolean overriteSprite;
     protected boolean loaded;
 
-    public Mario(Stats stats) {
+    public Mario(Stats s) {
         loaded = false;
         falling = false;
-        levelStats = stats;
-        states = new Stack<>();
-        toDo = new LinkedList<>();
+        stats = s;
         collider = new DefaultMarioCollider(this, new Rectangle());
-        actions = new TreeSet<>(new ActionComparator());
+        actions = new TreeSet<>(new PriorityComparator());
+        states = new HashMap<>();
         movementDirection = Direction.NONE;
 
         addAction(new VerticalMovement());
@@ -84,10 +80,6 @@ public class Mario extends UpdateableBody {
     }
 
     public void update() {
-        for (Runnable task : toDo) {
-            task.run();
-        }
-
         Iterator<MarioAction> actionsIterator = actions.iterator();
         while (actionsIterator.hasNext()) {
             actionsIterator.next().execute(this);
@@ -109,7 +101,7 @@ public class Mario extends UpdateableBody {
         setSprite(MARIO_DEATH);
         SoundManager.instance().removeAllSounds();
         SoundManager.instance().playSound("mariodie.wav");
-        levelStats.decreaseLives();
+        stats.decreaseLives();
         Timer timer = new Timer();
         TimerTask task = new TimerTask() {
             public void run(){
@@ -182,26 +174,49 @@ public class Mario extends UpdateableBody {
     }
 
     public void setState(MarioState state) {
+        MarioState previousState = states.put(state.getPriority(), state);
+        if (previousState != null) {
+            previousState.removeState();
+        }
+
         state.setState();
-        states.push(state);
     }
 
-    public void removeState() {
-        if (!states.isEmpty()) {
-            states.pop().removeState();
+    public void removeState(MarioState state) {
+        states.remove(state.getPriority());
+        state.removeState();
+    }
+
+    public MarioCollider setCollider(MarioCollider colliderToSet) {
+        Game.instance().setDebugging(true);
+        MarioCollider nextCollider = collider;
+        while (nextCollider.getPriority() > colliderToSet.getPriority()) {
+            nextCollider = nextCollider.getBaseCollider();
         }
-    }
 
-    public void setUnderlyingCollider(MarioCollider c) {
-        if (collider.getBaseCollider() != null) {
-            c.deactivate();
-            collider.setBaseCollider(c);
+        colliderToSet.copy(nextCollider);
+        if (nextCollider.getPriority() == colliderToSet.getPriority()) {
+            swapCollider(nextCollider, colliderToSet);
         } else {
-            setCollider(c);
+            colliderToSet.setBaseCollider(nextCollider);
+            colliderToSet.setColliderOnTop(nextCollider.getColliderOnTop());
+        }
+
+        if (collider == nextCollider) {
+            replaceCollider(colliderToSet);
+        }
+
+        return nextCollider;
+    }
+
+    protected void swapCollider(MarioCollider oldCollider, MarioCollider newCollider) {
+        newCollider.setBaseCollider(oldCollider.getBaseCollider());
+        if (oldCollider.getColliderOnTop() != null) {
+            oldCollider.getColliderOnTop().setBaseCollider(newCollider);
         }
     }
 
-    public void setCollider(MarioCollider c) {
+    public void replaceCollider(MarioCollider c) {
         collider.deactivate();
         collider = c;
         if (collider.isColliding()) {
@@ -210,14 +225,21 @@ public class Mario extends UpdateableBody {
         collider.activate();
     }
 
-    public void setCollider(InvulnerableCollider c) {
-        Mario mario = this;
-        collider.deactivate();
-        collider = new InvulnerableCollider(mario);
-        collider.activate();
+    public void modifyPoints(int points) {
+        stats.modifyPoints(points);
     }
 
-    public void modifyPoints(int points) {
-        levelStats.modifyPoints(points);
+    public void removeCollider(MarioCollider colliderToRemove) {
+        MarioCollider currentCollider = collider;
+        while (currentCollider != colliderToRemove && currentCollider != null) {
+            currentCollider = collider.getBaseCollider();
+        }
+
+        if (currentCollider != null) {
+            colliderToRemove.getBaseCollider().setColliderOnTop(colliderToRemove.getColliderOnTop());
+            if (colliderToRemove == collider) {
+                replaceCollider(collider.getBaseCollider());
+            }
+        }
     }
 }

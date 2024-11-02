@@ -4,10 +4,11 @@ import java.awt.event.KeyEvent;
 
 import entities.updateables.mario.Mario;
 import game.Game;
+import utils.BasePrioritizable;
 import utils.Direction;
 import utils.KeyStatus;
 
-public class ResolveHorizontalMovementDirection extends BaseMarioAction {
+public class ResolveHorizontalMovementDirection extends BasePrioritizable implements MarioAction {
     public static final int DEFAULT_PRIORITY = 300;
 
     public ResolveHorizontalMovementDirection() {

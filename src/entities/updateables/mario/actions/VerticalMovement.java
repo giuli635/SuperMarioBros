@@ -5,9 +5,10 @@ import java.awt.event.KeyEvent;
 import entities.updateables.mario.Mario;
 import game.Game;
 import game.SoundManager;
+import utils.BasePrioritizable;
 import utils.KeyStatus;
 
-public class VerticalMovement extends BaseMarioAction {
+public class VerticalMovement extends BasePrioritizable implements MarioAction {
     public static final int DEFAULT_PRIORITY = 400;
 
     public static final float ACCELERATION_WITH_W = 1f;

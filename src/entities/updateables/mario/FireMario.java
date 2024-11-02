@@ -7,22 +7,23 @@ import colliders.updateables.mario.MarioCollider;
 import entities.updateables.mario.actions.Crouch;
 import entities.updateables.mario.actions.ThrowFireBall;
 
-public class FireMario extends BaseMarioState {
+public class FireMario extends SuperMario {
     protected static final String FIRE_MARIO_SPRITES = "fireMario";
-    protected Crouch crouch;
+    protected static final int PRIORITY = 0;
     protected ThrowFireBall fireBallThrower;
 
     public FireMario(Mario m) {
         super(m);
         newSpritesFolder = FIRE_MARIO_SPRITES;
+        priority = PRIORITY;
     }
 
     @Override
     public void setState() {
-        mario.removeState();
-        MarioCollider newCollider = new FireMarioCollider(mario, new Rectangle());
+        MarioCollider newCollider = new FireMarioCollider(mario, new Rectangle(), this);
 
-        swapCollider(newCollider);
+        previousCollider = mario.setCollider(newCollider);
+        swapSprites();
         
         crouch = new Crouch();
         fireBallThrower = new ThrowFireBall();
@@ -32,7 +33,9 @@ public class FireMario extends BaseMarioState {
 
     @Override
     public void removeState() {
-        revertState();
+        crouch.unCrouch(mario);
+        mario.setCollider(previousCollider);
+        revertSprites();
         mario.removeAction(crouch);
         mario.removeAction(fireBallThrower);
     }

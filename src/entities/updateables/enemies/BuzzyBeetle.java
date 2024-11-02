@@ -5,19 +5,22 @@ import java.awt.Rectangle;
 import graphics.GameGraphicElement;
 
 import colliders.updateables.enemies.BuzzyBeetleCollider;
+import entities.updateables.Animator;
 
 public class BuzzyBeetle extends BaseEnemy implements ShellEnemy {
     protected static String SPRITES_FOLDER = "buzzyBeetle";
     public final static String[] ANIMATED_SPRITES = {"buzzyBeetle", "buzzyBeetleWalking"};
+    public static final int FRAMES_PER_SPRITE = 10;
     protected boolean shell;
     public final static int POINTS = 30; 
 
     protected BuzzyBeetleCollider collider;
     protected GameGraphicElement graphicElement;
+    protected Animator animator;
 
     public BuzzyBeetle() {
         super();
-        animatedSprites = ANIMATED_SPRITES;
+        animator = new Animator(ANIMATED_SPRITES, FRAMES_PER_SPRITE, this);
         shell = false;
         collider = new BuzzyBeetleCollider(this, new Rectangle());
         graphicElement = new GameGraphicElement(this, SPRITES_FOLDER);
@@ -35,7 +38,6 @@ public class BuzzyBeetle extends BaseEnemy implements ShellEnemy {
             setSprite(SPRITES_FOLDER + "Shell");
             speedX = 0;
             shell = true;
-            animatedSprites = null;
         } else {
             die(SPRITES_FOLDER + "Shell");
         }
@@ -43,7 +45,7 @@ public class BuzzyBeetle extends BaseEnemy implements ShellEnemy {
 
     public void update() {
         if (!shell) {
-            //TODO : Manejar los bucles de sprites
+            animator.animate();
         }
         super.update();
     }

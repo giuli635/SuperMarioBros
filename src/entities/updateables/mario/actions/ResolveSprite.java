@@ -3,9 +3,10 @@ package entities.updateables.mario.actions;
 import entities.updateables.mario.Mario;
 import game.Game;
 import graphics.GameGraphicElement;
+import utils.BasePrioritizable;
 import utils.Direction;
 
-public class ResolveSprite extends BaseMarioAction {
+public class ResolveSprite extends BasePrioritizable implements MarioAction {
     public static final int DEFAULT_PRIORITY = 0;
     protected static final int FRAMES_PER_SPRITE = 10;
 

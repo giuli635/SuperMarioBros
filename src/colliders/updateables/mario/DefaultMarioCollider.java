@@ -8,9 +8,12 @@ import entities.updateables.mario.Mario;
 import utils.Axis;
 
 public class DefaultMarioCollider extends MarioCollider {
+    public static final int PRIORITY = 0;
+
     public DefaultMarioCollider(Mario m, Rectangle b) {
         super(b);
         mario = m;
+        priority = PRIORITY;
     }
 
     @Override
