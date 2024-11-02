@@ -4,6 +4,7 @@ import java.awt.Rectangle;
 
 import colliders.LanguageSwitcherCollider;
 import colliders.ModeSwitcherCollider;
+import colliders.RankingShowCollider;
 import colliders.solids.SolidCollider;
 import entities.updateables.Animator;
 import entities.updateables.UpdateableBody;
@@ -31,7 +32,11 @@ public class ConfigurationBlock extends UpdateableBody {
         } else if (s == 'l') {
             collider = new LanguageSwitcherCollider(this, new Rectangle());
             text = new TextLabel("languageChange");
+        } else if (s == 'r'){
+            collider = new RankingShowCollider(this, new Rectangle());
+            text = new TextLabel("ranking");
         }
+
 
         setSprite(SPRITES_FOLDER);
     }

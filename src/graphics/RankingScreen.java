@@ -5,6 +5,7 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
+import game.GraphicEngine;
 import game.LanguageConfiguration;
 import game.RankingManager;
 import game.RankingManager.ScoreEntry;
@@ -91,6 +92,7 @@ public class RankingScreen extends BaseGraphicElement {
 
     public void showRankingScreen() {
         add();
+        GraphicEngine.instance().setDepth(this, GraphicEngine.FRONT_DEPTH + 1);
         try {
             Thread.sleep(4000); 
         } catch (InterruptedException e) {

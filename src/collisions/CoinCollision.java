@@ -297,4 +297,13 @@ public class CoinCollision extends BaseCollision implements UpdateableEntityColl
             c.handleVerticalCollision(this);
         }
     }
+
+    @Override
+    public void collide(RankingShowCollider c, Axis a) {
+        if (a == Axis.X) {
+            c.handleHorizontalCollision(this);
+        } else {
+            c.handleVerticalCollision(this);
+        }
+    }
 }

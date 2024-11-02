@@ -138,9 +138,13 @@ public class Game implements WindowListener, KeyListener {
     public void checkRanking() {
         int currentScore = lvlStats.getScore();
         if (rankingManager.checkAndUpdateRanking(currentScore)) {
-            RankingScreen rankingScreen = new RankingScreen(rankingManager);
-            rankingScreen.showRankingScreen();
+            showRanking();
         }
+    }
+
+    public void showRanking(){
+        RankingScreen rankingScreen = new RankingScreen(rankingManager);
+        rankingScreen.showRankingScreen();
     }
 
     public static void main(String[] args) {

@@ -1,25 +1,52 @@
-package collisions.updateables.enemies;
+package collisions;
 
-import colliders.*;
-import colliders.invisibles.*;
-import colliders.solids.*;
-import colliders.updateables.enemies.*;
-import colliders.updateables.mario.*;
-import colliders.updateables.powerups.*;
-import collisions.BaseCollision;
+import colliders.CoinCollider;
+import colliders.FireBallCollider;
+import colliders.FlagPoleCollider;
+import colliders.LanguageSwitcherCollider;
+import colliders.ModeSwitcherCollider;
+import colliders.RankingShowCollider;
+import colliders.invisibles.DeleterCollider;
+import colliders.invisibles.EmptyBlockCollider;
+import colliders.invisibles.GraphicUnloaderCollider;
+import colliders.invisibles.LevelEndCollider;
+import colliders.invisibles.LoaderCollider;
+import colliders.invisibles.ScreenBorderCollider;
+import colliders.invisibles.ScreenDisplacementCollider;
+import colliders.solids.BlockCollider;
+import colliders.solids.BrickCollider;
+import colliders.solids.PipeCollider;
+import colliders.solids.QuestionBlockCollider;
+import colliders.updateables.enemies.BuzzyBeetleCollider;
+import colliders.updateables.enemies.GoombaCollider;
+import colliders.updateables.enemies.KoopaTroopaCollider;
+import colliders.updateables.enemies.LakituCollider;
+import colliders.updateables.enemies.PiranhaPlantCollider;
+import colliders.updateables.enemies.SpinyCollider;
+import colliders.updateables.mario.DefaultMarioCollider;
+import colliders.updateables.mario.FireMarioCollider;
+import colliders.updateables.mario.InvulnerableCollider;
+import colliders.updateables.mario.StarMarioCollider;
+import colliders.updateables.mario.SuperMarioCollider;
+import colliders.updateables.powerups.FireFlowerCollider;
+import colliders.updateables.powerups.GreenMushroomCollider;
+import colliders.updateables.powerups.StarCollider;
+import colliders.updateables.powerups.SuperMushroomCollider;
+import collisions.updateables.UpdateableEntityCollision;
 import utils.Axis;
 
-public class BuzzyBeetleCollision extends BaseCollision implements ShellEnemyCollision {
-    protected BuzzyBeetleCollider collider;
+public class RankingShowCollision extends BaseCollision implements UpdateableEntityCollision {
+    protected RankingShowCollider collider;
 
-    public BuzzyBeetleCollision(BuzzyBeetleCollider c) {
+    public RankingShowCollision(RankingShowCollider c) {
         collider = c;
     }
 
     @Override
-    public BuzzyBeetleCollider getCollider() {
+    public RankingShowCollider getCollider() {
         return collider;
     }
+
 
     @Override
     public void collide(BlockCollider c, Axis a) {
@@ -49,15 +76,6 @@ public class BuzzyBeetleCollision extends BaseCollision implements ShellEnemyCol
     }
 
     @Override
-    public void collide(GoombaCollider c, Axis a) {
-        if (a == Axis.X) {
-            c.handleHorizontalCollision(this);
-        } else {
-            c.handleVerticalCollision(this);
-        }
-    }
-
-    @Override
     public void collide(SpinyCollider c, Axis a) {
         if (a == Axis.X) {
             c.handleHorizontalCollision(this);
@@ -76,7 +94,7 @@ public class BuzzyBeetleCollision extends BaseCollision implements ShellEnemyCol
     }
 
     @Override
-    public void collide(LakituCollider c, Axis a) {
+    public void collide(SuperMushroomCollider c, Axis a) {
         if (a == Axis.X) {
             c.handleHorizontalCollision(this);
         } else {
@@ -85,7 +103,7 @@ public class BuzzyBeetleCollision extends BaseCollision implements ShellEnemyCol
     }
 
     @Override
-    public void collide(SuperMushroomCollider c, Axis a) {
+    public void collide(GoombaCollider c, Axis a) {
         if (a == Axis.X) {
             c.handleHorizontalCollision(this);
         } else {
@@ -157,6 +175,14 @@ public class BuzzyBeetleCollision extends BaseCollision implements ShellEnemyCol
     }
 
     @Override
+    public void collide(LakituCollider c, Axis a) {
+        if (a == Axis.X) {
+            c.handleHorizontalCollision(this);
+        } else {
+            c.handleVerticalCollision(this);
+        }
+    }
+    @Override
     public void collide(BuzzyBeetleCollider c, Axis a) {
         if (a == Axis.X) {
             c.handleHorizontalCollision(this);
@@ -165,7 +191,6 @@ public class BuzzyBeetleCollision extends BaseCollision implements ShellEnemyCol
         }
     }
 
-    @Override
     public void collide(PiranhaPlantCollider c, Axis a) {
         if (a == Axis.X) {
             c.handleHorizontalCollision(this);
@@ -193,15 +218,6 @@ public class BuzzyBeetleCollision extends BaseCollision implements ShellEnemyCol
     }
 
     @Override
-    public void collide(GreenMushroomCollider c, Axis a) {
-        if (a == Axis.X) {
-            c.handleHorizontalCollision(this);
-        } else {
-            c.handleVerticalCollision(this);
-        }
-    }
-
-    @Override
     public void collide(SuperMarioCollider c, Axis a) {
         if (a == Axis.X) {
             c.handleHorizontalCollision(this);
@@ -212,6 +228,15 @@ public class BuzzyBeetleCollision extends BaseCollision implements ShellEnemyCol
 
     @Override
     public void collide(DefaultMarioCollider c, Axis a) {
+        if (a == Axis.X) {
+            c.handleHorizontalCollision(this);
+        } else {
+            c.handleVerticalCollision(this);
+        }
+    }
+
+    @Override
+    public void collide(GreenMushroomCollider c, Axis a) {
         if (a == Axis.X) {
             c.handleHorizontalCollision(this);
         } else {

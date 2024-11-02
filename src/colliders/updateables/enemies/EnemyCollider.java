@@ -8,6 +8,7 @@ import colliders.updateables.UpdateableEntityCollider;
 import collisions.updateables.FireBallCollision;
 import collisions.updateables.enemies.EnemyCollision;
 import collisions.updateables.enemies.ShellEnemyCollision;
+import collisions.updateables.mario.FireMarioCollision;
 import collisions.updateables.mario.InvulnerableCollision;
 import collisions.updateables.mario.MarioCollision;
 import collisions.updateables.mario.SuperMarioCollision;
@@ -35,6 +36,12 @@ public abstract class EnemyCollider extends BaseCollider implements UpdateableEn
     }
 
     public void handleHorizontalCollision(SuperMarioCollision m) {
+        Mario mario = m.getCollider().getEntity();
+        mario.removeState(m.getCollider().getAssociatedState());
+        mario.setState(new InvulnerableState(mario));
+    }
+
+    public void handleHorizontalCollision(FireMarioCollision m) {
         Mario mario = m.getCollider().getEntity();
         mario.removeState(m.getCollider().getAssociatedState());
         mario.setState(new InvulnerableState(mario));
