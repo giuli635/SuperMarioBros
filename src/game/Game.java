@@ -12,6 +12,7 @@ import java.util.Set;
 
 import entities.updateables.UpdatableEntity;
 import graphics.GameOverScreen;
+import graphics.RankingScreen;
 import utils.KeyStatus;
 
 public class Game implements WindowListener, KeyListener {
@@ -34,6 +35,8 @@ public class Game implements WindowListener, KeyListener {
     protected boolean reset;
     protected GameOverScreen gameOverScreen;
 
+    protected RankingManager rankingManager;
+
     public boolean isDebugging() {
         return debugging;
     }
@@ -49,6 +52,7 @@ public class Game implements WindowListener, KeyListener {
         run = true;
         pause = false;
         reset = false;
+        rankingManager = new RankingManager();
     }
 
     public static Game instance() {
@@ -102,7 +106,7 @@ public class Game implements WindowListener, KeyListener {
                     CollisionsEngine.instance().reset();
                     graphicEngine.reset();
                     if (!checkGameOver(graphicEngine, soundManager, reader)){
-                        lvlStats = reader.createLevel(lvlStats.getLives(), lvlStats.getRemainingTime(), lvlStats.getLevelNumber(), 0);
+                        lvlStats = reader.createLevel(lvlStats.getLives(), lvlStats.getRemainingTime(), lvlStats.getLevelNumber(), lvlStats.getScore());
                         reader.readTxt(levels[currLevel]);
                         soundManager.playLoopingSound("marioBackground.wav");
                         reset = false;
@@ -117,17 +121,10 @@ public class Game implements WindowListener, KeyListener {
     public boolean checkGameOver(GraphicEngine graphicEngine, SoundManager soundManager, LevelReader reader){
         if (lvlStats.getLives() == 0){
             gameOverScreen = new GameOverScreen();
-            gameOverScreen.add();
-            graphicEngine.setDepth(gameOverScreen, GraphicEngine.FRONT_DEPTH + 1);
-            graphicEngine.drawFrame();
-            soundManager.playSound("gameover.wav");
-            graphicEngine.remove(gameOverScreen);
-            try {
-                Thread.sleep(4000); 
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            gameOverScreen.showGameOverScreen(graphicEngine, soundManager);
+            checkRanking();
             lvlStats = reader.createLevel(3, 300, 1, 0);
+            currLevel = 0;
             reader.readTxt(levels[currLevel]);
             soundManager.playLoopingSound("marioBackground.wav");
             reset = false;
@@ -135,6 +132,14 @@ public class Game implements WindowListener, KeyListener {
         }
         else{
             return false;
+        }
+    }
+
+    public void checkRanking() {
+        int currentScore = lvlStats.getScore();
+        if (rankingManager.checkAndUpdateRanking(currentScore)) {
+            RankingScreen rankingScreen = new RankingScreen(rankingManager);
+            rankingScreen.showRankingScreen();
         }
     }
 
