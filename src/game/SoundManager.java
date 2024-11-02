@@ -1,14 +1,13 @@
 package game;
 
 import javax.sound.sampled.*;
-import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
 public class SoundManager {
     protected static SoundManager uniqueInstance;
     private Map<String, Clip> clips;
-    private String soundPath = "sound/";
+    //private String soundPath = "sound/";
     
     private SoundManager() {
         clips = new HashMap<>();

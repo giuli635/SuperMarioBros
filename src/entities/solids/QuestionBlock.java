@@ -11,7 +11,6 @@ import entities.updateables.powerups.GreenMushroom;
 import entities.updateables.powerups.PowerUp;
 import entities.updateables.powerups.Star;
 import graphics.GameGraphicElement;
-import game.GraphicEngine;
 import game.LevelReader;
 
 public class QuestionBlock extends UpdateableBody {
@@ -66,29 +65,10 @@ public class QuestionBlock extends UpdateableBody {
         if (depends) {
             entity = p;
         }
-        releaseEntity(entity);
+        spawnEntity(entity, 0, LevelReader.CHUNK);
         entity = null;
         active = false;
         setSprite("questionBlockHit");
-    }
-
-    public void releaseEntity(UpdatableEntity e) {
-        int entityGraphicX = (int) graphicElement.getPosition().getX();
-        int entityGraphicY = (int) graphicElement.getPosition().getY();
-
-        e.getGraphicElement().setPosition(entityGraphicX, entityGraphicY + LevelReader.CHUNK);
-
-        int entityColliderX = (int) collider.getPosition().getX();
-        int entityColliderY = (int) collider.getPosition().getY();
-
-        e.getCollider().setPosition(entityColliderX, entityColliderY + LevelReader.CHUNK);
-        e.getCollider().activate();
-
-        GraphicEngine.instance().add(e.getGraphicElement());
-        e.load();
-    }
-
-    public void releaseEntity(Coin c) {
     }
 
     public boolean getActive() {

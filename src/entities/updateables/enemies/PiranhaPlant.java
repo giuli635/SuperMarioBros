@@ -35,12 +35,12 @@ public class PiranhaPlant extends BaseEnemy {
     @Override
     public void recieveDamage() {
         collider.deactivate();
+        unload();
 
         Timer timer = new Timer();
         TimerTask task = new TimerTask() {
             public void run(){
                 GraphicEngine.instance().remove(graphicElement);
-                unload();
             }
         };
 

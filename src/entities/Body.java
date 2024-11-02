@@ -5,6 +5,8 @@ import java.awt.Rectangle;
 import javax.swing.ImageIcon;
 
 import colliders.Collider;
+import entities.updateables.UpdatableEntity;
+import game.GraphicEngine;
 import graphics.GameGraphicElement;
 
 public abstract class Body implements Entity {
@@ -66,5 +68,21 @@ public abstract class Body implements Entity {
         int displacement = collider.displaceY(collision, 0);
         getGraphicElement().translate(0, displacement);
         return displacement;
+    }
+
+    public void spawnEntity(UpdatableEntity e, int diffX, int diffY) {
+        int entityGraphicX = (int) getGraphicElement().getPosition().getX();
+        int entityGraphicY = (int) getGraphicElement().getPosition().getY();
+
+        e.getGraphicElement().setPosition(entityGraphicX + diffX, entityGraphicY + diffY);
+
+        int entityColliderX = (int) getCollider().getPosition().getX();
+        int entityColliderY = (int) getCollider().getPosition().getY();
+
+        e.getCollider().setPosition(entityColliderX + diffX, entityColliderY + diffY);
+        e.getCollider().activate();
+
+        GraphicEngine.instance().add(e.getGraphicElement());
+        e.load();
     }
 }

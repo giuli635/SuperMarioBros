@@ -2,11 +2,13 @@ package colliders.updateables.enemies;
 
 import java.awt.Rectangle;
 
+import collisions.updateables.FireBallCollision;
 import collisions.updateables.enemies.EnemyCollision;
 import collisions.updateables.mario.MarioCollision;
 import collisions.updateables.mario.SuperMarioCollision;
 import entities.updateables.enemies.ShellEnemy;
 import entities.updateables.mario.Mario;
+import entities.updateables.mario.states.InvulnerableState;
 import utils.Direction;
 
 public abstract class ShellEnemyCollider extends EnemyCollider{
@@ -53,16 +55,17 @@ public abstract class ShellEnemyCollider extends EnemyCollider{
     public void handleHorizontalCollision(SuperMarioCollision m) {
         Rectangle collision = getBounds().intersection(m.getCollider().getBounds());
         Mario mario = m.getCollider().getEntity();
+        
         if (!getEntity().getShell()) {
-            mario.die();
-            mario.modifyPoints(getEntity().pointsToSubtract());
+            mario.removeState(m.getCollider().getAssociatedState());
+            mario.setState(new InvulnerableState(mario));
         } else if(getEntity().getSpeedX() == 0) {
             int displacement = m.getCollider().displaceX(collision, 3);
             mario.getGraphicElement().translate(displacement, 0);
             getEntity().setSpeedX((int) -Math.signum(displacement) * 6);
         } else {
-            mario.die();
-            mario.modifyPoints(getEntity().pointsToSubtract());
+            mario.removeState(m.getCollider().getAssociatedState());
+            mario.setState(new InvulnerableState(mario));
         }
     }
 
@@ -70,6 +73,7 @@ public abstract class ShellEnemyCollider extends EnemyCollider{
         Direction collisionDirection = m.getCollider().getVelocity().getYComponent() > 0 ? Direction.UP : Direction.DOWN;
         Rectangle collision = getBounds().intersection(m.getCollider().getBounds());
         Mario mario = m.getCollider().getEntity();
+        
         if(collisionDirection == Direction.DOWN) {
             getEntity().recieveDamage();
             mario.modifyPoints(getEntity().pointsToAdd()/2);
@@ -78,10 +82,22 @@ public abstract class ShellEnemyCollider extends EnemyCollider{
             mario.addSpeed(0, Mario.FIXED_BOUNCE_SPEED);
         } else {
             if (!getEntity().getShell()) {
-                mario.die();
-                mario.modifyPoints(getEntity().pointsToSubtract());
+                mario.removeState(m.getCollider().getAssociatedState());
+                mario.setState(new InvulnerableState(mario));
             }
         }
+    }
+
+    @Override
+    public void handleHorizontalCollision(FireBallCollision f) {
+        super.handleHorizontalCollision(f);
+        getEntity().recieveDamage();
+    }
+
+    @Override
+    public void handleVerticalCollision(FireBallCollision f) {
+        super.handleVerticalCollision(f);
+        getEntity().recieveDamage();
     }
 
     @Override

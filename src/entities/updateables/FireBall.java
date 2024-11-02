@@ -3,6 +3,7 @@ package entities.updateables;
 import java.awt.Rectangle;
 
 import colliders.FireBallCollider;
+import entities.updateables.mario.Mario;
 import entities.updateables.mario.actions.ThrowFireBall;
 import graphics.GameGraphicElement;
 
@@ -15,12 +16,14 @@ public class FireBall extends BaseMovableEntity implements Bouncer {
     protected FireBallCollider collider;
     protected GameGraphicElement graphicElement;
     protected Animator animator;
+    protected Mario mario;
 
-    public FireBall(ThrowFireBall t) {
+    public FireBall(ThrowFireBall t, Mario m) {
         animator = new Animator(ANIMATED_SPRITES, FRAMES_PER_SPRITE, this);
         thrower = t;
         speedX = 4;
         speedY = 0;
+        mario = m;
         collider = new FireBallCollider(this, new Rectangle());
         graphicElement = new GameGraphicElement(this, SPRITES_FOLDER);
         setSprite(SPRITES_FOLDER);
@@ -51,6 +54,16 @@ public class FireBall extends BaseMovableEntity implements Bouncer {
         collider.deactivate();
         graphicElement.remove();
         unload();
+        thrower.increaseAmmo();
+    }
+
+    public Mario getMario() {
+        return mario;
+    }
+
+    @Override
+    public void unload() {
+        super.unload();
         thrower.increaseAmmo();
     }
 }

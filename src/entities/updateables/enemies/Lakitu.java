@@ -2,7 +2,6 @@ package entities.updateables.enemies;
 
 import java.awt.Rectangle;
 
-import game.GraphicEngine;
 import game.LevelReader;
 import graphics.GameGraphicElement;
 
@@ -37,29 +36,11 @@ public class Lakitu extends BaseEnemy {
                 graphicElement.getPosition().getX() > MIN_DISTANCE &&
                 graphicElement.getPosition().getX() < game.GraphicEngine.instance().getPanelSize().width
                         - MIN_DISTANCE) {
-            throwEnemy();
+            spawnEntity(new Spiny(), 0, -LevelReader.CHUNK);
             lastThrowTime = currentTime;
         }
 
         super.update();
-    }
-
-    public void throwEnemy() {
-        Spiny spiny = new Spiny();
-
-        int spinyGraphicX = (int) graphicElement.getPosition().getX();
-        int spinyGraphicY = (int) graphicElement.getPosition().getY();
-
-        spiny.getGraphicElement().setPosition(spinyGraphicX, spinyGraphicY - LevelReader.CHUNK);
-
-        int spinyColliderX = (int) collider.getPosition().getX();
-        int spinyColliderY = (int) collider.getPosition().getY();
-
-        spiny.getCollider().setPosition(spinyColliderX, spinyColliderY - LevelReader.CHUNK);
-        spiny.getCollider().activate();
-
-        GraphicEngine.instance().add(spiny.getGraphicElement());
-        spiny.load();
     }
 
     @Override
@@ -79,7 +60,6 @@ public class Lakitu extends BaseEnemy {
 
     @Override
     public int pointsToSubtract() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'pointsToSubtract'");
+        return 0;
     }
 }
