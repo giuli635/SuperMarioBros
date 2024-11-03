@@ -1,0 +1,15 @@
+@startuml
+
+interface Prioritizable
+abstract BasePrioritizable
+
+BasePrioritizable --|> Prioritizable
+
+PriorityComparator --|> Comparator
+
+Vector2D --> Point
+
+
+
+
+@enduml
