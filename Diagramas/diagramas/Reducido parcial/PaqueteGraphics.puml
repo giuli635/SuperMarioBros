@@ -1,0 +1,36 @@
+@startuml
+interface GraphicElement
+BaseGraphicElement ..|> GraphicElement
+abstract class BaseGraphicElement
+GameGraphicElement --|> BaseGraphicElement
+GameGraphicElement --> Entity
+GameGraphicElement --> JLabel
+GameGraphicElement --> ImageIcon
+GameGraphicElement --> Rectangle
+GameGraphicElement --> Map
+class GameGraphicElement
+GameOverScreen --|> BaseGraphicElement
+GameOverScreen --> LanguageConfiguration
+GameOverScreen --> SoundManager
+GameOverScreen --> JPanel
+GameOverScreen --> JLabel
+GameOverScreen --> Font
+class GameOverScreen
+RankingScreen --|> BaseGraphicElement
+RankingScreen --> JPanel
+RankingScreen --> JLabel
+RankingScreen --> Font
+class RankingScreen
+StatsBar --|> BaseGraphicElement
+StatsBar ..|> LevelStatsObserver
+StatsBar --> LevelTimer
+StatsBar --> JPanel
+StatsBar --> JLabel
+StatsBar --> StatsPanel
+StatsBar --> Stats
+StatsBar --> Font
+class StatsBar
+SpriteFactory --> SpriteFactory
+SpriteFactory --> Map
+class SpriteFactory
+@enduml
