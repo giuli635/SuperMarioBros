@@ -11,7 +11,7 @@ import game.GraphicEngine;
 import graphics.GameGraphicElement;
 
 public class PiranhaPlant extends BaseEnemy {
-    public static final float MAX_HEIGHT = 1.5f;
+    public static final float MAX_HEIGHT = 1.8f;
     public static String SPRITES_FOLDER = "piranha";
     public final static List<String> ANIMATED_SPRITES = List.of(
         "piranhaOpen", "piranhaClosed"

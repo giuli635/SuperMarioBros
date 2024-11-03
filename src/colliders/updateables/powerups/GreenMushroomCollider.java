@@ -9,9 +9,7 @@ import collisions.updateables.mario.StarMarioCollision;
 import collisions.updateables.mario.SuperMarioCollision;
 import collisions.updateables.powerups.GreenMushroomCollision;
 import entities.updateables.mario.Mario;
-import entities.updateables.mario.states.StarMario;
 import entities.updateables.powerups.GreenMushroom;
-import entities.updateables.powerups.Star;
 import utils.Axis;
 
 public class GreenMushroomCollider extends PowerUpCollider {

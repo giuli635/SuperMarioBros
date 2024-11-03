@@ -6,6 +6,7 @@ import game.LevelReader;
 import graphics.GameGraphicElement;
 
 import colliders.updateables.enemies.LakituCollider;
+import entities.updateables.UpdatableEntity;
 
 public class Lakitu extends BaseEnemy {
     protected static final int THROW_COOLDOWN = 10000;
@@ -19,6 +20,7 @@ public class Lakitu extends BaseEnemy {
 
     public Lakitu() {
         super();
+        speedY = 0;
         collider = new LakituCollider(this, new Rectangle());
         graphicElement = new GameGraphicElement(this, SPRITES_FOLDER);
         setSprite(SPRITES_FOLDER);
@@ -40,7 +42,8 @@ public class Lakitu extends BaseEnemy {
             lastThrowTime = currentTime;
         }
 
-        super.update();
+        getGraphicElement().translate((int) speedX, (int) speedY);
+        getCollider().translate((int) speedX, (int) speedY);
     }
 
     @Override
@@ -61,5 +64,11 @@ public class Lakitu extends BaseEnemy {
     @Override
     public int pointsToSubtract() {
         return 0;
+    }
+
+    @Override
+    public void spawnEntity(UpdatableEntity e, int diffX, int diffY) {
+        super.spawnEntity(e, diffX, diffY);
+        e.getGraphicElement().translate(0, - LevelReader.CHUNK/2);
     }
 }

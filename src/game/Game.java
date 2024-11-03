@@ -120,11 +120,11 @@ public class Game implements WindowListener, KeyListener {
 
     public boolean checkGameOver(GraphicEngine graphicEngine, SoundManager soundManager, LevelReader reader){
         if (lvlStats.getLives() == 0){
+            currLevel = 0;
+            lvlStats = reader.createLevel(3, 300, 0, 0);
             screenOverlay = new ScreenOverlay("gameOver");
             screenOverlay.showOverlay(graphicEngine, soundManager);
             checkRanking();
-            currLevel = 0;
-            lvlStats = reader.createLevel(3, 300, 0, 0);
             resetCurrentLevel();
             return true;
         }
@@ -165,10 +165,10 @@ public class Game implements WindowListener, KeyListener {
             resetCurrentLevel();
             lvlStats = stash;
         } else {
-            screenOverlay = new ScreenOverlay("gameEnd");
-            screenOverlay.showOverlay(GraphicEngine.instance(), SoundManager.instance());
             currLevel = 0;
             lvlStats = LevelReader.instance().createLevel(3, 300, 0, 0);
+            screenOverlay = new ScreenOverlay("gameEnd");
+            screenOverlay.showOverlay(GraphicEngine.instance(), SoundManager.instance());
             SoundManager.instance().removeAllSounds();
             checkRanking();
             resetCurrentLevel();

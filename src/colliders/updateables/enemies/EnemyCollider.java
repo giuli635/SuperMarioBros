@@ -11,10 +11,8 @@ import collisions.updateables.enemies.ShellEnemyCollision;
 import collisions.updateables.mario.InvulnerableCollision;
 import collisions.updateables.mario.MarioCollision;
 import collisions.updateables.mario.StarMarioCollision;
-import collisions.updateables.mario.SuperMarioCollision;
 import entities.updateables.enemies.Enemy;
 import entities.updateables.mario.Mario;
-import entities.updateables.mario.states.InvulnerableState;
 import game.GraphicEngine;
 import utils.Direction;
 
@@ -47,7 +45,7 @@ public abstract class EnemyCollider extends BaseCollider implements UpdateableEn
 
     public void handleVerticalCollision(MarioCollision m) {
         Mario mario = m.getCollider().getEntity();
-
+        
         if (calculateCollisionDirection(m) == Direction.DOWN) {
             getEntity().recieveDamage();
             mario.modifyPoints(getEntity().pointsToAdd());
@@ -56,21 +54,6 @@ public abstract class EnemyCollider extends BaseCollider implements UpdateableEn
             mario.die();
             mario.modifyPoints(getEntity().pointsToSubtract());
         }
-    }
-    
-    public void handleHorizontalCollision(SuperMarioCollision m) {
-        Direction collisionDirection = m.getCollider().getVelocity().getYComponent() > 0 ? Direction.UP : Direction.DOWN;
-        Mario mario = m.getCollider().getEntity();
-        
-        if(collisionDirection == Direction.DOWN) {
-            getEntity().recieveDamage();
-            mario.modifyPoints(getEntity().pointsToAdd());
-            mario.removeState(m.getCollider().getAssociatedState());
-            mario.setState(new InvulnerableState(mario));
-        } else {
-                mario.removeState(m.getCollider().getAssociatedState()); //esto para mi no es necesario pero por las dudas
-                mario.setState(new InvulnerableState(mario));            //hasta que lo hablemos
-            }
     }
     
     public void handleHorizontalCollision(StarMarioCollision m){
@@ -85,7 +68,7 @@ public abstract class EnemyCollider extends BaseCollider implements UpdateableEn
         getEntity().recieveDamage();
         m.modifyPoints(getEntity().pointsToAdd());
     }
-
+    
     public void handleVerticalCollision(ShellEnemyCollision s) {
         if (!s.getCollider().getEntity().getShell() || s.getCollider().getEntity().getSpeedX() == 0) {
             Rectangle collision = getBounds().intersection(s.getCollider().getBounds());

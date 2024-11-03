@@ -4,8 +4,6 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import colliders.updateables.mario.MarioCollider;
 import colliders.updateables.mario.StarMarioCollider;
@@ -45,7 +43,7 @@ public class StarMario extends BaseMarioState {
         mario.setCollider(starCollider);
 
         List<Map<Color, Color>> colorsMapping = new ArrayList<>(STAR_MARIO_COLORS);
-        colorsMapping.addFirst(mario.getInitialColorStarMario());
+        colorsMapping.add(mario.getInitialColorStarMario());
         colorChanger = new ChangeMarioColors(colorsMapping, mario);
         mario.addAction(colorChanger);
 

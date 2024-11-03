@@ -55,9 +55,7 @@ public class ThrowFireBall extends BasePrioritizable implements MarioAction {
         fireBall.getCollider().setPosition(fireBallColliderX, fireBallColliderY);
         fireBall.getCollider().activate();
 
-        boolean flipped = m.getCollider().getEntity().getGraphicElement().isFlipped();
-
-        if (flipped) {
+        if (m.getCollider().getEntity().getGraphicElement().isFlipped()) {
             fireBall.setSpeedX(-fireBall.getSpeedX());
             fireBall.translate(-m.getGraphicElement().getSprite().getIconWidth(), 0);
         }

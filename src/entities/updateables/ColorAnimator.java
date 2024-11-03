@@ -13,7 +13,7 @@ public class ColorAnimator implements Animator {
     protected boolean wasFlipped;
 
     public ColorAnimator(List<Map<Color, Color>> colorMappings, int framesPerColor, Body e) {
-        colorMappings.addFirst(null);
+        colorMappings.add(null);
         colorsIterator = new CyclicIterator<>(colorMappings, framesPerColor);
         entity = e;
     }
