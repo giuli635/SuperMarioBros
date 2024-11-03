@@ -11,7 +11,7 @@ import java.util.Map;
 import java.util.Set;
 
 import entities.updateables.UpdatableEntity;
-import graphics.GameOverScreen;
+import graphics.ScreenOverlay;
 import graphics.RankingScreen;
 import utils.KeyStatus;
 
@@ -33,7 +33,7 @@ public class Game implements WindowListener, KeyListener {
     protected List<UpdatableEntity> toRemoveList = new ArrayList<>();
     protected boolean debugging;
     protected boolean reset;
-    protected GameOverScreen gameOverScreen;
+    protected ScreenOverlay screenOverlay;
 
     protected RankingManager rankingManager;
 
@@ -120,14 +120,12 @@ public class Game implements WindowListener, KeyListener {
 
     public boolean checkGameOver(GraphicEngine graphicEngine, SoundManager soundManager, LevelReader reader){
         if (lvlStats.getLives() == 0){
-            gameOverScreen = new GameOverScreen();
-            gameOverScreen.showGameOverScreen(graphicEngine, soundManager);
+            screenOverlay = new ScreenOverlay("gameOver");
+            screenOverlay.showOverlay(graphicEngine, soundManager);
             checkRanking();
-            lvlStats = reader.createLevel(3, 300, 1, 0);
             currLevel = 0;
-            reader.readTxt(levels[currLevel]);
-            soundManager.playLoopingSound("marioBackground.wav");
-            reset = false;
+            lvlStats = reader.createLevel(3, 300, 0, 0);
+            resetCurrentLevel();
             return true;
         }
         else{
@@ -163,6 +161,14 @@ public class Game implements WindowListener, KeyListener {
             Stats stash = new Stats(300, lvlStats.getLives(), currLevel, lvlStats.getScore());
             resetCurrentLevel();
             lvlStats = stash;
+        } else {
+            screenOverlay = new ScreenOverlay("gameEnd");
+            screenOverlay.showOverlay(GraphicEngine.instance(), SoundManager.instance());
+            currLevel = 0;
+            lvlStats = LevelReader.instance().createLevel(3, 300, 0, 0);
+            SoundManager.instance().removeAllSounds();
+            checkRanking();
+            resetCurrentLevel();
         }
     }
     
