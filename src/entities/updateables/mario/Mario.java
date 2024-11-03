@@ -270,10 +270,10 @@ public class Mario extends UpdateableBody {
 
         if (currentCollider != null) {
             MarioCollider topCollider = colliderToRemove.getColliderOnTop();
+            colliderToRemove.getBaseCollider().setColliderOnTop(topCollider);
+
             if (topCollider == null) {
                 replaceCollider(collider.getBaseCollider());
-            } else {
-                colliderToRemove.getBaseCollider().setColliderOnTop(topCollider);
             }
         }
     }

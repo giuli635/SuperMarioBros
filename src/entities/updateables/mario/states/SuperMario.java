@@ -6,6 +6,7 @@ import colliders.updateables.mario.MarioCollider;
 import colliders.updateables.mario.SuperMarioCollider;
 import entities.updateables.mario.Mario;
 import entities.updateables.mario.actions.Crouch;
+import game.Game;
 
 public class SuperMario extends BaseMarioState {
     protected static final String SUPER_MARIO_SPRITES = "superMario";

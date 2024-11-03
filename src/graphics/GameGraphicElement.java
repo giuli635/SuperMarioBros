@@ -6,13 +6,11 @@ import java.awt.Rectangle;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.util.Map;
-import java.util.zip.Inflater;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 import entities.Entity;
-import game.Game;
 import game.GraphicEngine;
 
 public class GameGraphicElement extends BaseGraphicElement {
@@ -115,7 +113,6 @@ public class GameGraphicElement extends BaseGraphicElement {
     }
 
     public void remapSpriteColor(Map<Color, Color> mask) {
-        Game.instance().setDebugging(true);
         BufferedImage bufferedImage = iconToBufferedImage(sprite);
         for (int x = 0; x < bufferedImage.getWidth(); x++) {          
             for (int y = 0; y < bufferedImage.getHeight(); y++) {   

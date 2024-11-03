@@ -57,7 +57,6 @@ public class FireBall extends BaseMovableEntity implements Bouncer {
         collider.deactivate();
         graphicElement.remove();
         unload();
-        thrower.increaseAmmo();
     }
 
     public Mario getMario() {
