@@ -10,9 +10,10 @@ import collisions.updateables.enemies.EnemyCollision;
 import collisions.updateables.enemies.ShellEnemyCollision;
 import collisions.updateables.mario.InvulnerableCollision;
 import collisions.updateables.mario.MarioCollision;
-import collisions.updateables.mario.StarMarioCollision;
+import collisions.updateables.mario.SuperMarioCollision;
 import entities.updateables.enemies.Enemy;
 import entities.updateables.mario.Mario;
+import entities.updateables.mario.states.InvulnerableState;
 import game.GraphicEngine;
 import utils.Direction;
 
@@ -56,17 +57,10 @@ public abstract class EnemyCollider extends BaseCollider implements UpdateableEn
         }
     }
     
-    public void handleHorizontalCollision(StarMarioCollision m){
-        starCollision(m.getCollider().getEntity());
-    }
-
-    public void handleVerticalCollision(StarMarioCollision m){
-        starCollision(m.getCollider().getEntity());
-    }
-
-    private void starCollision(Mario m){
-        getEntity().recieveDamage();
-        m.modifyPoints(getEntity().pointsToAdd());
+    public void handleHorizontalCollision(SuperMarioCollision m) {
+        Mario mario = m.getCollider().getEntity();
+        mario.removeState(m.getCollider().getAssociatedState());
+        mario.setState(new InvulnerableState(mario));
     }
     
     public void handleVerticalCollision(ShellEnemyCollision s) {
@@ -121,11 +115,11 @@ public abstract class EnemyCollider extends BaseCollider implements UpdateableEn
     protected void bounce(EnemyCollider e) {
         Rectangle collision = getBounds().intersection(e.getBounds());
         
-        int displacement = displaceX(collision, DISPLACEMENT_COEFFICIENT);
-        getEntity().getGraphicElement().translate(displacement, 0);
+        int displacement = e.displaceX(collision, DISPLACEMENT_COEFFICIENT);
+        e.getEntity().getGraphicElement().translate(displacement, 0);
         
-        getEntity().switchDirection();
         e.getEntity().switchDirection();
+        getEntity().switchDirection();
     }
     
     public Direction calculateCollisionDirection(MarioCollision m) {
