@@ -233,6 +233,7 @@ public class Game implements WindowListener, KeyListener {
                 pauseKeyAlreadyPressed = true;
                 if (pause){
                     lvlStats.pauseTimer();
+                    SoundManager.instance().playSound("pause.wav");
                     SoundManager.instance().pauseAllSounds();
                 }
                 else{

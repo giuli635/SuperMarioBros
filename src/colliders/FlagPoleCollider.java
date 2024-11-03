@@ -8,6 +8,7 @@ import collisions.updateables.mario.MarioCollision;
 import entities.Entity;
 import entities.FlagPole;
 import game.Game;
+import game.SoundManager;
 import utils.Axis;
 
 public class FlagPoleCollider extends BaseCollider{
@@ -35,5 +36,6 @@ public class FlagPoleCollider extends BaseCollider{
 
     public void handleHorizontalCollision(MarioCollision m) {
         Game.instance().advanceLevel();
+        SoundManager.instance().playSound("flagpole.wav");
     }
 }

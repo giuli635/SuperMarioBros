@@ -8,6 +8,7 @@ import entities.updateables.mario.Mario;
 import game.Game;
 import game.GraphicEngine;
 import game.LevelReader;
+import game.SoundManager;
 import graphics.GameGraphicElement;
 import utils.BasePrioritizable;
 import utils.KeyStatus;
@@ -62,6 +63,7 @@ public class ThrowFireBall extends BasePrioritizable implements MarioAction {
 
         GraphicEngine.instance().add(fireBall.getGraphicElement());
         fireBall.load();
+        SoundManager.instance().playSound("fireball.wav");
     }
 
     public void increaseAmmo() {

@@ -13,6 +13,7 @@ import entities.updateables.powerups.PowerUp;
 import entities.updateables.powerups.Star;
 import graphics.GameGraphicElement;
 import game.LevelReader;
+import game.SoundManager;
 
 public class QuestionBlock extends UpdateableBody {
     protected static String SPRITES_FOLDER = "questionBlock";
@@ -72,6 +73,7 @@ public class QuestionBlock extends UpdateableBody {
         entity = null;
         active = false;
         setSprite("questionBlockHit");
+        SoundManager.instance().playSound("powerupAppears.wav");
     }
 
     public boolean getActive() {

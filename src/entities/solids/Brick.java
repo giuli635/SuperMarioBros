@@ -8,7 +8,7 @@ import graphics.GameGraphicElement;
 
 public class Brick extends Body {
     protected static String SPRITES_FOLDER = "brick";
-
+    public static final String SOUND = "breakBlock.wav";
     protected BrickCollider collider;
     protected GameGraphicElement graphicElement;
 

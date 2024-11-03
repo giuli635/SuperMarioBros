@@ -12,10 +12,12 @@ import collisions.updateables.mario.InvulnerableCollision;
 import collisions.updateables.mario.MarioCollision;
 import collisions.updateables.mario.StarMarioCollision;
 import collisions.updateables.mario.SuperMarioCollision;
+import entities.updateables.enemies.BaseEnemy;
 import entities.updateables.enemies.Enemy;
 import entities.updateables.mario.Mario;
 import entities.updateables.mario.states.InvulnerableState;
 import game.GraphicEngine;
+import game.SoundManager;
 import utils.Direction;
 
 public abstract class EnemyCollider extends BaseCollider implements UpdateableEntityCollider {
@@ -50,6 +52,7 @@ public abstract class EnemyCollider extends BaseCollider implements UpdateableEn
         
         if (calculateCollisionDirection(m) == Direction.DOWN) {
             getEntity().recieveDamage();
+            SoundManager.instance().playSound(BaseEnemy.STOMP_SOUND);
             mario.modifyPoints(getEntity().pointsToAdd());
             mario.addSpeed(0, Mario.FIXED_BOUNCE_SPEED);
         } else {
@@ -109,6 +112,7 @@ public abstract class EnemyCollider extends BaseCollider implements UpdateableEn
     
     public void handleHorizontalCollision(FireBallCollision f) {
         getEntity().recieveDamage();
+        SoundManager.instance().playSound(BaseEnemy.DIE_FIRE_SOUND);
         f.getCollider().getEntity().getMario().modifyPoints(getEntity().pointsToAdd());
         f.getCollider().deactivate();
         f.getCollider().getEntity().unload();
@@ -117,6 +121,7 @@ public abstract class EnemyCollider extends BaseCollider implements UpdateableEn
     
     public void handleVerticalCollision(FireBallCollision f) {
         getEntity().recieveDamage();
+        SoundManager.instance().playSound(BaseEnemy.DIE_FIRE_SOUND);
         f.getCollider().getEntity().getMario().modifyPoints(getEntity().pointsToAdd());
         f.getCollider().deactivate();
         f.getCollider().getEntity().unload();

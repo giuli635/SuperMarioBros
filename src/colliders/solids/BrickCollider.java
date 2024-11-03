@@ -10,6 +10,7 @@ import collisions.updateables.mario.MarioCollision;
 import collisions.updateables.mario.SuperMarioCollision;
 import entities.solids.Brick;
 import entities.updateables.mario.Mario;
+import game.SoundManager;
 import utils.Axis;
 
 public class BrickCollider extends SolidCollider {
@@ -64,6 +65,7 @@ public class BrickCollider extends SolidCollider {
             brick.getCollider().deactivate();
             brick.getGraphicElement().remove();
             mario.setSpeedY(0);
+            SoundManager.instance().playSound(Brick.SOUND);
         }
         else{
             mario.land();
