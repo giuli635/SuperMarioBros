@@ -1,26 +1,29 @@
 package entities.updateables.enemies;
 
 import java.awt.Rectangle;
+import java.util.List;
 
 import graphics.GameGraphicElement;
 
 import colliders.updateables.enemies.GoombaCollider;
-import entities.updateables.Animator;
+import entities.updateables.MovementAnimator;
 
 public class Goomba extends BaseEnemy {
     protected static String SPRITES_FOLDER = "goomba";
-    public final static String[] ANIMATED_SPRITES = {"goomba", "goombaWalking"};
-    public static final int FRAMES_PER_SPRITE = 10;
+    public final static List<String> ANIMATED_SPRITES = List.of(
+        "goomba", "goombaWalking"
+    );
+    public final static int FRAMES_PER_SPRITE = 10;
     public final static int POINTS = 60;
     protected int speedX;
 
     protected GoombaCollider collider;
     protected GameGraphicElement graphicElement;
-    protected Animator animator;
+    protected MovementAnimator animator;
 
     public Goomba() {
         super();
-        animator = new Animator(ANIMATED_SPRITES, FRAMES_PER_SPRITE, this);
+        animator = new MovementAnimator(ANIMATED_SPRITES, FRAMES_PER_SPRITE, this);
         collider = new GoombaCollider(this, new Rectangle());
         graphicElement = new GameGraphicElement(this, SPRITES_FOLDER);
         setSprite(SPRITES_FOLDER);

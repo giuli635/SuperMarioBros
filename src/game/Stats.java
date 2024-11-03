@@ -37,6 +37,11 @@ public class Stats {
     public void resumeTimer(){
         levelTimer.resumeTimer();
     }
+
+    public void addLives(){
+        lives++;
+        notifyObserver();
+    }
     
     public void decreaseLives() {
         lives--;

@@ -1,25 +1,28 @@
 package entities.updateables.enemies;
 
 import java.awt.Rectangle;
+import java.util.List;
 
 import colliders.updateables.enemies.KoopaTroopaCollider;
-import entities.updateables.Animator;
+import entities.updateables.MovementAnimator;
 import graphics.GameGraphicElement;
 
 public class KoopaTroopa extends BaseEnemy implements ShellEnemy {
     protected static String SPRITES_FOLDER = "koopa";
-    public final static String[] ANIMATED_SPRITES = {"koopa", "koopaWalking"};
-    public static final int FRAMES_PER_SPRITE = 10;
+    public final static List<String> ANIMATED_SPRITES = List.of(
+        "koopa", "koopaWalking"
+    );
+    public final static int FRAMES_PER_SPRITE = 10;
     public final static int POINTS = 90;
     protected boolean shell;
 
     protected KoopaTroopaCollider collider;
     protected GameGraphicElement graphicElement;
-    protected Animator animator;
+    protected MovementAnimator animator;
 
     public KoopaTroopa(){
         super();
-        animator = new Animator(ANIMATED_SPRITES, FRAMES_PER_SPRITE, this);
+        animator = new MovementAnimator(ANIMATED_SPRITES, FRAMES_PER_SPRITE, this);
         shell = false;
         collider = new KoopaTroopaCollider(this, new Rectangle());
         graphicElement = new GameGraphicElement(this, SPRITES_FOLDER);

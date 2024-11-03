@@ -1,0 +1,158 @@
+@startuml
+interface Entity 
+Body ..|> Entity
+abstract class Body
+UpdeteableEntity ..|> Entity
+interface UpdeteableEntity
+UpdeteableBody --|> Body
+UpdeteableBody ..|> UpdatableEntity
+abstract class UpdatableBody
+interface MovableEntity
+BaseAnimatedEntity --|> UpdeteableBody
+abstract class BaseAnimatedEntity
+BaseMovableEntity --|> BaseAnimatedEntity
+BaseMovableEntity ..|> MovableEntity
+abstract class BaseMovableEntity
+Block --|> Body
+Block --> BlockCollider
+Block --> GameGraphicElement
+class Block
+Brick --|> Body
+Brick --> BrickCollider
+Brick --> GameGraphicElement
+class Brick
+Pipe --|> Body
+Pipe --> PipeCollider
+Pipe --> GameGraphicElement
+class Pipe
+QuestionBlock --|> BaseAnimatedEntity
+QuestionBlock --> SolidCollider
+QuestionBlock --> SolidCollider
+QuestionBlock --> GameGraphicElement
+QuestionBlock --> UpdeteableEntity
+class QuestionBlock
+Enemy --|> UpdatableEntity
+Enemy --|> MovableEntity
+interface Enemy 
+BaseEnemy --|> BaseMovableEntity
+BaseEnemy ..|> Enemy
+BaseEnemy --> Timer
+abstract class BaseEnemy
+Goomba --|> BaseEnemy
+Goomba --> GameGraphicElement
+Goomba --> GoombaCollider
+class Goomba
+ShellEnemy --|> Enemy
+interface ShellEnemy
+KoopaTroopa --|> BaseEnemy
+KoopaTroopa ..|> ShellEnemy
+KoopaTroopa --> KoopaTroopaCollider
+KoopaTroopa --> GameGraphicElement
+class KoopaTroopa
+BuzzyBeetle --|> BaseEnemy
+BuzzyBeetle ..|> ShellEnemy
+BuzzyBeetle --> BuzzyBeetleCollider
+BuzzyBeetle --> GameGraphicElement
+class BuzzyBeetle
+Lakitu --|> BaseEnemy
+Lakitu --> LakituCollider
+Lakitu --> GameGraphicElement
+class Lakitu
+Spiny --|> BaseEnemy
+Spiny --> SpinyCollider
+Spiny --> GameGraphicElement
+class Spiny
+PiranhaPlant --|> BaseEnemy
+PiranhaPlant --> PiranhaPlantCollider
+PiranhaPlant --> GameGraphicElement
+class PiranhaPlant
+PowerUp --|> UpdatableEntity
+PowerUp --|> MovableEntity
+interface PowerUp
+FireFlower --|> BaseMovableEntity
+FireFlower ..|> PowerUp
+FireFlower --> FireFlowerCollider
+FireFlower --> GameGraphicElement
+interface FireFlower
+GreenMushroom --|> BaseMovableEntity
+GreenMushroom ..|> PowerUp
+GreenMushroom --> GreenMushroomCollider
+GreenMushroom --> GameGraphicElement
+interface GreenMushroom
+SuperMushroom --|> BaseMovableEntity
+SuperMushroom ..|> PowerUp
+SuperMushroom --> SuperMushroomCollider
+SuperMushroom --> GameGraphicElement
+interface SuperMushroom
+Star --|> BaseMovableEntity
+Star ..|> PowerUp
+Star ..|> Bouncer
+Star --> StarCollider
+Star --> GameGraphicElement
+interface Star
+FireBall --|> BaseMovableEntity
+FireBall ..|> Bouncer
+FireBall --> FireBallCollider
+FireBall --> GameGraphicElement
+FireBall --> ThrowFireBall
+class FireBall
+Bouncer --|> UpdatableEntity
+interface Bouncer
+Coin --|> BaseAnimatedEntity
+Coin --> CoinCollider
+Coin --> GameGraphicElement
+class Coin
+EmptyBlock --|> Body
+EmptyBlock --> EmptyBlockCollider
+EmptyBlock --> GameGraphicElement
+class EmptyBlock
+FlagPole --|> Body
+FlagPole --> FlagPoleCollider
+FlagPole --> GameGraphicElement
+class FlagPole
+Castle --|> Block
+Castle --> GameGraphicElement
+class Castle
+Mario --|> UpdatableBody
+Mario --> SortedSet
+Mario --> MarioAction
+Mario --> Stack
+Mario --> MarioState
+Mario --> Runnable
+Mario --> Queue
+Mario --> MarioCollider
+Mario --> GameGraphicElement
+Mario --> Stats
+Mario --> Direction
+class Mario
+interface MarioState
+BaseMarioState ..|> MarioState
+BaseMarioState --> MarioCollider
+abstract class BaseMarioState
+SuperMario --|> BaseMarioState
+SuperMario --> Crouch
+class SuperMario
+FireMario --|> BaseMarioState
+FireMario --> Crouch
+FireMario --> ThrowFireBallr
+class FireMario
+interface MarioAction
+BaseMarioAction ..|> MarioAction
+abstract class BaseMarioAction
+ActionComparator ..|> Comparator
+class ActionComparator
+Crouch --|> BaseMarioAction
+class Crouch
+DisappearSprite --|> BaseMarioAction
+class DisappearSprite
+ResolveSprite --|> BaseMarioAction
+class ResolveSprite
+HorizontalMovement --|> BaseMarioAction
+class HorizontalMovement
+ResolveHorizontalMovementDirection --|> BaseMarioAction
+class ResolveHorizontalMovementDirection
+VerticalMovement --|> BaseMarioAction
+class VerticalMovement
+ThrowFireBall --|> BaseMarioAction
+class ThrowFireBall
+@enduml

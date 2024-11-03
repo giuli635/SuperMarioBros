@@ -12,16 +12,16 @@ import entities.updateables.powerups.SuperMushroom;
 import utils.Axis;
 
 public class SuperMushroomCollider extends PowerUpCollider {
-    protected SuperMushroom m;
+    protected SuperMushroom SM;
 
     public SuperMushroomCollider(SuperMushroom mushroom, Rectangle b) {
         super(b);
-        m = mushroom;
+        SM = mushroom;
     }
     
     @Override
     public SuperMushroom getEntity() {
-        return m;
+        return SM;
     }
 
     @Override
@@ -46,5 +46,6 @@ public class SuperMushroomCollider extends PowerUpCollider {
         Mario mario = m.getCollider().getEntity();
         super.handleCollision(m);
         mario.setState(new SuperMario(mario));
+        mario.modifyPoints(SuperMushroom.POINTS_MARIO);
     }
 }

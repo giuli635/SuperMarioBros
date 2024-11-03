@@ -1,26 +1,32 @@
 package entities.updateables.powerups;
 
 import java.awt.Rectangle;
+import java.util.List;
 
 import colliders.updateables.powerups.StarCollider;
-import entities.updateables.Animator;
+import entities.updateables.MovementAnimator;
 import entities.updateables.BaseMovableEntity;
 import entities.updateables.Bouncer;
 import graphics.GameGraphicElement;
 
 public class Star extends BaseMovableEntity implements PowerUp, Bouncer {
     public static final String SPRITES_FOLDER = "star";
-    public static final String[] ANIMATED_SPRITES = {"star", "star2"};
+    public static final List<String> ANIMATED_SPRITES = List.of(
+        "star", "star2"
+    );
     public static final int FRAMES_PER_SPRITE = 10;
-    
+    public final static int POINTS_MARIO = 20;
+    public final static int POINTS_SUPER_MARIO = 30;
+    public final static int POINTS_STAR_MARIO = 10;
+
     protected StarCollider collider;
     protected GameGraphicElement graphicElement;
-    protected Animator animator;
+    protected MovementAnimator animator;
 
     public Star() {
         speedX = 4;
         speedY = 0;
-        animator = new Animator(ANIMATED_SPRITES, FRAMES_PER_SPRITE, this);
+        animator = new MovementAnimator(ANIMATED_SPRITES, FRAMES_PER_SPRITE, this);
         collider = new StarCollider(this, new Rectangle());
         graphicElement = new GameGraphicElement(this, SPRITES_FOLDER);
         setSprite(SPRITES_FOLDER);

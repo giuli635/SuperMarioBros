@@ -38,6 +38,13 @@ public class EmptyBlockCollider extends SolidCollider {
 
     public void handleVerticalCollision(MarioCollision m) {
         Mario mario = m.getCollider().getEntity();
+        mario.modifyPoints(EmptyBlock.POINTS);
+        mario.die();
+    }
+
+    public void handleHorizontalCollision(MarioCollision m) {
+        Mario mario = m.getCollider().getEntity();
+        mario.modifyPoints(EmptyBlock.POINTS);
         mario.die();
     }
 

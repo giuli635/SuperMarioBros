@@ -1,5 +1,6 @@
 package colliders.updateables.powerups;
 
+import collisions.updateables.mario.FireMarioCollision;
 import collisions.updateables.mario.MarioCollision;
 import collisions.updateables.mario.SuperMarioCollision;
 import entities.updateables.powerups.PowerUp;
@@ -33,6 +34,10 @@ public abstract class PowerUpCollider extends BaseCollider implements Updateable
         remove();
     }
 
+    public void handleCollision(FireMarioCollision m) {
+        remove();
+    }
+
     public void handleVerticalCollision(MarioCollision m) {
         handleCollision(m);
     }
@@ -46,6 +51,14 @@ public abstract class PowerUpCollider extends BaseCollider implements Updateable
     }
 
     public void handleHorizontalCollision(SuperMarioCollision m) {
+        handleCollision(m);
+    }
+
+    public void handleHorizontalCollision(FireMarioCollision m) {
+        handleCollision(m);
+    }
+
+    public void handleVerticalCollision(FireMarioCollision m) {
         handleCollision(m);
     }
 }

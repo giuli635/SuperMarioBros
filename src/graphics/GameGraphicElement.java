@@ -1,4 +1,5 @@
 package graphics;
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
@@ -109,6 +110,20 @@ public class GameGraphicElement extends BaseGraphicElement {
         g2d.dispose();
 
         return flippedImage;
+    }
+
+    public void remapSpriteColor(Map<Color, Color> mask) {
+        BufferedImage bufferedImage = iconToBufferedImage(sprite);
+        for (int x = 0; x < bufferedImage.getWidth(); x++) {          
+            for (int y = 0; y < bufferedImage.getHeight(); y++) {   
+                Color newColor = mask.get(new Color(bufferedImage.getRGB(x, y), true));
+                if (newColor != null) {
+                    bufferedImage.setRGB(x, y, newColor.getRGB());
+                }
+            }
+        }
+
+        sprite = new ImageIcon(bufferedImage);
     }
 
     public void draw() {

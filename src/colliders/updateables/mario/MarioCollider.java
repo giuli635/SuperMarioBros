@@ -67,7 +67,9 @@ public abstract class MarioCollider extends BaseCollider implements UpdateableEn
 
     public void setColliderOnTop(MarioCollider collider) {
         colliderOnTop = collider;
-        track(collider);
+        if (collider != null) {
+            track(collider);
+        }
     }
 }
 

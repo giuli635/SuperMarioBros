@@ -7,6 +7,7 @@ import graphics.GameGraphicElement;
 
 public class EmptyBlock extends Body {
     protected static String SPRITES_FOLDER = "EmptyBlock";
+    public final static int POINTS = -15; 
 
     protected EmptyBlockCollider collider;
     protected GameGraphicElement graphicElement;

@@ -1,30 +1,33 @@
 package entities.updateables.enemies;
 
 import java.awt.Rectangle;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import colliders.updateables.enemies.PiranhaPlantCollider;
-import entities.updateables.Animator;
+import entities.updateables.MovementAnimator;
 import game.GraphicEngine;
 import graphics.GameGraphicElement;
 
 public class PiranhaPlant extends BaseEnemy {
     public static final float MAX_HEIGHT = 1.5f;
     public static String SPRITES_FOLDER = "piranha";
-    public final static String[] ANIMATED_SPRITES = {"piranhaOpen", "piranhaClosed"};
-    public static final int FRAMES_PER_SPRITE = 10;
+    public final static List<String> ANIMATED_SPRITES = List.of(
+        "piranhaOpen", "piranhaClosed"
+    );
+    public final static int FRAMES_PER_SPRITE = 10;
     public final static int POINTS = 30;
 
     protected boolean movingUp;
 
     protected PiranhaPlantCollider collider;
     protected GameGraphicElement graphicElement;
-    protected Animator animator;
+    protected MovementAnimator animator;
 
     public PiranhaPlant() {
         super();
-        animator = new Animator(ANIMATED_SPRITES, FRAMES_PER_SPRITE, this);
+        animator = new MovementAnimator(ANIMATED_SPRITES, FRAMES_PER_SPRITE, this);
         collider = new PiranhaPlantCollider(this, new Rectangle());
         graphicElement = new GameGraphicElement(this, SPRITES_FOLDER);
         movingUp = true;

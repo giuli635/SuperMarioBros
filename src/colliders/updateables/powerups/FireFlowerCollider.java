@@ -3,6 +3,7 @@ package colliders.updateables.powerups;
 import java.awt.Rectangle;
 
 import collisions.Collision;
+import collisions.updateables.mario.FireMarioCollision;
 import collisions.updateables.mario.MarioCollision;
 import collisions.updateables.mario.SuperMarioCollision;
 import collisions.updateables.powerups.FireFlowerCollision;
@@ -34,14 +35,19 @@ public class FireFlowerCollider extends PowerUpCollider {
        return f;
     }
 
-    // @Override
-    // public void handleCollision(FireMarioCollision m) {
-    // }
+     @Override
+    public void handleCollision(FireMarioCollision m) {
+        Mario mario = m.getCollider().getEntity();
+        super.handleCollision(m);
+        mario.modifyPoints(FireFlower.POINTS_FIRE_MARIO);
+        mario.setState(new FireMario(mario));
+    }
 
     @Override
     public void handleCollision(SuperMarioCollision m) {
         Mario mario = m.getCollider().getEntity();
         super.handleCollision(m);
+        mario.modifyPoints(FireFlower.POINTS_SUPER_MARIO);
         mario.setState(new FireMario(mario));
     }
 
@@ -49,6 +55,8 @@ public class FireFlowerCollider extends PowerUpCollider {
     public void handleCollision(MarioCollision m) {
         Mario mario = m.getCollider().getEntity();
         super.handleCollision(m);
+        mario.modifyPoints(FireFlower.POINTS_MARIO);
         mario.setState(new FireMario(mario));
     }
+
 }

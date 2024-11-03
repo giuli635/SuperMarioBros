@@ -7,8 +7,8 @@ import entities.updateables.BaseMovableEntity;
 import graphics.GameGraphicElement;
 
 public class SuperMushroom extends BaseMovableEntity implements PowerUp {
-    public static final int POINTS_MARIO = 10;
-    public static final int POINTS_SUPER_MARIO = 50;
+    public final static int POINTS_MARIO = 10;
+    public final static int POINTS_SUPER_MARIO = 50;
     protected static String SPRITES_FOLDER = "superMushroom";
 
     protected SuperMushroomCollider collider;
