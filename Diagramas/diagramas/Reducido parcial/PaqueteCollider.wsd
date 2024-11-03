@@ -1,0 +1,169 @@
+@startuml
+
+interface Collider
+interface UpdateableEntityCollider
+interface BouncerCollider
+
+abstract BaseCollider
+abstract SolidCollider
+abstract MarioCollider
+abstract PowerUpCollider
+
+BaseCollider ..|> Collider
+BaseCollider --> Vector2D
+BaseCollider --> Rectangle
+
+CoinCollider ..|> BaseCollider
+CoinCollider ..|> UpdateableEntityCollider
+CoinCollider --> Coin
+
+FireBallCollider --|> BaseCollider
+FireBallCollider --> BouncerCollider
+FireBallCollider --> FireBall
+
+FlagPoleCollider --|> BaseCollider
+FlagPoleCollider --> FlagPole
+
+LanguageSwitcherCollider --|> SolidCollider
+LanguageSwitcherCollider --> UpdateableEntityCollider
+LanguageSwitcherCollider --> ConfigurationBlock
+
+ModeSwitcherCollider --|> SolidCollider
+ModeSwitcherCollider --> UpdateableEntityCollider
+ModeSwitcherCollider --> ConfigurationBlock
+
+RakingShowCollider --|> SolidCollider
+RakingShowCollider --> UpdateableEntityCollider
+RakingShowCollider --> ConfigurationBlock
+
+newpage
+
+'Dentro de invisible
+
+DelaterCollider --|> BaseCollider
+
+EmptyBlockCollider --|> SolidCollider
+EmptyBlockCollider --> EmptyBlock
+
+GraphicUnloaderCollider --|> BaseCollider
+
+LevelEndCollider --> BaseCollider
+
+LoaderCollider --|> BaseCollider
+
+ScreenBorderCollider --|> BaseCollider
+ScreenBorderCollider --> Direction
+
+ScreenDisplacementCollider --|> BaseCollider
+ScreenDisplacementCollider --> ScreenBorderCollider
+ScreenDisplacementCollider --> LoaderCollider
+ScreenDisplacementCollider --> GraphicUnloaderCollider
+ScreenDisplacementCollider --> DeleterCollider
+
+newpage
+
+'Dentro de Solids 
+
+BlockCollider --|> SolidCollider
+BlockCollider --> Block
+
+BrickCollider --|> SolidCollider
+BrickCollider --> Brick
+
+PipeCollider --|> SolidCollider
+PipeCollider --> Pipe
+
+QuestionBlockCollider ..|> SolidCollider
+QuestionBlockCollider --> UpdateableEntityCollider
+QuestionBlockCollider --> QuestionBlock
+
+SolidCollider --|> BaseCollider
+
+newpage
+
+'Dentro de Updateables
+
+'Dentro de UpdateablesEnemies
+
+BuzzyBeetleCollider --|> ShellEnemyCollider
+BuzzyBeetleCollider --> BuzzyBeetle
+
+EnemyCollider --|> BaseCollider 
+EnemyCollider --> UpdateableEntityCollider
+
+GoombaCollider --|> EnemyCollider
+GoombaCollider --> Goomba
+
+KoopaTroopaCollider --|> ShellEnemyCollider
+KoopaTroopaCollider --> KoopaTroopa
+
+LakituCollider --|> EnemyCollider
+LakituCollider --> Lakitu
+
+SpinyCollider --|> EnemyCollider
+SpinyCollider --> Spiny
+
+PiranhaPlantCollider --|> EnemyCollider
+PiranhaPlantCollider --> PiranhaPlant
+
+ShellEnemyCollider --|> EnemyCollider
+
+newPage
+
+'Dentro de Mario
+interface Prioritizable
+interface MarioState
+
+DefaultMarioCollider --|> MarioCollider
+
+FireMarioCollider --|> SuperMarioCollider
+
+SuperMarioCollider --|> MarioCollider
+
+MarioCollider --|> BaseCollider
+MarioCollider --> UpdateableEntityCollider
+MarioCollider --> Prioritizable
+MarioCollider --> Mario
+MarioCollider --> MarioCollider
+MarioCollider --> MarioState
+
+InvulnerableCollider --|> MarioCollider
+InvulnerableCollider --> Mario
+
+StarMarioCollider --|> MarioCollider
+StarMarioCollider --> Mario
+
+newPage
+
+'Dentro de PowerUp
+
+FireFlowerCollider --|> PowerUpCollider
+FireBallCollider --> FireFlower
+
+GreenMushroomCollider --|> PowerUpCollider
+GreenMushroomCollider --> GreenMushroom
+
+SuperMushroomCollider --|> PowerUpCollider 
+SuperMushroomCollider --> SuperMushroom
+
+StarCollider --|> PowerUpCollider
+StarCollider --> BouncerCollider
+StarCollider --> Star
+
+PowerUpCollider --|> BaseCollider 
+PowerUpCollider --> UpdateableEntityCollider
+PowerUpCollider --> PowerUp
+
+newPage
+
+'Dentro de Updeteables
+interface Bouncer
+interface UpdateableEntity
+
+BouncerCollider --|> UpdateableEntityCollider
+BouncerCollider --> Bouncer
+
+UpdateableEntityCollider --|> Collider
+UpdateableEntityCollider --> UpdateableEntity
+
+@enduml
