@@ -10,6 +10,7 @@ import collisions.updateables.enemies.EnemyCollision;
 import collisions.updateables.enemies.ShellEnemyCollision;
 import collisions.updateables.mario.InvulnerableCollision;
 import collisions.updateables.mario.MarioCollision;
+import collisions.updateables.mario.StarMarioCollision;
 import collisions.updateables.mario.SuperMarioCollision;
 import entities.updateables.enemies.Enemy;
 import entities.updateables.mario.Mario;
@@ -61,6 +62,16 @@ public abstract class EnemyCollider extends BaseCollider implements UpdateableEn
         Mario mario = m.getCollider().getEntity();
         mario.removeState(m.getCollider().getAssociatedState());
         mario.setState(new InvulnerableState(mario));
+    }
+
+    public void handleHorizontalCollision(StarMarioCollision m){
+        getEntity().recieveDamage();
+        m.getCollider().getEntity().modifyPoints(getEntity().pointsToAdd()/2);
+    }
+
+    public void handleVerticalCollision(StarMarioCollision m){
+        getEntity().recieveDamage();
+        m.getCollider().getEntity().modifyPoints(getEntity().pointsToAdd()/2);
     }
     
     public void handleVerticalCollision(ShellEnemyCollision s) {
@@ -115,11 +126,11 @@ public abstract class EnemyCollider extends BaseCollider implements UpdateableEn
     protected void bounce(EnemyCollider e) {
         Rectangle collision = getBounds().intersection(e.getBounds());
         
-        int displacement = e.displaceX(collision, DISPLACEMENT_COEFFICIENT);
-        e.getEntity().getGraphicElement().translate(displacement, 0);
+        int displacement = displaceX(collision, DISPLACEMENT_COEFFICIENT);
+        getEntity().getGraphicElement().translate(displacement, 0);
         
-        e.getEntity().switchDirection();
         getEntity().switchDirection();
+        e.getEntity().switchDirection();
     }
     
     public Direction calculateCollisionDirection(MarioCollision m) {
