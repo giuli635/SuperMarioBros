@@ -47,7 +47,7 @@ public abstract class EnemyCollider extends BaseCollider implements UpdateableEn
 
     public void handleVerticalCollision(MarioCollision m) {
         Mario mario = m.getCollider().getEntity();
-        
+
         if (calculateCollisionDirection(m) == Direction.DOWN) {
             getEntity().recieveDamage();
             mario.modifyPoints(getEntity().pointsToAdd());
@@ -73,13 +73,6 @@ public abstract class EnemyCollider extends BaseCollider implements UpdateableEn
             }
     }
     
-    
-    public void handleVerticalCollision(SuperMarioCollision m) {
-        Mario mario = m.getCollider().getEntity();
-        mario.removeState(m.getCollider().getAssociatedState());
-        mario.setState(new InvulnerableState(mario));
-    }
-
     public void handleHorizontalCollision(StarMarioCollision m){
         starCollision(m.getCollider().getEntity());
     }
