@@ -158,6 +158,9 @@ public class Game implements WindowListener, KeyListener {
 
     public void advanceLevel() {
         if (currLevel < levels.length -1) {
+            if (currLevel != 0){
+            lvlStats.modifyPoints(lvlStats.getRemainingTime()*50);
+            }
             currLevel ++;
             SoundManager.instance().removeAllSounds();
             Stats stash = new Stats(300, lvlStats.getLives(), currLevel, lvlStats.getScore());
