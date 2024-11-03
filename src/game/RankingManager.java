@@ -52,18 +52,20 @@ public class RankingManager {
     }
 
     public boolean checkAndUpdateRanking(int score) {
-        if (highScores.size() < 5 || score > highScores.get(4).score) {
+        if ((highScores.size() < 5) || (score > highScores.get(4).getScore())) {
+            
             String playerName = JOptionPane.showInputDialog(LanguageConfiguration.instance().get("enterName"));
+            
             if (playerName != null && !playerName.trim().isEmpty()) {
                 addScore(playerName, score);
-                return true; 
+                return true;
             }
             else{
                 addScore("ANONIMO", score);
                 return true;
             }
         }
-        return false; 
+        return false;
     }
 
     public List<ScoreEntry> getHighScores() {
@@ -72,7 +74,7 @@ public class RankingManager {
 
     public static class ScoreEntry {
         String playerName;
-        int score;
+        int score;  
 
         public ScoreEntry(String playerName, int score) {
             this.playerName = playerName;
