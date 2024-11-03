@@ -51,7 +51,7 @@ public class ScreenBorderCollider extends BaseCollider {
         Direction myCollisionDirection = Direction.horizontalDirectionFromSign((int) getVelocity().getXComponent());
         Direction collisionDirection = Direction.horizontalDirectionFromSign((int) c.getCollider().getVelocity().getXComponent());
 
-        if  (myCollisionDirection == position || collisionDirection == position) {
+        if  (myCollisionDirection == position || collisionDirection != position) {
             if (!graphicElement.added()) {
                 Point colliderPosition = c.getCollider().getVelocity().getEnd();
                 int heightDifference = graphicElement.getSprite().getIconHeight() - LevelReader.CHUNK;

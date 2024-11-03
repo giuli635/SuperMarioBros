@@ -115,11 +115,11 @@ public abstract class EnemyCollider extends BaseCollider implements UpdateableEn
     protected void bounce(EnemyCollider e) {
         Rectangle collision = getBounds().intersection(e.getBounds());
         
-        int displacement = e.displaceX(collision, DISPLACEMENT_COEFFICIENT);
-        e.getEntity().getGraphicElement().translate(displacement, 0);
+        int displacement = displaceX(collision, DISPLACEMENT_COEFFICIENT);
+        getEntity().getGraphicElement().translate(displacement, 0);
         
-        e.getEntity().switchDirection();
         getEntity().switchDirection();
+        e.getEntity().switchDirection();
     }
     
     public Direction calculateCollisionDirection(MarioCollision m) {
