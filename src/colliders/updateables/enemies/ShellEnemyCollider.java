@@ -5,6 +5,7 @@ import java.awt.Rectangle;
 import collisions.updateables.FireBallCollision;
 import collisions.updateables.enemies.EnemyCollision;
 import collisions.updateables.mario.MarioCollision;
+import collisions.updateables.mario.StarMarioCollision;
 import collisions.updateables.mario.SuperMarioCollision;
 import entities.updateables.enemies.ShellEnemy;
 import entities.updateables.mario.Mario;
@@ -63,6 +64,8 @@ public abstract class ShellEnemyCollider extends EnemyCollider{
             int displacement = m.getCollider().displaceX(collision, 3);
             mario.getGraphicElement().translate(displacement, 0);
             getEntity().setSpeedX((int) -Math.signum(displacement) * 6);
+            mario.removeState(m.getCollider().getAssociatedState());
+            mario.setState(new InvulnerableState(mario));
         } else {
             mario.removeState(m.getCollider().getAssociatedState());
             mario.setState(new InvulnerableState(mario));
@@ -85,7 +88,21 @@ public abstract class ShellEnemyCollider extends EnemyCollider{
                 mario.removeState(m.getCollider().getAssociatedState());
                 mario.setState(new InvulnerableState(mario));
             }
+            else{
+                mario.removeState(m.getCollider().getAssociatedState());
+                mario.setState(new InvulnerableState(mario));
+            }
         }
+    }
+
+    public void handleHorizontalCollision(StarMarioCollision m){
+        getEntity().recieveDamage();
+        m.getCollider().getEntity().modifyPoints(getEntity().pointsToAdd()/2);
+    }
+
+    public void handleVerticalCollision(StarMarioCollision m){
+        getEntity().recieveDamage();
+        m.getCollider().getEntity().modifyPoints(getEntity().pointsToAdd()/2);
     }
 
     @Override

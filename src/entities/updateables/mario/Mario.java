@@ -262,6 +262,10 @@ public class Mario extends UpdateableBody {
         stats.modifyPoints(points);
     }
 
+    public void addLives(){
+        stats.addLives();
+    }
+
     public void removeCollider(MarioCollider colliderToRemove) {
         MarioCollider currentCollider = collider;
         while (currentCollider != colliderToRemove && currentCollider != null) {

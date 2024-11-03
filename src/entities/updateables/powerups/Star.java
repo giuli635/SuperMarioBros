@@ -15,7 +15,10 @@ public class Star extends BaseMovableEntity implements PowerUp, Bouncer {
         "star", "star2"
     );
     public static final int FRAMES_PER_SPRITE = 10;
-    
+    public final static int POINTS_MARIO = 20;
+    public final static int POINTS_SUPER_MARIO = 30;
+    public final static int POINTS_STAR_MARIO = 10;
+
     protected StarCollider collider;
     protected GameGraphicElement graphicElement;
     protected MovementAnimator animator;

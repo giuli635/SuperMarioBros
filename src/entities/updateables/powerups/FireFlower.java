@@ -14,6 +14,9 @@ public class FireFlower extends BaseMovableEntity implements PowerUp {
         "fireFlower", "fireFlower2"
     );
     public final static int FRAMES_PER_SPRITE = 10;
+    public final static int POINTS_MARIO = 5;
+    public final static int POINTS_SUPER_MARIO = 30;
+    public final static int POINTS_FIRE_MARIO = 50;
 
     protected FireFlowerCollider collider;
     protected GameGraphicElement graphicElement;

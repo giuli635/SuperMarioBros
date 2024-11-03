@@ -10,6 +10,7 @@ import collisions.updateables.enemies.EnemyCollision;
 import collisions.updateables.enemies.ShellEnemyCollision;
 import collisions.updateables.mario.InvulnerableCollision;
 import collisions.updateables.mario.MarioCollision;
+import collisions.updateables.mario.StarMarioCollision;
 import collisions.updateables.mario.SuperMarioCollision;
 import entities.updateables.enemies.Enemy;
 import entities.updateables.mario.Mario;
@@ -58,11 +59,40 @@ public abstract class EnemyCollider extends BaseCollider implements UpdateableEn
     }
     
     public void handleHorizontalCollision(SuperMarioCollision m) {
+        Direction collisionDirection = m.getCollider().getVelocity().getYComponent() > 0 ? Direction.UP : Direction.DOWN;
+        Mario mario = m.getCollider().getEntity();
+        
+        if(collisionDirection == Direction.DOWN) {
+            getEntity().recieveDamage();
+            mario.modifyPoints(getEntity().pointsToAdd());
+            mario.removeState(m.getCollider().getAssociatedState());
+            mario.setState(new InvulnerableState(mario));
+        } else {
+                mario.removeState(m.getCollider().getAssociatedState()); //esto para mi no es necesario pero por las dudas
+                mario.setState(new InvulnerableState(mario));            //hasta que lo hablemos
+            }
+    }
+    
+    
+    public void handleVerticalCollision(SuperMarioCollision m) {
         Mario mario = m.getCollider().getEntity();
         mario.removeState(m.getCollider().getAssociatedState());
         mario.setState(new InvulnerableState(mario));
     }
-    
+
+    public void handleHorizontalCollision(StarMarioCollision m){
+        starCollision(m.getCollider().getEntity());
+    }
+
+    public void handleVerticalCollision(StarMarioCollision m){
+        starCollision(m.getCollider().getEntity());
+    }
+
+    private void starCollision(Mario m){
+        getEntity().recieveDamage();
+        m.modifyPoints(getEntity().pointsToAdd());
+    }
+
     public void handleVerticalCollision(ShellEnemyCollision s) {
         if (!s.getCollider().getEntity().getShell() || s.getCollider().getEntity().getSpeedX() == 0) {
             Rectangle collision = getBounds().intersection(s.getCollider().getBounds());
