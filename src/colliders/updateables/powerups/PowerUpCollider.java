@@ -10,9 +10,9 @@ import game.SoundManager;
 import java.awt.Rectangle;
 
 import colliders.BaseCollider;
-import colliders.updateables.UpdateableEntityCollider;
+import colliders.updateables.MovableEntityCollider;
 
-public abstract class PowerUpCollider extends BaseCollider implements UpdateableEntityCollider {
+public abstract class PowerUpCollider extends BaseCollider implements MovableEntityCollider {
     public abstract PowerUp getEntity();
 
     public PowerUpCollider(Rectangle b) {

@@ -4,7 +4,7 @@ import java.awt.Point;
 import java.awt.Rectangle;
 
 import colliders.BaseCollider;
-import colliders.updateables.UpdateableEntityCollider;
+import colliders.updateables.MovableEntityCollider;
 import collisions.updateables.FireBallCollision;
 import collisions.updateables.enemies.EnemyCollision;
 import collisions.updateables.enemies.ShellEnemyCollision;
@@ -16,11 +16,10 @@ import entities.updateables.enemies.BaseEnemy;
 import entities.updateables.enemies.Enemy;
 import entities.updateables.mario.Mario;
 import entities.updateables.mario.states.InvulnerableState;
-import game.GraphicEngine;
 import game.SoundManager;
 import utils.Direction;
 
-public abstract class EnemyCollider extends BaseCollider implements UpdateableEntityCollider {
+public abstract class EnemyCollider extends BaseCollider implements MovableEntityCollider {
     protected static int DISPLACEMENT_COEFFICIENT = 0;
     
     public abstract Enemy getEntity();
@@ -42,26 +41,20 @@ public abstract class EnemyCollider extends BaseCollider implements UpdateableEn
 
     public void handleHorizontalCollision(MarioCollision m) {
         Mario mario = m.getCollider().getEntity();
-        mario.die();
-        mario.modifyPoints(getEntity().pointsToSubtract());
+        kill(mario);
     }
 
     public void handleVerticalCollision(MarioCollision m) {
         Mario mario = m.getCollider().getEntity();
         if (calculateCollisionDirection(m) == Direction.DOWN) {
-            getEntity().recieveDamage();
-            SoundManager.instance().playSound(BaseEnemy.STOMP_SOUND);
-            mario.modifyPoints(getEntity().pointsToAdd());
-            mario.addSpeed(0, Mario.FIXED_BOUNCE_SPEED);
+            getKilled(mario);
         } else {
-            mario.die();
-            mario.modifyPoints(getEntity().pointsToSubtract());
+            kill(mario);
         }
     }
     
     public void handleHorizontalCollision(SuperMarioCollision m) {
         Mario mario = m.getCollider().getEntity();
-        getEntity().recieveDamage();
         mario.removeState(m.getCollider().getAssociatedState());
         mario.setState(new InvulnerableState(mario));
     }
@@ -69,10 +62,7 @@ public abstract class EnemyCollider extends BaseCollider implements UpdateableEn
     public void handleVerticalCollision(SuperMarioCollision m){
         Mario mario = m.getCollider().getEntity();
         if (calculateCollisionDirection(m) == Direction.DOWN) {
-            getEntity().recieveDamage();
-            SoundManager.instance().playSound(BaseEnemy.STOMP_SOUND);
-            mario.modifyPoints(getEntity().pointsToAdd());
-            mario.addSpeed(0, Mario.FIXED_BOUNCE_SPEED);
+            getKilled(mario);
         } else {
             mario.removeState(m.getCollider().getAssociatedState());
             mario.setState(new InvulnerableState(mario));
@@ -81,11 +71,13 @@ public abstract class EnemyCollider extends BaseCollider implements UpdateableEn
 
     public void handleHorizontalCollision(StarMarioCollision m){
         getEntity().recieveDamage();
+        SoundManager.instance().playSound(BaseEnemy.DIE_FIRE_SOUND);
         m.getCollider().getEntity().modifyPoints(getEntity().pointsToAdd());
     }
 
     public void handleVerticalCollision(StarMarioCollision m){
         getEntity().recieveDamage();
+        SoundManager.instance().playSound(BaseEnemy.DIE_FIRE_SOUND);
         m.getCollider().getEntity().modifyPoints(getEntity().pointsToAdd());
     }
     
@@ -97,6 +89,7 @@ public abstract class EnemyCollider extends BaseCollider implements UpdateableEn
             s.getCollider().getEntity().getGraphicElement().translate(0, displacement);
         } else {
             getEntity().recieveDamage();
+            SoundManager.instance().playSound(BaseEnemy.DIE_FIRE_SOUND);
         }
     }
     
@@ -105,6 +98,7 @@ public abstract class EnemyCollider extends BaseCollider implements UpdateableEn
             bounce(s.getCollider());
         } else {
             getEntity().recieveDamage();
+            SoundManager.instance().playSound(BaseEnemy.DIE_FIRE_SOUND);
         }
     }
     
@@ -125,19 +119,13 @@ public abstract class EnemyCollider extends BaseCollider implements UpdateableEn
     public void handleHorizontalCollision(FireBallCollision f) {
         getEntity().recieveDamage();
         SoundManager.instance().playSound(BaseEnemy.DIE_FIRE_SOUND);
-        f.getCollider().getEntity().getMario().modifyPoints(getEntity().pointsToAdd());
-        f.getCollider().deactivate();
-        f.getCollider().getEntity().unload();
-        GraphicEngine.instance().remove(f.getCollider().getEntity().getGraphicElement());
+        f.getCollider().getEntity().destroy();
     }
     
     public void handleVerticalCollision(FireBallCollision f) {
         getEntity().recieveDamage();
         SoundManager.instance().playSound(BaseEnemy.DIE_FIRE_SOUND);
-        f.getCollider().getEntity().getMario().modifyPoints(getEntity().pointsToAdd());
-        f.getCollider().deactivate();
-        f.getCollider().getEntity().unload();
-        GraphicEngine.instance().remove(f.getCollider().getEntity().getGraphicElement());
+        f.getCollider().getEntity().destroy();
     }
 
     protected void bounce(EnemyCollider e) {
@@ -163,5 +151,17 @@ public abstract class EnemyCollider extends BaseCollider implements UpdateableEn
         }
         
         return collisionDirection;
+    }
+
+    protected void kill(Mario mario) {
+        mario.die();
+        mario.modifyPoints(getEntity().pointsToSubtract());
+    }
+
+    protected void getKilled(Mario mario) {
+        getEntity().recieveDamage();
+        SoundManager.instance().playSound(BaseEnemy.STOMP_SOUND);
+        mario.modifyPoints(getEntity().pointsToAdd());
+        mario.addSpeed(0, Mario.FIXED_BOUNCE_SPEED);
     }
 }

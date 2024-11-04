@@ -8,7 +8,7 @@ import entities.updateables.mario.Mario;
 import entities.updateables.mario.actions.ThrowFireBall;
 import graphics.GameGraphicElement;
 
-public class FireBall extends BaseMovableEntity implements Bouncer {
+public class FireBall extends Bouncer {
     protected static String SPRITES_FOLDER = "fireBall";
     public final static List<String> ANIMATED_SPRITES = List.of(
         "fireBall", "fireBall2"
@@ -47,10 +47,6 @@ public class FireBall extends BaseMovableEntity implements Bouncer {
     @Override
     public FireBallCollider getCollider() {
         return collider;
-    }
-
-    public void bounce() {
-        speedY = 12;
     }
 
     public void destroy() {

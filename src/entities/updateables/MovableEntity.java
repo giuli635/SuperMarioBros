@@ -1,6 +1,6 @@
 package entities.updateables;
 
-public interface MovableEntity {
+public interface MovableEntity extends UpdateableEntity {
     public void switchDirection();
     public float getSpeedY();
     public void setSpeedY(float y);

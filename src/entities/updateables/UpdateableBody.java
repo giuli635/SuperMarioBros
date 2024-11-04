@@ -3,7 +3,7 @@ package entities.updateables;
 import entities.Body;
 import game.Game;
 
-public abstract class UpdateableBody extends Body implements UpdatableEntity {
+public abstract class UpdateableBody extends Body implements UpdateableEntity {
     protected boolean loaded;
     
     public void load() {

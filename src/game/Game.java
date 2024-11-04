@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import entities.updateables.UpdatableEntity;
+import entities.updateables.UpdateableEntity;
 import graphics.ScreenOverlay;
 import graphics.TemporaryScreenOverlay;
 import graphics.RankingScreen;
@@ -20,7 +20,7 @@ public class Game implements WindowListener, KeyListener {
     protected static int SECOND = 1000;
     protected static int FPS = 60;
     protected static Game uniqueInstance;
-    protected Set<UpdatableEntity> toUpdateRegistry;
+    protected Set<UpdateableEntity> toUpdateRegistry;
     protected Map<Integer, KeyStatus> keysStatus;
     protected Stats lvlStats;
     protected boolean run;
@@ -30,8 +30,8 @@ public class Game implements WindowListener, KeyListener {
     protected int currLevel = 0;
     protected long frames = 0;
 
-    protected List<UpdatableEntity> toAddList = new ArrayList<>();
-    protected List<UpdatableEntity> toRemoveList = new ArrayList<>();
+    protected List<UpdateableEntity> toAddList = new ArrayList<>();
+    protected List<UpdateableEntity> toRemoveList = new ArrayList<>();
     protected boolean debugging;
     protected boolean reset;
     protected ScreenOverlay screenOverlay;
@@ -60,11 +60,11 @@ public class Game implements WindowListener, KeyListener {
         return uniqueInstance;
     }
 
-    public void registerToUpdate(UpdatableEntity e) {
+    public void registerToUpdate(UpdateableEntity e) {
         toUpdateRegistry.add(e);
     }
 
-    public void unregisterToUpdate(UpdatableEntity e) {
+    public void unregisterToUpdate(UpdateableEntity e) {
         toUpdateRegistry.remove(e);
     }
 
@@ -85,9 +85,9 @@ public class Game implements WindowListener, KeyListener {
             debugging = false;
             lastUpdateTime = System.currentTimeMillis();
             if(!pause) {
-                List<UpdatableEntity> list = new ArrayList<>(toUpdateRegistry);
+                List<UpdateableEntity> list = new ArrayList<>(toUpdateRegistry);
                 
-                for (UpdatableEntity entity : list) {
+                for (UpdateableEntity entity : list) {
                     entity.update();
                 }
                 CollisionsEngine.instance().update();

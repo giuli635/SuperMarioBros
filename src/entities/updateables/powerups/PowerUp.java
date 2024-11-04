@@ -1,8 +1,7 @@
 package entities.updateables.powerups;
 
 import entities.updateables.MovableEntity;
-import entities.updateables.UpdatableEntity;
 
-public interface PowerUp extends UpdatableEntity, MovableEntity {
+public interface PowerUp extends MovableEntity {
     public static final String SOUND = "powerup.wav";
 }

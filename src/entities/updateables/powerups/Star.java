@@ -9,7 +9,7 @@ import entities.updateables.BaseMovableEntity;
 import entities.updateables.Bouncer;
 import graphics.GameGraphicElement;
 
-public class Star extends BaseMovableEntity implements PowerUp, Bouncer {
+public class Star extends Bouncer implements PowerUp {
     public static final String SPRITES_FOLDER = "star";
     public static final List<String> ANIMATED_SPRITES = List.of(
         "star", "star2"

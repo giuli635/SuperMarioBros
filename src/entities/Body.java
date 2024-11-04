@@ -5,7 +5,7 @@ import java.awt.Rectangle;
 import javax.swing.ImageIcon;
 
 import colliders.Collider;
-import entities.updateables.UpdatableEntity;
+import entities.updateables.UpdateableEntity;
 import game.GraphicEngine;
 import graphics.GameGraphicElement;
 
@@ -70,7 +70,7 @@ public abstract class Body implements Entity {
         return displacement;
     }
 
-    public void spawnEntity(UpdatableEntity e, int diffX, int diffY) {
+    public void spawnEntity(UpdateableEntity e, int diffX, int diffY) {
         int entityGraphicX = (int) getGraphicElement().getPosition().getX();
         int entityGraphicY = (int) getGraphicElement().getPosition().getY();
 

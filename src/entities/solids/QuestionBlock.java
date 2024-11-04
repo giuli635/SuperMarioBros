@@ -6,7 +6,7 @@ import java.util.List;
 import colliders.solids.QuestionBlockCollider;
 import entities.updateables.MovementAnimator;
 import entities.updateables.Coin;
-import entities.updateables.UpdatableEntity;
+import entities.updateables.UpdateableEntity;
 import entities.updateables.UpdateableBody;
 import entities.updateables.powerups.GreenMushroom;
 import entities.updateables.powerups.PowerUp;
@@ -26,7 +26,7 @@ public class QuestionBlock extends UpdateableBody {
     protected GameGraphicElement graphicElement;
     protected boolean depends;
     protected boolean active;
-    protected UpdatableEntity entity;
+    protected UpdateableEntity entity;
     protected MovementAnimator animator;
 
     public QuestionBlock(char s) {

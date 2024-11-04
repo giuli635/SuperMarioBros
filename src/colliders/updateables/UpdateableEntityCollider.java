@@ -1,8 +1,8 @@
 package colliders.updateables;
 
 import colliders.Collider;
-import entities.updateables.UpdatableEntity;
+import entities.updateables.UpdateableEntity;
 
 public interface UpdateableEntityCollider extends Collider {
-    public UpdatableEntity getEntity();
+    public UpdateableEntity getEntity();
 }
