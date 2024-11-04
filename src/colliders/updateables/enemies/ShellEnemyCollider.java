@@ -64,8 +64,6 @@ public abstract class ShellEnemyCollider extends EnemyCollider{
             int displacement = m.getCollider().displaceX(collision, 3);
             mario.getGraphicElement().translate(displacement, 0);
             getEntity().setSpeedX((int) -Math.signum(displacement) * 6);
-            mario.removeState(m.getCollider().getAssociatedState());
-            mario.setState(new InvulnerableState(mario)); 
         } else {
             mario.removeState(m.getCollider().getAssociatedState());
             mario.setState(new InvulnerableState(mario));
