@@ -1,52 +1,33 @@
 @startuml
-Game ..|> WindowListener
-Game ..|> KeyListener
-Game --> Game
-Game --> UpdatableEntity
-Game --> KeyStatus
-Game --> Stats
-Game --> GameOverScreen
-Game --> RankingManager
-Game --> Map
-Game --> List
-Game --> Set
-class Game
-CollisionsEngine --> CollisionsEngine
-CollisionsEngine --> Collider
-CollisionsEngine --> List
-CollisionsEngine --> Set
-class CollisionsEngine
-GraphicEngine --> GraphicEngine
-GraphicEngine --> JFrame
-GraphicEngine --> JLayeredPane
-GraphicEngine --> GraphicElement
-GraphicEngine --> GameGraphicElement
-GraphicEngine --> Set
-GraphicEngine --> Integer
-class GraphicEngine
-LanguageConfiguration --> LanguageConfiguration
-LanguageConfiguration --> Properties
-class LanguageConfiguration
-LevelReader --> LevelReader
-LevelReader --> Map
-LevelReader --> Character
-LevelReader --> EntityLoader
-class LevelReader
-interface LevelStatsObserver
-LevelTimer --> Timer
-class LevelTimer
-RankingManager --> ScoreEntry
-RankingManager --> List
-class RankingManager
-SoundManager --> SoundManager
-SoundManager --> Clip
-SoundManager --> Map
-class SoundManager
-Stats --> List
-Stats --> LevelTimer
-Stats --> LevelStatsObserver
-class Stats
-StatsPanel --|> JPanel
-StatsPanel --> JLabel
-class StatsPanel
+interface GraphicElement
+interface TranslatableGraphicElement
+interface EntityLoader
+
+Game .u.|> WindowListener
+Game .u.|> KeyListener
+Game "1" --> "0..*" UpdatableEntity
+Game "1" --> "1" Stats
+Game "1" --> "0..*" KeyStatus
+
+CollisionsEngine "1" --> "0..*" Collider
+
+GraphicEngine "1" --> "1" JFrame
+GraphicEngine "1" --> "1" JLayeredPane
+GraphicEngine "1" --> "0..*" GraphicElement
+GraphicEngine "1" --> "*" TranslatableGraphicElement
+GraphicEngine "1" --> "2" GameGraphicElement
+GraphicEngine "1" --> "1" Font
+
+LanguageConfiguration "1" --> "2" Properties
+
+LevelReader "1" --> "0..*" EntityLoader
+
+RankingManager "1" --> "0..5" ScoreEntry
+
+SoundManager "1" --> "0..*" Clip
+
+Stats "1" --> "1" Timer
+
+StatsPanel -u-|> JPanel
+StatsPanel "1" --> "2" JLabel
 @enduml

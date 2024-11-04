@@ -3,13 +3,10 @@
 interface Prioritizable
 abstract BasePrioritizable
 
-BasePrioritizable --|> Prioritizable
+BasePrioritizable -u-|> Prioritizable
 
-PriorityComparator --|> Comparator
+PriorityComparator -u-|> Comparator
 
 Vector2D --> Point
-
-
-
 
 @enduml

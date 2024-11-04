@@ -1,0 +1,29 @@
+@startuml
+
+interface Collider
+interface EntityLoader
+abstract BaseLoader
+
+BaseLoader -u-|> EnityLoader
+BasePipeLoader -u-|> BaseLoader
+BlockLoader -u-|> BaseLoader
+BrickLoader -u-|> BaseLoader
+BuzzyBeetleLoader -u-|> BaseLoader
+CastleLoader -u-|> BaseLoader
+CoinLoader -u-|> BaseLoader
+ConfigurationBlockLoader -u-|> BaseLoader
+EmptyBlockLoader -u-|> BaseLoader
+FireFlowerLoader -u-|> BaseLoader
+FlagPoleLoader -u-|> BaseLoader
+GoombaLoader -u-|> BaseLoader
+GreenMushroomLoader -u-|> BaseLoader
+KoopaTroopaLoader -u-|> BaseLoader
+LakituLoader -u-|> BaseLoader
+MarioLoader -u-|> BaseLoader
+PiranhaPlantLoader -u-|> BaseLoader
+QuestionBlockLoader -u-|> BaseLoader
+SpinyLoader -u-|> BaseLoader
+StarLoader -u-|> BaseLoader
+SuperMushroomLoader -u-|> BaseLoader
+TopPipeLoader -u-|> BaseLoader
+@enduml
