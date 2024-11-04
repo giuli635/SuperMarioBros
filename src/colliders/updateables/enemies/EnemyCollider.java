@@ -34,9 +34,7 @@ public abstract class EnemyCollider extends BaseCollider implements UpdateableEn
     }
     
     public void handleVerticalCollision(InvulnerableCollision m) {
-        Game.instance().setDebugging(true);
         Mario mario = m.getCollider().getEntity();
-        
         if (calculateCollisionDirection(m) == Direction.DOWN) {
             getEntity().recieveDamage();
             mario.addSpeed(0, Mario.FIXED_BOUNCE_SPEED);
@@ -50,9 +48,7 @@ public abstract class EnemyCollider extends BaseCollider implements UpdateableEn
     }
 
     public void handleVerticalCollision(MarioCollision m) {
-        Game.instance().setDebugging(true);
         Mario mario = m.getCollider().getEntity();
-        
         if (calculateCollisionDirection(m) == Direction.DOWN) {
             getEntity().recieveDamage();
             SoundManager.instance().playSound(BaseEnemy.STOMP_SOUND);
@@ -66,8 +62,22 @@ public abstract class EnemyCollider extends BaseCollider implements UpdateableEn
     
     public void handleHorizontalCollision(SuperMarioCollision m) {
         Mario mario = m.getCollider().getEntity();
+        getEntity().recieveDamage();
         mario.removeState(m.getCollider().getAssociatedState());
         mario.setState(new InvulnerableState(mario));
+    }
+
+    public void handleVerticalCollision(SuperMarioCollision m){
+        Mario mario = m.getCollider().getEntity();
+        if (calculateCollisionDirection(m) == Direction.DOWN) {
+            getEntity().recieveDamage();
+            SoundManager.instance().playSound(BaseEnemy.STOMP_SOUND);
+            mario.modifyPoints(getEntity().pointsToAdd());
+            mario.addSpeed(0, Mario.FIXED_BOUNCE_SPEED);
+        } else {
+            mario.removeState(m.getCollider().getAssociatedState());
+            mario.setState(new InvulnerableState(mario));
+        }
     }
 
     public void handleHorizontalCollision(StarMarioCollision m){
@@ -142,7 +152,6 @@ public abstract class EnemyCollider extends BaseCollider implements UpdateableEn
     }
     
     public Direction calculateCollisionDirection(MarioCollision m) {
-        Game.instance().setDebugging(true);
         Direction collisionDirection = Direction.UP;
         
         Rectangle marioBounds = m.getCollider().getBounds();

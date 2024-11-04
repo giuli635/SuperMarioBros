@@ -65,7 +65,7 @@ public abstract class ShellEnemyCollider extends EnemyCollider{
             mario.getGraphicElement().translate(displacement, 0);
             getEntity().setSpeedX((int) -Math.signum(displacement) * 6);
             mario.removeState(m.getCollider().getAssociatedState());
-            mario.setState(new InvulnerableState(mario));
+            mario.setState(new InvulnerableState(mario)); 
         } else {
             mario.removeState(m.getCollider().getAssociatedState());
             mario.setState(new InvulnerableState(mario));
@@ -73,7 +73,7 @@ public abstract class ShellEnemyCollider extends EnemyCollider{
     }
 
     public void handleVerticalCollision(SuperMarioCollision m) {
-        Direction collisionDirection = m.getCollider().getVelocity().getYComponent() > 0 ? Direction.UP : Direction.DOWN;
+        Direction collisionDirection = calculateCollisionDirection(m);
         Rectangle collision = getBounds().intersection(m.getCollider().getBounds());
         Mario mario = m.getCollider().getEntity();
         
