@@ -72,12 +72,12 @@ public abstract class EnemyCollider extends BaseCollider implements UpdateableEn
 
     public void handleHorizontalCollision(StarMarioCollision m){
         getEntity().recieveDamage();
-        m.getCollider().getEntity().modifyPoints(getEntity().pointsToAdd()/2);
+        m.getCollider().getEntity().modifyPoints(getEntity().pointsToAdd());
     }
 
     public void handleVerticalCollision(StarMarioCollision m){
         getEntity().recieveDamage();
-        m.getCollider().getEntity().modifyPoints(getEntity().pointsToAdd()/2);
+        m.getCollider().getEntity().modifyPoints(getEntity().pointsToAdd());
     }
     
     public void handleVerticalCollision(ShellEnemyCollision s) {
