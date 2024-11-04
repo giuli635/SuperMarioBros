@@ -16,7 +16,6 @@ import entities.updateables.enemies.BaseEnemy;
 import entities.updateables.enemies.Enemy;
 import entities.updateables.mario.Mario;
 import entities.updateables.mario.states.InvulnerableState;
-import game.Game;
 import game.GraphicEngine;
 import game.SoundManager;
 import utils.Direction;

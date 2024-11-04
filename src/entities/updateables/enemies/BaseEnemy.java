@@ -14,6 +14,7 @@ public abstract class BaseEnemy extends BaseMovableEntity implements Enemy {
     public static final String DIE_FIRE_SOUND = "kick.wav";
 
     public BaseEnemy() {
+        falling = false;
         speedX = DEFAULT_SPEEDX;
         speedY = DEFAULT_SPEEDY;
     }

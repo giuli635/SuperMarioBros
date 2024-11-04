@@ -10,6 +10,7 @@ import collisions.updateables.UpdateableEntityCollision;
 import collisions.updateables.enemies.EnemyCollision;
 import collisions.updateables.mario.MarioCollision;
 import collisions.updateables.powerups.PowerUpCollision;
+import entities.updateables.enemies.Enemy;
 import entities.updateables.mario.Mario;
 
 public abstract class SolidCollider extends BaseCollider {
@@ -61,7 +62,11 @@ public abstract class SolidCollider extends BaseCollider {
     }
 
     public void handleVerticalCollision(EnemyCollision e) {
-        displaceVertically(e.getCollider());
+        int displacement = displaceVertically(e.getCollider());
+        Enemy enemy = e.getCollider().getEntity();
+        if (displacement > 0) {
+            enemy.land();
+        }
     }
 
     public void handleHorizontalCollision(PowerUpCollision p) {

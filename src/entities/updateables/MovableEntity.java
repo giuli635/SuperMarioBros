@@ -6,6 +6,7 @@ public interface MovableEntity {
     public void setSpeedY(float y);
     public float getSpeedX();
     public void setSpeedX(float x);
+    public void land();
     public void applyGravity();
 }
 
