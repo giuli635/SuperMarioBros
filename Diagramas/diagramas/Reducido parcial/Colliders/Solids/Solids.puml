@@ -1,0 +1,18 @@
+@startuml Solids
+
+BlockCollider --|> SolidCollider
+BlockCollider --> Block
+
+BrickCollider --|> SolidCollider
+BrickCollider --> Brick
+
+PipeCollider --|> SolidCollider
+PipeCollider --> Pipe
+
+QuestionBlockCollider ..|> SolidCollider
+QuestionBlockCollider --> UpdateableEntityCollider
+QuestionBlockCollider --> QuestionBlock
+
+SolidCollider --|> BaseCollider
+
+@enduml

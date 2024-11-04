@@ -1,0 +1,25 @@
+@startuml Mario
+
+interface Prioritizable
+interface MarioState
+
+DefaultMarioCollider --|> MarioCollider
+
+FireMarioCollider --|> SuperMarioCollider
+
+SuperMarioCollider --|> MarioCollider
+
+MarioCollider --|> BaseCollider
+MarioCollider --> UpdateableEntityCollider
+MarioCollider --> Prioritizable
+MarioCollider --> Mario
+MarioCollider --> MarioCollider
+MarioCollider --> MarioState
+
+InvulnerableCollider --|> MarioCollider
+InvulnerableCollider --> Mario
+
+StarMarioCollider --|> MarioCollider
+StarMarioCollider --> Mario
+
+@enduml

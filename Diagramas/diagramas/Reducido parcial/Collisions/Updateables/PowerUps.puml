@@ -1,0 +1,22 @@
+@startuml PowerUps
+
+PowerUpCollision -u-|> UpdateableEntityCollision
+
+FireFlowerCollision .u.|> PowerUpCollision
+FireFlowerCollision -u-|> BaseCollision
+FireFlowerCollision "1" --> "1" FireFlowerCollider
+
+GreenMushroomCollision .u.|> PowerUpCollision
+GreenMushroomCollision -u-|> BaseCollision
+GreenMushroomCollision "1" --> "1" GreenMushroomCollider
+
+StarCollision .u.|> PowerUpCollision
+StarCollision .u.|> BouncerCollision
+StarCollision -u-|> BaseCollision
+StarCollision "1" --> "1" StarCollider
+
+SuperMushroomCollision .u.|> PowerUpCollision
+SuperMushroomCollision -u-|> BaseCollision
+SuperMushroomCollision "1" --> "1" SuperMushroomCollider
+
+@enduml

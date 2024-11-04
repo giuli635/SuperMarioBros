@@ -1,0 +1,23 @@
+@startuml PowerUps
+
+PowerUp -u-|> UpdateableEntity
+PowerUp -u-|> MovableEntity
+
+FireFlower .u.|> PowerUp
+FireFlower -u-|> BaseMovableEntity
+FireFlower "1" --> "1" FireFlowerCollider
+
+GreenMushroom .u.|> PowerUp
+GreenMushroom -u-|> BaseMovableEntity
+GreenMushroom "1" --> "1" GreenMushroomCollider
+
+SuperMushroom .u.|> PowerUp
+SuperMushroom -u-|> BaseMovableEntity
+SuperMushroom "1" --> "1" SuperMushroomCollider
+
+Star .u.|> Bouncer
+Star .u.|> PowerUp
+Star -u-|> BaseMovableEntity
+Star "1" --> "1" StarCollider
+
+@enduml

@@ -1,0 +1,20 @@
+@startuml PowerUps
+
+FireFlowerCollider --|> PowerUpCollider
+FireBallCollider --> FireFlower
+
+GreenMushroomCollider --|> PowerUpCollider
+GreenMushroomCollider --> GreenMushroom
+
+SuperMushroomCollider --|> PowerUpCollider 
+SuperMushroomCollider --> SuperMushroom
+
+StarCollider --|> PowerUpCollider
+StarCollider --> BouncerCollider
+StarCollider --> Star
+
+PowerUpCollider --|> BaseCollider 
+PowerUpCollider --> UpdateableEntityCollider
+PowerUpCollider --> PowerUp
+
+@enduml

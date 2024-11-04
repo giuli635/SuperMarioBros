@@ -1,0 +1,10 @@
+@startuml Mario
+
+Mario -u-|> UpdateableBody
+Mario "1" --> "4..*" MarioAction
+Mario "1" --> "0..*" MarioState
+Mario "1" --> "1" MarioCollider
+Mario "1" --> "1" Stats
+Mario "1" --> "1" Direction
+
+@enduml

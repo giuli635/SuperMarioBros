@@ -1,0 +1,31 @@
+@startuml UpdateableEnemies
+
+EnemyCollision -u-|> UpdateableEntityCollision
+
+ShellEnemyCollision -u-|> EnemyCollision
+
+BuzzyBeetleCollision .u.|> ShellEnemyCollision
+BuzzyBeetleCollision -u-|> BaseCollision
+BuzzyBeetleCollision "1" --> "1" BuzzyBeetleCollider
+
+GoombaCollision .u.|> EnemyCollision
+GoombaCollision -u-|> BaseCollision 
+GoombaCollision "1" --> "1" GoombaCollider
+
+KoopaTroopa .u.|> ShellEnemyCollision
+KoopaTroopa -u-|> BaseCollision
+KoopaTroopa "1" --> "1" KoopaTroopaCollider
+
+LakituCollision .u.|> EnemyCollision
+LakituCollision -u-|> BaseCollision 
+LakituCollision "1" --> "1" LakituCollider
+
+PiranhaPlantCollision .u.|> EnemyCollision
+PiranhaPlantCollision -u-|> BaseCollision
+PiranhaPlantCollision "1" --> "1" PiranhaPlantCollider
+
+SpinyCollision .u.|> EnemyCollision
+SpinyCollision --|> BaseCollision
+SpinyCollision "1" --> "1" SpinyCollider
+
+@enduml

@@ -1,0 +1,10 @@
+@startuml Updateables
+
+UpdateableEntityCollision .u.|> Collision
+BouncerCollision .u.|> UpdateableEntityCollision
+
+FireBallCollision .u.> BouncerCollision
+FireBallCollision -u-|> BaseCollision
+FireBallCollision "1" --> "1" FireBallCollider
+
+@enduml

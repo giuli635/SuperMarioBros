@@ -1,0 +1,26 @@
+@startuml UpdateableEnemies
+
+BuzzyBeetleCollider --|> ShellEnemyCollider
+BuzzyBeetleCollider --> BuzzyBeetle
+
+EnemyCollider --|> BaseCollider 
+EnemyCollider --> UpdateableEntityCollider
+
+GoombaCollider --|> EnemyCollider
+GoombaCollider --> Goomba
+
+KoopaTroopaCollider --|> ShellEnemyCollider
+KoopaTroopaCollider --> KoopaTroopa
+
+LakituCollider --|> EnemyCollider
+LakituCollider --> Lakitu
+
+SpinyCollider --|> EnemyCollider
+SpinyCollider --> Spiny
+
+PiranhaPlantCollider --|> EnemyCollider
+PiranhaPlantCollider --> PiranhaPlant
+
+ShellEnemyCollider --|> EnemyCollider
+
+@enduml

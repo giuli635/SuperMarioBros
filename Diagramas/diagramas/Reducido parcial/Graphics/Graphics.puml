@@ -1,4 +1,5 @@
-@startuml
+@startuml Graphics
+
 interface GraphicElement
 interface TranslatableGraphicElement
 interface LevelStatsObserver
@@ -40,4 +41,5 @@ TextLabel -u-|> BaseTranslatableGraphicElement
 TextLabel "1" --> "1" Font
 
 SpriteFactory "1" --> "0..*" ImageIcon
+
 @enduml

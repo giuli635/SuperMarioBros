@@ -1,0 +1,13 @@
+@startuml Actions
+
+BaseMarioAction .u.|> MarioAction
+
+Crouch -u-|> BaseMarioAction
+DisappearSprite -u-|> BaseMarioAction
+ResolveSprite -u-|> BaseMarioAction
+HorizontalMovement -u-|> BaseMarioAction
+ResolveHorizontalMovementDirection -u-|> BaseMarioAction
+VerticalMovement -u-|> BaseMarioAction
+ThrowFireBall -u-|> BaseMarioAction
+
+@enduml

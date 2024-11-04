@@ -1,0 +1,13 @@
+@startuml States
+
+BaseMarioState .u.|> MarioState
+BaseMarioState "1" --> "1" MarioCollider
+
+SuperMario -u-|> BaseMarioState
+SuperMario "1" --> "1" Crouch
+
+FireMario -u-|> BaseMarioState
+FireMario "1" --> "1" Crouch
+FireMario "1" --> "1" ThrowFireBall
+
+@enduml
