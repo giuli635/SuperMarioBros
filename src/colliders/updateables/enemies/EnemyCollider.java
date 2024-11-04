@@ -16,6 +16,7 @@ import entities.updateables.enemies.BaseEnemy;
 import entities.updateables.enemies.Enemy;
 import entities.updateables.mario.Mario;
 import entities.updateables.mario.states.InvulnerableState;
+import game.Game;
 import game.GraphicEngine;
 import game.SoundManager;
 import utils.Direction;
@@ -33,6 +34,7 @@ public abstract class EnemyCollider extends BaseCollider implements UpdateableEn
     }
     
     public void handleVerticalCollision(InvulnerableCollision m) {
+        Game.instance().setDebugging(true);
         Mario mario = m.getCollider().getEntity();
         
         if (calculateCollisionDirection(m) == Direction.DOWN) {
@@ -48,6 +50,7 @@ public abstract class EnemyCollider extends BaseCollider implements UpdateableEn
     }
 
     public void handleVerticalCollision(MarioCollision m) {
+        Game.instance().setDebugging(true);
         Mario mario = m.getCollider().getEntity();
         
         if (calculateCollisionDirection(m) == Direction.DOWN) {
@@ -139,6 +142,7 @@ public abstract class EnemyCollider extends BaseCollider implements UpdateableEn
     }
     
     public Direction calculateCollisionDirection(MarioCollision m) {
+        Game.instance().setDebugging(true);
         Direction collisionDirection = Direction.UP;
         
         Rectangle marioBounds = m.getCollider().getBounds();
@@ -146,7 +150,7 @@ public abstract class EnemyCollider extends BaseCollider implements UpdateableEn
         int outcode = this.getBounds().outcode(marioPosition);
         
         if ((outcode & Rectangle.OUT_BOTTOM) == Rectangle.OUT_BOTTOM
-        && m.getCollider().getEntity().getSpeedY() < -Mario.GRAVITY) {
+        && m.getCollider().getEntity().getSpeedY() < -(Mario.GRAVITY * 2)) {
             collisionDirection = Direction.DOWN;
         }
         

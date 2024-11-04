@@ -248,7 +248,7 @@ public class GraphicEngine {
     }
 
     public void addToRedraw(GraphicElement graphicElement) {
-        toRedraw.addLast(graphicElement);
+        toRedraw.add(graphicElement);
     }
 
     public Font getFont() {

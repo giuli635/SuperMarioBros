@@ -15,7 +15,7 @@ public class ColorAnimator implements Animator {
 
     public ColorAnimator(List<Map<Color, Color>> colorMappings, int framesPerColor, Body e) {
         List<Map<Color, Color>> mapping = new ArrayList<>(colorMappings);
-        mapping.addFirst(null);
+        mapping.add(0, null);
         colorsIterator = new CyclicIterator<>(colorMappings, framesPerColor);
         entity = e;
     }
