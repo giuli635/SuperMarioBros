@@ -11,9 +11,8 @@ import java.util.Map;
 import java.util.Set;
 
 import entities.updateables.UpdateableEntity;
-import graphics.ScreenOverlay;
-import graphics.TemporaryScreenOverlay;
 import graphics.RankingScreen;
+import graphics.TemporaryScreenOverlay;
 import utils.KeyStatus;
 
 public class Game implements WindowListener, KeyListener {
@@ -22,19 +21,19 @@ public class Game implements WindowListener, KeyListener {
     protected static Game uniqueInstance;
     protected Set<UpdateableEntity> toUpdateRegistry;
     protected Map<Integer, KeyStatus> keysStatus;
-    protected Stats lvlStats;
-    protected boolean run;
+    protected Stats stats;
+    protected Runnable executionState;
+
     protected boolean pause;
-    protected boolean pauseKeyAlreadyPressed = false;
+    protected boolean runGameLoop;
+    protected boolean runGame;
+    protected boolean debugging;
+
     protected String[] levels = {"menu.txt", "level1.txt", "level2.txt", "level3.txt"};
-    protected int currLevel = 0;
     protected long frames = 0;
 
     protected List<UpdateableEntity> toAddList = new ArrayList<>();
     protected List<UpdateableEntity> toRemoveList = new ArrayList<>();
-    protected boolean debugging;
-    protected boolean reset;
-    protected ScreenOverlay screenOverlay;
 
     protected RankingManager rankingManager;
 
@@ -49,10 +48,10 @@ public class Game implements WindowListener, KeyListener {
     private Game() {
         toUpdateRegistry = new HashSet<>();
         keysStatus = new HashMap<>();
-        lvlStats = null;
-        run = true;
+        stats = null;
+        runGame = true;
+        runGameLoop = true;
         pause = false;
-        reset = false;
         rankingManager = new RankingManager();
     }
 
@@ -72,70 +71,96 @@ public class Game implements WindowListener, KeyListener {
         return keysStatus.getOrDefault(key, KeyStatus.RELEASED);
     }
 
-    private void loop() {
-        GraphicEngine graphicEngine = GraphicEngine.instance();
-        graphicEngine.initBackgrounds();
-        SoundManager soundManager = SoundManager.instance();
-        LevelReader reader = LevelReader.instance();
-        lvlStats = reader.createLevel(3, 300, currLevel, 0);
-        reader.readTxt(levels[currLevel]);
-        soundManager.playLoopingSound("marioBackground.wav");
-        long lastUpdateTime;
-        while (run) {
-            debugging = false;
-            lastUpdateTime = System.currentTimeMillis();
-            if(!pause) {
-                List<UpdateableEntity> list = new ArrayList<>(toUpdateRegistry);
-                
-                for (UpdateableEntity entity : list) {
-                    entity.update();
-                }
-                CollisionsEngine.instance().update();
+    protected void runGame() {
+        stats = new Stats(300, 3, 0, 0);
+        reloadGameStatus();
 
-                if (!debugging) {
-                    try {
-                        Thread.sleep(SECOND / FPS - (lastUpdateTime - System.currentTimeMillis()));
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-                graphicEngine.drawFrame();
-                frames++;
-
-                if (reset) {
-                    toUpdateRegistry = new HashSet<>();
-                    CollisionsEngine.instance().reset();
-                    graphicEngine.reset();
-                    if (!checkGameOver(graphicEngine, soundManager, reader)){
-                        lvlStats = reader.createLevel(lvlStats.getLives(), lvlStats.getRemainingTime(), lvlStats.getLevelNumber(), lvlStats.getScore());
-                        reader.readTxt(levels[currLevel]);
-                        soundManager.playLoopingSound("marioBackground.wav");
-                        reset = false;
-                    }
-                }
-            }
-
-            checkPause();
+        while (runGame) {
+            executionState.run();
         }
     }
 
-    public boolean checkGameOver(GraphicEngine graphicEngine, SoundManager soundManager, LevelReader reader){
-        if (lvlStats.getLives() == 0){
-            screenOverlay = new TemporaryScreenOverlay("gameOver", 4 * SECOND);
-            screenOverlay.add();
-            currLevel = 0;
+    protected void loop() {
+        long lastUpdateTime;
+        while (runGameLoop) {
+            debugging = false;
+            lastUpdateTime = System.currentTimeMillis();
+            List<UpdateableEntity> list = new ArrayList<>(toUpdateRegistry);
+            
+            for (UpdateableEntity entity : list) {
+                entity.update();
+            }
+            CollisionsEngine.instance().update();
+
+            if (!debugging) {
+                try {
+                    Thread.sleep(SECOND / FPS - (lastUpdateTime - System.currentTimeMillis()));
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            GraphicEngine.instance().drawFrame();
+            frames++;
+        }
+
+        // if (pause) {
+        //     activatePause();
+        // }
+    }
+
+    public void advanceLevel() {
+        reload();
+
+        if (stats.getLevelNumber() < levels.length - 1) {
+            if (stats.getLevelNumber() > 0){
+                stats.modifyPoints(stats.getRemainingTime() * 50);
+            }
+
+            stats.advanceLevel();
+        } else {
+            new TemporaryScreenOverlay("gameEnd", 4 * SECOND).add();
             checkRanking();
-            lvlStats = reader.createLevel(3, 300, 0, 0);
-            resetCurrentLevel();
-            return true;
+            stats.reset();
         }
-        else{
-            return false;
+    }
+
+    public void checkGameOver() {
+        reload();
+
+        if (stats.getLives() == -1){
+            new TemporaryScreenOverlay("gameOver", 4 * SECOND).add();
+            checkRanking();
+            stats.reset();
         }
+    }
+
+    public void reloadGameStatus(){
+        toUpdateRegistry = new HashSet<>();
+        GraphicEngine.instance().initBackgrounds();
+        // SoundManager.instance().removeAllSounds();
+        LevelReader.instance().loadLevel(levels[stats.getLevelNumber()]);
+        LevelReader.instance().loadStats(stats);
+        // SoundManager.instance().playLoopingSound("marioBackground.wav");
+        runGameLoop = true;
+        executionState = new Runnable() {
+            public void run() {
+                loop();
+            }
+        };
+    }
+
+    protected synchronized void activatePause() {
+        stats.pauseTimer();
+        SoundManager.instance().playSound("pause.wav");
+        SoundManager.instance().pauseAllSounds();
+
+        stats.resumeTimer();
+        SoundManager.instance().resumeAllSounds();
+        loop();
     }
 
     public void checkRanking() {
-        int currentScore = lvlStats.getScore();
+        int currentScore = stats.getScore();
         if (rankingManager.checkAndUpdateRanking(currentScore)) {
             showRanking();
         }
@@ -148,35 +173,30 @@ public class Game implements WindowListener, KeyListener {
 
     public static void main(String[] args) {
         uniqueInstance = new Game();
-        uniqueInstance.loop();
+        uniqueInstance.runGame();
     }
 
-    public void resetCurrentLevel() {
-        reset = true;
-    }
-
-    public void advanceLevel() {
-        if (currLevel < levels.length -1) {
-            if (currLevel != 0){
-            lvlStats.modifyPoints(lvlStats.getRemainingTime()*50);
+    public void reload() {
+        executionState = new Runnable() {
+            public void run() {
+                reloadGameStatus();
             }
-            currLevel ++;
-            Stats stash = new Stats(300, lvlStats.getLives(), currLevel, lvlStats.getScore());
-            lvlStats = stash;
-        } else {
-            screenOverlay = new TemporaryScreenOverlay("gameEnd", 4 * SECOND);
-            screenOverlay.add();
-            currLevel = 0;
-            checkRanking();
-            lvlStats = LevelReader.instance().createLevel(3, 300, 0, 0);
-        }
+        };
 
-        SoundManager.instance().removeAllSounds();
-        resetCurrentLevel();
+        runGameLoop = false;
     }
-    
+
+    public void resume() {
+    }
+
+    public void pause() {
+    }
+
+    protected void togglePause() {
+    }
+
     public Stats getLevelStats(){
-        return lvlStats;
+        return stats;
     }
 
     public long getFrames() {
@@ -189,7 +209,8 @@ public class Game implements WindowListener, KeyListener {
 
     @Override
     public void windowClosed(WindowEvent e) {
-        run = false;
+        runGame = false;
+        runGameLoop = false;
     }
 
     @Override
@@ -214,7 +235,11 @@ public class Game implements WindowListener, KeyListener {
 
     @Override
     public void keyPressed(KeyEvent arg0) {
-        keysStatus.put(arg0.getKeyCode(), KeyStatus.PRESSED);
+        if (arg0.getKeyCode() != KeyEvent.VK_P) {
+            keysStatus.put(arg0.getKeyCode(), KeyStatus.PRESSED);
+        } else {
+            togglePause();
+        }
     }
 
     @Override
@@ -224,26 +249,5 @@ public class Game implements WindowListener, KeyListener {
 
     @Override
     public void keyTyped(KeyEvent arg0) {
-    }
-
-    public void checkPause() {
-        if (Game.instance().getKeyStatus(KeyEvent.VK_P) == KeyStatus.PRESSED) {
-            if (!pauseKeyAlreadyPressed) {
-                pause = !pause;
-                pauseKeyAlreadyPressed = true;
-                if (pause){
-                    lvlStats.pauseTimer();
-                    SoundManager.instance().playSound("pause.wav");
-                    SoundManager.instance().pauseAllSounds();
-                }
-                else{
-                    lvlStats.resumeTimer();
-                    SoundManager.instance().resumeAllSounds();
-                }
-
-            }
-        } else {
-            pauseKeyAlreadyPressed = false;
-        }
     }
 }

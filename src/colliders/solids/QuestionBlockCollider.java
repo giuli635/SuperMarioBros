@@ -6,7 +6,6 @@ import java.util.TimerTask;
 import colliders.updateables.UpdateableEntityCollider;
 import collisions.Collision;
 import collisions.solids.QuestionBlockCollision;
-import collisions.updateables.enemies.PiranhaPlantCollision;
 import collisions.updateables.mario.MarioCollision;
 import collisions.updateables.mario.SuperMarioCollision;
 import utils.Axis;
@@ -63,7 +62,7 @@ public class QuestionBlockCollider extends SolidCollider implements UpdateableEn
                     }
                 };
 
-                timer.schedule(task,300);
+                timer.schedule(task, 300);
             }
         }
     }
@@ -96,11 +95,5 @@ public class QuestionBlockCollider extends SolidCollider implements UpdateableEn
                 timer.schedule(task,300);
             }
         }
-    }
-
-    public void handleVerticalCollision(PiranhaPlantCollision p) {
-    }
-
-    public void handleHorizontalCollision(PiranhaPlantCollision p) {
     }
 }

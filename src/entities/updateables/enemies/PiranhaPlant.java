@@ -47,7 +47,7 @@ public class PiranhaPlant extends BaseEnemy {
             }
         };
 
-        timer.schedule(task,1000);
+        timer.schedule(task, 1000);
     }
 
     @Override

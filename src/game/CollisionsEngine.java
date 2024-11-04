@@ -16,11 +16,9 @@ public class CollisionsEngine {
     protected static CollisionsEngine uniqueInstance;
     protected List<List<Collider>> chunks;
     protected Set<Collider> toUpdate;
-    protected Collider swap;
     protected Collider currentCollider;
 
     protected CollisionsEngine() {
-        swap = null;
         reset();
     }
 
@@ -86,12 +84,6 @@ public class CollisionsEngine {
             if (toCheck != currentCollider){
                 toCheck.setColliding(true);
                 checkCollision(currentCollider, toCheck, axis);
-                if (swap != null) {
-                    currentCollider.deactivate();
-                    currentCollider = swap;
-                    addToUpdate(currentCollider);
-                    swap = null;
-                }
                 toCheck.setColliding(false);
             }
         }
@@ -166,7 +158,10 @@ public class CollisionsEngine {
         toUpdate = ConcurrentHashMap.newKeySet();
     }
 
-    public void swap(Collider c) {
-        swap = c;
+    public void swap(Collider toSwap, Collider swapper) {
+        if (currentCollider == toSwap) {
+            currentCollider = swapper;
+        }
+        addToUpdate(swapper);
     }
 }

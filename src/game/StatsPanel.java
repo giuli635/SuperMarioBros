@@ -7,7 +7,7 @@ import java.awt.Font;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class StatsPanel extends JPanel{
+public class StatsPanel extends JPanel {
     protected JLabel text;
     protected JLabel stat;
 

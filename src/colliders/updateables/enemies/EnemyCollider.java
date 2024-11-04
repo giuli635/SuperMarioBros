@@ -146,7 +146,7 @@ public abstract class EnemyCollider extends BaseCollider implements MovableEntit
         int outcode = this.getBounds().outcode(marioPosition);
         
         if ((outcode & Rectangle.OUT_BOTTOM) == Rectangle.OUT_BOTTOM
-        && m.getCollider().getEntity().getSpeedY() < -(Mario.GRAVITY * 2)) {
+            && m.getCollider().getEntity().getSpeedY() < -(Mario.GRAVITY * 2)) {
             collisionDirection = Direction.DOWN;
         }
         

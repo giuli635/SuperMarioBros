@@ -59,16 +59,9 @@ public class LevelReader {
         return uniqueInstance;
     }
 
-    public Stats createLevel(int livesMario, int levelTimer, int numberLevel, int score) {
-        Stats level = null;
-        level = new Stats(levelTimer, livesMario, numberLevel, score);
-        StatsBar statsBar = new StatsBar(level);
-        GraphicEngine.instance().add(statsBar);
-        GraphicEngine.instance().setDepth(statsBar, GraphicEngine.FRONT_DEPTH);
-        return level;
-    }
-
-    public void readTxt(String file){
+    public void loadLevel(String file){
+        CollisionsEngine.instance().reset();
+        GraphicEngine.instance().reset();
         try (BufferedReader br = new BufferedReader(new FileReader("levels/" + file))) {
             loadEntities(br);
             br.close();
@@ -78,7 +71,24 @@ public class LevelReader {
         loadScreen();
     }
 
-    private void loadScreen() {
+    protected void loadEntities(BufferedReader br) throws IOException {
+        chunk = br.readLine();
+        BlockLoader blockLoader = new BlockLoader();
+        row = 0;
+        while (chunk != null) {
+            for (column = 0; column < chunk.length(); column++) {
+                char character = chunk.charAt(column);
+                if (character != ' ') {
+                    loaders.getOrDefault(character, blockLoader).load(this);
+                }
+            }
+            row++;
+            chunk = br.readLine();
+        }
+
+    }
+
+    protected void loadScreen() {
         CollisionsEngine collisionsEngine = CollisionsEngine.instance();
         GraphicEngine graphicEngine = GraphicEngine.instance();
 
@@ -105,18 +115,25 @@ public class LevelReader {
             }
         }
 
-        LoaderCollider loader = new LoaderCollider(new Rectangle(0, 0, CHUNK, 2 * windowHeight));
+        loadInvisibleColliders(lastChunkInScreen, windowHeight);
+    }
+
+    private void loadInvisibleColliders(int lastChunkInScreen, int windowHeight) {
+        LoaderCollider loader = new LoaderCollider(
+            new Rectangle(0, 0, CHUNK, 2 * windowHeight)
+        );
         loader.activate();
 
-        for (int i =  0; i <= lastChunkInScreen; i++) {
-            loader.translate(CHUNK, 0);
-            collisionsEngine.update();
-        }
+        loadUpdateablesEntitiesInScreen(lastChunkInScreen, loader);
 
-        GraphicUnloaderCollider unloader = new GraphicUnloaderCollider(new Rectangle((loadingStartingPoint - 2) * CHUNK, 0, CHUNK, 2 * windowHeight));
+        GraphicUnloaderCollider unloader = new GraphicUnloaderCollider(
+            new Rectangle((loadingStartingPoint - 2) * CHUNK, 0, CHUNK, 2 * windowHeight)
+        );
         unloader.activate();
 
-        DeleterCollider deleter = new DeleterCollider(new Rectangle((loadingStartingPoint - 6) * CHUNK, 0, CHUNK, 2 * windowHeight));
+        DeleterCollider deleter = new DeleterCollider(
+            new Rectangle((loadingStartingPoint - 6) * CHUNK, 0, CHUNK, 2 * windowHeight)
+        );
         deleter.activate();
         
         ScreenBorderCollider leftBorder = new ScreenBorderCollider(
@@ -141,25 +158,23 @@ public class LevelReader {
             deleter
         ).activate();
 
-        LevelEndCollider le = new LevelEndCollider(new Rectangle(row * CHUNK - halfScreen, 0,  CHUNK, 2 * windowHeight));
-        le.activate();
+        LevelEndCollider levelEnd = new LevelEndCollider(
+            new Rectangle(row * CHUNK - halfScreen, 0,  CHUNK, 2 * windowHeight)
+        );
+        levelEnd.activate();
     }
-    
-    public void loadEntities(BufferedReader br) throws IOException {
-        chunk = br.readLine();
-        BlockLoader blockLoader = new BlockLoader();
-        row = 0;
-        while (chunk != null) {
-            for (column = 0; column < chunk.length(); column++) {
-                char character = chunk.charAt(column);
-                if (character != ' ') {
-                    loaders.getOrDefault(character, blockLoader).load(this);
-                }
-            }
-            row++;
-            chunk = br.readLine();
-        }
 
+    protected void loadUpdateablesEntitiesInScreen(int lastChunkInScreen, LoaderCollider loader) {
+        for (int i =  0; i <= lastChunkInScreen; i++) {
+            loader.translate(CHUNK, 0);
+            CollisionsEngine.instance().update();
+        }
+    }
+
+    public void loadStats(Stats stats) {
+        StatsBar statsBar = new StatsBar(stats);
+        GraphicEngine.instance().add(statsBar);
+        GraphicEngine.instance().setDepth(statsBar, GraphicEngine.FRONT_DEPTH);
     }
 
     public void setColumn(int i) {

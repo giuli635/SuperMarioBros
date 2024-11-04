@@ -14,16 +14,24 @@ public class Stats {
     protected Timer timer;
     protected boolean timerPaused;
 
+    protected int initialTime;
+    protected int initialLives;
+
     protected List<LevelStatsObserver> observers;
     
     public Stats(int initialTime, int initialLives, int numberLevel, int scoreLevel) {
+        this.initialTime = initialTime;
+        this.initialLives = initialLives;
+
         remainingTime = initialTime;
         lives = initialLives;
-        score = scoreLevel;
         levelNumber = numberLevel;
+        score = scoreLevel;
+
         timer = new Timer();
         observers = new ArrayList<>();
         timerPaused = false;
+
         startTimer();
     }
     
@@ -98,5 +106,17 @@ public class Stats {
 
     public void setLevelNumber(int levelNumber) {
         this.levelNumber = levelNumber;
+    }
+
+    public void advanceLevel() {
+        levelNumber++;
+        remainingTime = initialTime;
+    }
+    
+    public void reset() {
+        remainingTime = initialTime;
+        lives = initialLives;
+        score = 0;
+        levelNumber = 0;
     }
 }

@@ -1,9 +1,8 @@
-package entities;
+package entities.solids;
 
-import entities.solids.Block;
 import graphics.GameGraphicElement;
 
-public class Castle extends Block{
+public class Castle extends Block {
     protected static final String SPRITES_FOLDER = "castle";
     protected String sprite;
 

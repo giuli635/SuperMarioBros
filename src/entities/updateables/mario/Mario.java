@@ -139,15 +139,17 @@ public class Mario extends UpdateableBody {
     public void die() {
         unload();
         collider.deactivate();
+
         setSpritesFolder("mario");
         setSprite(MARIO_DEATH);
-        SoundManager.instance().removeAllSounds();
+
         SoundManager.instance().playSound("mariodie.wav");
         stats.decreaseLives();
+
         Timer timer = new Timer();
         TimerTask task = new TimerTask() {
             public void run(){
-                Game.instance().resetCurrentLevel();
+                Game.instance().checkGameOver();
             }
         }; 
         timer.schedule(task,3000);
@@ -238,6 +240,7 @@ public class Mario extends UpdateableBody {
     }
 
     public MarioCollider setCollider(MarioCollider colliderToSet) {
+        Game.instance().setDebugging(true);
         MarioCollider nextCollider = collider;
         while (nextCollider.getPriority() > colliderToSet.getPriority()) {
             nextCollider = nextCollider.getBaseCollider();
@@ -275,10 +278,8 @@ public class Mario extends UpdateableBody {
 
     public void replaceCollider(MarioCollider c) {
         collider.deactivate();
+        CollisionsEngine.instance().swap(collider, c);
         collider = c;
-        if (collider.isColliding()) {
-            CollisionsEngine.instance().swap(c);
-        }
         collider.activate();
     }
 

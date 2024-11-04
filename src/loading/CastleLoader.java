@@ -1,6 +1,6 @@
 package loading;
 
-import entities.Castle;
+import entities.solids.Castle;
 import game.LevelReader;
 
 public class CastleLoader extends BaseLoader {
