@@ -8,8 +8,8 @@ import java.util.Map;
 
 public class SoundManager {
     protected static SoundManager uniqueInstance;
-    private Map<String, Clip> clips;
-    //private String soundPath = "sound/";
+    protected Map<String, Clip> clips;
+    protected String soundPath = "sound/";
     
     private SoundManager() {
         clips = new HashMap<>();
@@ -23,22 +23,19 @@ public class SoundManager {
     }
     
     public void playSound(String soundFile) {
-        /*
         try {
             File file = new File(soundPath + soundFile);
             AudioInputStream audioIn = AudioSystem.getAudioInputStream(file);
             Clip clip = AudioSystem.getClip();
             clip.open(audioIn);
             clip.start();
-         } catch (Exception e) {
+        } catch (Exception e) {
             System.err.println("Error al reproducir el sonido: " + e.getMessage());
             e.printStackTrace();
         }
-        */
     }
 
     public void playLoopingSound(String soundFile) {
-        /* 
         try {
             File file = new File(soundPath + soundFile);
             AudioInputStream audioIn = AudioSystem.getAudioInputStream(file);
@@ -46,11 +43,10 @@ public class SoundManager {
             clip.open(audioIn);
             clips.put(soundFile, clip);
             clip.loop(Clip.LOOP_CONTINUOUSLY);
-         } catch (Exception e) {
+        } catch (Exception e) {
             System.err.println("Error al reproducir el sonido en loop: " + e.getMessage());
             e.printStackTrace();
         }
-        */
     }
 
     public void pauseAllSounds() {

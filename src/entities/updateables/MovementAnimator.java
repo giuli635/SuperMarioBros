@@ -18,11 +18,7 @@ public class MovementAnimator implements Animator {
     public void animate() {
         String nextSprite = spriteIterator.next();
         if (nextSprite != currentSprite) {
-            boolean flipped = entity.getGraphicElement().isFlipped();
             entity.setSprite(nextSprite);
-            if (flipped) {
-                entity.getGraphicElement().flipSprite();
-            }
             currentSprite = nextSprite;
         }
     }

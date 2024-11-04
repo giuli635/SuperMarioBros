@@ -11,7 +11,7 @@ public class StatsPanel extends JPanel{
     protected JLabel text;
     protected JLabel stat;
 
-    public StatsPanel(String s, int t, Font f){
+    public StatsPanel(Font f){
         text = new JLabel();
         stat = new JLabel();
         text.setFont(f);

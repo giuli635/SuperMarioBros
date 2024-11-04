@@ -12,6 +12,7 @@ import java.util.Set;
 
 import entities.updateables.UpdatableEntity;
 import graphics.ScreenOverlay;
+import graphics.TemporaryScreenOverlay;
 import graphics.RankingScreen;
 import utils.KeyStatus;
 
@@ -120,8 +121,8 @@ public class Game implements WindowListener, KeyListener {
 
     public boolean checkGameOver(GraphicEngine graphicEngine, SoundManager soundManager, LevelReader reader){
         if (lvlStats.getLives() == 0){
-            screenOverlay = new ScreenOverlay("gameOver");
-            screenOverlay.showOverlay(graphicEngine, soundManager);
+            screenOverlay = new TemporaryScreenOverlay("gameOver", 4 * SECOND);
+            screenOverlay.add();
             currLevel = 0;
             checkRanking();
             lvlStats = reader.createLevel(3, 300, 0, 0);
@@ -142,7 +143,7 @@ public class Game implements WindowListener, KeyListener {
 
     public void showRanking(){
         RankingScreen rankingScreen = new RankingScreen(rankingManager);
-        rankingScreen.showRankingScreen();
+        rankingScreen.add();
     }
 
     public static void main(String[] args) {
@@ -160,19 +161,18 @@ public class Game implements WindowListener, KeyListener {
             lvlStats.modifyPoints(lvlStats.getRemainingTime()*50);
             }
             currLevel ++;
-            SoundManager.instance().removeAllSounds();
             Stats stash = new Stats(300, lvlStats.getLives(), currLevel, lvlStats.getScore());
-            resetCurrentLevel();
             lvlStats = stash;
         } else {
-            screenOverlay = new ScreenOverlay("gameEnd");
-            screenOverlay.showOverlay(GraphicEngine.instance(), SoundManager.instance());
-            SoundManager.instance().removeAllSounds();
+            screenOverlay = new TemporaryScreenOverlay("gameEnd", 4 * SECOND);
+            screenOverlay.add();
             currLevel = 0;
             checkRanking();
             lvlStats = LevelReader.instance().createLevel(3, 300, 0, 0);
-            resetCurrentLevel();
         }
+
+        SoundManager.instance().removeAllSounds();
+        resetCurrentLevel();
     }
     
     public Stats getLevelStats(){

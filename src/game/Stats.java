@@ -2,13 +2,18 @@ package game;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Stats {
-    protected int remainingTime;
+    protected double remainingTime;
     protected int score;
     protected int lives;
     protected int levelNumber;
-    protected LevelTimer levelTimer;
+    protected long lastActualization;
+    protected Timer timer;
+    protected boolean timerPaused;
+
     protected List<LevelStatsObserver> observers;
     
     public Stats(int initialTime, int initialLives, int numberLevel, int scoreLevel) {
@@ -16,10 +21,28 @@ public class Stats {
         lives = initialLives;
         score = scoreLevel;
         levelNumber = numberLevel;
-        levelTimer = new LevelTimer(remainingTime);
+        timer = new Timer();
         observers = new ArrayList<>();
+        timerPaused = false;
+        startTimer();
     }
     
+    protected void startTimer() {
+        lastActualization = System.currentTimeMillis();
+        timer.scheduleAtFixedRate(new TimerTask() {
+            public void run() {
+                if (remainingTime > 0 && !timerPaused) {
+                    long currentActualization = System.currentTimeMillis();
+                    remainingTime += (lastActualization - currentActualization) / 1000;
+                    lastActualization = currentActualization;
+                    notifyObserver();
+                } else if (remainingTime <= 0) {
+                    timer.cancel();
+                }
+            }
+        }, 0, 1000);
+    }
+
     public void addObserver(LevelStatsObserver observer) {
         observers.add(observer);
     }
@@ -31,11 +54,12 @@ public class Stats {
     }
 
     public void pauseTimer(){
-        levelTimer.pauseTimer();
+        timerPaused = true;
     }
 
     public void resumeTimer(){
-        levelTimer.resumeTimer();
+        timerPaused = false;
+        lastActualization = System.currentTimeMillis();
     }
 
     public void addLives(){
@@ -45,14 +69,7 @@ public class Stats {
     
     public void decreaseLives() {
         lives--;
-        checkGameOver();
         notifyObserver();
-    }
-
-    public void checkGameOver(){
-        if (lives == 0){
-            notifyObserver();
-        }
     }
 
     public void modifyPoints(int points){
@@ -72,14 +89,14 @@ public class Stats {
     }
 
     public int getRemainingTime() { 
-        return levelTimer.getRemainingTime(); 
+        return (int) Math.floor(remainingTime); 
     }
 
-    public LevelTimer getLevelTimer(){
-        return levelTimer;
-    }
-    
-    public int getLevelNumber(){
+    public int getLevelNumber() {
         return levelNumber;
+    }
+
+    public void setLevelNumber(int levelNumber) {
+        this.levelNumber = levelNumber;
     }
 }

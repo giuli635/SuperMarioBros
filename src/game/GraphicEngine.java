@@ -1,10 +1,14 @@
 package game;
-import java.awt.Dimension;  
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.FontFormatException;
 import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.swing.ImageIcon;
@@ -14,54 +18,67 @@ import javax.swing.SwingUtilities;
 
 import graphics.GameGraphicElement;
 import graphics.GraphicElement;
+import graphics.TranslatableGraphicElement;
 
 public class GraphicEngine {
     protected static GraphicEngine uniqueInstance;
+    public static final String FRAME_TITLE = "Super Mario Bros. - Comisión 02 TDP";
     public static final Integer BACKGROUND_DEPTH = 0;
     public static final Integer FRONT_DEPTH = 100;
     public static final Integer DEFAULT_DEPTH = 50;
-    protected JFrame frame;
+    public static final int FRAME_WIDTH = 1000;
+    public static final int FRAME_HEIGHT = 480;
+    public static final String fontPath = "font/LanaPixel.ttf";
     protected static final String[] modes = {"mode1", "mode2"};
+
     protected int mode;
-    protected JLayeredPane panel;
-    protected Set<GraphicElement> onScreen;
     protected int position;
+    protected JFrame frame;
+    protected JLayeredPane panel;
     protected GameGraphicElement[] backgrounds;
-
-    public int getPosition() {
-        return position;
-    }
-
-    public void setPosition(int x) {
-        position = x;
-    }
-
-    public void translate(int dx) {
-        position += dx;
-    }
+    protected Set<GraphicElement> staticElementsOnScreen;
+    protected Set<TranslatableGraphicElement> dynamicElementsOnScreen;
+    protected List<GraphicElement> toRedraw;
+    protected Font font;
 
     private GraphicEngine() {
-        onScreen = new HashSet<>();
-        frame = new JFrame("Super Mario Bros. - Comisión 02 TDP");
+        staticElementsOnScreen = new HashSet<>();
+        dynamicElementsOnScreen = new HashSet<>();
+        toRedraw = new ArrayList<>();
 
         mode = 0;
 
         panel = new JLayeredPane();
-        panel.setPreferredSize(new Dimension(1000, 480));
+        panel.setPreferredSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
         panel.setLayout(null);
         panel.setDoubleBuffered(true);
 
+        initFrame();
+        loadFont();
+    }
+
+    protected void loadFont() {
+        try {
+            font = Font.createFont(Font.TRUETYPE_FONT, new File(fontPath)).deriveFont(Font.BOLD);
+        } catch (FontFormatException | IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    protected void initFrame() {
+        frame = new JFrame(FRAME_TITLE);
         frame.addWindowListener(Game.instance());
         frame.addKeyListener(Game.instance());
+
         frame.getContentPane().add(panel);
         frame.pack();
+
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frame.setVisible(true);
         frame.setResizable(false);
+        frame.setVisible(true);
 
-        Path spritePath = Paths.get("sprites", "questionBlock", modes[mode]);
-        File spriteDir = spritePath.toFile();
+        File spriteDir = Paths.get("sprites", "questionBlock", modes[mode]).toFile();
         File[] spriteFiles = spriteDir.listFiles();
 
         frame.setIconImage(new ImageIcon(spriteFiles[0].getAbsolutePath()).getImage());
@@ -71,7 +88,7 @@ public class GraphicEngine {
         backgrounds = new GameGraphicElement[]{new GameGraphicElement(null, "level"), new GameGraphicElement(null, "level")};
         for (int i = 0; i < backgrounds.length; i++) {
             backgrounds[i].setSprite("levelBackground1");
-            add(backgrounds[i]);
+            backgrounds[i].add();
             setDepth(backgrounds[i], BACKGROUND_DEPTH);
         }
 
@@ -90,9 +107,12 @@ public class GraphicEngine {
         try {
             SwingUtilities.invokeAndWait(new Runnable() {
                 public void run() {
-                    for (GraphicElement element : onScreen) {
-                        element.draw();
+                    List<GraphicElement> toRedrawCopy = toRedraw;
+                    toRedraw = new ArrayList<>();
+                    for (GraphicElement element : toRedrawCopy) {
+                        element.redraw();
                     }
+
                     panel.revalidate();
                     panel.paintImmediately(panel.getBounds());
                 }
@@ -103,22 +123,38 @@ public class GraphicEngine {
     }
 
     public void add(GraphicElement e) {
+        add(e, staticElementsOnScreen);
+    }
+
+    public void remove(GraphicElement e) {
+        remove(e, staticElementsOnScreen);
+    }
+
+    public void add(TranslatableGraphicElement e) {
+        add(e, dynamicElementsOnScreen);
+    }
+
+    public void remove(TranslatableGraphicElement e) {
+        remove(e, dynamicElementsOnScreen);
+    }
+
+    protected <T extends GraphicElement> void add(T e, Set<T> set) {
         if (!e.added()) {
             e.setAdded(true);
-            onScreen.add(e);
+            set.add(e);
+            e.reload();
             SwingUtilities.invokeLater(new Runnable() {
                 public void run() {
-                    e.reload(); //TODO: Rework del GraphicElement;
                     panel.add(e.getComponent(), DEFAULT_DEPTH, 0);
                 }
             });
         }
     }
 
-    public void remove(GraphicElement e) {
+    protected <T extends GraphicElement> void remove(T e, Set<T> set) {
         if (e.added()) {
             e.setAdded(false);
-            onScreen.remove(e);
+            set.remove(e);
             SwingUtilities.invokeLater(new Runnable() {
                 public void run() {
                     panel.remove(e.getComponent());
@@ -131,6 +167,18 @@ public class GraphicEngine {
         return panel.getSize();
     }
 
+    public int getPosition() {
+        return position;
+    }
+
+    public void setPosition(int x) {
+        position = x;
+    }
+
+    public void translate(int dx) {
+        position += dx;
+    }
+
     public void scrollScreen(int velocity) {  
         translate(-velocity);
         if (backgrounds[1].getComponent().getBounds().getMaxX() < getPanelSize().getWidth()) {
@@ -140,7 +188,7 @@ public class GraphicEngine {
             backgrounds[1] = aux;
         }
 
-        for (GraphicElement element : onScreen) {
+        for (TranslatableGraphicElement element : dynamicElementsOnScreen) {
             element.translate(velocity, 0);
         }
     }
@@ -170,7 +218,8 @@ public class GraphicEngine {
     }
 
     public void reset() {
-        onScreen = new HashSet<>();
+        staticElementsOnScreen = new HashSet<>();
+        dynamicElementsOnScreen = new HashSet<>();
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 panel.removeAll();
@@ -185,12 +234,28 @@ public class GraphicEngine {
     }
 
     public void reload() {
-        for (GraphicElement g :  onScreen) {
+        for (GraphicElement g : staticElementsOnScreen) {
+            g.reload();
+        }
+
+        for (GraphicElement g : dynamicElementsOnScreen) {
             g.reload();
         }
     }
 
     public String getMode() {
         return modes[mode];
+    }
+
+    public void addToRedraw(GraphicElement graphicElement) {
+        toRedraw.addLast(graphicElement);
+    }
+
+    public Font getFont() {
+        return font;
+    }
+
+    public void setFont(Font font) {
+        this.font = font;
     }
 }

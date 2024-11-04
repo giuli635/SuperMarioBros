@@ -1,8 +1,6 @@
 package graphics;
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.Point;
-import java.awt.Rectangle;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.util.Map;
@@ -13,48 +11,30 @@ import javax.swing.JLabel;
 import entities.Entity;
 import game.GraphicEngine;
 
-public class GameGraphicElement extends BaseGraphicElement {
+public class GameGraphicElement extends BaseTranslatableGraphicElement {
     protected Entity entity;
-    protected JLabel label;
+
     protected ImageIcon sprite;
     protected String currentSprite;
     protected String lastNotNullSprite;
-    protected Rectangle bounds;
-    protected boolean toUpdate;
+    protected Map<Color, Color> colorRemap;
     protected boolean flipped;
+    protected boolean iconUpdated;
 
     protected Map<String, ImageIcon> sprites;
     protected String folder;
 
     public GameGraphicElement(Entity e, String folderPath) {
+        super();
         folder = folderPath;
         entity = e;
         sprite = null;
-        label = new JLabel();
         flipped = false;
-        bounds = label.getBounds();
-        loadSprites();
+        reload();
     }
     
     public Entity getEntity() {
         return entity;
-    }
-
-    @Override
-    public void translate(int dx, int dy) {
-        toUpdate = true;
-        bounds.translate(dx, dy);
-    }
-
-    @Override
-    public Point getPosition() {
-        return bounds.getLocation();
-    }
-
-    @Override
-    public void setPosition(int x, int y) {
-        toUpdate = true;
-        bounds.setLocation(x, y);
     }
 
     public String getSpriteName() {
@@ -70,11 +50,28 @@ public class GameGraphicElement extends BaseGraphicElement {
     }
 
     public void setSprite(String s) {
-        toUpdate = true;
-        flipped = false;
+        if (s != currentSprite) {
+            forcefullyUpdateSprite(s);
+        }
+    }
+
+    protected void forcefullyUpdateSprite(String s) {
+        GraphicEngine.instance().addToRedraw(this);
+        iconUpdated = true;
+
         if (s != null) {
             lastNotNullSprite = s;
+            
             sprite = sprites.get(s + ".png");
+
+            if (flipped) {
+                sprite = new ImageIcon(flipImage(iconToBufferedImage(sprite)));
+            }
+
+            if (colorRemap != null) {
+                sprite = remapSpriteColor(colorRemap, sprite);
+            }
+
             bounds.setSize(sprite.getIconWidth(), sprite.getIconHeight());
         } else {
             sprite = null;
@@ -84,19 +81,70 @@ public class GameGraphicElement extends BaseGraphicElement {
         currentSprite = s;
     }
 
-    public void flipSprite() {
-        toUpdate = true;
-        flipped = !flipped;
-        sprite = new ImageIcon(flipImage(iconToBufferedImage(sprite)));
-        bounds.setSize(sprite.getIconWidth(), sprite.getIconHeight());
+    @Override
+    public JLabel getComponent() {
+        return label;
     }
 
-    public static BufferedImage iconToBufferedImage(ImageIcon icon) {
-        BufferedImage bufferedImage = new BufferedImage(icon.getIconWidth(), icon.getIconHeight(), BufferedImage.TYPE_INT_ARGB);
-        Graphics2D g = bufferedImage.createGraphics();
-        g.drawImage(icon.getImage(), 0, 0, null);
-        g.dispose();
-        return bufferedImage;
+    @Override
+    public void reload() {
+        loadSprites();
+    }
+
+    @Override
+    public void redraw() {
+        super.redraw();
+
+        if (iconUpdated) {
+            label.setIcon(sprite);
+            iconUpdated = false;
+        }
+    }
+
+    protected void loadSprites() {
+        sprites = SpriteFactory.instance().getSprites(folder, GraphicEngine.instance().getMode());
+        forcefullyUpdateSprite(currentSprite);
+    }
+
+    public void setFolder(String f) {
+        folder = f;
+        reload();
+    }
+
+    public String getFolder() {
+        return folder;
+    }
+
+    public boolean isFlipped() {
+        return flipped;
+    }
+
+    public Map<Color, Color> getColorRemap() {
+        return colorRemap;
+    }
+
+    public void setColorRemap(Map<Color, Color> colorRemap) {
+        GraphicEngine.instance().addToRedraw(this);
+        iconUpdated = true;
+
+        this.colorRemap = colorRemap;
+        sprite = remapSpriteColor(colorRemap, sprite);
+    }
+
+    public void removeColorRemap() {
+        colorRemap = null;
+        forcefullyUpdateSprite(currentSprite);
+    }
+
+    public void flipSprite() {
+        GraphicEngine.instance().addToRedraw(this);
+        iconUpdated = true;
+
+        flipped = !flipped;
+        
+        if (sprite != null) {
+            sprite = new ImageIcon(flipImage(iconToBufferedImage(sprite)));
+        }
     }
 
     public static BufferedImage flipImage(BufferedImage image) {
@@ -112,63 +160,25 @@ public class GameGraphicElement extends BaseGraphicElement {
         return flippedImage;
     }
 
-    public void remapSpriteColor(Map<Color, Color> mask) {
+    public static ImageIcon remapSpriteColor(Map<Color, Color> colorRemap, ImageIcon sprite) {
         BufferedImage bufferedImage = iconToBufferedImage(sprite);
         for (int x = 0; x < bufferedImage.getWidth(); x++) {          
             for (int y = 0; y < bufferedImage.getHeight(); y++) {   
-                Color newColor = mask.get(new Color(bufferedImage.getRGB(x, y), true));
+                Color newColor = colorRemap.get(new Color(bufferedImage.getRGB(x, y), true));
                 if (newColor != null) {
                     bufferedImage.setRGB(x, y, newColor.getRGB());
                 }
             }
         }
 
-        sprite = new ImageIcon(bufferedImage);
+        return new ImageIcon(bufferedImage);
     }
 
-    public void draw() {
-        if (toUpdate) {
-            Rectangle boundsToDraw = new Rectangle(bounds);
-            boundsToDraw.setLocation(
-                (int) bounds.getX(),
-                (int) (GraphicEngine.instance().getPanelSize().getHeight() - bounds.getY())
-            );
-            label.setBounds(boundsToDraw);
-            label.setIcon(sprite);
-            toUpdate = false;
-        }
-    }
-
-    @Override
-    public JLabel getComponent() {
-        return label;
-    }
-
-    public void loadSprites() {
-        sprites = SpriteFactory.instance().getSprites(folder, GraphicEngine.instance().getMode());
-        setSprite(currentSprite);
-        toUpdate = true;
-    }
-
-    public void setFolder(String f) {
-        folder = f;
-        loadSprites();
-    }
-
-    public String getFolder() {
-        return folder;
-    }
-
-    public boolean isFlipped() {
-        return flipped;
-    }
-
-    public void setFlipped(boolean flipped) {
-        this.flipped = flipped;
-    }
-
-    @Override
-    public void reload() {
-        loadSprites();
+    public static BufferedImage iconToBufferedImage(ImageIcon icon) {
+        BufferedImage bufferedImage = new BufferedImage(icon.getIconWidth(), icon.getIconHeight(), BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g = bufferedImage.createGraphics();
+        g.drawImage(icon.getImage(), 0, 0, null);
+        g.dispose();
+        return bufferedImage;
     }
 }

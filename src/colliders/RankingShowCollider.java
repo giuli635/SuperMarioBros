@@ -47,8 +47,7 @@ public class RankingShowCollider extends SolidCollider implements UpdateableEnti
             translate(0, -displacement);
             getEntity().getGraphicElement().translate(0, -displacement);
             
-            Game.instance().showRanking(); //no me gusta tanto hacerlo asi -.-
-                                          
+            Game.instance().showRanking();
             mario.setSpeedY(0);
             
             Timer timer = new Timer();

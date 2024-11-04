@@ -40,7 +40,6 @@ public class ConfigurationBlock extends UpdateableBody {
             text = new TextLabel("ranking");
         }
 
-
         setSprite(SPRITES_FOLDER);
     }
 
@@ -49,7 +48,10 @@ public class ConfigurationBlock extends UpdateableBody {
         super.load();
         if (text != null) {
             text.add();
-            text.setPosition((int) graphicElement.getPosition().getX() - text.getComponent().getWidth() / 2 + LevelReader.CHUNK, (int) graphicElement.getPosition().getY() + 50);
+            int horizontalPosition = (int) graphicElement.getPosition().getX()
+                - text.getComponent().getWidth() / 2 + LevelReader.CHUNK / 2;
+            int verticalPosition = (int) graphicElement.getPosition().getY() + 50;
+            text.setPosition(horizontalPosition, verticalPosition);
         }
     }
 

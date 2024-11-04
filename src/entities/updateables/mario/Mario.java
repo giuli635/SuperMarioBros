@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Rectangle;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.SortedSet;
 import java.util.Timer;
@@ -28,17 +29,41 @@ import utils.Direction;
 import utils.PriorityComparator;
 
 public class Mario extends UpdateableBody {
-    protected static final Map<Color, Color> INITIAL_COLOR_STAR_MARIO = initStarColor();
+    protected static final List<Map<Color, Color>> COLOR_STAR_MARIO_COLORS = initStarColor();
 
-    protected static Map<Color, Color> initStarColor() {
-        Map<Color, Color> colorMapping = Map.of(
+    protected static List<Map<Color, Color>> initStarColor() {
+        Map<Color, Color> firstColorMapping = Map.of(
+            // Black to green
             new Color(0, 0, 0, 255), new Color(12, 147, 0, 255),
+            // Grey to orange 
             new Color(107, 109, 0, 255), new Color(234, 158, 34, 255),
+            // Red to green
             new Color(181, 49, 32, 255), new Color(12, 147, 0, 255),
+            // Orange to white
             new Color(234, 158, 34, 255), new Color(255, 254, 255, 255)
         );
 
-        return colorMapping;
+        Map<Color, Color> secondColorMapping = Map.of(
+            // Black to red
+            new Color(0, 0, 0, 255), new Color(181, 49, 32, 255),
+            // Grey to orange
+            new Color(107, 109, 0, 255), new Color(234, 158, 34, 255),
+            // Orange to white
+            new Color(234, 158, 34, 255), new Color(255, 254, 255, 255)
+        );
+
+        Map<Color, Color> thirdColorMapping = Map.of(
+            // Black to blue 
+            new Color(0, 0, 0, 255), new Color(0, 124, 141),
+            // Grey to brown
+            new Color(107, 109, 0, 255), new Color(153, 78, 0, 255),
+            // Red to black
+            new Color(181, 49, 32, 255), new Color(0, 0, 0, 255),
+            // Orange to pale rose
+            new Color(234, 158, 34, 255), new Color(254, 204, 197, 255)
+        );
+
+        return List.of(firstColorMapping, secondColorMapping, thirdColorMapping);
     }
 
     public static final String MARIO_DEATH = "marioDeath";
@@ -57,7 +82,7 @@ public class Mario extends UpdateableBody {
     protected float accelerationX;
     protected boolean falling;
 
-    protected Map<Color, Color> initialColorStarMario;
+    protected List<Map<Color, Color>> starMarioColors;
     protected MarioCollider collider;
     protected GameGraphicElement graphicElement;
     protected SortedSet<MarioAction> actions;
@@ -75,7 +100,7 @@ public class Mario extends UpdateableBody {
         actions = new TreeSet<>(new PriorityComparator());
         states = new HashMap<>();
         movementDirection = Direction.NONE;
-        initialColorStarMario = INITIAL_COLOR_STAR_MARIO;
+        starMarioColors = COLOR_STAR_MARIO_COLORS;
 
         addAction(new VerticalMovement());
         addAction(new ResolveHorizontalMovementDirection());
@@ -190,12 +215,12 @@ public class Mario extends UpdateableBody {
         this.overriteSprite = overriteSprite;
     }
 
-    public Map<Color, Color> getInitialColorStarMario() {
-        return initialColorStarMario;
+    public List<Map<Color, Color>> getColorStarMarioColors() {
+        return starMarioColors;
     }
 
-    public void setInitialColorStarMario(Map<Color, Color> initialColorStarMario) {
-        this.initialColorStarMario = initialColorStarMario;
+    public void setStarMarioColors(List<Map<Color, Color>> initialColorStarMario) {
+        this.starMarioColors = initialColorStarMario;
     }
 
     public void setState(MarioState state) {

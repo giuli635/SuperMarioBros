@@ -4,67 +4,47 @@ import javax.swing.*;
 
 import game.GraphicEngine;
 import game.LanguageConfiguration;
-import game.SoundManager;
 
 import java.awt.*;
-import java.io.File;
-import java.io.IOException;
 
-public class ScreenOverlay extends BaseGraphicElement {
+public abstract class ScreenOverlay extends BaseGraphicElement {
+    public static final Color DEFAULT_BACKGROUND_COLOR = Color.BLACK;
     protected JPanel panel;
     protected String text;
     protected JLabel label;
-    protected Font customFont;
-    protected static final int DISPLAY_DURATION_MS = 3000;
-    protected boolean isDisplayed = false;
+    protected Font font;
+    protected Rectangle bounds;
 
-
-    public ScreenOverlay(String s) {
-        text = s;
+    public ScreenOverlay(String overlayText) {
+        text = overlayText;
         panel = new JPanel();
-        panel.setLayout(new GridBagLayout());
-        panel.setPreferredSize(new Dimension(1000, 480)); 
-        panel.setBackground(new Color(0, 0, 0, 255)); 
-        
-        label = new JLabel(LanguageConfiguration.instance().get(text));
-        label.setHorizontalAlignment(SwingConstants.CENTER);
-        
-        try {
-            customFont = Font.createFont(Font.TRUETYPE_FONT, new File("font/LanaPixel.ttf")).deriveFont(60f);
-            label.setFont(customFont);
-        } catch (FontFormatException | IOException e) {
-            e.printStackTrace();
-        }
 
-        label.setForeground(Color.WHITE);
-        
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.weightx = 1;
-        gbc.weighty = 1;
-        
-        panel.add(label, gbc);
-        panel.setBounds(0, 0, 1000, 480); 
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                Dimension panelSize = GraphicEngine.instance().getPanelSize();
+                panel.setBounds(0, 0, (int) panelSize.getWidth(), (int) panelSize.getHeight()); 
+                panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+                panel.setBackground(DEFAULT_BACKGROUND_COLOR); 
+
+                font = GraphicEngine.instance().getFont().deriveFont(60f);
+
+                label = new JLabel(LanguageConfiguration.instance().get(text));
+                label.setFont(font);
+                label.setForeground(Color.WHITE);
+                label.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+                panel.add(Box.createVerticalGlue());
+                panel.add(label);
+                panel.setOpaque(true);
+            }
+        });
+    }
+
+    protected void initOverlay() {
+        panel.add(Box.createVerticalGlue());
         panel.setVisible(true);
     }
-
-    public void showOverlay(GraphicEngine graphicEngine, SoundManager soundManager) {
-        if (!isDisplayed) {
-            add();
-            graphicEngine.setDepth(this, GraphicEngine.FRONT_DEPTH + 1);
-            soundManager.playSound("gameover.wav");
-            isDisplayed = true;
-            try {
-                Thread.sleep(DISPLAY_DURATION_MS); 
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            remove();
-            isDisplayed = false;
-        }
-    }
-
 
     @Override
     public JComponent getComponent() {
@@ -72,28 +52,18 @@ public class ScreenOverlay extends BaseGraphicElement {
     }
 
     @Override
-    public void draw() {
-        panel.repaint();
-    }
-
-    @Override
-    public void translate(int dx, int dy) {
-        Point p = panel.getLocation();
-        panel.setLocation(p.x + dx, p.y + dy);
-    }
-
-    @Override
-    public Point getPosition() {
-        return panel.getLocation();
-    }
-
-    @Override
-    public void setPosition(int x, int y) {
-        panel.setLocation(x, y);
+    public void redraw() {
+        label.setText(LanguageConfiguration.instance().get(text));
     }
 
     @Override
     public void reload() {
-        label.setText(LanguageConfiguration.instance().get(text));
+        GraphicEngine.instance().addToRedraw(this);
+    }
+
+    @Override
+    public void add() {
+        super.add();
+        GraphicEngine.instance().setDepth(this, GraphicEngine.FRONT_DEPTH + 1);
     }
 }

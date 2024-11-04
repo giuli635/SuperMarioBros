@@ -11,7 +11,6 @@ public class ResolveSprite extends BasePrioritizable implements MarioAction {
     protected static final int FRAMES_PER_SPRITE = 10;
 
     protected int walkingSprite;
-    protected boolean flipped;
 
     public ResolveSprite() {
         walkingSprite = 0;
@@ -22,9 +21,6 @@ public class ResolveSprite extends BasePrioritizable implements MarioAction {
     public void execute(Mario m) {
         GameGraphicElement graphicElement = m.getGraphicElement();
         Direction movementDirection = m.getMovementDirection();
-        if (graphicElement.getSprite() != null) {
-            flipped = graphicElement.isFlipped();
-        }
 
         if (!m.overriteSprite()){
             if (m.isFalling()) {
@@ -38,8 +34,9 @@ public class ResolveSprite extends BasePrioritizable implements MarioAction {
             }
         }
 
-        if ((movementDirection == Direction.LEFT || movementDirection == Direction.NONE
-                && flipped) && graphicElement.getSprite() != null) {
+        if (movementDirection == Direction.LEFT && !graphicElement.isFlipped()) {
+            graphicElement.flipSprite();
+        } else if (movementDirection == Direction.RIGHT && graphicElement.isFlipped()) {
             graphicElement.flipSprite();
         }
     }

@@ -1,6 +1,7 @@
 package entities.updateables;
 
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -13,7 +14,8 @@ public class ColorAnimator implements Animator {
     protected boolean wasFlipped;
 
     public ColorAnimator(List<Map<Color, Color>> colorMappings, int framesPerColor, Body e) {
-        colorMappings.add(null);
+        List<Map<Color, Color>> mapping = new ArrayList<>(colorMappings);
+        mapping.addFirst(null);
         colorsIterator = new CyclicIterator<>(colorMappings, framesPerColor);
         entity = e;
     }
@@ -21,8 +23,11 @@ public class ColorAnimator implements Animator {
     public void animate() {
         Map<Color, Color> nextColors = colorsIterator.next();
         if (nextColors != null) {
-            entity.getGraphicElement().remapSpriteColor(nextColors);
+            entity.getGraphicElement().removeColorRemap();
+            entity.getGraphicElement().setColorRemap(nextColors);
             currentColors = nextColors;
+        } else {
+            entity.getGraphicElement().removeColorRemap();
         }
     }
 }
