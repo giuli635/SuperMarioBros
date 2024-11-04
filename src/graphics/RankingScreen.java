@@ -5,6 +5,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import game.LanguageConfiguration;
 import game.RankingManager;
 import game.RankingManager.ScoreEntry;
 
@@ -37,8 +38,7 @@ public class RankingScreen extends ScreenOverlay {
 
         panel.add(Box.createVerticalGlue());
 
-        // TODO: FRANNNNNNNNNNNNNNNNNNNN
-        JButton exit = new JButton("< Return");
+        JButton exit = new JButton("<" + LanguageConfiguration.instance().get("return"));
         exit.setFont(font.deriveFont(30f));
         exit.setForeground(Color.WHITE);
         exit.setOpaque(false);
