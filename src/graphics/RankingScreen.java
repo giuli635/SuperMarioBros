@@ -5,6 +5,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import game.Game;
 import game.LanguageConfiguration;
 import game.RankingManager;
 import game.RankingManager.ScoreEntry;
@@ -50,11 +51,11 @@ public class RankingScreen extends ScreenOverlay {
             @Override
             public void actionPerformed(ActionEvent arg0) {
                 remove();
+                Game.instance().resume();
             }
         });
-        panel.add(exit);
 
-        panel.add(Box.createVerticalGlue());
+        panel.add(exit);
 
         super.initOverlay();
     }

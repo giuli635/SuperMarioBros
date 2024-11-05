@@ -18,6 +18,7 @@ import utils.KeyStatus;
 public class Game implements WindowListener, KeyListener {
     protected static int SECOND = 1000;
     protected static int FPS = 60;
+    protected final Object lock = new Object();
     protected static Game uniqueInstance;
     protected Set<UpdateableEntity> toUpdateRegistry;
     protected Map<Integer, KeyStatus> keysStatus;
@@ -36,14 +37,6 @@ public class Game implements WindowListener, KeyListener {
     protected List<UpdateableEntity> toRemoveList = new ArrayList<>();
 
     protected RankingManager rankingManager;
-
-    public boolean isDebugging() {
-        return debugging;
-    }
-
-    public void setDebugging(boolean debugging) {
-        this.debugging = debugging;
-    }
 
     private Game() {
         toUpdateRegistry = new HashSet<>();
@@ -102,14 +95,10 @@ public class Game implements WindowListener, KeyListener {
             GraphicEngine.instance().drawFrame();
             frames++;
         }
-
-        // if (pause) {
-        //     activatePause();
-        // }
     }
 
     public void advanceLevel() {
-        reload();
+        pause();
 
         if (stats.getLevelNumber() < levels.length - 1) {
             if (stats.getLevelNumber() > 0){
@@ -122,16 +111,22 @@ public class Game implements WindowListener, KeyListener {
             checkRanking();
             stats.reset();
         }
+
+        resume();
+        reload();
     }
 
     public void checkGameOver() {
-        reload();
+        pause();
 
-        if (stats.getLives() == -1){
+        if (stats.getLives() == 0){
             new TemporaryScreenOverlay("gameOver", 4 * SECOND).add();
             checkRanking();
             stats.reset();
         }
+
+        resume();
+        reload();
     }
 
     public void reloadGameStatus(){
@@ -141,22 +136,7 @@ public class Game implements WindowListener, KeyListener {
         LevelReader.instance().loadLevel(levels[stats.getLevelNumber()]);
         LevelReader.instance().loadStats(stats);
         // SoundManager.instance().playLoopingSound("marioBackground.wav");
-        runGameLoop = true;
-        executionState = new Runnable() {
-            public void run() {
-                loop();
-            }
-        };
-    }
-
-    protected synchronized void activatePause() {
-        stats.pauseTimer();
-        SoundManager.instance().playSound("pause.wav");
-        SoundManager.instance().pauseAllSounds();
-
-        stats.resumeTimer();
-        SoundManager.instance().resumeAllSounds();
-        loop();
+        resumeLoop();
     }
 
     public void checkRanking() {
@@ -167,6 +147,7 @@ public class Game implements WindowListener, KeyListener {
     }
 
     public void showRanking(){
+        pause();
         RankingScreen rankingScreen = new RankingScreen(rankingManager);
         rankingScreen.add();
     }
@@ -175,6 +156,15 @@ public class Game implements WindowListener, KeyListener {
         uniqueInstance = new Game();
         uniqueInstance.runGame();
     }
+
+    protected void resumeLoop() {
+        runGameLoop = true;
+        executionState = new Runnable() {
+            public void run() {
+                loop();
+            };
+        };
+    };
 
     public void reload() {
         executionState = new Runnable() {
@@ -187,12 +177,51 @@ public class Game implements WindowListener, KeyListener {
     }
 
     public void resume() {
+        synchronized (lock) {
+            lock.notify();
+        }
+
+        stats.resumeTimer();
+        SoundManager.instance().resumeAllSounds();
+        pause = false;
     }
 
     public void pause() {
+        stats.pauseTimer();
+        SoundManager.instance().playSound("pause.wav");
+        SoundManager.instance().pauseAllSounds();
+        runGameLoop = false;
+        pause = true;
+
+        executionState = new Runnable() {
+            public void run() {
+                synchronized (lock) {
+                    try {
+                        lock.wait();
+                        resumeLoop();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+        };
     }
 
     protected void togglePause() {
+        if (pause) {
+            resume();
+        } else {
+            pause();
+        }
+    }
+
+    public boolean isDebugging() {
+        return debugging;
+    }
+
+    public void setDebugging(boolean debugging) {
+        this.debugging = debugging;
     }
 
     public Stats getLevelStats(){
