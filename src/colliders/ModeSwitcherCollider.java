@@ -51,15 +51,21 @@ public class ModeSwitcherCollider extends SolidCollider implements UpdateableEnt
             
             mario.setSpeedY(0);
             
-            Timer timer = new Timer();
+            fallBackIntoPlace(displacement);
+        }
+    }
+
+    protected void fallBackIntoPlace(int displacement) {
+        Timer timer = new Timer();
             TimerTask task = new TimerTask() {
                 public void run(){
+                    setColliding(true);
                     translate(0, displacement);
                     getEntity().getGraphicElement().translate(0, displacement);
+                    setColliding(false);;
                 }
             };
 
-            timer.schedule(task,300);
-        }
+        timer.schedule(task,300);
     }
 }

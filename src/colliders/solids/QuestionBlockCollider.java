@@ -12,6 +12,7 @@ import utils.Axis;
 import entities.solids.QuestionBlock;
 import entities.updateables.mario.Mario;
 import entities.updateables.powerups.FireFlower;
+import entities.updateables.powerups.PowerUp;
 import entities.updateables.powerups.SuperMushroom;
 
 public class QuestionBlockCollider extends SolidCollider implements UpdateableEntityCollider {
@@ -37,9 +38,17 @@ public class QuestionBlockCollider extends SolidCollider implements UpdateableEn
     }
 
     public void handleVerticalCollision(MarioCollision m) {
+        marioVerticalCollision(new SuperMushroom(), m);
+    }
+
+    public void handleVerticalCollision(SuperMarioCollision m) {
+        marioVerticalCollision(new FireFlower(), m);
+    }
+
+    protected void marioVerticalCollision(PowerUp p, MarioCollision m) {
         Mario mario = m.getCollider().getEntity();
         int displacement = displaceVertically(m.getCollider());
-        
+
         if (!questionBlock.getActive()) {
             if (displacement >= 0) {
                 mario.land();
@@ -48,52 +57,27 @@ public class QuestionBlockCollider extends SolidCollider implements UpdateableEn
             if (displacement >= 0) {
                 mario.land();
             } else {
-                mario.setSpeedY(0);
                 translate(0, -displacement);
                 getEntity().getGraphicElement().translate(0, -displacement);
                 mario.setSpeedY(0);
-                questionBlock.interaction(new SuperMushroom());
+                questionBlock.interaction(p);
                 
-                Timer timer = new Timer();
-                TimerTask task = new TimerTask() {
-                    public void run(){
-                        translate(0, displacement);
-                        getEntity().getGraphicElement().translate(0, displacement);
-                    }
-                };
-
-                timer.schedule(task, 300);
+                fallBackIntoPlace(displacement);
             }
         }
     }
 
-    public void handleVerticalCollision(SuperMarioCollision m) {
-        Mario mario = m.getCollider().getEntity();
-        int displacement = displaceVertically(m.getCollider());
-        
-        if (!questionBlock.getActive()) {
-            if (displacement >= 0) {
-                mario.land();
-            }
-        } else {
-            if (displacement >= 0) {
-                mario.land();
-            } else {
-                translate(0, -displacement);
-                getEntity().getGraphicElement().translate(0, -displacement);
-                mario.setSpeedY(0);
-                questionBlock.interaction(new FireFlower());
-                
-                Timer timer = new Timer();
-                TimerTask task = new TimerTask() {
-                    public void run(){
-                        translate(0, displacement);
-                        getEntity().getGraphicElement().translate(0, displacement);
-                    }
-                };
+    protected void fallBackIntoPlace(int displacement) {
+        Timer timer = new Timer();
+            TimerTask task = new TimerTask() {
+                public void run(){
+                    setColliding(true);
+                    translate(0, displacement);
+                    getEntity().getGraphicElement().translate(0, displacement);
+                    setColliding(false);;
+                }
+            };
 
-                timer.schedule(task,300);
-            }
-        }
+        timer.schedule(task,300);
     }
 }

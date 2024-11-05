@@ -46,15 +46,7 @@ public class BrickCollider extends SolidCollider {
             mario.setSpeedY(0);
             getEntity().getGraphicElement().translate(0, -displacement);
                     
-            Timer timer = new Timer();
-            TimerTask task = new TimerTask() {
-                public void run(){
-                    translate(0, displacement);
-                    getEntity().getGraphicElement().translate(0, displacement);
-                }
-            };
-
-            timer.schedule(task,300);
+            fallBackIntoPlace(displacement);
         }
     }
 
@@ -70,5 +62,19 @@ public class BrickCollider extends SolidCollider {
         else{
             mario.land();
         }
+    }
+
+    protected void fallBackIntoPlace(int displacement) {
+        Timer timer = new Timer();
+            TimerTask task = new TimerTask() {
+                public void run(){
+                    setColliding(true);
+                    translate(0, displacement);
+                    getEntity().getGraphicElement().translate(0, displacement);
+                    setColliding(false);;
+                }
+            };
+
+        timer.schedule(task,300);
     }
 }
