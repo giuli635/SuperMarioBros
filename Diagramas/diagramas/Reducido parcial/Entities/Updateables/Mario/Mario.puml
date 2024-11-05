@@ -1,5 +1,8 @@
 @startuml Mario
 
+interface MarioAction
+interface MarioState
+
 Mario -u-|> UpdateableBody
 Mario "1" --> "4..*" MarioAction
 Mario "1" --> "0..*" MarioState

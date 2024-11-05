@@ -1,5 +1,9 @@
 @startuml Actions
 
+abstract BaseMarioAction
+
+interface MarioAction
+
 BaseMarioAction .u.|> MarioAction
 
 Crouch -u-|> BaseMarioAction

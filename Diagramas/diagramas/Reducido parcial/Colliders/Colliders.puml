@@ -1,13 +1,11 @@
 @startuml Colliders
 
-interface Collider
-interface UpdateableEntityCollider
-interface BouncerCollider
-
 abstract BaseCollider
 abstract SolidCollider
-abstract MarioCollider
-abstract PowerUpCollider
+
+interface Collider
+interface BouncerCollider
+interface UpdateableEntityCollider
 
 BaseCollider ..|> Collider
 BaseCollider --> Vector2D

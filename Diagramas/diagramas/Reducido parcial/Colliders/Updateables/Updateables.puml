@@ -1,12 +1,18 @@
 @startuml Updateables
 
+interface Collider
 interface Bouncer
 interface UpdateableEntity
+interface UpdateableEntityCollider
+interface MovableEntityCollider
+interface BouncerCollider
 
 BouncerCollider --|> UpdateableEntityCollider
 BouncerCollider --> Bouncer
 
 UpdateableEntityCollider --|> Collider
 UpdateableEntityCollider --> UpdateableEntity
+
+MovableEntityCollider --|> UpdateableEntityCollider	
 
 @enduml

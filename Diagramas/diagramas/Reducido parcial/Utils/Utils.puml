@@ -1,7 +1,8 @@
 @startuml Utils
 
-interface Prioritizable
 abstract BasePrioritizable
+
+interface Prioritizable
 
 BasePrioritizable -u-|> Prioritizable
 

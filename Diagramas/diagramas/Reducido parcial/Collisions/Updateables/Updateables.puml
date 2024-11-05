@@ -1,7 +1,14 @@
 @startuml Updateables
 
+abstract BaseCollision
+
+interface Collision
+interface BouncerCollision
+interface MovableEntityCollision
+interface UpdateableEntityCollision
+
 UpdateableEntityCollision .u.|> Collision
-BouncerCollision .u.|> UpdateableEntityCollision
+BouncerCollision .u.|> MovableEntityCollision
 
 FireBallCollision .u.> BouncerCollision
 FireBallCollision -u-|> BaseCollision

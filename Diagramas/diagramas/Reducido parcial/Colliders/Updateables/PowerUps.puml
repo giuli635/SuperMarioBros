@@ -1,5 +1,12 @@
 @startuml PowerUps
 
+abstract PowerUpCollider
+abstract BaseCollider
+
+interface BouncerCollider
+interface UpdateableEntityCollider
+interface PowerUp
+
 FireFlowerCollider --|> PowerUpCollider
 FireBallCollider --> FireFlower
 

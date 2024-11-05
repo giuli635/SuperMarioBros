@@ -1,5 +1,11 @@
 @startuml PowerUps
 
+abstract BaseCollision
+
+interface PowerUpCollision
+interface UpdateableEntityCollision
+interface BouncerCollision
+
 PowerUpCollision -u-|> UpdateableEntityCollision
 
 FireFlowerCollision .u.|> PowerUpCollision

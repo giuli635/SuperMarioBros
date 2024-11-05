@@ -1,5 +1,9 @@
 @startuml Mario
 
+abstract BaseCollision
+
+interface UpdateableEntityCollision
+
 FireMarioCollision -u-|> SuperMarioCollision
 MarioCollision -u-|> UpdateableEntityCollision
 

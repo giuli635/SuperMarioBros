@@ -1,13 +1,9 @@
 @startuml Collisions
 
-interface Collision
-interface SolidCollision
-interface BouncerCollision
-interface UpdateableEntityCollision
-interface ShellEnemyCollision
-interface EnemyCollision
+abstract BaseCollision
 
-abstract class BaseCollision
+interface Collision
+interface UpdateableEntityCollision
 
 BaseCollision ..|> Collision
 

@@ -1,5 +1,10 @@
 @startuml Solids
 
+abstract SolidCollider
+abstract BaseCollider
+
+interface UpdateableEntityCollider
+
 BlockCollider --|> SolidCollider
 BlockCollider --> Block
 
