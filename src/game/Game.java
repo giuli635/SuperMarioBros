@@ -98,8 +98,6 @@ public class Game implements WindowListener, KeyListener {
     }
 
     public void advanceLevel() {
-        pause();
-
         if (stats.getLevelNumber() < levels.length - 1) {
             if (stats.getLevelNumber() > 0){
                 stats.modifyPoints(stats.getRemainingTime() * 50);
@@ -112,20 +110,16 @@ public class Game implements WindowListener, KeyListener {
             stats.reset();
         }
 
-        resume();
         reload();
     }
 
     public void checkGameOver() {
-        pause();
-
         if (stats.getLives() == 0){
             new TemporaryScreenOverlay("gameOver", 4 * SECOND).add();
             checkRanking();
             stats.reset();
         }
 
-        resume();
         reload();
     }
 

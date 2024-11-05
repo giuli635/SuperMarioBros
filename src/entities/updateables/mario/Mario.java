@@ -274,6 +274,7 @@ public class Mario extends UpdateableBody {
         } else {
             replaceCollider(newCollider);
         }
+        oldCollider.setColliderOnTop(null);
     }
 
     public void replaceCollider(MarioCollider c) {

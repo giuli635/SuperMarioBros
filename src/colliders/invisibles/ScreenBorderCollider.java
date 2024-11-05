@@ -5,6 +5,7 @@ import java.awt.Rectangle;
 
 import colliders.BaseCollider;
 import collisions.Collision;
+import collisions.invisibles.EmptyBlockCollision;
 import collisions.invisibles.LevelEndCollision;
 import collisions.invisibles.ScreenBorderCollision;
 import collisions.updateables.enemies.PiranhaPlantCollision;
@@ -53,13 +54,12 @@ public class ScreenBorderCollider extends BaseCollider {
         horizontalCollision(p);
         GraphicEngine.instance().setDepth(p.getCollider().getEntity().getGraphicElement(), GraphicEngine.DEFAULT_DEPTH);
     }
+
+    public void handleVerticalCollision(PiranhaPlantCollision p) {
+        horizontalCollision(p);
+        GraphicEngine.instance().setDepth(p.getCollider().getEntity().getGraphicElement(), GraphicEngine.DEFAULT_DEPTH);
+    }
     
-    public void handleHorizontalCollision(LevelEndCollision c){
-    }
-
-    public void handleVerticalCollision(LevelEndCollision c){
-    }
-
     protected void horizontalCollision(Collision c) {
         GraphicEngine graphicEngine = GraphicEngine.instance();
         GameGraphicElement graphicElement = c.getCollider().getEntity().getGraphicElement();
@@ -80,5 +80,17 @@ public class ScreenBorderCollider extends BaseCollider {
                 graphicElement.add();
             }
         }
+    }
+
+    public void handleHorizontalCollision(LevelEndCollision c){
+    }
+
+    public void handleVerticalCollision(LevelEndCollision c){
+    }
+
+    public void handleHorizontalCollision(EmptyBlockCollision c) {
+    }
+
+    public void handleVerticalCollision(EmptyBlockCollision c) {
     }
 }

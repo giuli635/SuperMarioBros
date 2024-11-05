@@ -10,5 +10,4 @@ public class EmptyBlockLoader extends BaseLoader {
         EmptyBlock empty = new EmptyBlock();
         positionCollider(empty, lr.getRow(), lr.getColumn());
     }
-
 }

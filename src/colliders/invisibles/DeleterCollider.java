@@ -32,9 +32,6 @@ public class DeleterCollider extends BaseCollider {
     }
 
     public void delete(Collision c) {
-        GraphicEngine graphicEngine = GraphicEngine.instance();
-        GameGraphicElement graphicElement = c.getCollider().getEntity().getGraphicElement();
-        graphicEngine.remove(graphicElement);
         c.getCollider().deactivate();
     }
 

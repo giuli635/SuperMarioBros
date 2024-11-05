@@ -2,19 +2,17 @@ package colliders.invisibles;
 
 import java.awt.Rectangle;
 
-import colliders.solids.SolidCollider;
+import colliders.BaseCollider;
 import collisions.Collision;
 import collisions.invisibles.EmptyBlockCollision;
-import collisions.updateables.enemies.EnemyCollision;
+import collisions.updateables.FireBallCollision;
+import collisions.updateables.UpdateableEntityCollision;
 import collisions.updateables.mario.MarioCollision;
-import collisions.updateables.powerups.PowerUpCollision;
-import collisions.updateables.powerups.StarCollision;
 import entities.EmptyBlock;
 import entities.updateables.mario.Mario;
-import game.GraphicEngine;
 import utils.Axis;
 
-public class EmptyBlockCollider extends SolidCollider {
+public class EmptyBlockCollider extends BaseCollider {
     protected EmptyBlock block;
 
     public EmptyBlockCollider(EmptyBlock e, Rectangle b) {
@@ -48,29 +46,23 @@ public class EmptyBlockCollider extends SolidCollider {
         mario.die();
     }
 
-    public void handleHorizontalCollision(EnemyCollision e) {
-        e.getCollider().getEntity().recieveDamage();
-    }
-
-    public void handleVerticalCollision(EnemyCollision e) {
-        e.getCollider().getEntity().recieveDamage();
-    }
-
-    public void handleHorizontalCollision(PowerUpCollision p) {
+    public void handleHorizontalCollision(UpdateableEntityCollision p) {
         p.getCollider().deactivate();
         p.getCollider().getEntity().unload();
-        GraphicEngine.instance().remove(p.getCollider().getEntity().getGraphicElement());
+        p.getCollider().getEntity().getGraphicElement().remove();
     }
 
-    public void handleVerticalCollision(PowerUpCollision p) {
+    public void handleVerticalCollision(UpdateableEntityCollision p) {
         p.getCollider().deactivate();
         p.getCollider().getEntity().unload();
-        GraphicEngine.instance().remove(p.getCollider().getEntity().getGraphicElement());
+        p.getCollider().getEntity().getGraphicElement().remove();
     }
 
-    public void handleVerticalCollision(StarCollision s) {
-        s.getCollider().deactivate();
-        s.getCollider().getEntity().unload();
-        GraphicEngine.instance().remove(getEntity().getGraphicElement());
+    public void handleHorizontalCollision(FireBallCollision f) {
+        f.getCollider().getEntity().destroy();
+    }
+
+    public void handleVerticalCollision(FireBallCollision f) {
+        f.getCollider().getEntity().destroy();
     }
 }

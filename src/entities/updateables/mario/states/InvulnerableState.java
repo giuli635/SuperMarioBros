@@ -24,7 +24,6 @@ public class InvulnerableState extends BaseMarioState {
     public void setState() {
         invulnerableCollider = new InvulnerableCollider(mario);
 
-        Game.instance().setDebugging(true);
         mario.setCollider(invulnerableCollider);
 
         mario.addAction(new DisappearSprite());
@@ -33,7 +32,7 @@ public class InvulnerableState extends BaseMarioState {
         Timer timer = new Timer();
         TimerTask task = new TimerTask() {
             public void run() {
-                mario.removeState(thisState);
+               mario.removeState(thisState);
             }
         };
 

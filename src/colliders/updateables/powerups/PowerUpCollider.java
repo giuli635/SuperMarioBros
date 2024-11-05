@@ -4,7 +4,6 @@ import collisions.updateables.mario.FireMarioCollision;
 import collisions.updateables.mario.MarioCollision;
 import collisions.updateables.mario.SuperMarioCollision;
 import entities.updateables.powerups.PowerUp;
-import game.GraphicEngine;
 import game.SoundManager;
 
 import java.awt.Rectangle;
@@ -23,7 +22,7 @@ public abstract class PowerUpCollider extends BaseCollider implements MovableEnt
         SoundManager.instance().playSound(PowerUp.SOUND);
         deactivate();
         getEntity().unload();
-        GraphicEngine.instance().remove(getEntity().getGraphicElement());
+        getEntity().getGraphicElement().remove();
     }
 
     public void handleCollision(MarioCollision m) {

@@ -42,8 +42,12 @@ public abstract class ScreenOverlay extends BaseGraphicElement {
     }
 
     protected void initOverlay() {
-        panel.add(Box.createVerticalGlue());
-        panel.setVisible(true);
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                panel.add(Box.createVerticalGlue());
+                panel.setVisible(true);
+            }
+        });
     }
 
     @Override
