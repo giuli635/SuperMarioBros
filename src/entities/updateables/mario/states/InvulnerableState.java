@@ -8,7 +8,6 @@ import colliders.updateables.mario.InvulnerableCollider;
 import colliders.updateables.mario.MarioCollider;
 import entities.updateables.mario.Mario;
 import entities.updateables.mario.actions.DisappearSprite;
-import game.Game;
 
 public class InvulnerableState extends BaseMarioState {
     protected static final int PRIORITY = 1;

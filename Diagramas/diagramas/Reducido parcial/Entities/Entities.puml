@@ -1,22 +1,6 @@
 @startuml Entities
 
-interface Entity 
-interface UpdateableEntity
-interface MovableEntity
-interface Bouncer
-
-interface Enemy 
-interface ShellEnemy
-interface PowerUp
-interface MarioState
-interface MarioAction
-
-abstract class BaseMarioState
 abstract class Body
-abstract class UpdateableBody
-abstract class BaseMovableEntity
-abstract class BaseEnemy
-abstract class BaseMarioAction
 
 Body "1" --> "1" GameGraphicElement
 

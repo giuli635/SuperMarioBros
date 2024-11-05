@@ -17,7 +17,7 @@ public class Star extends Bouncer implements PowerUp {
     public static final int FRAMES_PER_SPRITE = 10;
     public final static int POINTS_MARIO = 20;
     public final static int POINTS_SUPER_MARIO = 30;
-    public final static int POINTS_STAR_MARIO = 10;
+    public final static int POINTS_STAR_MARIO = 35;
 
     protected StarCollider collider;
     protected GameGraphicElement graphicElement;

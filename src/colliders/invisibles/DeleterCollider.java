@@ -7,8 +7,6 @@ import collisions.Collision;
 import collisions.invisibles.DeleterCollision;
 import collisions.updateables.UpdateableEntityCollision;
 import entities.Entity;
-import game.GraphicEngine;
-import graphics.GameGraphicElement;
 import utils.Axis;
 
 public class DeleterCollider extends BaseCollider {
