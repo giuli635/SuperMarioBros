@@ -55,7 +55,9 @@ public class RankingManager {
         if ((highScores.size() < 5) || (score > highScores.get(4).getScore())) {
             
             String playerName = JOptionPane.showInputDialog(LanguageConfiguration.instance().get("enterName"));
-            
+
+            GraphicEngine.instance().focusFrame();
+
             if (playerName != null && !playerName.trim().isEmpty()) {
                 addScore(playerName, score);
                 return true;

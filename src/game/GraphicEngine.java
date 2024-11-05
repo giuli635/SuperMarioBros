@@ -258,4 +258,8 @@ public class GraphicEngine {
     public void setFont(Font font) {
         this.font = font;
     }
+
+    public void focusFrame() {
+        frame.requestFocus();
+    }
 }
