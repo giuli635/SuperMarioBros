@@ -29,16 +29,11 @@
 ###      b
 ###z     b
 ###      b
-<<<<<<< Updated upstream
 ###      b
-###
-###
-=======
 ###      b $
 ###          $
 ###          $ 
 ###      b $
->>>>>>> Stashed changes
 ###      b
 ###      b
 ###      b $
