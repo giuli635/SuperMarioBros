@@ -105,6 +105,8 @@ public class Game implements WindowListener, KeyListener {
 
             stats.advanceLevel();
         } else {
+            SoundManager.instance().removeAllSounds();
+            SoundManager.instance().playSound("worldClear.wav");
             new TemporaryScreenOverlay("gameEnd", 4 * SECOND).add();
             checkRanking();
             stats.reset();
@@ -115,6 +117,7 @@ public class Game implements WindowListener, KeyListener {
 
     public void checkGameOver() {
         if (stats.getLives() == 0){
+            SoundManager.instance().playSound("gameover.wav");
             new TemporaryScreenOverlay("gameOver", 4 * SECOND).add();
             checkRanking();
             stats.reset();
@@ -126,10 +129,10 @@ public class Game implements WindowListener, KeyListener {
     public void reloadGameStatus(){
         toUpdateRegistry = new HashSet<>();
         GraphicEngine.instance().initBackgrounds();
-        // SoundManager.instance().removeAllSounds();
+        SoundManager.instance().removeAllSounds();
         LevelReader.instance().loadLevel(levels[stats.getLevelNumber()]);
         LevelReader.instance().loadStats(stats);
-        // SoundManager.instance().playLoopingSound("marioBackground.wav");
+        SoundManager.instance().playLoopingSound("marioBackground.wav");
         resumeLoop();
     }
 

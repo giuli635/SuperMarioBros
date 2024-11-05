@@ -7,9 +7,11 @@ import collisions.updateables.enemies.EnemyCollision;
 import collisions.updateables.mario.MarioCollision;
 import collisions.updateables.mario.StarMarioCollision;
 import collisions.updateables.mario.SuperMarioCollision;
+import entities.updateables.enemies.BaseEnemy;
 import entities.updateables.enemies.ShellEnemy;
 import entities.updateables.mario.Mario;
 import entities.updateables.mario.states.InvulnerableState;
+import game.SoundManager;
 import utils.Direction;
 
 public abstract class ShellEnemyCollider extends EnemyCollider{
@@ -41,6 +43,7 @@ public abstract class ShellEnemyCollider extends EnemyCollider{
         Mario mario = m.getCollider().getEntity();
         if(collisionDirection == Direction.DOWN) {
             getEntity().recieveDamage();
+            SoundManager.instance().playSound(BaseEnemy.STOMP_SOUND);
             mario.modifyPoints(getEntity().pointsToAdd()/2);
             int displacement = m.getCollider().displaceY(collision, 3);
             mario.getGraphicElement().translate(0, displacement);
@@ -79,6 +82,7 @@ public abstract class ShellEnemyCollider extends EnemyCollider{
             getEntity().recieveDamage();
             mario.modifyPoints(getEntity().pointsToAdd()/2);
             int displacement = m.getCollider().displaceY(collision, 3);
+            SoundManager.instance().playSound(BaseEnemy.STOMP_SOUND);
             mario.getGraphicElement().translate(0, displacement);
             mario.addSpeed(0, Mario.FIXED_BOUNCE_SPEED);
         } else {

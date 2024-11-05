@@ -30,7 +30,6 @@ public class SoundManager {
             clip.open(audioIn);
             clip.start();
         } catch (Exception e) {
-            System.err.println("Error al reproducir el sonido: " + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -44,7 +43,6 @@ public class SoundManager {
             clips.put(soundFile, clip);
             clip.loop(Clip.LOOP_CONTINUOUSLY);
         } catch (Exception e) {
-            System.err.println("Error al reproducir el sonido en loop: " + e.getMessage());
             e.printStackTrace();
         }
     }

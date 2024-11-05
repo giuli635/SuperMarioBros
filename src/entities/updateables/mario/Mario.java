@@ -142,7 +142,7 @@ public class Mario extends UpdateableBody {
 
         setSpritesFolder("mario");
         setSprite(MARIO_DEATH);
-
+        SoundManager.instance().removeAllSounds();
         SoundManager.instance().playSound("mariodie.wav");
         stats.decreaseLives();
 
