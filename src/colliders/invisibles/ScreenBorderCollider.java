@@ -7,6 +7,7 @@ import colliders.BaseCollider;
 import collisions.Collision;
 import collisions.invisibles.LevelEndCollision;
 import collisions.invisibles.ScreenBorderCollision;
+import collisions.updateables.enemies.PiranhaPlantCollision;
 import collisions.updateables.mario.MarioCollision;
 import entities.Entity;
 import game.GraphicEngine;
@@ -45,6 +46,21 @@ public class ScreenBorderCollider extends BaseCollider {
     }
 
     public void handleHorizontalCollision(Collision c) {
+        horizontalCollision(c);
+    }
+
+    public void handleHorizontalCollision(PiranhaPlantCollision p) {
+        horizontalCollision(p);
+        GraphicEngine.instance().setDepth(p.getCollider().getEntity().getGraphicElement(), GraphicEngine.DEFAULT_DEPTH);
+    }
+    
+    public void handleHorizontalCollision(LevelEndCollision c){
+    }
+
+    public void handleVerticalCollision(LevelEndCollision c){
+    }
+
+    protected void horizontalCollision(Collision c) {
         GraphicEngine graphicEngine = GraphicEngine.instance();
         GameGraphicElement graphicElement = c.getCollider().getEntity().getGraphicElement();
 
@@ -64,13 +80,5 @@ public class ScreenBorderCollider extends BaseCollider {
                 graphicElement.add();
             }
         }
-    }
-    
-    public void handleHorizontalCollision(LevelEndCollision c){
-
-    }
-
-    public void handleVerticalCollision(LevelEndCollision c){
-
     }
 }

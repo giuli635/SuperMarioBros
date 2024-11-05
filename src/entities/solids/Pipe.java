@@ -14,16 +14,14 @@ public class Pipe extends Body {
     protected PipeCollider collider;
     protected GameGraphicElement graphicElement;
 
-    public Pipe() {
+    public Pipe(char c) {
         collider = new PipeCollider(this, new Rectangle());
         graphicElement = new GameGraphicElement(this, FOLDER_PATH);
-        setSprite(TOP_PIPE);
-    }
-
-    public Pipe(int i) {
-        collider = new PipeCollider(this, new Rectangle(64, 32));
-        graphicElement = new GameGraphicElement(this, FOLDER_PATH);
-        setSprite(BASE_PIPE);
+        if (c == 'P')
+            setSprite(TOP_PIPE);
+        else {
+            setSprite(BASE_PIPE);
+        }
     }
 
     @Override

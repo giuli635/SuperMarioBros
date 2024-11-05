@@ -37,8 +37,8 @@ public class LevelReader {
         loaders.put('z', new BuzzyBeetleLoader());
         loaders.put('s', new SuperMushroomLoader());
         loaders.put('b', new BrickLoader());
-        loaders.put('P', new TopPipeLoader());
-        loaders.put('p', new BasePipeLoader());
+        loaders.put('P', new PipeLoader());
+        loaders.put('p', new PipeLoader());
         loaders.put('?', new QuestionBlockLoader());
         loaders.put('l', new LakituLoader());
         loaders.put('r', new PiranhaPlantLoader());
@@ -50,6 +50,7 @@ public class LevelReader {
         loaders.put('$', new CoinLoader());
         loaders.put('f', new FireFlowerLoader());
         loaders.put('*', new ConfigurationBlockLoader());
+        loaders.put('S', new StarLoader());
     }
 
     protected static LevelReader instance(){
