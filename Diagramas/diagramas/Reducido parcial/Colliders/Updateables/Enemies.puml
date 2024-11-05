@@ -1,10 +1,12 @@
-@startuml UpdateableEnemies
+@startuml Enemies
+
+interface EnemyCollider
 
 BuzzyBeetleCollider --|> ShellEnemyCollider
 BuzzyBeetleCollider --> BuzzyBeetle
 
 EnemyCollider --|> BaseCollider 
-EnemyCollider --> UpdateableEntityCollider
+EnemyCollider --> MovableEntityCollider
 
 GoombaCollider --|> EnemyCollider
 GoombaCollider --> Goomba

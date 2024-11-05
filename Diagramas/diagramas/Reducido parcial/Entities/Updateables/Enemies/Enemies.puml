@@ -1,6 +1,11 @@
 @startuml Enemies
 
-Enemy -u-|> UpdateableEntity
+abstract BaseEnemy
+
+interface Enemy
+interface MovableEntity
+interface ShellEnemy
+
 Enemy -u-|> MovableEntity
 
 BaseEnemy .u.|> Enemy

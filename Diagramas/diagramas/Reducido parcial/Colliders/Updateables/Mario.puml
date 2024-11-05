@@ -1,5 +1,6 @@
 @startuml Mario
 
+abstract MarioCollider
 interface Prioritizable
 interface MarioState
 

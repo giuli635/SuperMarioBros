@@ -1,5 +1,9 @@
 @startuml States
 
+abstract BaseMarioState
+
+interface MarioState
+
 BaseMarioState .u.|> MarioState
 BaseMarioState "1" --> "1" MarioCollider
 

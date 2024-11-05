@@ -1,5 +1,13 @@
 @startuml Updateables
 
+abstract Body
+abstract UpdateableBody
+abstract BaseMovableEntity
+
+interface Entity
+interface UpdateableEntity
+interface MovableEntity
+
 UpdateableEntity -u-|> Entity
 Body .u.|> Entity
 

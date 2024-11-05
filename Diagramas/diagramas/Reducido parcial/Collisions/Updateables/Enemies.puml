@@ -1,6 +1,12 @@
-@startuml UpdateableEnemies
+@startuml Enemies
 
-EnemyCollision -u-|> UpdateableEntityCollision
+abstract BaseCollision
+
+interface EnemyCollision
+interface ShellEnemyCollision
+interface MovableEntityCollision
+
+EnemyCollision -u-|> MovableEntityCollision
 
 ShellEnemyCollision -u-|> EnemyCollision
 

@@ -1,6 +1,6 @@
 @startuml Invinsibles
 
-DelaterCollider --|> BaseCollider
+DeleterCollider --|> BaseCollider
 
 EmptyBlockCollider --|> SolidCollider
 EmptyBlockCollider --> EmptyBlock

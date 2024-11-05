@@ -1,10 +1,10 @@
 @startuml Loading
 
-interface Collider
-interface EntityLoader
 abstract BaseLoader
 
-BaseLoader -u-|> EnityLoader
+interface EntityLoader
+
+BaseLoader -u-|> EntityLoader
 BasePipeLoader -u-|> BaseLoader
 BlockLoader -u-|> BaseLoader
 BrickLoader -u-|> BaseLoader

@@ -1,11 +1,13 @@
 @startuml Graphics
 
+abstract BaseGraphicElement
+abstract ScreenOverlay 
+abstract BaseTranslatableGraphicElement
+
 interface GraphicElement
 interface TranslatableGraphicElement
 interface LevelStatsObserver
-abstract class BaseGraphicElement
-abstract class ScreenOverlay 
-abstract class BaseTranslatableGraphicElement
+
 BaseGraphicElement .u.|> GraphicElement
 
 BaseTranslatableGraphicElement .u.|> TranslatableGraphicElement

@@ -1,7 +1,9 @@
 @startuml Invisibles
 
-DelaterCollision -u-|> BaseCollision
-DelaterCollision "1" --> "1" DelaterCollider
+abstract BaseCollision
+
+DeleterCollision -u-|> BaseCollision
+DeleterCollision "1" --> "1" DeleterCollider
 
 EmptyBlockCollision -u-|> BaseCollision
 EmptyBlockCollision "1" --> "1" EmptyBlockCollider
@@ -15,8 +17,8 @@ LoaderCollision "1" --> "1" LoaderCollider
 ScreenBorderCollision -u-|> BaseCollision
 ScreenBorderCollision "1" --> "1" ScreenBorderCollider
 
-ScreenDisplamentCollision -u-|> BaseCollision
-ScreenDisplamentCollision "1" --> "1" ScreenBorderCollider
+ScreenDisplacementCollision -u-|> BaseCollision
+ScreenDisplacementCollision "1" --> "1" ScreenBorderCollider
 
 UnloaderCollision -u-|> BaseCollision
 UnloaderCollision "1" --> "1" GraphicUnloaderCollider

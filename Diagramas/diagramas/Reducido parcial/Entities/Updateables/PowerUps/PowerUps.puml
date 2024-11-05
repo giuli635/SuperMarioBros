@@ -1,6 +1,10 @@
 @startuml PowerUps
 
-PowerUp -u-|> UpdateableEntity
+abstract class BaseMovableEntity
+
+interface PowerUp
+interface MovableEntity
+
 PowerUp -u-|> MovableEntity
 
 FireFlower .u.|> PowerUp

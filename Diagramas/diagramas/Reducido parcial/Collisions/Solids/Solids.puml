@@ -1,5 +1,11 @@
 @startuml Solids
 
+abstract BaseCollision
+
+interface SolidCollision
+interface Collision
+interface UpdateableEntityCollision
+
 SolidCollision --|> Collision
 
 BlockCollision .u.|> SolidCollision
