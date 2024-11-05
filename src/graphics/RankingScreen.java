@@ -17,7 +17,6 @@ public class RankingScreen extends ScreenOverlay {
         super("highScore");
         rankingManager = ranking;
         SwingUtilities.invokeLater(new Runnable() {
-            @Override
             public void run() {
                 initOverlay();
             }

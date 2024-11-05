@@ -66,6 +66,6 @@ public class ModeSwitcherCollider extends SolidCollider implements UpdateableEnt
                 }
             };
 
-        timer.schedule(task,300);
+        timer.schedule(task, 300);
     }
 }

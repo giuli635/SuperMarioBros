@@ -60,11 +60,8 @@ public class StarMarioCollision extends BaseCollision implements MarioCollision 
 
     @Override
     public void collide(BrickCollider c, Axis a) {
-        if (a == Axis.X) {
-            c.handleHorizontalCollision(this);
-        } else {
-            c.handleVerticalCollision(this);
-        }
+        baseCollision.setCollider(collider);
+        baseCollision.collide(c, a);
     }
 
     @Override

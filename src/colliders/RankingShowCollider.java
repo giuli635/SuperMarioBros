@@ -65,6 +65,6 @@ public class RankingShowCollider extends SolidCollider implements UpdateableEnti
                 }
             };
 
-        timer.schedule(task,300);
+        timer.schedule(task, 300);
     }
 }

@@ -6,8 +6,10 @@ import java.awt.event.WindowListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 import java.util.Set;
 
 import entities.updateables.UpdateableEntity;
@@ -23,7 +25,7 @@ public class Game implements WindowListener, KeyListener {
     protected Set<UpdateableEntity> toUpdateRegistry;
     protected Map<Integer, KeyStatus> keysStatus;
     protected Stats stats;
-    protected Runnable executionState;
+    protected Queue<Runnable> executionQueue;
 
     protected boolean pause;
     protected boolean runGameLoop;
@@ -46,6 +48,7 @@ public class Game implements WindowListener, KeyListener {
         runGameLoop = true;
         pause = false;
         rankingManager = new RankingManager();
+        executionQueue = new LinkedList<>();
     }
 
     public static Game instance() {
@@ -69,8 +72,10 @@ public class Game implements WindowListener, KeyListener {
         reloadGameStatus();
 
         while (runGame) {
-            executionState.run();
+            executionQueue.remove().run();
         }
+
+        System.exit(0);
     }
 
     protected void loop() {
@@ -98,32 +103,44 @@ public class Game implements WindowListener, KeyListener {
     }
 
     public void advanceLevel() {
-        if (stats.getLevelNumber() < levels.length - 1) {
-            if (stats.getLevelNumber() > 0){
-                stats.modifyPoints(stats.getRemainingTime() * 50);
+        runGameLoop = false;
+
+        executionQueue.add(new Runnable() {
+            public void run() {
+                if (stats.getLevelNumber() < levels.length - 1) {
+                    if (stats.getLevelNumber() > 0){
+                        stats.modifyPoints(stats.getRemainingTime() * 50);
+                    }
+
+                    stats.advanceLevel();
+                } else {
+                    SoundManager.instance().removeAllSounds();
+                    SoundManager.instance().playSound("worldClear.wav");
+                    new TemporaryScreenOverlay("gameEnd", 4 * SECOND).add();
+                    checkRanking();
+                    stats.reset();
+                }
+
+                reload();
             }
-
-            stats.advanceLevel();
-        } else {
-            SoundManager.instance().removeAllSounds();
-            SoundManager.instance().playSound("worldClear.wav");
-            new TemporaryScreenOverlay("gameEnd", 4 * SECOND).add();
-            checkRanking();
-            stats.reset();
-        }
-
-        reload();
+        });
     }
 
     public void checkGameOver() {
-        if (stats.getLives() == 0){
-            SoundManager.instance().playSound("gameover.wav");
-            new TemporaryScreenOverlay("gameOver", 4 * SECOND).add();
-            checkRanking();
-            stats.reset();
-        }
+        runGameLoop = false;
 
-        reload();
+        executionQueue.add(new Runnable() {
+            public void run() {
+                if (stats.getLives() == 0){
+                    SoundManager.instance().playSound("gameover.wav");
+                    new TemporaryScreenOverlay("gameOver", 4 * SECOND).add();
+                    checkRanking();
+                    stats.reset();
+                }
+
+                reload();
+            }
+        });
     }
 
     public void reloadGameStatus(){
@@ -156,31 +173,34 @@ public class Game implements WindowListener, KeyListener {
 
     protected void resumeLoop() {
         runGameLoop = true;
-        executionState = new Runnable() {
+
+        executionQueue.add(new Runnable() {
             public void run() {
                 loop();
             };
-        };
+        });
     };
 
     public void reload() {
-        executionState = new Runnable() {
+        runGameLoop = false;
+
+        executionQueue.add(new Runnable() {
             public void run() {
                 reloadGameStatus();
             }
-        };
-
-        runGameLoop = false;
+        });
     }
 
     public void resume() {
-        synchronized (lock) {
-            lock.notify();
-        }
+        if (pause) {
+            synchronized (lock) {
+                lock.notify();
+            }
 
-        stats.resumeTimer();
-        SoundManager.instance().resumeAllSounds();
-        pause = false;
+            stats.resumeTimer();
+            SoundManager.instance().resumeAllSounds();
+            pause = false;
+        }
     }
 
     public void pause() {
@@ -190,7 +210,7 @@ public class Game implements WindowListener, KeyListener {
         runGameLoop = false;
         pause = true;
 
-        executionState = new Runnable() {
+        executionQueue.add(new Runnable() {
             public void run() {
                 synchronized (lock) {
                     try {
@@ -201,8 +221,7 @@ public class Game implements WindowListener, KeyListener {
                     }
                 }
             }
-
-        };
+        });
     }
 
     protected void togglePause() {
