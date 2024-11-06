@@ -4,9 +4,10 @@ abstract BasePrioritizable
 
 interface Prioritizable
 
-BasePrioritizable -u-|> Prioritizable
 
-PriorityComparator -u-|> Comparator
+BasePrioritizable .u.|> Prioritizable
+
+PriorityComparator .u.|> "Comparator<Prioritizable>"
 
 Vector2D --> Point
 

@@ -4,30 +4,36 @@ interface GraphicElement
 interface TranslatableGraphicElement
 interface EntityLoader
 interface UpdateableEntity
-interface LevelStatsObserver
+interface ObserverLevelStats
 
-Game .u.|> WindowListener
-Game .u.|> KeyListener
-Game "1" --> "0..*" UpdatableEntity
-Game "1" --> "1" Stats
-Game "1" --> "0..*" KeyStatus
+class SingletonGame <<Singleton>>
+class SingletonGraphicEngine <<Singleton>>
+class SingletonLevelReader <<Singleton>>
+class SingletonSoundManager <<Singleton>>
+class SingletonCollisionsEngine <<Singleton>>
 
-CollisionsEngine "1" --> "0..*" Collider
+SingletonGame .u.|> WindowListener
+SingletonGame .u.|> KeyListener
+SingletonGame "1" --> "0..*" UpdatableEntity
+SingletonGame "1" --> "1" Stats
+SingletonGame "1" --> "0..*" KeyStatus
 
-GraphicEngine "1" --> "1" JFrame
-GraphicEngine "1" --> "1" JLayeredPane
-GraphicEngine "1" --> "0..*" GraphicElement
-GraphicEngine "1" --> "*" TranslatableGraphicElement
-GraphicEngine "1" --> "2" GameGraphicElement
-GraphicEngine "1" --> "1" Font
+SingletonCollisionsEngine "1" --> "0..*" Collider
+
+SingletonGraphicEngine "1" --> "1" JFrame
+SingletonGraphicEngine "1" --> "1" JLayeredPane
+SingletonGraphicEngine "1" --> "0..*" GraphicElement
+SingletonGraphicEngine "1" --> "*" TranslatableGraphicElement
+SingletonGraphicEngine "1" --> "2" GameGraphicElement
+SingletonGraphicEngine "1" --> "1" Font
 
 LanguageConfiguration "1" --> "2" Properties
 
-LevelReader "1" --> "0..*" EntityLoader
+SingletonLevelReader "1" --> "0..*" EntityLoader
 
 RankingManager "1" --> "0..5" ScoreEntry
 
-SoundManager "1" --> "0..*" Clip
+SingletonSoundManager "1" --> "0..*" Clip
 
 Stats "1" --> "1" Timer
 

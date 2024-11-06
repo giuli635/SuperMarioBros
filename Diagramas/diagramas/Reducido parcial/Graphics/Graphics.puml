@@ -8,8 +8,11 @@ interface GraphicElement
 interface TranslatableGraphicElement
 interface LevelStatsObserver
 
+class FlyweightSpriteFactory <<Singleton>>
+
 BaseGraphicElement .u.|> GraphicElement
 
+BaseTranslatableGraphicElement -u-|> BaseGraphicElement
 BaseTranslatableGraphicElement .u.|> TranslatableGraphicElement
 BaseTranslatableGraphicElement "1" --> "1" Rectangle
 BaseTranslatableGraphicElement "1" --> "1" JLabel
@@ -32,7 +35,7 @@ RankingScreen -u-|> ScreenOverlay
 RankingScreen --> RankingManager
 
 StatsBar -u-|> BaseGraphicElement
-StatsBar .u.|> LevelStatsObserver
+StatsBar .u.|> ObserverLevelStats
 StatsBar "1"  --> "1" JPanel
 StatsBar "1" --> "1" JLabel
 StatsBar "1" --> "5" StatsPanel
@@ -42,6 +45,6 @@ StatsBar "1" --> "1" Font
 TextLabel -u-|> BaseTranslatableGraphicElement
 TextLabel "1" --> "1" Font
 
-SpriteFactory "1" --> "0..*" ImageIcon
+FlyweightSpriteFactory "1" --> "0..*" ImageIcon
 
 @enduml

@@ -4,7 +4,7 @@ abstract BaseLoader
 
 interface EntityLoader
 
-BaseLoader -u-|> EntityLoader
+BaseLoader .u.|> EntityLoader
 BasePipeLoader -u-|> BaseLoader
 BlockLoader -u-|> BaseLoader
 BrickLoader -u-|> BaseLoader
