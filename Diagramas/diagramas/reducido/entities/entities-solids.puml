@@ -1,0 +1,25 @@
+@startuml
+abstract Body
+abstract UpdateableBody
+interface ObserverUpdateableEntity
+
+UpdateableBody -u-|> Body
+
+UpdateableBody .u.|> ObserverUpdateableEntity
+
+Block -u-|> Body
+Block "1" --> "1" BlockCollider
+
+Brick -u-|> Body
+Brick "1" --> "1" BrickCollider
+
+Pipe -u-|> Body
+Pipe "1" --> "1" PipeCollider
+
+QuestionBlock -u-|> UpdateableBody
+QuestionBlock "1" --> "1" QuestionBlockCollider
+QuestionBlock "1" --> "1" ObserverUpdateableEntity
+
+Castle -u-|> Block
+
+@enduml

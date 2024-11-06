@@ -1,0 +1,58 @@
+@startuml
+class FireFlowerCollider {
+   #f: FireFlower
+   +FireFlowerCollider(fireFlower: FireFlower, b: Rectangle)
+   +recieveCollision(c: VisitorCollision, a: Axis)
+   +getCollision(): VisitorCollision 
+   +getEntity(): FireFlower 
+   +handleCollision(m: FireMarioCollision)
+   +handleCollision(m: SuperMarioCollision)
+   +handleCollision(m: MarioCollision)
+}
+
+class GreenMushroomCollider {
+   #m: GreenMushroom
+   +GreenMushroomCollider(mushroom: GreenMushroom, b: Rectangle)
+   +getEntity(): GreenMushroom 
+   +recieveCollision(c: VisitorCollision, a: Axis)
+   +getCollision(): GreenMushroomCollision 
+   +handleCollision(m: MarioCollision)
+}
+
+abstract class PowerUpCollider {
+   +PowerUp getEntity(): abstract 
+   +PowerUpCollider(b: Rectangle)
+   #remove()
+   +handleCollision(m: MarioCollision)
+   +handleCollision(m: SuperMarioCollision)
+   +handleCollision(m: FireMarioCollision)
+   +handleVerticalCollision(m: MarioCollision)
+   +handleHorizontalCollision(m: MarioCollision)
+   +handleVerticalCollision(m: SuperMarioCollision)
+   +handleHorizontalCollision(m: SuperMarioCollision)
+   +handleHorizontalCollision(m: FireMarioCollision)
+   +handleVerticalCollision(m: FireMarioCollision)
+}
+
+class StarCollider {
+   #s: Star
+   +StarCollider(star: Star, b: Rectangle)
+   +recieveCollision(c: VisitorCollision, a: Axis)
+   +getCollision(): StarCollision 
+   +getEntity(): Star 
+   +handleCollision(m: MarioCollision)
+   +handleCollision(m: SuperMarioCollision)
+   +handleCollision(m: StarMarioCollision)
+}
+
+class SuperMushroomCollider {
+   #SM: SuperMushroom
+   +SuperMushroomCollider(mushroom: SuperMushroom, b: Rectangle)
+   +getEntity(): SuperMushroom 
+   +recieveCollision(c: VisitorCollision, a: Axis)
+   +getCollision(): SuperMushroomCollision 
+   +handleCollision(m: SuperMarioCollision)
+   +handleCollision(m: MarioCollision)
+}
+
+@enduml

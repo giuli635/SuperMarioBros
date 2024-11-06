@@ -1,0 +1,28 @@
+@startuml
+abstract BaseCollision
+
+interface VisitorCollision
+interface UpdateableEntityCollision
+
+UpdateableEntityCollision .u.|> VisitorCollision
+
+BaseCollision .u.|> VisitorCollision
+
+CoinCollision -u-|> BaseCollision 
+CoinCollision "1" --> "1" CoinCollider
+
+FlagPoleCollision -u-|> BaseCollision
+FlagPoleCollision "1" --> "1" FlagPoleCollider
+
+LanguageSwitcherCollision .u.|> UpdateableEntityCollision
+LanguageSwitcherCollision -u-|> BaseCollision
+LanguageSwitcherCollision "1" --> "1" LanguageSwitcherCollider
+
+ModeSwitcherCollision .u.|> UpdateableEntityCollision
+ModeSwitcherCollision -u-|> BaseCollision
+ModeSwitcherCollision "1" --> "1" ModeSwitcherCollider
+
+RankingShowCollision .u.|> UpdateableEntityCollision
+RankingShowCollision -u-|> BaseCollision 
+RankingShowCollision "1" --> "1" RankingShowCollider
+@enduml

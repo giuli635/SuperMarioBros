@@ -1,0 +1,61 @@
+@startuml
+class Mario {
+   #{static}List<Map<Color, Color>> COLOR_STAR_MARIO_COLORS = initStarColor(): final 
+   #{static}Color>> initStarColor(): List<Map<Color, 
+   +{static} String: final
+   +{static} String: final
+   +final {static} MARIO_STILL: String
+   +final {static} MARIO_JUMP: String
+   +final {static} List<String> MARIO_WALKING = List.of(
+   +final {static} MARIO_STOPPING: String
+   +{static} int: final
+   +{static} float: final
+   #jumpSpeed: float
+   #speedX: float
+   #speedY: float
+   #accelerationX: float
+   #falling: boolean
+   #starMarioColors: List<Map<Color, Color>>
+   #collider: MarioCollider
+   #graphicElement: GameGraphicElement
+   #actions: SortedSet<StrategyMarioAction>
+   #states: Map<Integer, CommandMarioStatus>
+   #stats: Stats
+   #movementDirection: Direction
+   #overriteSprite: boolean
+   #loaded: boolean
+   +Mario(s: Stats)
+   +getCollider(): MarioCollider 
+   +getGraphicElement(): GameGraphicElement 
+   +update()
+   +land()
+   +die()
+   +isFalling(): boolean 
+   +setFalling(j: boolean)
+   +addSpeed(dx: int, dy: int)
+   +getSpeedY(): float 
+   +setSpeedY(speedY: float)
+   +getSpeedX(): float 
+   +setSpeedX(speedX: float)
+   +addAction(action: StrategyMarioAction)
+   +removeAction(action: StrategyMarioAction)
+   +getAccelerationX(): float 
+   +setAccelerationX(accelerationX: float)
+   +getMovementDirection(): Direction 
+   +setMovementDirection(movementDirection: Direction)
+   +overriteSprite(): boolean 
+   +setOverriteSprite(overriteSprite: boolean)
+   +Color>> getColorStarMarioColors(): List<Map<Color, 
+   +setStarMarioColors(: List<Map<Color, initialColorStarMario: Color>>)
+   +modifyPoints(points: int)
+   +addLife()
+   +setState(state: CommandMarioStatus)
+   +removeState(state: CommandMarioStatus)
+   +setCollider(colliderToSet: MarioCollider): MarioCollider 
+   #putColliderOnTop(newTopCollider: MarioCollider, bottomCollider: MarioCollider)
+   #swapCollider(oldCollider: MarioCollider, newCollider: MarioCollider)
+   +replaceCollider(c: MarioCollider)
+   +removeCollider(colliderToRemove: MarioCollider)
+}
+
+@enduml

@@ -1,0 +1,39 @@
+@startuml
+
+abstract BaseEnemy
+
+abstract BaseMovableEntity
+interface Enemy
+interface MovableEntity
+interface ShellEnemy
+
+BaseMovableEntity .u.|> MovableEntity
+
+Enemy -u-|> MovableEntity
+
+BaseEnemy .u.|> Enemy
+BaseEnemy -u-|> BaseMovableEntity
+
+Goomba -u-|> BaseEnemy
+Goomba "1" --> "1" GoombaCollider
+
+ShellEnemy -u-|> Enemy
+
+KoopaTroopa .u.|> ShellEnemy
+KoopaTroopa -u-|> BaseEnemy
+KoopaTroopa "1" --> "1" KoopaTroopaCollider
+
+BuzzyBeetle .u.|> ShellEnemy
+BuzzyBeetle -u-|> BaseEnemy
+BuzzyBeetle "1" --> "1" BuzzyBeetleCollider
+
+Lakitu -u-|> BaseEnemy
+Lakitu "1" --> "1" LakituCollider
+
+Spiny -u-|> BaseEnemy
+Spiny "1" --> "1" SpinyCollider
+
+PiranhaPlant -u-|> BaseEnemy
+PiranhaPlant "1" --> "1" PiranhaPlantCollider
+
+@enduml

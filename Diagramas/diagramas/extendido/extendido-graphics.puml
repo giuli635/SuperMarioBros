@@ -1,0 +1,139 @@
+@startuml
+abstract class BaseGraphicElement {
+   #added: boolean
+   +added(): boolean 
+   +add()
+   +remove()
+   +setAdded(status: boolean)
+}
+
+abstract class BaseTranslatableGraphicElement {
+   #label: JLabel
+   #bounds: Rectangle
+   +BaseTranslatableGraphicElement()
+   +getComponent(): JComponent 
+   +add()
+   +remove()
+   +translate(dx: int, dy: int)
+   +getPosition(): Point 
+   +setPosition(x: int, y: int)
+   +redraw()
+}
+
+class FlyweightSpriteFactory {
+   #{static} uniqueInstance: FlyweightSpriteFactory
+   #{static} SPRITES_DIR: String
+   #sprites: Map<String, Map<String, ImageIcon>>
+   -FlyweightSpriteFactory()
+   +{static}instance(): FlyweightSpriteFactory 
+   +ImageIcon> getSprites(entity: String, mode: String): Map<String, 
+   -ImageIcon> loadSprites(entity: String, mode: String): Map<String, 
+   -loadImage(file: File): ImageIcon 
+   +clearCache()
+   +hasSpritesLoaded(entity: String): boolean 
+}
+
+class GameGraphicElement {
+   #entity: Entity
+   #sprite: ImageIcon
+   #currentSprite: String
+   #lastNotNullSprite: String
+   #colorRemap: Map<Color, Color>
+   #flipped: boolean
+   #iconUpdated: boolean
+   #sprites: Map<String, ImageIcon>
+   #folder: String
+   +GameGraphicElement(e: Entity, folderPath: String)
+   +getEntity(): Entity 
+   +getSpriteName(): String 
+   +getSprite(): ImageIcon 
+   +lastNotNullSpriteName(): String 
+   +setSprite(s: String)
+   #forcefullyUpdateSprite(s: String)
+   +getComponent(): JLabel 
+   +reload()
+   +redraw()
+   #loadSprites()
+   +setFolder(f: String)
+   +getFolder(): String 
+   +isFlipped(): boolean 
+   +Color> getColorRemap(): Map<Color, 
+   +setColorRemap(: Map<Color, colorRemap: Color>)
+   +removeColorRemap()
+   +flipSprite()
+   +{static}flipImage(image: BufferedImage): BufferedImage 
+   +{static}remapSpriteColor(: Map<Color, colorRemap: Color>, sprite: ImageIcon): ImageIcon 
+   +{static}iconToBufferedImage(icon: ImageIcon): BufferedImage 
+}
+
+interface GraphicElement {
+   +getComponent(): JComponent 
+   +redraw()
+   +setAdded(status: boolean)
+   +added(): boolean 
+   +add()
+   +remove()
+   +reload()
+}
+
+class RankingScreen {
+   #rankingManager: RankingManager
+   +RankingScreen(ranking: RankingManager)
+   #initOverlay()
+}
+
+abstract class ScreenOverlay {
+   +{static} Color: final
+   #panel: JPanel
+   #text: String
+   #label: JLabel
+   #font: Font
+   #bounds: Rectangle
+   +ScreenOverlay(overlayText: String)
+   #initOverlay()
+   +getComponent(): JComponent 
+   +redraw()
+   +reload()
+   +add()
+}
+
+class StatsBar {
+   #font: Font
+   #timePanel: StatsPanel
+   #livesPanel: StatsPanel
+   #levelPanel: StatsPanel
+   #scorePanel: StatsPanel
+   #mainPanel: JPanel
+   #levelStats: Stats
+   +StatsBar(l: Stats)
+   +createPanel(font: Font): StatsPanel 
+   +addElement(element: StatsPanel)
+   +redraw()
+   +getComponent(): JComponent 
+   +getFont(): Font 
+   +onStatsChanged()
+   +reload()
+}
+
+class TemporaryScreenOverlay {
+   #timeout: int
+   +TemporaryScreenOverlay(overlayText: String, timeout: int)
+   +add()
+}
+
+class TextLabel {
+   #data: String
+   #font: Font
+   +TextLabel(s: String)
+   +redraw()
+   +reload()
+   +getComponent(): JComponent 
+}
+
+interface TranslatableGraphicElement {
+   +translate(dx: int, dy: int)
+   +getPosition(): Point 
+   +setPosition(x: int, y: int)
+}
+
+@enduml

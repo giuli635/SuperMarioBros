@@ -1,0 +1,50 @@
+@startuml
+
+abstract BaseGraphicElement
+abstract ScreenOverlay 
+abstract BaseTranslatableGraphicElement
+
+interface GraphicElement
+interface TranslatableGraphicElement
+interface LevelStatsObserver
+
+class FlyweightSpriteFactory <<Singleton>>
+
+BaseGraphicElement .u.|> GraphicElement
+
+BaseTranslatableGraphicElement -u-|> BaseGraphicElement
+BaseTranslatableGraphicElement .u.|> TranslatableGraphicElement
+BaseTranslatableGraphicElement "1" --> "1" Rectangle
+BaseTranslatableGraphicElement "1" --> "1" JLabel
+
+GameGraphicElement -u-|> BaseTranslatableGraphicElement
+GameGraphicElement "1" --> "1" Entity
+GameGraphicElement "1" --> "1" ImageIcon
+GameGraphicElement "1" --> "1" "Map<Color, Color>"
+GameGraphicElement "1" --> "1" "Map<String, ImageIcon>"
+
+ScreenOverlay -u-|> BaseGraphicElement
+ScreenOverlay "1" --> "1" JPanel
+ScreenOverlay "1" --> "1" JLabel
+ScreenOverlay "1" --> "1" Font
+ScreenOverlay "1" --> "1" Rectangle
+
+TemporaryScreenOverlay -u-|> ScreenOverlay
+
+RankingScreen -u-|> ScreenOverlay
+RankingScreen --> RankingManager
+
+StatsBar -u-|> BaseGraphicElement
+StatsBar .u.|> ObserverLevelStats
+StatsBar "1"  --> "1" JPanel
+StatsBar "1" --> "1" JLabel
+StatsBar "1" --> "5" StatsPanel
+StatsBar "1" --> "1" Stats
+StatsBar "1" --> "1" Font
+
+TextLabel -u-|> BaseTranslatableGraphicElement
+TextLabel "1" --> "1" Font
+
+FlyweightSpriteFactory "1" --> "0..*" ImageIcon
+
+@enduml

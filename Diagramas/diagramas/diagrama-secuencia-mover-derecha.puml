@@ -1,9 +1,0 @@
-@startuml
-Game --> Mario : update() 
-activate Mario
-Mario --> Game : getKeyPressed(KeyEvent.VK_W)
-alt true
-    Mario --> Position : alterX(speedX)
-end
-deactivate Mario
-@enduml

@@ -1,0 +1,11 @@
+@startuml
+interface Collider
+interface MovableEntityCollider
+interface BouncerCollider
+
+BouncerCollider -u-|> MovableEntityCollider
+
+UpdateableEntityCollider -u-|> Collider
+
+MovableEntityCollider -u-|> UpdateableEntityCollider	
+@enduml

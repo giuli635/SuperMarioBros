@@ -1,0 +1,83 @@
+@startuml
+class ChangeMarioColors {
+   +{static} int: final, : 50
+   #{static} int: final
+   #animator: ColorAnimator
+   +ChangeMarioColors(: List<Map<Color, colorsMapping: Color>>, m: Mario)
+   +execute()
+}
+
+class Crouch {
+   +{static} int: final
+   #crouched: boolean
+   #mario: Mario
+   +Crouch(m: Mario)
+   +execute()
+   +unCrouch(mario: Mario)
+}
+
+class DisappearSprite {
+   +{static} int: final, : 100
+   #{static} int: final
+   #disappear: int
+   #mario: Mario
+   +DisappearSprite(m: Mario)
+   +execute()
+}
+
+class HorizontalMovement {
+   +{static} int: final
+   +{static} int: final
+   +{static} float: final
+   +{static} float: final
+   +{static} int: final
+   #mario: Mario
+   +HorizontalMovement(m: Mario)
+   +execute()
+   #handleAirHorizontalMovement(m: Mario, currentDirection: Direction)
+   #handleGroundHorizontalMovement(m: Mario, currentDirection: Direction)
+}
+
+class ResolveHorizontalMovementDirection {
+   +{static} int: final
+   #mario: Mario
+   +ResolveHorizontalMovementDirection(m: Mario)
+   +execute()
+}
+
+class ResolveSprite {
+   +{static} int: final
+   #{static} int: final
+   +ResolveSprite(m: Mario)
+   +execute()
+}
+
+interface StrategyMarioAction {
+   +execute()
+}
+
+class ThrowFireBall {
+   +{static} int: final
+   +{static} int: final
+   +{static} int: final
+   #throwedBalls: int
+   #lastThrow: long
+   #mario: Mario
+   +ThrowFireBall(m: Mario)
+   +execute()
+   #createFireBall()
+   +increaseAmmo()
+}
+
+class VerticalMovement {
+   +{static} int: final
+   +{static} float: final
+   +{static} int: final, : 8
+   +{static} int: final
+   +{static} float: final
+   #mario: Mario
+   +VerticalMovement(m: Mario)
+   +execute()
+}
+
+@enduml

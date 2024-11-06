@@ -1,0 +1,24 @@
+@startuml
+abstract PowerUpCollider
+abstract BaseCollider
+
+interface BouncerCollider
+interface MovableEntityCollider
+interface PowerUp
+
+FireFlowerCollider -u-|> PowerUpCollider
+
+GreenMushroomCollider -u-|> PowerUpCollider
+GreenMushroomCollider "1" --> "1" GreenMushroom
+
+SuperMushroomCollider -u-|> PowerUpCollider 
+SuperMushroomCollider "1" --> "1" SuperMushroom
+
+StarCollider -u-|> PowerUpCollider
+StarCollider .u.|> BouncerCollider
+StarCollider "1" --> "1" Star
+
+PowerUpCollider -u-|> BaseCollider 
+PowerUpCollider .u.|> MovableEntityCollider
+PowerUpCollider "1" --> "1" PowerUp
+@enduml

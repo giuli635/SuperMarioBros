@@ -1,0 +1,139 @@
+@startuml
+abstract class BaseEnemy {
+   +{static} float: final, : 2f
+   +{static} float: final
+   +{static} String: final
+   +{static} String: final
+   +BaseEnemy()
+   +die(sprite: String)
+}
+
+class BuzzyBeetle {
+   #{static} SPRITES_FOLDER: String
+   +final {static} List<String> ANIMATED_SPRITES = List.of(
+   +final {static} FRAMES_PER_SPRITE: int
+   +final {static} int POINTS = 30 
+   #shell: boolean
+   #collider: BuzzyBeetleCollider
+   #graphicElement: GameGraphicElement
+   #animator: MovementAnimator
+   +BuzzyBeetle()
+   +clone(): BuzzyBeetle 
+   +recieveDamage()
+   +update()
+   +setShell(b: boolean)
+   +getShell(): boolean 
+   +getGraphicElement(): GameGraphicElement 
+   +getCollider(): BuzzyBeetleCollider 
+   +pointsToAdd(): int 
+   +pointsToSubtract(): int 
+}
+
+interface Enemy {
+   +recieveDamage()
+   +pointsToAdd(): int 
+   +pointsToSubtract(): int 
+}
+
+class Goomba {
+   #{static} SPRITES_FOLDER: String
+   +final {static} List<String> ANIMATED_SPRITES = List.of(
+   +final {static} FRAMES_PER_SPRITE: int
+   +final {static} POINTS: int
+   #speedX: int
+   #collider: GoombaCollider
+   #graphicElement: GameGraphicElement
+   #animator: MovementAnimator
+   +Goomba()
+   +update()
+   +recieveDamage()
+   +getGraphicElement(): GameGraphicElement 
+   +getCollider(): GoombaCollider 
+   +pointsToAdd(): int 
+   +pointsToSubtract(): int 
+}
+
+class KoopaTroopa {
+   #{static} SPRITES_FOLDER: String
+   +final {static} List<String> ANIMATED_SPRITES = List.of(
+   +final {static} FRAMES_PER_SPRITE: int
+   +final {static} POINTS: int
+   #shell: boolean
+   #collider: KoopaTroopaCollider
+   #graphicElement: GameGraphicElement
+   #animator: MovementAnimator
+   +KoopaTroopa()
+   +recieveDamage()
+   +update()
+   +setShell(b: boolean)
+   +getShell(): boolean 
+   +getGraphicElement(): GameGraphicElement 
+   +getCollider(): KoopaTroopaCollider 
+   +pointsToAdd(): int 
+   +pointsToSubtract(): int 
+}
+
+class Lakitu {
+   #{static} int: final
+   +final {static} POINTS: int
+   #{static} SPRITES_FOLDER: String
+   #lastThrowTime: long
+   #collider: LakituCollider
+   #graphicElement: GameGraphicElement
+   +Lakitu()
+   +recieveDamage()
+   +update()
+   +getGraphicElement(): GameGraphicElement 
+   +getCollider(): LakituCollider 
+   +pointsToAdd(): int 
+   +pointsToSubtract(): int 
+   +spawnEntity(e: ObserverUpdateableEntity, diffX: int, diffY: int)
+}
+
+class PiranhaPlant {
+   +{static} float: final
+   +{static} float: final
+   +{static} SPRITES_FOLDER: String
+   +final {static} List<String> ANIMATED_SPRITES = List.of(
+   +final {static} FRAMES_PER_SPRITE: int
+   +final {static} POINTS: int
+   #movingUp: boolean
+   #collider: PiranhaPlantCollider
+   #graphicElement: GameGraphicElement
+   #animator: MovementAnimator
+   +PiranhaPlant()
+   +recieveDamage()
+   +update()
+   -handleVerticalMovement()
+   +switchDirection()
+   +getGraphicElement(): GameGraphicElement 
+   +getCollider(): PiranhaPlantCollider 
+   +pointsToAdd(): int 
+   +pointsToSubtract(): int 
+}
+
+interface ShellEnemy {
+   +{static} int: final
+   +setShell(s: boolean)
+   +getShell(): boolean 
+}
+
+class Spiny {
+   #{static} SPRITES_FOLDER: String
+   +final {static} List<String> ANIMATED_SPRITES = List.of(
+   +final {static} FRAMES_PER_SPRITE: int
+   +final {static} POINTS: int
+   #speedX: int
+   #collider: SpinyCollider
+   #graphicElement: GameGraphicElement
+   #animator: MovementAnimator
+   +Spiny()
+   +recieveDamage()
+   +update()
+   +getGraphicElement(): GameGraphicElement 
+   +getCollider(): SpinyCollider 
+   +pointsToAdd(): int 
+   +pointsToSubtract(): int 
+}
+
+@enduml

@@ -1,0 +1,19 @@
+@startuml
+
+abstract BaseCollision
+
+interface VisitorCollision
+interface BouncerCollision
+interface MovableEntityCollision
+interface UpdateableEntityCollision
+
+MovableEntityCollision .u.|> UpdateableEntityCollision
+UpdateableEntityCollision .u.|> VisitorCollision
+BouncerCollision .u.|> MovableEntityCollision
+
+BaseCollision .u.|> VisitorCollision
+
+FireBallCollision .u.|> BouncerCollision
+FireBallCollision -u-|> BaseCollision
+FireBallCollision "1" --> "1" FireBallCollider
+@enduml

@@ -1,0 +1,51 @@
+@startuml
+abstract class Body {
+   +setSpritesFolder(folder: String)
+   +setSprite(s: String)
+   +adjustGraphicElementOnChange(newSprite: ImageIcon, previousSprite: ImageIcon)
+   +adjustColliderToGraphicElement()
+   +translate(dx: int, dy: int)
+   +displaceHorizontally(c: Collider): int 
+   +displaceVertically(c: Collider): int 
+   +spawnEntity(e: ObserverUpdateableEntity, diffX: int, diffY: int)
+}
+
+class ConfigurationBlock {
+   #{static} SPRITES_FOLDER: String
+   +final {static} List<String> ANIMATED_SPRITES = List.of(
+   +{static} int: final
+   #collider: SolidCollider
+   #graphicElement: GameGraphicElement
+   #text: TextLabel
+   #animator: MovementAnimator
+   +ConfigurationBlock(s: char)
+   +load()
+   +getGraphicElement(): GameGraphicElement 
+   +getCollider(): SolidCollider 
+   +update()
+}
+
+class EmptyBlock {
+   +final {static} int POINTS = -15 
+   #collider: EmptyBlockCollider
+   #graphicElement: GameGraphicElement
+   +EmptyBlock()
+   +getGraphicElement(): GameGraphicElement 
+   +getCollider(): EmptyBlockCollider 
+}
+
+interface Entity {
+   +getGraphicElement(): GameGraphicElement 
+   +getCollider(): Collider 
+}
+
+class FlagPole {
+   #{static} SPRITES_FOLDER: String
+   #collider: FlagPoleCollider
+   #graphicElement: GameGraphicElement
+   +FlagPole()
+   +getGraphicElement(): GameGraphicElement 
+   +getCollider(): FlagPoleCollider 
+}
+
+@enduml

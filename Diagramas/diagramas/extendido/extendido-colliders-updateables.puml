@@ -1,0 +1,14 @@
+@startuml
+interface BouncerCollider {
+   +getEntity(): Bouncer 
+}
+
+interface MovableEntityCollider {
+   +getEntity(): MovableEntity 
+}
+
+interface UpdateableEntityCollider {
+   +getEntity(): ObserverUpdateableEntity 
+}
+
+@enduml

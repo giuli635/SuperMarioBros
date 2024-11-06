@@ -1,0 +1,43 @@
+@startuml
+
+interface GraphicElement
+interface TranslatableGraphicElement
+interface EntityLoader
+interface UpdateableEntity
+interface ObserverLevelStats
+
+class SingletonGame <<Singleton>>
+class SingletonGraphicEngine <<Singleton>>
+class SingletonLevelReader <<Singleton>>
+class SingletonSoundManager <<Singleton>>
+class SingletonCollisionsEngine <<Singleton>>
+
+SingletonGame .u.|> WindowListener
+SingletonGame .u.|> KeyListener
+SingletonGame "1" --> "0..*" UpdatableEntity
+SingletonGame "1" --> "1" Stats
+SingletonGame "1" --> "0..*" KeyStatus
+
+SingletonCollisionsEngine "1" --> "0..*" Collider
+
+SingletonGraphicEngine "1" --> "1" JFrame
+SingletonGraphicEngine "1" --> "1" JLayeredPane
+SingletonGraphicEngine "1" --> "0..*" GraphicElement
+SingletonGraphicEngine "1" --> "*" TranslatableGraphicElement
+SingletonGraphicEngine "1" --> "2" GameGraphicElement
+SingletonGraphicEngine "1" --> "1" Font
+
+LanguageConfiguration "1" --> "2" Properties
+
+SingletonLevelReader "1" --> "0..*" EntityLoader
+
+RankingManager "1" --> "0..5" ScoreEntry
+
+SingletonSoundManager "1" --> "0..*" Clip
+
+Stats "1" --> "1" Timer
+
+StatsPanel -u-|> JPanel
+StatsPanel "1" --> "2" JLabel
+
+@enduml

@@ -1,0 +1,35 @@
+@startuml
+
+abstract Body
+abstract UpdateableBody
+abstract BaseMovableEntity
+
+interface Entity
+interface UpdateableEntity
+interface MovableEntity
+interface Collider
+interface GameGraphicElement
+
+Body "1" --> "1" Collider
+Body "1" --> "1" GameGraphicElement
+
+UpdateableEntity -u-|> Entity
+Body .u.|> Entity
+
+UpdateableBody .u.|> UpdateableEntity
+UpdateableBody -u-|> Body
+
+BaseMovableEntity .u.|> MovableEntity
+BaseMovableEntity -u-|> UpdateableBody
+
+Bouncer -u-|> UpdateableEntity
+
+FireBall .u.|> Bouncer
+FireBall -u-|> BaseMovableEntity
+FireBall "1" --> "1" FireBallCollider
+FireBall "1" --> "1" ThrowFireBall
+
+Coin -u-|> UpdateableBody
+Coin "1" --> "1" CoinCollider
+
+@enduml

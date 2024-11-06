@@ -1,0 +1,89 @@
+@startuml
+class BuzzyBeetleCollider {
+   #buzzyBeetle: BuzzyBeetle
+   +BuzzyBeetleCollider(z: BuzzyBeetle, b: Rectangle)
+   +getEntity(): BuzzyBeetle 
+   +getCollision(): BuzzyBeetleCollision 
+   +recieveCollision(c: VisitorCollision, a: Axis)
+}
+
+abstract class EnemyCollider {
+   #{static} DISPLACEMENT_COEFFICIENT: int
+   +Enemy getEntity(): abstract 
+   +EnemyCollider(b: Rectangle)
+   #kill(mario: Mario)
+   #getKilled(mario: Mario, sound: String)
+   +calculateCollisionDirection(m: MarioCollision): Direction 
+   +handleHorizontalCollision(m: MarioCollision)
+   +handleVerticalCollision(m: MarioCollision)
+   +handleHorizontalCollision(m: SuperMarioCollision)
+   +handleVerticalCollision(m: SuperMarioCollision)
+   +handleVerticalCollision(m: InvulnerableCollision)
+   +handleHorizontalCollision(m: InvulnerableCollision)
+   +handleHorizontalCollision(m: StarMarioCollision)
+   +handleVerticalCollision(m: StarMarioCollision)
+   +handleHorizontalCollision(f: FireBallCollision)
+   +handleVerticalCollision(f: FireBallCollision)
+   +handleVerticalCollision(e: EnemyCollision)
+   +handleVerticalCollision(s: ShellEnemyCollision)
+   #bounce(e: EnemyCollider)
+   +handleHorizontalCollision(s: ShellEnemyCollision)
+   +handleHorizontalCollision(e: EnemyCollision)
+}
+
+class GoombaCollider {
+   #goomba: Goomba
+   +GoombaCollider(g: Goomba, b: Rectangle)
+   +getEntity(): Goomba 
+   +getCollision(): GoombaCollision 
+   +recieveCollision(c: VisitorCollision, a: Axis)
+}
+
+class KoopaTroopaCollider {
+   #koopa: KoopaTroopa
+   +KoopaTroopaCollider(k: KoopaTroopa, b: Rectangle)
+   +getEntity(): KoopaTroopa 
+   +getCollision(): KoopaTroopaCollision 
+   +recieveCollision(c: VisitorCollision, a: Axis)
+}
+
+class LakituCollider {
+   #lakitu: Lakitu
+   +LakituCollider(l: Lakitu, b: Rectangle)
+   +getEntity(): Lakitu 
+   +getCollision(): LakituCollision 
+   +recieveCollision(c: VisitorCollision, a: Axis)
+}
+
+class PiranhaPlantCollider {
+   #piranha: PiranhaPlant
+   +PiranhaPlantCollider(p: PiranhaPlant, b: Rectangle)
+   +recieveCollision(c: VisitorCollision, a: Axis)
+   +getCollision(): PiranhaPlantCollision 
+   +getEntity(): PiranhaPlant 
+   +handleVerticalCollision(m: InvulnerableCollision)
+   +handleVerticalCollision(m: MarioCollision)
+   +handleVerticalCollision(m: SuperMarioCollision)
+}
+
+abstract class ShellEnemyCollider {
+   +ShellEnemy getEntity(): abstract 
+   +ShellEnemyCollider(b: Rectangle)
+   +handleHorizontalCollision(m: MarioCollision)
+   +handleHorizontalCollision(m: SuperMarioCollision)
+   +handleHorizontalCollision(m: StarMarioCollision)
+   +handleVerticalCollision(m: StarMarioCollision)
+   +handleHorizontalCollision(f: FireBallCollision)
+   +handleVerticalCollision(f: FireBallCollision)
+}
+
+class SpinyCollider {
+   #spiny: Spiny
+   +SpinyCollider(s: Spiny, b: Rectangle)
+   +getEntity(): Spiny 
+   +recieveCollision(c: VisitorCollision, a: Axis)
+   +getCollision(): SpinyCollision 
+   +handleVerticalCollision(m: MarioCollision)
+}
+
+@enduml

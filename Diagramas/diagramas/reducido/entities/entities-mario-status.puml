@@ -1,0 +1,24 @@
+@startuml
+
+abstract BaseMarioStatus
+
+interface CommandMarioStatus
+
+BaseMarioStatus .u.|> CommandMarioStatus
+BaseMarioStatus "1" --> "1" MarioCollider
+
+SuperMario -u-|> BaseMarioStatus
+SuperMario "1" --> "1" Crouch
+
+FireMario -u-|> BaseMarioStatus
+FireMario "1" --> "1" Crouch
+FireMario "1" --> "1" ThrowFireBall
+
+Invulnerable -u-|> BaseMarioStatus
+Invulnerable "1" --> "1" Timer
+Invulnerable "1" --> "1" DisappearSprite
+
+StarMario -u-|> BaseMarioStatus
+StarMario "1" --> "1" Timer
+StarMario "1" --> "1" ChangeMarioColors
+@enduml

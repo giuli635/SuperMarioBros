@@ -1,0 +1,12 @@
+@startuml
+abstract class Body
+
+Body "1" --> "1" Collider
+Body "1" --> "1" GameGraphicElement
+
+EmptyBlock -u-|> Body
+EmptyBlock "1" --> "1" EmptyBlockCollider
+
+FlagPole -u-|> Body
+FlagPole "1" --> "1" FlagPoleCollider
+@enduml

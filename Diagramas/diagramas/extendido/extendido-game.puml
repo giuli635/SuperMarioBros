@@ -1,0 +1,229 @@
+@startuml
+class LanguageConfiguration {
+   #{static} uniqueInstance: LanguageConfiguration
+   #configuration: Properties
+   #{static} String[]: final
+   #currLanguage: int
+   #language: Properties
+   #LanguageConfiguration()
+   +{static}instance(): LanguageConfiguration 
+   +setLanguage(s: String)
+   +get(s: String): String 
+   +nextLanguage()
+}
+
+class LevelReader {
+   +{static} int: final
+   #{static} uniqueInstance: LevelReader
+   #loaders: Map<Character, EntityLoader>
+   #{static} loadingStartingPoint: int
+   #column: int
+   #row: int
+   #chunk: String
+   -LevelReader()
+   #{static}instance(): LevelReader 
+   +loadLevel(file: String)
+   #loadEntities(br: BufferedReader)
+   #loadScreen()
+   -loadInvisibleColliders(lastChunkInScreen: int, windowHeight: int)
+   #loadUpdateablesEntitiesInScreen(lastChunkInScreen: int, loader: LoaderCollider)
+   +loadStats(stats: Stats)
+   +setColumn(i: int)
+   +getColumn(): int 
+   +setRow(i: int)
+   +getRow(): int 
+   +setChunk(s: String)
+   +getChunk(): String 
+}
+
+interface ObserverLevelStats {
+}
+
+class RankingManager {
+   -{static} String: final
+   -highScores: List<ScoreEntry>
+   +RankingManager()
+   +addScore(playerName: String, score: int)
+   -loadHighScores()
+   -saveHighScores()
+   +checkAndUpdateRanking(score: int): boolean 
+   +getHighScores(): List<ScoreEntry> 
+    static class ScoreEntry {
+}
+
+class SingletonCollisionsEngine {
+   #{static} uniqueInstance: SingletonCollisionsEngine
+   #chunks: List<List<Collider>>
+   #toUpdate: Set<Collider>
+   #currentCollider: Collider
+   #SingletonCollisionsEngine()
+   +{static}instance(): SingletonCollisionsEngine 
+   #checkCollision(c1: Collider, c2: Collider, axis: Axis)
+   +update()
+   #checkCollisions(axis: Axis)
+   #checkChunk(axis: Axis, i: int)
+   +updateColliderBounds(previousBounds: Rectangle, c: Collider)
+   #calculateChunk(minX: int, maxX: int): int[] 
+   #calculateChunk(bounds: Rectangle): int[] 
+   +add(collider: Collider)
+   #removeFromChunks(bounds: Rectangle, c: Collider)
+   +remove(collider: Collider)
+   +getCollidersInRange(lowerBound: int, higherBound: int): Iterable<Collider> 
+   +addToUpdate(c: Collider)
+   +reset()
+   +swap(toSwap: Collider, swapper: Collider)
+}
+
+class SingletonGame {
+   +{static} int: final
+   +{static} int: final
+   #Object lock = new Object(): final 
+   #{static} uniqueInstance: SingletonGame
+   #toUpdateRegistry: Set<ObserverUpdateableEntity>
+   #keysStatus: Map<Integer, KeyStatus>
+   #stats: Stats
+   #executionQueue: Queue<Runnable>
+   #pause: boolean
+   #runGameLoop: boolean
+   #runGame: boolean
+   #debugging: boolean
+   #levels: String[]
+   #frames: long
+   #toAddList = new ArrayList<>(): List<ObserverUpdateableEntity> 
+   #toRemoveList = new ArrayList<>(): List<ObserverUpdateableEntity> 
+   #rankingManager: RankingManager
+   -SingletonGame()
+   +{static}instance(): SingletonGame 
+   +registerToUpdate(e: ObserverUpdateableEntity)
+   +unregisterToUpdate(e: ObserverUpdateableEntity)
+   +getKeyStatus(key: int): KeyStatus 
+   #runGame()
+   #loop()
+   +advanceLevel()
+   +checkGameOver()
+   +reloadGameStatus()
+   +checkRanking()
+   +showRanking()
+   +{static} main(args: String[])
+   #resumeLoop()
+   +reload()
+   +resume()
+   +pause()
+   #togglePause()
+   +isDebugging(): boolean 
+   +setDebugging(debugging: boolean)
+   +getLevelStats(): Stats 
+   +getFrames(): long 
+   +windowActivated(e: WindowEvent)
+   +windowClosed(e: WindowEvent)
+   +windowClosing(e: WindowEvent)
+   +windowDeactivated(e: WindowEvent)
+   +windowDeiconified(e: WindowEvent)
+   +windowIconified(e: WindowEvent)
+   +windowOpened(e: WindowEvent)
+   +keyPressed(arg0: KeyEvent)
+   +keyReleased(arg0: KeyEvent)
+   +keyTyped(arg0: KeyEvent)
+}
+
+class SingletonGraphicEngine {
+   #{static} uniqueInstance: SingletonGraphicEngine
+   +{static} String: final, 02:  Comisión
+   +{static} Integer: final
+   +{static} Integer: final
+   +{static} Integer: final
+   +{static} int: final
+   +{static} int: final
+   +{static} String: final
+   #{static} String[]: final
+   #mode: int
+   #position: int
+   #frame: JFrame
+   #panel: JLayeredPane
+   #backgrounds: GameGraphicElement[]
+   #Set<GraphicElement> {static}ElementsOnScreen
+   #dynamicElementsOnScreen: Set<TranslatableGraphicElement>
+   #toRedraw: List<GraphicElement>
+   #font: Font
+   -SingletonGraphicEngine()
+   #loadFont()
+   #initFrame()
+   +initBackgrounds()
+   +{static}instance(): SingletonGraphicEngine 
+   +drawFrame()
+   +add(e: GraphicElement)
+   +remove(e: GraphicElement)
+   +add(e: TranslatableGraphicElement)
+   +remove(e: TranslatableGraphicElement)
+   #<T extends GraphicElement> add(e: T, set: Set<T>)
+   #<T extends GraphicElement> remove(e: T, set: Set<T>)
+   +getPanelSize(): Dimension 
+   +getPosition(): int 
+   +setPosition(x: int)
+   +translate(dx: int)
+   +scrollScreen(velocity: int) {  
+   +moveToBack(e: GraphicElement)
+   +moveToFront(e: GraphicElement)
+   +setDepth(e: GraphicElement, depth: Integer)
+   +reset()
+   +nextMode()
+   +reload()
+   +getMode(): String 
+   +addToRedraw(graphicElement: GraphicElement)
+   +getFont(): Font 
+   +setFont(font: Font)
+   +focusFrame()
+}
+
+class SingletonSoundManager {
+   #{static} uniqueInstance: SingletonSoundManager
+   #clips: Map<String, Clip>
+   #soundPath: String
+   -SingletonSoundManager()
+   +{static}instance(): SingletonSoundManager 
+   +playSound(soundFile: String)
+   +playLoopingSound(soundFile: String)
+   +pauseAllSounds()
+   +resumeAllSounds()
+   +removeAllSounds()
+}
+
+class Stats {
+   #remainingTime: double
+   #score: int
+   #lives: int
+   #levelNumber: int
+   #lastActualization: long
+   #timer: Timer
+   #timerPaused: boolean
+   #initialTime: int
+   #initialLives: int
+   #observers: List<ObserverLevelStats>
+   +Stats(initialTime: int, initialLives: int, numberLevel: int, scoreLevel: int)
+   #startTimer()
+   +addObserver(observer: ObserverLevelStats)
+   #notifyObserver()
+   +pauseTimer()
+   +resumeTimer()
+   +addLife()
+   +decreaseLives()
+   +modifyPoints(points: int)
+   +getLives() { : int 
+   +getScore() { : int 
+   +getRemainingTime() { : int 
+   +getLevelNumber(): int 
+   +setLevelNumber(levelNumber: int)
+   +advanceLevel()
+   +reset()
+}
+
+class StatsPanel {
+   #text: JLabel
+   #stat: JLabel
+   +StatsPanel(f: Font)
+   +getText(): String 
+   +setText(s: String)
+   +setStat(t: int)
+}
+
+@enduml

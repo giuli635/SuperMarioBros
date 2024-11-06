@@ -2,12 +2,46 @@
 geometry: landscape, margin=0.1cm
 ---
 
-![Diagrama extendido juego](./build/images/diagrama-extendido-game.svg)
+![](./build/images/extendido-colliders-enemies.svg)
 \newpage
-![Diagrama extendido personaje](./build/images/diagrama-extendido-loading.svg)
+![](./build/images/extendido-colliders-invisibles.svg)
 \newpage
-![Diagrama extendido entidades](./build/images/diagrama-extendido-entities.svg)
+![](./build/images/extendido-entities-updateables.svg)
 \newpage
-![Diagrama extendido gráficos](./build/images/diagrama-extendido-graphics.svg)
+![](./build/images/extendido-entities-solids.svg)
 \newpage
-![Diagrama extendido colisiones](./build/images/diagrama-extendido-collisions.svg)
+![](./build/images/extendido-colliders.svg)
+\newpage
+![](./build/images/extendido-entities-powerups.svg)
+\newpage
+![](./build/images/extendido-entities-mario-actions.svg)
+\newpage
+![](./build/images/extendido-entities-mario.svg)
+\newpage
+![](./build/images/extendido-collisions-mario.svg)
+\newpage
+![](./build/images/extendido-collisions.svg)
+\newpage
+![](./build/images/extendido-entities-mario-status.svg)
+\newpage
+![](./build/images/extendido-game.svg)
+\newpage
+![](./build/images/extendido-graphics.svg)
+\newpage
+![](./build/images/extendido-collisions-powerups.svg)
+\newpage
+![](./build/images/extendido-utils.svg)
+\newpage
+![](./build/images/extendido-collisions-updateables.svg)
+\newpage
+![](./build/images/extendido-colliders-updateables.svg)
+\newpage
+![](./build/images/extendido-colliders-mario.svg)
+\newpage
+![](./build/images/extendido-loading.svg)
+\newpage
+![](./build/images/extendido-colliders-solids.svg)
+\newpage
+![](./build/images/extendido-collisions-enemies.svg)
+\newpage
+![](./build/images/extendido-entities.svg)

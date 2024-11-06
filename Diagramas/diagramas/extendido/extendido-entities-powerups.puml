@@ -1,0 +1,61 @@
+@startuml
+class FireFlower {
+   #{static} SPRITES_FOLDER: String
+   +final {static} List<String> ANIMATED_SPRITES = List.of(
+   +final {static} FRAMES_PER_SPRITE: int
+   +final {static} POINTS_MARIO: int
+   +final {static} POINTS_SUPER_MARIO: int
+   +final {static} POINTS_FIRE_MARIO: int
+   #collider: FireFlowerCollider
+   #graphicElement: GameGraphicElement
+   #animator: MovementAnimator
+   +FireFlower()
+   +update()
+   +getGraphicElement(): GameGraphicElement 
+   +getCollider(): FireFlowerCollider 
+}
+
+class GreenMushroom {
+   #{static} SPRITES_FOLDER: String
+   +final {static} POINTS: int
+   #collider: GreenMushroomCollider
+   #graphicElement: GameGraphicElement
+   +GreenMushroom()
+   +getGraphicElement(): GameGraphicElement 
+   +getCollider(): GreenMushroomCollider 
+}
+
+interface PowerUp {
+   +{static} String: final
+}
+
+class Star {
+   +{static} String: final
+   +{static} final List<String> ANIMATED_SPRITES = List.of(
+   +{static} int: final
+   +final {static} POINTS_MARIO: int
+   +final {static} POINTS_SUPER_MARIO: int
+   +final {static} POINTS_STAR_MARIO: int
+   +final {static} BOUNCE_SPEED: int
+   #collider: StarCollider
+   #graphicElement: GameGraphicElement
+   #animator: MovementAnimator
+   +Star()
+   +update()
+   +getGraphicElement(): GameGraphicElement 
+   +getCollider(): StarCollider 
+   +bounce()
+}
+
+class SuperMushroom {
+   +final {static} POINTS_MARIO: int
+   +final {static} POINTS_SUPER_MARIO: int
+   #{static} SPRITES_FOLDER: String
+   #collider: SuperMushroomCollider
+   #graphicElement: GameGraphicElement
+   +SuperMushroom()
+   +getGraphicElement(): GameGraphicElement 
+   +getCollider(): SuperMushroomCollider 
+}
+
+@enduml

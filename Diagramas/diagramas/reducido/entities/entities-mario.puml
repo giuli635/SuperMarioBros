@@ -1,0 +1,12 @@
+@startuml
+abstract UpdateableBody
+interface StrategyMarioAction
+interface CommandMarioStatus
+
+Mario -u-|> UpdateableBody
+Mario "1" --> "4..*" StrategyMarioAction
+Mario "1" --> "0..*" CommandMarioStatus
+Mario "1" --> "1" MarioCollider
+Mario "1" --> "1" Stats
+Mario "1" --> "1" Direction
+@enduml

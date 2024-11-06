@@ -1,0 +1,23 @@
+@startuml
+abstract BaseCollider
+
+DeleterCollider -u-|> BaseCollider
+
+EmptyBlockCollider -u-|> BaseCollider
+EmptyBlockCollider "1" --> "1" EmptyBlock
+
+GraphicUnloaderCollider -u-|> BaseCollider
+
+LevelEndCollider -u-|> BaseCollider
+
+LoaderCollider -u-|> BaseCollider
+
+ScreenBorderCollider -u-|> BaseCollider
+ScreenBorderCollider "1" --> "1" Direction
+
+ScreenDisplacementCollider -u-|> BaseCollider
+ScreenDisplacementCollider "1" --> "1" ScreenBorderCollider
+ScreenDisplacementCollider "1" --> "1" LoaderCollider
+ScreenDisplacementCollider "1" --> "1" GraphicUnloaderCollider
+ScreenDisplacementCollider "1" --> "1" DeleterCollider
+@enduml

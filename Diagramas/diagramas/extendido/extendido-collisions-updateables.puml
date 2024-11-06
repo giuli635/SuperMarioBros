@@ -1,0 +1,52 @@
+@startuml
+interface BouncerCollision {
+   +getCollider(): BouncerCollider 
+}
+
+class FireBallCollision {
+   #collider: FireBallCollider
+   +FireBallCollision(c: FireBallCollider)
+   +getCollider(): FireBallCollider 
+   +collide(c: BlockCollider, a: Axis)
+   +collide(c: ScreenDisplacementCollider, a: Axis)
+   +collide(c: ScreenBorderCollider, a: Axis)
+   +collide(c: SpinyCollider, a: Axis)
+   +collide(c: KoopaTroopaCollider, a: Axis)
+   +collide(c: SuperMushroomCollider, a: Axis)
+   +collide(c: GoombaCollider, a: Axis)
+   +collide(c: LoaderCollider, a: Axis)
+   +collide(c: BrickCollider, a: Axis)
+   +collide(c: PipeCollider, a: Axis)
+   +collide(c: QuestionBlockCollider, a: Axis)
+   +collide(c: CoinCollider, a: Axis)
+   +collide(c: GraphicUnloaderCollider, a: Axis)
+   +collide(c: DeleterCollider, a: Axis)
+   +collide(c: LakituCollider, a: Axis)
+   +collide(c: BuzzyBeetleCollider, a: Axis)
+   +collide(c: PiranhaPlantCollider, a: Axis)
+   +collide(c: FireFlowerCollider, a: Axis)
+   +collide(c: StarMarioCollider, a: Axis)
+   +collide(c: SuperMarioCollider, a: Axis)
+   +collide(c: DefaultMarioCollider, a: Axis)
+   +collide(c: GreenMushroomCollider, a: Axis)
+   +collide(c: EmptyBlockCollider, a: Axis)
+   +collide(c: LevelEndCollider, a: Axis)
+   +collide(c: InvulnerableCollider, a: Axis)
+   +collide(c: FlagPoleCollider, a: Axis)
+   +collide(c: FireMarioCollider, a: Axis)
+   +collide(c: FireBallCollider, a: Axis)
+   +collide(c: ModeSwitcherCollider, a: Axis)
+   +collide(c: LanguageSwitcherCollider, a: Axis)
+   +collide(c: StarCollider, a: Axis)
+   +collide(c: RankingShowCollider, a: Axis)
+}
+
+interface MovableEntityCollision {
+   +getCollider(): MovableEntityCollider 
+}
+
+interface UpdateableEntityCollision {
+   +getCollider(): UpdateableEntityCollider 
+}
+
+@enduml

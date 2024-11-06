@@ -1,0 +1,22 @@
+@startuml
+abstract SolidCollider
+abstract BaseCollider
+
+interface UpdateableEntityCollider
+
+BlockCollider -u-|> SolidCollider
+BlockCollider "1" --> "1" Block
+
+BrickCollider -u-|> SolidCollider
+BrickCollider "1" --> "1" Brick
+
+PipeCollider -u-|> SolidCollider
+PipeCollider "1" --> "1" Pipe
+
+QuestionBlockCollider -u-|> SolidCollider
+QuestionBlockCollider "1" --> "1" UpdateableEntityCollider
+QuestionBlockCollider "1" --> "1" QuestionBlock
+
+SolidCollider -u-|> BaseCollider
+
+@enduml

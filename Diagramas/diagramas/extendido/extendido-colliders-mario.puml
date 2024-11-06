@@ -1,0 +1,59 @@
+@startuml
+class DefaultMarioCollider {
+   +{static} int: final
+   +DefaultMarioCollider(m: Mario, b: Rectangle)
+   +getCollision(): DefaultMarioCollision 
+   +recieveCollision(c: VisitorCollision, a: Axis)
+}
+
+class FireMarioCollider {
+   +{static} int: final
+   +FireMarioCollider(m: Mario, b: Rectangle, f: FireMario)
+   +getCollision(): FireMarioCollision 
+   +recieveCollision(c: VisitorCollision, a: Axis)
+}
+
+class InvulnerableCollider {
+   #mario: Mario
+   +{static} int: final
+   +InvulnerableCollider(m: Mario)
+   +getEntity(): Mario 
+   +recieveCollision(c: VisitorCollision, a: Axis)
+   +getCollision(): InvulnerableCollision 
+}
+
+abstract class MarioCollider {
+   #mario: Mario
+   #baseCollider: MarioCollider
+   #colliderOnTop: MarioCollider
+   #associatedState: CommandMarioStatus
+   #priority: int
+   +MarioCollider(b: Rectangle)
+   +getEntity(): Mario 
+   +MarioCollision getCollision(): abstract 
+   +getBaseCollider(): MarioCollider 
+   +getAssociatedState(): CommandMarioStatus 
+   +setBaseCollider(c: MarioCollider)
+   +getPriority(): int 
+   +setPriority(priority: int)
+   +getColliderOnTop(): MarioCollider 
+   +setColliderOnTop(collider: MarioCollider)
+}
+
+class StarMarioCollider {
+   #mario: Mario
+   +{static} int: final
+   +StarMarioCollider(m: Mario, starMario: StarMario)
+   +getEntity(): Mario 
+   +recieveCollision(c: VisitorCollision, a: Axis)
+   +getCollision(): StarMarioCollision 
+}
+
+class SuperMarioCollider {
+   +{static} int: final
+   +SuperMarioCollider(m: Mario, b: Rectangle, s: SuperMario)
+   +getCollision(): SuperMarioCollision 
+   +recieveCollision(c: VisitorCollision, a: Axis)
+}
+
+@enduml

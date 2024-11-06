@@ -1,0 +1,60 @@
+@startuml
+class BlockCollider {
+   #block: Block
+   +BlockCollider(e: Block, b: Rectangle)
+   +getEntity(): Block 
+   +recieveCollision(c: VisitorCollision, a: Axis)
+   +getCollision(): BlockCollision 
+}
+
+class BrickCollider {
+   #brick: Brick
+   +BrickCollider(brick2: Brick, b: Rectangle)
+   +getEntity(): Brick 
+   +recieveCollision(c: VisitorCollision, a: Axis)
+   +getCollision(): BrickCollision 
+   +handleVerticalCollision(m: MarioCollision)
+   +handleVerticalCollision(m: SuperMarioCollision)
+   #fallBackIntoPlace(displacement: int)
+}
+
+class PipeCollider {
+   #pipe: Pipe
+   +PipeCollider(e: Pipe, b: Rectangle)
+   +getEntity(): Pipe 
+   +recieveCollision(c: VisitorCollision, a: Axis)
+   +getCollision(): PipeCollision 
+   +handleVerticalCollision(p: PiranhaPlantCollision)
+   +handleHorizontalCollision(p: PiranhaPlantCollision)
+}
+
+class QuestionBlockCollider {
+   #questionBlock: QuestionBlock
+   +QuestionBlockCollider(e: QuestionBlock, b: Rectangle)
+   +getEntity(): QuestionBlock 
+   +recieveCollision(c: VisitorCollision, a: Axis)
+   +getCollision(): QuestionBlockCollision 
+   +handleVerticalCollision(m: MarioCollision)
+   +handleVerticalCollision(m: SuperMarioCollision)
+   #marioVerticalCollision(p: PowerUp, m: MarioCollision)
+   #fallBackIntoPlace(displacement: int)
+}
+
+abstract class SolidCollider {
+   +SolidCollider(b: Rectangle)
+   +handleHorizontalCollision(e: UpdateableEntityCollision)
+   +handleVerticalCollision(e: UpdateableEntityCollision)
+   +handleVerticalCollision(m: MovableEntityCollision)
+   +handleHorizontalCollision(m: MarioCollision)
+   +handleVerticalCollision(m: MarioCollision)
+   +handleHorizontalCollision(e: EnemyCollision)
+   +handleVerticalCollision(e: EnemyCollision)
+   +handleHorizontalCollision(p: PowerUpCollision)
+   +handleVerticalCollision(s: BouncerCollision)
+   +handleHorizontalCollision(p: FireBallCollision)
+   +displaceHorizontally(c: Collider): int 
+   +displaceVertically(c: Collider): int 
+   #fallBackIntoPlace(displacement: int)
+}
+
+@enduml

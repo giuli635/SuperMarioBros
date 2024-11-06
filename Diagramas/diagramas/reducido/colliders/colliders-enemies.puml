@@ -1,0 +1,28 @@
+@startuml
+abstract BaseCollider
+abstract EnemyCollider
+abstract ShellEnemyCollider
+
+EnemyCollider .u.|> MovableEntityCollider
+EnemyCollider -u-|> BaseCollider
+
+BuzzyBeetleCollider -u-|> ShellEnemyCollider
+BuzzyBeetleCollider "1" --> "1" BuzzyBeetle
+
+GoombaCollider -u-|> EnemyCollider
+GoombaCollider "1" --> "1" Goomba
+
+KoopaTroopaCollider -u-|> ShellEnemyCollider
+KoopaTroopaCollider "1" --> "1" KoopaTroopa
+
+LakituCollider -u-|> EnemyCollider
+LakituCollider "1" --> "1" Lakitu
+
+SpinyCollider -u-|> EnemyCollider
+SpinyCollider "1" --> "1" Spiny
+
+PiranhaPlantCollider -u-|> EnemyCollider
+PiranhaPlantCollider "1" --> "1" PiranhaPlant
+
+ShellEnemyCollider -u-|> EnemyCollider
+@enduml

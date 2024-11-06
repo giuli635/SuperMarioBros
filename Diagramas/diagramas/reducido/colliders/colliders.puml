@@ -1,0 +1,37 @@
+@startuml
+abstract BaseCollider
+abstract SolidCollider
+
+interface Collider
+interface BouncerCollider
+interface UpdateableEntityCollider
+
+BaseCollider .u.|> Collider
+BaseCollider "1" --> "1" Vector2D
+BaseCollider "1" --> "1" Rectangle
+
+SolidCollider -u-|> BaseCollider
+
+CoinCollider -u-|> BaseCollider
+CoinCollider .u.|> UpdateableEntityCollider
+CoinCollider "1" --> "1" Coin
+
+FireBallCollider -u-|> BaseCollider
+FireBallCollider .u.|> BouncerCollider
+FireBallCollider "1" --> "1" FireBall
+
+FlagPoleCollider -u-|> BaseCollider
+FlagPoleCollider "1" --> "1" FlagPole
+
+LanguageSwitcherCollider -u-|> SolidCollider
+LanguageSwitcherCollider .u.|> UpdateableEntityCollider
+LanguageSwitcherCollider "1" --> "1" ConfigurationBlock
+
+ModeSwitcherCollider -u-|> SolidCollider
+ModeSwitcherCollider .u.|> UpdateableEntityCollider
+ModeSwitcherCollider "1" --> "1" ConfigurationBlock
+
+RakingShowCollider -u-|> SolidCollider
+RakingShowCollider .u.|> UpdateableEntityCollider
+RakingShowCollider "1" --> "1" ConfigurationBlock
+@enduml

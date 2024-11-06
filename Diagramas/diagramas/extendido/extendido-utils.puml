@@ -1,0 +1,49 @@
+@startuml
+enum Axis {
+}package utils;
+
+abstract class BasePrioritizable {
+   #priority: int
+   +getPriority(): int 
+   +setPriority(p: int)
+}
+
+enum Direction {
+   +{static}opposite(d1: Direction): Direction 
+   +{static}sum(d1: Direction, d2: Direction): Direction 
+   +{static}horizontalDirectionFromSign(d: int): Direction 
+   +{static}signFromDirection(d1: Direction): int 
+   +{static}verticalDirectionFromSign(d: int): Direction 
+}
+
+enum KeyStatus {
+}
+
+interface Prioritizable {
+   +getPriority(): int 
+   +setPriority(p: int)
+}
+
+class PriorityComparator {
+   +compare(arg0: Prioritizable, arg1: Prioritizable): int 
+}
+
+class Vector2D {
+   #start: Point
+   #end: Point
+   #xComponent: double
+   #yComponent: double
+   +(s: Point, e: Point): Vector2D 
+   #calculateComponents()
+   +getStart(): Point 
+   +getEnd(): Point 
+   +sum(v: Vector2D): Vector2D 
+   +grow(dx: int, dy: int)
+   +translate(dx: int, dy: int)
+   +getXComponent(): double 
+   +getYComponent(): double 
+   +clone(): Vector2D 
+   +toString(): String 
+}
+
+@enduml

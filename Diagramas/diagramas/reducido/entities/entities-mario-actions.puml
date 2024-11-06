@@ -1,0 +1,17 @@
+@startuml
+
+abstract BaseMarioAction
+
+interface StrategyMarioAction
+
+BaseMarioAction .u.|> StrategyMarioAction
+
+Crouch -u-|> BaseMarioAction
+DisappearSprite -u-|> BaseMarioAction
+ResolveSprite -u-|> BaseMarioAction
+HorizontalMovement -u-|> BaseMarioAction
+ResolveHorizontalMovementDirection -u-|> BaseMarioAction
+VerticalMovement -u-|> BaseMarioAction
+ThrowFireBall -u-|> BaseMarioAction
+
+@enduml

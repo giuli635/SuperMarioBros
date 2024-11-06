@@ -1,0 +1,73 @@
+@startuml
+abstract class BaseMarioStatus {
+   #mario: Mario
+   #previousCollider: MarioCollider
+   #newSpritesFolder: String
+   #String previousSpritesFolder 
+   +BaseMarioStatus(m: Mario)
+   #swapSprites()
+   #revertSprites()
+}
+
+interface CommandMarioStatus {
+   +setStatus()
+   +removeStatus()
+}
+
+abstract class BaseMarioStatus {
+}
+
+interface CommandMarioStatus {
+}
+
+class FireMario {
+}
+
+class Invulnerable {
+}
+
+class StarMario {
+}
+
+class SuperMario {
+}
+
+class FireMario {
+   #{static} String: final
+   #{static} int: final
+   #fireBallThrower: ThrowFireBall
+   +FireMario(m: Mario)
+   +setStatus()
+   +removeStatus()
+}
+
+class Invulnerable {
+   #{static} int: final
+   #invulnerableCollider: MarioCollider
+   #timer: Timer
+   #disappearSprite: DisappearSprite
+   +Invulnerable(m: Mario)
+   +setStatus()
+   +removeStatus()
+}
+
+class StarMario {
+   #{static} int: final
+   #starCollider: MarioCollider
+   #colorChanger: ChangeMarioColors
+   #timer: Timer
+   +StarMario(m: Mario)
+   +setStatus()
+   +removeStatus()
+}
+
+class SuperMario {
+   #{static} String: final
+   #{static} int: final
+   #crouch: Crouch
+   +SuperMario(m: Mario)
+   +setStatus()
+   +removeStatus()
+}
+
+@enduml

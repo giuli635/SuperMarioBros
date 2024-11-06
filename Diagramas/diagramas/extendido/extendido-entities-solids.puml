@@ -1,0 +1,58 @@
+@startuml
+class Block {
+   #{static} SPRITES_FOLDER: String
+   #collider: BlockCollider
+   #graphicElement: GameGraphicElement
+   +Block()
+   +getGraphicElement(): GameGraphicElement 
+   +getCollider(): BlockCollider 
+}
+
+class Brick {
+   #{static} SPRITES_FOLDER: String
+   +{static} String: final
+   #collider: BrickCollider
+   #graphicElement: GameGraphicElement
+   +Brick()
+   +getGraphicElement(): GameGraphicElement 
+   +getCollider(): BrickCollider 
+}
+
+class Castle {
+   #{static} String: final
+   #sprite: String
+   +Castle(c: char)
+}
+
+class Pipe {
+   #{static} FOLDER_PATH: String
+   #{static} TOP_PIPE: String
+   #{static} BASE_PIPE: String
+   #collider: PipeCollider
+   #graphicElement: GameGraphicElement
+   +Pipe(c: char)
+   +getGraphicElement(): GameGraphicElement 
+   +getCollider(): PipeCollider 
+}
+
+class QuestionBlock {
+   #{static} SPRITES_FOLDER: String
+   +{static} final List<String> ANIMATED_SPRITES = List.of(
+   +{static} int: final
+   #collider: QuestionBlockCollider
+   #graphicElement: GameGraphicElement
+   #depends: boolean
+   #active: boolean
+   #entity: ObserverUpdateableEntity
+   #animator: MovementAnimator
+   +QuestionBlock(s: char)
+   +getGraphicElement(): GameGraphicElement 
+   +getCollider(): QuestionBlockCollider 
+   +setDepends(b: boolean)
+   +getDepends(): boolean 
+   +interaction(p: PowerUp)
+   +getActive(): boolean 
+   +update()
+}
+
+@enduml

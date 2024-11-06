@@ -1,0 +1,123 @@
+@startuml
+abstract class BaseCollider {
+   #bounds: Rectangle
+   #activated: boolean
+   #velocity: Vector2D
+   #colliding: boolean
+   #moving: boolean
+   #nextVelocity: Vector2D
+   +BaseCollider(b: Rectangle)
+   +isMoving(): boolean 
+   +setMoving(m: boolean)
+   +isColliding(): boolean 
+   +setColliding(c: boolean)
+   +getPosition(): Point 
+   +setPosition(x: int, y: int)
+   +getVelocity(): Vector2D 
+   +getNextVelocity(): Vector2D 
+   +isActivated(): boolean 
+   +setActivated(status: boolean)
+   +activate()
+   +deactivate()
+   +getBounds(): Rectangle 
+   +translate(dx: int, dy: int)
+   +moveX()
+   +moveY()
+   +updateVelocity()
+   +getSize(): Dimension 
+   +setSize(width: int, height: int)
+   +displaceX(intersection: Rectangle, coefficient: int): int 
+   +displaceY(intersection: Rectangle, coefficient: int): int 
+   +copy(c: Collider)
+   +track(c: Collider)
+   +handleHorizontalCollision(c: VisitorCollision)
+   +handleVerticalCollision(c: VisitorCollision)
+}
+
+class CoinCollider {
+   #coin: Coin
+   +CoinCollider(c: Coin, b: Rectangle)
+   +getEntity(): Coin 
+   +recieveCollision(c: VisitorCollision, a: Axis)
+   +getCollision(): CoinCollision 
+   +handleHorizontalCollision(m: MarioCollision)
+   +handleVerticalCollision(m: MarioCollision)
+}
+
+interface Collider {
+   +getEntity(): Entity 
+   +recieveCollision(c: VisitorCollision, a: Axis)
+   +getBounds(): Rectangle 
+   +getCollision(): VisitorCollision 
+   +setPosition(x: int, y: int)
+   +getPosition(): Point 
+   +translate(dx: int, dy: int)
+   +getSize(): Dimension 
+   +setSize(width: int, height: int)
+   +getVelocity(): Vector2D 
+   +getNextVelocity(): Vector2D 
+   +isActivated(): boolean 
+   +setActivated(status: boolean)
+   +activate()
+   +deactivate()
+   +updateVelocity()
+   +moveX()
+   +moveY()
+   +setColliding(c: boolean)
+   +isColliding(): boolean 
+   +isMoving(): boolean 
+   +setMoving(m: boolean)
+   +displaceX(intersection: Rectangle, coefficient: int): int 
+   +displaceY(intersection: Rectangle, coefficient: int): int 
+   +copy(c: Collider)
+   +track(c: Collider)
+}
+
+class FireBallCollider {
+   #fireBall: FireBall
+   +FireBallCollider(f: FireBall, b: Rectangle)
+   +recieveCollision(c: VisitorCollision, a: Axis)
+   +getCollision(): FireBallCollision 
+   +getEntity(): FireBall 
+}
+
+class FlagPoleCollider {
+   #flagPole: FlagPole
+   +FlagPoleCollider(e: FlagPole, b: Rectangle)
+   +getEntity(): Entity 
+   +recieveCollision(c: VisitorCollision, a: Axis)
+   +getCollision(): VisitorCollision 
+   +handleHorizontalCollision(m: MarioCollision)
+}
+
+class LanguageSwitcherCollider {
+   #block: ConfigurationBlock
+   +LanguageSwitcherCollider(e: ConfigurationBlock, b: Rectangle)
+   +getEntity(): ConfigurationBlock 
+   +recieveCollision(c: VisitorCollision, a: Axis)
+   +getCollision(): LanguageSwitcherCollision 
+   +handleVerticalCollision(m: MarioCollision)
+}
+
+class ModeSwitcherCollider {
+   #block: ConfigurationBlock
+   +ModeSwitcherCollider(q: ConfigurationBlock, b: Rectangle)
+   +getEntity(): ConfigurationBlock 
+   +recieveCollision(c: VisitorCollision, a: Axis)
+   +getCollision(): VisitorCollision 
+   +handleVerticalCollision(m: MarioCollision)
+}
+
+interface MovableCollider {
+}
+
+class RankingShowCollider {
+   #block: ConfigurationBlock
+   +RankingShowCollider(q: ConfigurationBlock, b: Rectangle)
+   +getEntity(): ConfigurationBlock 
+   +recieveCollision(c: VisitorCollision, a: Axis)
+   +getCollision(): VisitorCollision 
+   +handleVerticalCollision(m: MarioCollision)
+}
+
+@enduml

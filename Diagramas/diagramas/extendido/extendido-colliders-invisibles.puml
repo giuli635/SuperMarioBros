@@ -1,0 +1,80 @@
+@startuml
+class DeleterCollider {
+   +DeleterCollider(b: Rectangle)
+   +getEntity(): Entity 
+   +recieveCollision(c: VisitorCollision, a: Axis)
+   +getCollision(): DeleterCollision 
+   +delete(c: VisitorCollision)
+   +handleHorizontalCollision(c: UpdateableEntityCollision)
+   +handleHorizontalCollision(c: VisitorCollision)
+}
+
+class EmptyBlockCollider {
+   #block: EmptyBlock
+   +EmptyBlockCollider(e: EmptyBlock, b: Rectangle)
+   +getEntity(): EmptyBlock 
+   +recieveCollision(c: VisitorCollision, a: Axis)
+   +getCollision(): EmptyBlockCollision 
+   +handleVerticalCollision(m: MarioCollision)
+   +handleHorizontalCollision(m: MarioCollision)
+   +handleHorizontalCollision(p: UpdateableEntityCollision)
+   +handleVerticalCollision(p: UpdateableEntityCollision)
+   +handleHorizontalCollision(f: FireBallCollision)
+   +handleVerticalCollision(f: FireBallCollision)
+}
+
+class GraphicUnloaderCollider {
+   +GraphicUnloaderCollider(b: Rectangle)
+   +getEntity(): Entity 
+   +recieveCollision(c: VisitorCollision, a: Axis)
+   +getCollision(): UnloaderCollision 
+   +handleHorizontalCollision(c: VisitorCollision)
+}
+
+class LevelEndCollider {
+   +LevelEndCollider(b: Rectangle)
+   +getEntity(): Entity 
+   +recieveCollision(c: VisitorCollision, a: Axis)
+   +getCollision(): LevelEndCollision 
+   +handleHorizontalCollision(c: ScreenDisplacementCollision)
+}
+
+class LoaderCollider {
+   +LoaderCollider(b: Rectangle)
+   +getEntity(): Entity 
+   +recieveCollision(c: VisitorCollision, a: Axis)
+   +getCollision(): LoaderCollision 
+   +handleHorizontalCollision(c: UpdateableEntityCollision)
+}
+
+class ScreenBorderCollider {
+   #position: Direction
+   +ScreenBorderCollider(b: Rectangle, position: Direction)
+   +getEntity(): Entity 
+   +recieveCollision(c: VisitorCollision, a: Axis)
+   +getCollision(): ScreenBorderCollision 
+   +handleHorizontalCollision(m: MarioCollision)
+   +handleHorizontalCollision(c: VisitorCollision)
+   #horizontalCollision(c: VisitorCollision)
+   +handleHorizontalCollision(p: PiranhaPlantCollision)
+   +handleVerticalCollision(p: PiranhaPlantCollision)
+   +handleHorizontalCollision(c: LevelEndCollision)
+   +handleVerticalCollision(c: LevelEndCollision)
+   +handleHorizontalCollision(c: EmptyBlockCollision)
+   +handleVerticalCollision(c: EmptyBlockCollision)
+}
+
+class ScreenDisplacementCollider {
+   #leftBorder: ScreenBorderCollider
+   #rightBorder: ScreenBorderCollider
+   #loader: LoaderCollider
+   #unloader: GraphicUnloaderCollider
+   #deleter: DeleterCollider
+   +ScreenDisplacementCollider(
+   +getEntity(): Entity 
+   +getCollision(): ScreenDisplacementCollision 
+   +recieveCollision(c: VisitorCollision, a: Axis)
+   +handleHorizontalCollision(m: MarioCollision)
+}
+
+@enduml

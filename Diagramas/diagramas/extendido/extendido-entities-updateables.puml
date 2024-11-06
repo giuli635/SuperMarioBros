@@ -1,0 +1,118 @@
+@startuml
+interface Animator {
+   +animate()
+}
+
+abstract class BaseMovableEntity {
+   +{static} float: final
+   #falling: boolean
+   #speedX: float
+   #speedY: float
+   +switchDirection()
+   +getSpeedX(): float 
+   +setSpeedX(x: float)
+   +getSpeedY(): float 
+   +setSpeedY(y: float)
+   +applyGravity()
+   +land()
+   +update()
+}
+
+class Bouncer {
+   +bounce()
+   +applyGravity()
+   +update()
+   +getGraphicElement(): GameGraphicElement 
+   +getCollider(): Collider 
+}
+
+class Coin {
+   #{static} SPRITES_FOLDER: String
+   +final {static} List<String> ANIMATED_SPRITES = List.of(
+   +final {static} FRAMES_PER_SPRITE: int
+   +final {static} SOUND: String
+   +final {static} POINTS: int
+   #collider: CoinCollider
+   #graphicElement: GameGraphicElement
+   #animator: MovementAnimator
+   +Coin()
+   +update()
+   +getGraphicElement(): GameGraphicElement 
+   +getCollider(): CoinCollider 
+}
+
+class ColorAnimator {
+   #entity: Body
+   #colorsIterator: CyclicIterator<Map<Color, Color>>
+   #currentColors: Map<Color, Color>
+   #wasFlipped: boolean
+   +ColorAnimator(: List<Map<Color, colorMappings: Color>>, framesPerColor: int, e: Body)
+   +animate()
+}
+
+class CyclicIterator<E> {
+   #list: List<E>
+   #delay: int
+   #currentIndex: int
+   +CyclicIterator(l: List<E>, delay: int)
+   +next(): E 
+   +getDelay(): int 
+   +setDelay(delay: int)
+   +getCurrentIndex(): int 
+   +setCurrentIndex(currentIndex: int)
+   +getList(): List<E> 
+   +setList(list: List<E>)
+}
+
+class FireBall {
+   #{static} SPRITES_FOLDER: String
+   +final {static} List<String> ANIMATED_SPRITES = List.of(
+   +final {static} FRAMES_PER_SPRITE: int
+   #thrower: ThrowFireBall
+   #collider: FireBallCollider
+   #graphicElement: GameGraphicElement
+   #animator: MovementAnimator
+   #mario: Mario
+   +FireBall(t: ThrowFireBall, m: Mario)
+   +update()
+   +getGraphicElement(): GameGraphicElement 
+   +getCollider(): FireBallCollider 
+   +destroy()
+   +getMario(): Mario 
+   +unload()
+}
+
+interface MovableEntity {
+   +switchDirection()
+   +getSpeedY(): float 
+   +setSpeedY(y: float)
+   +getSpeedX(): float 
+   +setSpeedX(x: float)
+   +land()
+   +applyGravity()
+}
+
+class MovementAnimator {
+   #entity: Body
+   #spriteIterator: CyclicIterator<String>
+   #currentSprite: String
+   #wasFlipped: boolean
+   +MovementAnimator(sprites: List<String>, framesPerSprite: int, e: Body)
+   +animate()
+}
+
+interface ObserverUpdateableEntity {
+   +update()
+   +loaded(): boolean 
+   +load()
+   +unload()
+}
+
+abstract class UpdateableBody {
+   #loaded: boolean
+   +load()
+   +unload()
+   +loaded(): boolean 
+}
+
+@enduml
