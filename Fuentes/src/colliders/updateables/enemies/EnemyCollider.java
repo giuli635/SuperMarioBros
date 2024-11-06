@@ -16,6 +16,7 @@ import entities.updateables.enemies.BaseEnemy;
 import entities.updateables.enemies.Enemy;
 import entities.updateables.mario.Mario;
 import entities.updateables.mario.states.Invulnerable;
+import game.SingletonGame;
 import game.SingletonSoundManager;
 import utils.Direction;
 
@@ -164,6 +165,7 @@ public abstract class EnemyCollider extends BaseCollider implements MovableEntit
     }
     
     public void handleHorizontalCollision(EnemyCollision e) {
+        SingletonGame.instance().setDebugging(true);
         bounce(e.getCollider());
     }
 }

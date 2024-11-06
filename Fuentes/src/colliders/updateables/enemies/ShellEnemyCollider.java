@@ -3,6 +3,7 @@ package colliders.updateables.enemies;
 import java.awt.Rectangle;
 
 import collisions.updateables.FireBallCollision;
+import collisions.updateables.enemies.EnemyCollision;
 import collisions.updateables.mario.MarioCollision;
 import collisions.updateables.mario.StarMarioCollision;
 import collisions.updateables.mario.SuperMarioCollision;
@@ -66,5 +67,13 @@ public abstract class ShellEnemyCollider extends EnemyCollider {
     public void handleVerticalCollision(FireBallCollision f) {
         super.handleVerticalCollision(f);
         getEntity().recieveDamage();
+    }
+
+    @Override
+    public void handleHorizontalCollision(EnemyCollision e) {
+    }
+
+    @Override
+    public void handleVerticalCollision(EnemyCollision e) {
     }
 }
