@@ -8,7 +8,7 @@ import colliders.updateables.mario.*;
 import colliders.updateables.powerups.*;
 import utils.Axis;
 
-public interface Collision {
+public interface VisitorCollision {
     public Collider getCollider();
     public void collide(SuperMarioCollider c, Axis a);
     public void collide(DefaultMarioCollider c, Axis a);

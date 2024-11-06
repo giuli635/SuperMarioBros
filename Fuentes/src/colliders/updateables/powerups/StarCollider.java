@@ -3,7 +3,7 @@ package colliders.updateables.powerups;
 import java.awt.Rectangle;
 
 import colliders.updateables.BouncerCollider;
-import collisions.Collision;
+import collisions.VisitorCollision;
 import collisions.updateables.mario.MarioCollision;
 import collisions.updateables.mario.StarMarioCollision;
 import collisions.updateables.mario.SuperMarioCollision;
@@ -22,7 +22,7 @@ public class StarCollider extends PowerUpCollider implements BouncerCollider {
     }
 
     @Override
-    public void recieveCollision(Collision c, Axis a) {
+    public void recieveCollision(VisitorCollision c, Axis a) {
        c.collide(this, a);
     }
 

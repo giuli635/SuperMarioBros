@@ -3,7 +3,7 @@ package colliders.invisibles;
 import java.awt.Rectangle;
 
 import colliders.BaseCollider;
-import collisions.Collision;
+import collisions.VisitorCollision;
 import collisions.invisibles.UnloaderCollision;
 import entities.Entity;
 import graphics.GameGraphicElement;
@@ -21,7 +21,7 @@ public class GraphicUnloaderCollider extends BaseCollider {
     }
 
     @Override
-    public void recieveCollision(Collision c, Axis a) {
+    public void recieveCollision(VisitorCollision c, Axis a) {
         c.collide(this, a);
     }
 
@@ -30,7 +30,7 @@ public class GraphicUnloaderCollider extends BaseCollider {
         return new UnloaderCollision(this);
     }
 
-    public void handleHorizontalCollision(Collision c) {
+    public void handleHorizontalCollision(VisitorCollision c) {
         GameGraphicElement graphicElement = c.getCollider().getEntity().getGraphicElement();
         if (graphicElement != null) {
             graphicElement.remove();

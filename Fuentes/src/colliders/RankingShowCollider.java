@@ -4,12 +4,12 @@ import java.awt.Rectangle;
 
 import colliders.solids.SolidCollider;
 import colliders.updateables.UpdateableEntityCollider;
-import collisions.Collision;
+import collisions.VisitorCollision;
 import collisions.RankingShowCollision;
 import collisions.updateables.mario.MarioCollision;
 import entities.ConfigurationBlock;
 import entities.updateables.mario.Mario;
-import game.Game;
+import game.SingletonGame;
 import utils.Axis;
 
 public class RankingShowCollider extends SolidCollider implements UpdateableEntityCollider {
@@ -26,12 +26,12 @@ public class RankingShowCollider extends SolidCollider implements UpdateableEnti
     }
 
     @Override
-    public void recieveCollision(Collision c, Axis a) {
+    public void recieveCollision(VisitorCollision c, Axis a) {
         c.collide(this, a);
     }
 
     @Override
-    public Collision getCollision() {
+    public VisitorCollision getCollision() {
         return new RankingShowCollision(this);
     }
     
@@ -47,7 +47,7 @@ public class RankingShowCollider extends SolidCollider implements UpdateableEnti
             mario.setSpeedY(0);
             fallBackIntoPlace(displacement);
 
-            Game.instance().showRanking();
+            SingletonGame.instance().showRanking();
         }
     }
 }

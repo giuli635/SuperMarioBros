@@ -2,7 +2,7 @@ package colliders.updateables.powerups;
 
 import java.awt.Rectangle;
 
-import collisions.Collision;
+import collisions.VisitorCollision;
 import collisions.updateables.mario.FireMarioCollision;
 import collisions.updateables.mario.MarioCollision;
 import collisions.updateables.mario.SuperMarioCollision;
@@ -21,12 +21,12 @@ public class FireFlowerCollider extends PowerUpCollider {
     }
 
     @Override
-    public void recieveCollision(Collision c, Axis a) {
+    public void recieveCollision(VisitorCollision c, Axis a) {
         c.collide(this, a);
     }
 
     @Override
-    public Collision getCollision() {
+    public VisitorCollision getCollision() {
         return new FireFlowerCollision(this);
     }    
 

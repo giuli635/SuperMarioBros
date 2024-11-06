@@ -5,13 +5,13 @@ import entities.updateables.mario.Mario;
 import graphics.GameGraphicElement;
 import utils.BasePrioritizable;
 
-public abstract class BaseMarioState extends BasePrioritizable implements MarioState {
+public abstract class BaseMarioStatus extends BasePrioritizable implements CommandMarioStatus {
     protected Mario mario;
     protected MarioCollider previousCollider;
     protected String newSpritesFolder;
     protected String previousSpritesFolder; 
 
-    public BaseMarioState(Mario m) {
+    public BaseMarioStatus(Mario m) {
         mario = m;
     }
 

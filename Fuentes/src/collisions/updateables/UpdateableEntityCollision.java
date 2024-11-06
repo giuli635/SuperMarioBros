@@ -1,8 +1,8 @@
 package collisions.updateables;
 
 import colliders.updateables.UpdateableEntityCollider;
-import collisions.Collision;
+import collisions.VisitorCollision;
 
-public interface UpdateableEntityCollision extends Collision {
+public interface UpdateableEntityCollision extends VisitorCollision {
     public UpdateableEntityCollider getCollider();
 }

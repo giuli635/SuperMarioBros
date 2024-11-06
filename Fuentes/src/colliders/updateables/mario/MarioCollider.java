@@ -6,15 +6,15 @@ import colliders.BaseCollider;
 import colliders.updateables.UpdateableEntityCollider;
 import collisions.updateables.mario.MarioCollision;
 import entities.updateables.mario.Mario;
-import entities.updateables.mario.states.MarioState;
-import game.CollisionsEngine;
+import entities.updateables.mario.states.CommandMarioStatus;
+import game.SingletonCollisionsEngine;
 import utils.Prioritizable;
 
 public abstract class MarioCollider extends BaseCollider implements UpdateableEntityCollider, Prioritizable {
     protected Mario mario;
     protected MarioCollider baseCollider;
     protected MarioCollider colliderOnTop;
-    protected MarioState associatedState;
+    protected CommandMarioStatus associatedState;
     protected int priority;
 
     public MarioCollider(Rectangle b) {
@@ -35,7 +35,7 @@ public abstract class MarioCollider extends BaseCollider implements UpdateableEn
         return baseCollider;
     }
 
-    public MarioState getAssociatedState() {
+    public CommandMarioStatus getAssociatedState() {
         return associatedState;
     }
 
@@ -50,7 +50,7 @@ public abstract class MarioCollider extends BaseCollider implements UpdateableEn
             bounds = new Rectangle(bounds);
         }
 
-        CollisionsEngine.instance().updateColliderBounds(previousBounds, this);
+        SingletonCollisionsEngine.instance().updateColliderBounds(previousBounds, this);
     }
 
     public int getPriority() {

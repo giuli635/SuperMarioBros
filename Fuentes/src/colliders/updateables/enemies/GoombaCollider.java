@@ -2,7 +2,7 @@ package colliders.updateables.enemies;
 
 import java.awt.Rectangle;
 
-import collisions.Collision;
+import collisions.VisitorCollision;
 import collisions.updateables.enemies.GoombaCollision;
 import entities.updateables.enemies.Goomba;
 import utils.Axis;
@@ -26,7 +26,7 @@ public class GoombaCollider extends EnemyCollider {
     }
 
     @Override
-    public void recieveCollision(Collision c, Axis a) {
+    public void recieveCollision(VisitorCollision c, Axis a) {
         c.collide(this, a);
     }
 }

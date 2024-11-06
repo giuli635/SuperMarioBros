@@ -4,8 +4,8 @@ import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.Rectangle;
 
-import collisions.Collision;
-import game.CollisionsEngine;
+import collisions.VisitorCollision;
+import game.SingletonCollisionsEngine;
 import utils.Vector2D;
 
 public abstract class BaseCollider implements Collider {
@@ -52,7 +52,7 @@ public abstract class BaseCollider implements Collider {
 
     @Override
     public void setPosition(int x, int y) {
-        CollisionsEngine collisionsEngine = CollisionsEngine.instance();
+        SingletonCollisionsEngine collisionsEngine = SingletonCollisionsEngine.instance();
         Rectangle previousBounds = new Rectangle(bounds);
         bounds.setLocation(x, y);
         collisionsEngine.updateColliderBounds(previousBounds, this);
@@ -80,12 +80,12 @@ public abstract class BaseCollider implements Collider {
 
     @Override
     public void activate() {
-        CollisionsEngine.instance().add(this);
+        SingletonCollisionsEngine.instance().add(this);
     }
 
     @Override
     public void deactivate() {
-        CollisionsEngine.instance().remove(this);
+        SingletonCollisionsEngine.instance().remove(this);
         velocity = new Vector2D(bounds.getLocation(), bounds.getLocation());
         nextVelocity = new Vector2D(bounds.getLocation(), bounds.getLocation());
         moving = false;
@@ -102,18 +102,18 @@ public abstract class BaseCollider implements Collider {
         if (!activated) {
             bounds.translate(dx, dy);
         } else if (colliding) {
-            CollisionsEngine collisionsEngine = CollisionsEngine.instance();
+            SingletonCollisionsEngine collisionsEngine = SingletonCollisionsEngine.instance();
             Rectangle previousBounds = new Rectangle(bounds);
             bounds.translate(dx, dy);
             nextVelocity.translate(dx, dy);
             collisionsEngine.updateColliderBounds(previousBounds, this);
         } else if (moving) {
             nextVelocity.grow(dx, dy);
-            CollisionsEngine.instance().addToUpdate(this);
+            SingletonCollisionsEngine.instance().addToUpdate(this);
         } else {
             velocity.grow(dx, dy);
             nextVelocity.translate(dx, dy);
-            CollisionsEngine.instance().addToUpdate(this);
+            SingletonCollisionsEngine.instance().addToUpdate(this);
         }
     }
 
@@ -141,7 +141,7 @@ public abstract class BaseCollider implements Collider {
     @Override
     public void setSize(int width, int height) {
         bounds.setSize(width, height);
-        CollisionsEngine.instance().updateColliderBounds(bounds, this);
+        SingletonCollisionsEngine.instance().updateColliderBounds(bounds, this);
     }
 
     @Override
@@ -176,11 +176,11 @@ public abstract class BaseCollider implements Collider {
         bounds = c.getBounds();
     }
 
-    public void handleHorizontalCollision(Collision c) {
+    public void handleHorizontalCollision(VisitorCollision c) {
         c.setManaged(false);
     }
 
-    public void handleVerticalCollision(Collision c) {
+    public void handleVerticalCollision(VisitorCollision c) {
         c.setManaged(false);
     }
 }

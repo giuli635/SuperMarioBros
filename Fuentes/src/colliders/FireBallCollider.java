@@ -3,7 +3,7 @@ package colliders;
 import java.awt.Rectangle;
 
 import colliders.updateables.BouncerCollider;
-import collisions.Collision;
+import collisions.VisitorCollision;
 import collisions.updateables.FireBallCollision;
 import entities.updateables.FireBall;
 import utils.Axis;
@@ -17,7 +17,7 @@ public class FireBallCollider extends BaseCollider implements BouncerCollider {
     }
 
     @Override
-    public void recieveCollision(Collision c, Axis a) {
+    public void recieveCollision(VisitorCollision c, Axis a) {
        c.collide(this, a);
     }
 

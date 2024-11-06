@@ -2,7 +2,7 @@ package colliders.solids;
 
 import java.awt.Rectangle;
 
-import collisions.Collision;
+import collisions.VisitorCollision;
 import collisions.solids.PipeCollision;
 import collisions.updateables.enemies.PiranhaPlantCollision;
 import entities.solids.Pipe;
@@ -21,7 +21,7 @@ public class PipeCollider extends SolidCollider {
     }
 
     @Override
-    public void recieveCollision(Collision c, Axis a) {
+    public void recieveCollision(VisitorCollision c, Axis a) {
         c.collide(this, a);
     }
 

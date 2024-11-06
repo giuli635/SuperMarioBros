@@ -7,7 +7,7 @@ import colliders.updateables.mario.SuperMarioCollider;
 import entities.updateables.mario.Mario;
 import entities.updateables.mario.actions.Crouch;
 
-public class SuperMario extends BaseMarioState {
+public class SuperMario extends BaseMarioStatus {
     protected static final String SUPER_MARIO_SPRITES = "superMario";
     protected static final int PRIORITY = 0;
     protected Crouch crouch;
@@ -19,7 +19,7 @@ public class SuperMario extends BaseMarioState {
     }
 
     @Override
-    public void setState() {
+    public void setStatus() {
         MarioCollider newCollider = new SuperMarioCollider(mario, new Rectangle(), this);
 
         previousCollider = mario.setCollider(newCollider);
@@ -30,7 +30,7 @@ public class SuperMario extends BaseMarioState {
     }
 
     @Override
-    public void removeState() {
+    public void removeStatus() {
         crouch.unCrouch(mario);
         mario.setCollider(previousCollider);
         revertSprites();

@@ -4,13 +4,13 @@ import java.awt.Rectangle;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import collisions.Collision;
+import collisions.VisitorCollision;
 import collisions.solids.BrickCollision;
 import collisions.updateables.mario.MarioCollision;
 import collisions.updateables.mario.SuperMarioCollision;
 import entities.solids.Brick;
 import entities.updateables.mario.Mario;
-import game.SoundManager;
+import game.SingletonSoundManager;
 import utils.Axis;
 
 public class BrickCollider extends SolidCollider {
@@ -26,7 +26,7 @@ public class BrickCollider extends SolidCollider {
     }
 
     @Override
-    public void recieveCollision(Collision c, Axis a) {
+    public void recieveCollision(VisitorCollision c, Axis a) {
         c.collide(this, a);
     }
 
@@ -57,7 +57,7 @@ public class BrickCollider extends SolidCollider {
             brick.getCollider().deactivate();
             brick.getGraphicElement().remove();
             mario.setSpeedY(0);
-            SoundManager.instance().playSound(Brick.SOUND);
+            SingletonSoundManager.instance().playSound(Brick.SOUND);
         }
         else{
             mario.land();

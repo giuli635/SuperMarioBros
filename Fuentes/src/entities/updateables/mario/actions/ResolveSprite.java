@@ -6,7 +6,7 @@ import graphics.GameGraphicElement;
 import utils.BasePrioritizable;
 import utils.Direction;
 
-public class ResolveSprite extends BasePrioritizable implements MarioAction {
+public class ResolveSprite extends BasePrioritizable implements StrategyMarioAction {
     public static final int DEFAULT_PRIORITY = 0;
     protected static final int FRAMES_PER_SPRITE = 10;
     Mario mario;

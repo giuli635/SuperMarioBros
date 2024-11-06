@@ -6,18 +6,18 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
-public class SoundManager {
-    protected static SoundManager uniqueInstance;
+public class SingletonSoundManager {
+    protected static SingletonSoundManager uniqueInstance;
     protected Map<String, Clip> clips;
     protected String soundPath = "sound/";
     
-    private SoundManager() {
+    private SingletonSoundManager() {
         clips = new HashMap<>();
     }
 
-    public static SoundManager instance() {
+    public static SingletonSoundManager instance() {
         if (uniqueInstance == null) {
-            uniqueInstance = new SoundManager();
+            uniqueInstance = new SingletonSoundManager();
         }
         return uniqueInstance;
     }

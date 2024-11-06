@@ -9,29 +9,29 @@ import java.util.Vector;
 import java.util.concurrent.ConcurrentHashMap;
 
 import colliders.Collider;
-import collisions.Collision;
+import collisions.VisitorCollision;
 import utils.Axis;
 
-public class CollisionsEngine {
-    protected static CollisionsEngine uniqueInstance;
+public class SingletonCollisionsEngine {
+    protected static SingletonCollisionsEngine uniqueInstance;
     protected List<List<Collider>> chunks;
     protected Set<Collider> toUpdate;
     protected Collider currentCollider;
 
-    protected CollisionsEngine() {
+    protected SingletonCollisionsEngine() {
         reset();
     }
 
-    public static CollisionsEngine instance() {
+    public static SingletonCollisionsEngine instance() {
         if (uniqueInstance == null) {
-            uniqueInstance = new CollisionsEngine();
+            uniqueInstance = new SingletonCollisionsEngine();
         }
         return uniqueInstance;
     }
 
     protected void checkCollision(Collider c1, Collider c2, Axis axis) {
         if (c2.isActivated() && c1.getBounds().intersects(c2.getBounds())) {
-            Collision first = c1.getCollision();
+            VisitorCollision first = c1.getCollision();
             c2.recieveCollision(first, axis);
             if (!first.wasManaged()) {
                 c1.recieveCollision(c2.getCollision(), axis);

@@ -4,14 +4,14 @@ import java.awt.Point;
 import java.awt.Rectangle;
 
 import colliders.BaseCollider;
-import collisions.Collision;
+import collisions.VisitorCollision;
 import collisions.invisibles.EmptyBlockCollision;
 import collisions.invisibles.LevelEndCollision;
 import collisions.invisibles.ScreenBorderCollision;
 import collisions.updateables.enemies.PiranhaPlantCollision;
 import collisions.updateables.mario.MarioCollision;
 import entities.Entity;
-import game.GraphicEngine;
+import game.SingletonGraphicEngine;
 import game.LevelReader;
 import graphics.GameGraphicElement;
 import utils.Axis;
@@ -31,7 +31,7 @@ public class ScreenBorderCollider extends BaseCollider {
     }
 
     @Override
-    public void recieveCollision(Collision c, Axis a) {
+    public void recieveCollision(VisitorCollision c, Axis a) {
         c.collide(this, a);
     }
 
@@ -46,12 +46,12 @@ public class ScreenBorderCollider extends BaseCollider {
         m.getCollider().getEntity().getGraphicElement().translate(displacement, 0);
     }
 
-    public void handleHorizontalCollision(Collision c) {
+    public void handleHorizontalCollision(VisitorCollision c) {
         horizontalCollision(c);
     }
 
-    protected void horizontalCollision(Collision c) {
-        GraphicEngine graphicEngine = GraphicEngine.instance();
+    protected void horizontalCollision(VisitorCollision c) {
+        SingletonGraphicEngine graphicEngine = SingletonGraphicEngine.instance();
         GameGraphicElement graphicElement = c.getCollider().getEntity().getGraphicElement();
 
         Direction myCollisionDirection = Direction.horizontalDirectionFromSign(
@@ -79,16 +79,10 @@ public class ScreenBorderCollider extends BaseCollider {
 
     public void handleHorizontalCollision(PiranhaPlantCollision p) {
         horizontalCollision(p);
-        GraphicEngine.instance().moveToBack(
-            p.getCollider().getEntity().getGraphicElement()
-        );
     }
 
     public void handleVerticalCollision(PiranhaPlantCollision p) {
         horizontalCollision(p);
-        GraphicEngine.instance().moveToBack(
-            p.getCollider().getEntity().getGraphicElement()
-        );
     }
 
     public void handleHorizontalCollision(LevelEndCollision c){

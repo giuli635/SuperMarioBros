@@ -1,6 +1,6 @@
 package collisions.solids;
 
-import collisions.Collision;
+import collisions.VisitorCollision;
 
-public interface SolidCollision extends Collision {
+public interface SolidCollision extends VisitorCollision {
 }

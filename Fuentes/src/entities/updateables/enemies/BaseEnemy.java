@@ -4,8 +4,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import entities.updateables.BaseMovableEntity;
-import game.Game;
-import game.GraphicEngine;
+import game.SingletonGame;
+import game.SingletonGraphicEngine;
 import graphics.GameGraphicElement;
 
 public abstract class BaseEnemy extends BaseMovableEntity implements Enemy {
@@ -26,15 +26,15 @@ public abstract class BaseEnemy extends BaseMovableEntity implements Enemy {
 
         GameGraphicElement graphicElement = getGraphicElement();
         setSprite(sprite);
-        GraphicEngine.instance().moveToBack(graphicElement);
+        SingletonGraphicEngine.instance().moveToBack(graphicElement);
         
         Timer timer = new Timer();
         TimerTask task = new TimerTask() {
             public void run(){
-                GraphicEngine.instance().remove(graphicElement);
+                SingletonGraphicEngine.instance().remove(graphicElement);
             }
         };
 
-        timer.schedule(task, Game.SECOND);
+        timer.schedule(task, SingletonGame.SECOND);
     }
 }

@@ -4,13 +4,13 @@ import java.awt.event.KeyEvent;
 
 import entities.updateables.FireBall;
 import entities.updateables.mario.Mario;
-import game.Game;
+import game.SingletonGame;
 import game.LevelReader;
-import game.SoundManager;
+import game.SingletonSoundManager;
 import utils.BasePrioritizable;
 import utils.KeyStatus;
 
-public class ThrowFireBall extends BasePrioritizable implements MarioAction {
+public class ThrowFireBall extends BasePrioritizable implements StrategyMarioAction {
     public static final int DEFAULT_PRIORITY = 1000;
     public static final int MAX_FIRE_BALL = 2;
     public static final int COOLDOWN = 500;
@@ -28,7 +28,7 @@ public class ThrowFireBall extends BasePrioritizable implements MarioAction {
 
     @Override
     public void execute() {
-        if (Game.instance().getKeyStatus(KeyEvent.VK_SPACE) == KeyStatus.PRESSED) {
+        if (SingletonGame.instance().getKeyStatus(KeyEvent.VK_SPACE) == KeyStatus.PRESSED) {
             long currentTime = System.currentTimeMillis();
             if (throwedBalls < MAX_FIRE_BALL && currentTime - lastThrow > COOLDOWN) {
                 lastThrow = currentTime;
@@ -56,7 +56,7 @@ public class ThrowFireBall extends BasePrioritizable implements MarioAction {
             fireBall.translate(-mario.getGraphicElement().getSprite().getIconWidth(), 0);
         }
 
-        SoundManager.instance().playSound("fireball.wav");
+        SingletonSoundManager.instance().playSound("fireball.wav");
     }
 
     public void increaseAmmo() {

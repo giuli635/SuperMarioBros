@@ -4,7 +4,7 @@ import java.awt.Rectangle;
 
 import colliders.solids.SolidCollider;
 import colliders.updateables.UpdateableEntityCollider;
-import collisions.Collision;
+import collisions.VisitorCollision;
 import collisions.LanguageSwitcherCollision;
 import collisions.updateables.mario.MarioCollision;
 import entities.ConfigurationBlock;
@@ -26,7 +26,7 @@ public class LanguageSwitcherCollider extends SolidCollider implements Updateabl
     }
 
     @Override
-    public void recieveCollision(Collision c, Axis a) {
+    public void recieveCollision(VisitorCollision c, Axis a) {
         c.collide(this, a);
     }
 
