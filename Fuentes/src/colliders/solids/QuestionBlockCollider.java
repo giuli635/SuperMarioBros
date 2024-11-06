@@ -4,7 +4,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import colliders.updateables.UpdateableEntityCollider;
-import collisions.Collision;
+import collisions.VisitorCollision;
 import collisions.solids.QuestionBlockCollision;
 import collisions.updateables.mario.MarioCollision;
 import collisions.updateables.mario.SuperMarioCollision;
@@ -28,7 +28,7 @@ public class QuestionBlockCollider extends SolidCollider implements UpdateableEn
     }
 
     @Override
-    public void recieveCollision(Collision c, Axis a) {
+    public void recieveCollision(VisitorCollision c, Axis a) {
         c.collide(this, a);
     }
 

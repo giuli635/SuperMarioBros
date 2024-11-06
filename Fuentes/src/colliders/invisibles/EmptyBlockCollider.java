@@ -3,7 +3,7 @@ package colliders.invisibles;
 import java.awt.Rectangle;
 
 import colliders.BaseCollider;
-import collisions.Collision;
+import collisions.VisitorCollision;
 import collisions.invisibles.EmptyBlockCollision;
 import collisions.updateables.FireBallCollision;
 import collisions.updateables.UpdateableEntityCollision;
@@ -25,7 +25,7 @@ public class EmptyBlockCollider extends BaseCollider {
     }
 
     @Override
-    public void recieveCollision(Collision c, Axis a) {
+    public void recieveCollision(VisitorCollision c, Axis a) {
         c.collide(this, a);
     }
 

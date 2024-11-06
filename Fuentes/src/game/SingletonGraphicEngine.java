@@ -20,8 +20,8 @@ import graphics.GameGraphicElement;
 import graphics.GraphicElement;
 import graphics.TranslatableGraphicElement;
 
-public class GraphicEngine {
-    protected static GraphicEngine uniqueInstance;
+public class SingletonGraphicEngine {
+    protected static SingletonGraphicEngine uniqueInstance;
     public static final String FRAME_TITLE = "Super Mario Bros. - Comisión 02 TDP";
     public static final Integer BACKGROUND_DEPTH = 0;
     public static final Integer FRONT_DEPTH = 100;
@@ -41,7 +41,7 @@ public class GraphicEngine {
     protected List<GraphicElement> toRedraw;
     protected Font font;
 
-    private GraphicEngine() {
+    private SingletonGraphicEngine() {
         staticElementsOnScreen = new HashSet<>();
         dynamicElementsOnScreen = new HashSet<>();
         toRedraw = new ArrayList<>();
@@ -67,8 +67,8 @@ public class GraphicEngine {
 
     protected void initFrame() {
         frame = new JFrame(FRAME_TITLE);
-        frame.addWindowListener(Game.instance());
-        frame.addKeyListener(Game.instance());
+        frame.addWindowListener(SingletonGame.instance());
+        frame.addKeyListener(SingletonGame.instance());
 
         frame.getContentPane().add(panel);
         frame.pack();
@@ -96,9 +96,9 @@ public class GraphicEngine {
         backgrounds[1].setPosition((int) backgrounds[1].getSprite().getIconWidth(), 480);
     }
 
-    public static GraphicEngine instance() {
+    public static SingletonGraphicEngine instance() {
         if (uniqueInstance == null) {
-            uniqueInstance = new GraphicEngine();
+            uniqueInstance = new SingletonGraphicEngine();
         }
         return uniqueInstance;
     }

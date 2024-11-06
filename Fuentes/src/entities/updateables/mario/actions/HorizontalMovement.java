@@ -4,7 +4,7 @@ import entities.updateables.mario.Mario;
 import utils.BasePrioritizable;
 import utils.Direction;
 
-public class HorizontalMovement extends BasePrioritizable implements MarioAction {
+public class HorizontalMovement extends BasePrioritizable implements StrategyMarioAction {
     public static final int DEFAULT_PRIORITY = 100;
 
     public static final int MAX_SPEEDX = 6;

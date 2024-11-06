@@ -4,16 +4,16 @@ import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.Rectangle;
 
-import collisions.Collision;
+import collisions.VisitorCollision;
 import entities.Entity;
 import utils.Axis;
 import utils.Vector2D;
 
 public interface Collider {
     public Entity getEntity();
-    public void recieveCollision(Collision c, Axis a);
+    public void recieveCollision(VisitorCollision c, Axis a);
     public Rectangle getBounds();
-    public Collision getCollision();
+    public VisitorCollision getCollision();
     public void setPosition(int x, int y);
     public Point getPosition();
     public void translate(int dx, int dy);

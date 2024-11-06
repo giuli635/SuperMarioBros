@@ -4,11 +4,11 @@ import java.awt.Rectangle;
 
 import colliders.updateables.UpdateableEntityCollider;
 import collisions.CoinCollision;
-import collisions.Collision;
+import collisions.VisitorCollision;
 import collisions.updateables.mario.MarioCollision;
 import entities.updateables.Coin;
-import game.GraphicEngine;
-import game.SoundManager;
+import game.SingletonGraphicEngine;
+import game.SingletonSoundManager;
 import utils.Axis;
 
 public class CoinCollider extends BaseCollider implements UpdateableEntityCollider {
@@ -25,7 +25,7 @@ public class CoinCollider extends BaseCollider implements UpdateableEntityCollid
     }
 
     @Override
-    public void recieveCollision(Collision c, Axis a) {
+    public void recieveCollision(VisitorCollision c, Axis a) {
         c.collide(this, a);
     }
 
@@ -37,16 +37,16 @@ public class CoinCollider extends BaseCollider implements UpdateableEntityCollid
     public void handleHorizontalCollision(MarioCollision m) {
         deactivate();
         getEntity().unload();
-        GraphicEngine.instance().remove(getEntity().getGraphicElement());
+        SingletonGraphicEngine.instance().remove(getEntity().getGraphicElement());
         m.getCollider().getEntity().modifyPoints(Coin.POINTS);
-        SoundManager.instance().playSound(Coin.SOUND);
+        SingletonSoundManager.instance().playSound(Coin.SOUND);
     }
 
     public void handleVerticalCollision(MarioCollision m) {
         deactivate();
         getEntity().unload();
-        GraphicEngine.instance().remove(getEntity().getGraphicElement());
+        SingletonGraphicEngine.instance().remove(getEntity().getGraphicElement());
         m.getCollider().getEntity().modifyPoints(Coin.POINTS);
-        SoundManager.instance().playSound(Coin.SOUND);
+        SingletonSoundManager.instance().playSound(Coin.SOUND);
     }
 }

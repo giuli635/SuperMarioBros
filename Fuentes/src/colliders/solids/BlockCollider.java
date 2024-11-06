@@ -1,7 +1,7 @@
 package colliders.solids;
 import java.awt.Rectangle;
 
-import collisions.Collision;
+import collisions.VisitorCollision;
 import collisions.solids.BlockCollision;
 import entities.solids.Block;
 import utils.Axis;
@@ -19,7 +19,7 @@ public class BlockCollider extends SolidCollider {
     }
 
     @Override
-    public void recieveCollision(Collision c, Axis a) {
+    public void recieveCollision(VisitorCollision c, Axis a) {
         c.collide(this, a);
     }
 

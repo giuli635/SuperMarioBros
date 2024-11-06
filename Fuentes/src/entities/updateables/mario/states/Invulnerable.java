@@ -9,20 +9,20 @@ import colliders.updateables.mario.MarioCollider;
 import entities.updateables.mario.Mario;
 import entities.updateables.mario.actions.DisappearSprite;
 
-public class InvulnerableState extends BaseMarioState {
+public class Invulnerable extends BaseMarioStatus {
     protected static final int PRIORITY = 1;
     protected MarioCollider invulnerableCollider;
     protected Timer timer;
     protected DisappearSprite disappearSprite;
 
-    public InvulnerableState(Mario m) {
+    public Invulnerable(Mario m) {
         super(m);
         priority = PRIORITY;
         invulnerableCollider = null;
     }
 
     @Override
-    public void setState() {
+    public void setStatus() {
         invulnerableCollider = new InvulnerableCollider(mario);
 
         mario.setCollider(invulnerableCollider);
@@ -30,7 +30,7 @@ public class InvulnerableState extends BaseMarioState {
         disappearSprite = new DisappearSprite(mario);
         mario.addAction(disappearSprite);
 
-        InvulnerableState thisState = this;
+        Invulnerable thisState = this;
         timer = new Timer();
         TimerTask task = new TimerTask() {
             public void run() {
@@ -42,7 +42,7 @@ public class InvulnerableState extends BaseMarioState {
     }
 
     @Override
-    public void removeState() {
+    public void removeStatus() {
         timer.cancel();
         timer.purge();
         mario.removeCollider(invulnerableCollider);

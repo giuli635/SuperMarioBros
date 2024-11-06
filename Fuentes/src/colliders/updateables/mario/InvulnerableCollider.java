@@ -2,7 +2,7 @@ package colliders.updateables.mario;
 
 import java.awt.Rectangle;
 
-import collisions.Collision;
+import collisions.VisitorCollision;
 import collisions.updateables.mario.MarioCollision;
 import collisions.updateables.mario.InvulnerableCollision;
 import entities.updateables.mario.Mario;
@@ -24,7 +24,7 @@ public class InvulnerableCollider extends MarioCollider {
     }
 
     @Override
-    public void recieveCollision(Collision c, Axis a) {
+    public void recieveCollision(VisitorCollision c, Axis a) {
         c.collide(this, a);
     }
 

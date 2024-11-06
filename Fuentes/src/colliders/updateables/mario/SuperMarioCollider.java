@@ -2,7 +2,7 @@ package colliders.updateables.mario;
 
 import java.awt.Rectangle;
 
-import collisions.Collision;
+import collisions.VisitorCollision;
 import collisions.updateables.mario.SuperMarioCollision;
 import entities.updateables.mario.Mario;
 import entities.updateables.mario.states.SuperMario;
@@ -24,7 +24,7 @@ public class SuperMarioCollider extends MarioCollider {
     }
 
     @Override
-    public void recieveCollision(Collision c, Axis a) {
+    public void recieveCollision(VisitorCollision c, Axis a) {
         c.collide(this, a);
     }
 }

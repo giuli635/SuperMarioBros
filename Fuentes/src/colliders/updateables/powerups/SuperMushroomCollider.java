@@ -2,7 +2,7 @@ package colliders.updateables.powerups;
 
 import java.awt.Rectangle;
 
-import collisions.Collision;
+import collisions.VisitorCollision;
 import collisions.updateables.mario.MarioCollision;
 import collisions.updateables.mario.SuperMarioCollision;
 import collisions.updateables.powerups.SuperMushroomCollision;
@@ -25,7 +25,7 @@ public class SuperMushroomCollider extends PowerUpCollider {
     }
 
     @Override
-    public void recieveCollision(Collision c, Axis a) {
+    public void recieveCollision(VisitorCollision c, Axis a) {
         c.collide(this, a);
     }
 

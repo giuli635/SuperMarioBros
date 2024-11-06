@@ -53,6 +53,6 @@ public class LanguageConfiguration {
     public void nextLanguage() {
         currLanguage = (currLanguage + 1) % supportedLanguages.length;
         setLanguage(supportedLanguages[currLanguage]);
-        GraphicEngine.instance().reload();
+        SingletonGraphicEngine.instance().reload();
     }
 }

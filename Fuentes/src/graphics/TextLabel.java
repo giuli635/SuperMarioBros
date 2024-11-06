@@ -6,7 +6,7 @@ import java.awt.Font;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 
-import game.GraphicEngine;
+import game.SingletonGraphicEngine;
 import game.LanguageConfiguration;
 
 public class TextLabel extends BaseTranslatableGraphicElement {
@@ -17,7 +17,7 @@ public class TextLabel extends BaseTranslatableGraphicElement {
         data = s;
         label = new JLabel();
 
-        font = GraphicEngine.instance().getFont().deriveFont(38f);
+        font = SingletonGraphicEngine.instance().getFont().deriveFont(38f);
         label.setFont(font);
 
         label.setForeground(Color.WHITE);
@@ -36,7 +36,7 @@ public class TextLabel extends BaseTranslatableGraphicElement {
 
     @Override
     public void reload() {
-        GraphicEngine.instance().addToRedraw(this);
+        SingletonGraphicEngine.instance().addToRedraw(this);
     }
 
     @Override

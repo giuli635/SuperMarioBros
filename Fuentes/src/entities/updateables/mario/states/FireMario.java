@@ -21,7 +21,7 @@ public class FireMario extends SuperMario {
     }
 
     @Override
-    public void setState() {
+    public void setStatus() {
         MarioCollider newCollider = new FireMarioCollider(mario, new Rectangle(), this);
 
         previousCollider = mario.setCollider(newCollider);
@@ -35,7 +35,7 @@ public class FireMario extends SuperMario {
     }
 
     @Override
-    public void removeState() {
+    public void removeStatus() {
         crouch.unCrouch(mario);
         mario.setCollider(previousCollider);
         revertSprites();

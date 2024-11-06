@@ -9,7 +9,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 import entities.Entity;
-import game.GraphicEngine;
+import game.SingletonGraphicEngine;
 
 public class GameGraphicElement extends BaseTranslatableGraphicElement {
     protected Entity entity;
@@ -56,7 +56,7 @@ public class GameGraphicElement extends BaseTranslatableGraphicElement {
     }
 
     protected void forcefullyUpdateSprite(String s) {
-        GraphicEngine.instance().addToRedraw(this);
+        SingletonGraphicEngine.instance().addToRedraw(this);
         iconUpdated = true;
 
         if (s != null) {
@@ -102,7 +102,7 @@ public class GameGraphicElement extends BaseTranslatableGraphicElement {
     }
 
     protected void loadSprites() {
-        sprites = SpriteFactory.instance().getSprites(folder, GraphicEngine.instance().getMode());
+        sprites = FlyweightSpriteFactory.instance().getSprites(folder, SingletonGraphicEngine.instance().getMode());
         forcefullyUpdateSprite(currentSprite);
     }
 
@@ -124,7 +124,7 @@ public class GameGraphicElement extends BaseTranslatableGraphicElement {
     }
 
     public void setColorRemap(Map<Color, Color> colorRemap) {
-        GraphicEngine.instance().addToRedraw(this);
+        SingletonGraphicEngine.instance().addToRedraw(this);
         iconUpdated = true;
 
         this.colorRemap = colorRemap;
@@ -137,7 +137,7 @@ public class GameGraphicElement extends BaseTranslatableGraphicElement {
     }
 
     public void flipSprite() {
-        GraphicEngine.instance().addToRedraw(this);
+        SingletonGraphicEngine.instance().addToRedraw(this);
         iconUpdated = true;
 
         flipped = !flipped;

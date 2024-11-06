@@ -15,15 +15,15 @@ import colliders.updateables.mario.DefaultMarioCollider;
 import colliders.updateables.mario.MarioCollider;
 import entities.updateables.UpdateableBody;
 import entities.updateables.mario.actions.HorizontalMovement;
-import entities.updateables.mario.actions.MarioAction;
+import entities.updateables.mario.actions.StrategyMarioAction;
 import entities.updateables.mario.actions.ResolveHorizontalMovementDirection;
 import entities.updateables.mario.actions.ResolveSprite;
 import entities.updateables.mario.actions.VerticalMovement;
-import entities.updateables.mario.states.MarioState;
-import game.CollisionsEngine;
-import game.Game;
+import entities.updateables.mario.states.CommandMarioStatus;
+import game.SingletonCollisionsEngine;
+import game.SingletonGame;
 import game.Stats;
-import game.SoundManager;
+import game.SingletonSoundManager;
 import graphics.GameGraphicElement;
 import utils.Direction;
 import utils.PriorityComparator;
@@ -87,8 +87,8 @@ public class Mario extends UpdateableBody {
     protected List<Map<Color, Color>> starMarioColors;
     protected MarioCollider collider;
     protected GameGraphicElement graphicElement;
-    protected SortedSet<MarioAction> actions;
-    protected Map<Integer, MarioState> states;
+    protected SortedSet<StrategyMarioAction> actions;
+    protected Map<Integer, CommandMarioStatus> states;
     protected Stats stats;
     protected Direction movementDirection;
     protected boolean overriteSprite;
@@ -124,7 +124,7 @@ public class Mario extends UpdateableBody {
     }
 
     public void update() {
-        Iterator<MarioAction> actionsIterator = actions.iterator();
+        Iterator<StrategyMarioAction> actionsIterator = actions.iterator();
         while (actionsIterator.hasNext()) {
             actionsIterator.next().execute();
         }
@@ -144,14 +144,14 @@ public class Mario extends UpdateableBody {
 
         setSpritesFolder("mario");
         setSprite(MARIO_DEATH);
-        SoundManager.instance().removeAllSounds();
-        SoundManager.instance().playSound("mariodie.wav");
+        SingletonSoundManager.instance().removeAllSounds();
+        SingletonSoundManager.instance().playSound("mariodie.wav");
         stats.decreaseLives();
 
         Timer timer = new Timer();
         TimerTask task = new TimerTask() {
             public void run(){
-                Game.instance().checkGameOver();
+                SingletonGame.instance().checkGameOver();
             }
         }; 
         timer.schedule(task,3000);
@@ -187,11 +187,11 @@ public class Mario extends UpdateableBody {
         this.speedX = speedX;
     }
 
-    public void addAction(MarioAction action) {
+    public void addAction(StrategyMarioAction action) {
         actions.add(action);
     }
 
-    public void removeAction(MarioAction action) {
+    public void removeAction(StrategyMarioAction action) {
         actions.remove(action);
     }
 
@@ -235,22 +235,22 @@ public class Mario extends UpdateableBody {
         stats.addLife();
     }
 
-    public void setState(MarioState state) {
-        MarioState previousState = states.put(state.getPriority(), state);
+    public void setState(CommandMarioStatus state) {
+        CommandMarioStatus previousState = states.put(state.getPriority(), state);
         if (previousState != null) {
-            previousState.removeState();
+            previousState.removeStatus();
         }
 
-        state.setState();
+        state.setStatus();
     }
 
-    public void removeState(MarioState state) {
+    public void removeState(CommandMarioStatus state) {
         states.remove(state.getPriority());
-        state.removeState();
+        state.removeStatus();
     }
 
     public MarioCollider setCollider(MarioCollider colliderToSet) {
-        Game.instance().setDebugging(true);
+        SingletonGame.instance().setDebugging(true);
         MarioCollider nextCollider = collider;
         while (nextCollider.getPriority() > colliderToSet.getPriority()) {
             nextCollider = nextCollider.getBaseCollider();
@@ -289,7 +289,7 @@ public class Mario extends UpdateableBody {
 
     public void replaceCollider(MarioCollider c) {
         collider.deactivate();
-        CollisionsEngine.instance().swap(collider, c);
+        SingletonCollisionsEngine.instance().swap(collider, c);
         collider = c;
         collider.activate();
     }

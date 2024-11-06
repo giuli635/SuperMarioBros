@@ -61,8 +61,8 @@ public class LevelReader {
     }
 
     public void loadLevel(String file){
-        CollisionsEngine.instance().reset();
-        GraphicEngine.instance().reset();
+        SingletonCollisionsEngine.instance().reset();
+        SingletonGraphicEngine.instance().reset();
         try (BufferedReader br = new BufferedReader(new FileReader("levels/" + file))) {
             loadEntities(br);
             br.close();
@@ -90,8 +90,8 @@ public class LevelReader {
     }
 
     protected void loadScreen() {
-        CollisionsEngine collisionsEngine = CollisionsEngine.instance();
-        GraphicEngine graphicEngine = GraphicEngine.instance();
+        SingletonCollisionsEngine collisionsEngine = SingletonCollisionsEngine.instance();
+        SingletonGraphicEngine graphicEngine = SingletonGraphicEngine.instance();
 
         int lastChunkInScreen = (int) Math.ceil(graphicEngine.getPanelSize().getWidth() / (double) CHUNK) + loadingStartingPoint;
         int windowHeight = (int) graphicEngine.getPanelSize().getHeight();
@@ -149,7 +149,7 @@ public class LevelReader {
         );
         rightBorder.activate();
 
-        int halfScreen = (int) Math.ceil(GraphicEngine.instance().getPanelSize().getWidth() / 2);
+        int halfScreen = (int) Math.ceil(SingletonGraphicEngine.instance().getPanelSize().getWidth() / 2);
         new ScreenDisplacementCollider(
             new Rectangle(halfScreen + loadingStartingPoint * CHUNK, 0, CHUNK, 2 * windowHeight),
             leftBorder,
@@ -168,14 +168,14 @@ public class LevelReader {
     protected void loadUpdateablesEntitiesInScreen(int lastChunkInScreen, LoaderCollider loader) {
         for (int i =  0; i <= lastChunkInScreen; i++) {
             loader.translate(CHUNK, 0);
-            CollisionsEngine.instance().update();
+            SingletonCollisionsEngine.instance().update();
         }
     }
 
     public void loadStats(Stats stats) {
         StatsBar statsBar = new StatsBar(stats);
-        GraphicEngine.instance().add(statsBar);
-        GraphicEngine.instance().setDepth(statsBar, GraphicEngine.FRONT_DEPTH);
+        SingletonGraphicEngine.instance().add(statsBar);
+        SingletonGraphicEngine.instance().setDepth(statsBar, SingletonGraphicEngine.FRONT_DEPTH);
     }
 
     public void setColumn(int i) {

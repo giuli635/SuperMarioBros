@@ -1,10 +1,10 @@
 package entities.updateables.mario.actions;
 
 import entities.updateables.mario.Mario;
-import game.Game;
+import game.SingletonGame;
 import utils.BasePrioritizable;
 
-public class DisappearSprite extends BasePrioritizable implements MarioAction {
+public class DisappearSprite extends BasePrioritizable implements StrategyMarioAction {
     public static final int DEFAULT_PRIORITY = -100;
     protected static final int FRAMES_DISAPPEARING = 8;
     protected int disappear;
@@ -18,7 +18,7 @@ public class DisappearSprite extends BasePrioritizable implements MarioAction {
 
     @Override
     public void execute() {
-        disappear += (Game.instance().getFrames() % FRAMES_DISAPPEARING == 0) ? 1 : 0;
+        disappear += (SingletonGame.instance().getFrames() % FRAMES_DISAPPEARING == 0) ? 1 : 0;
         if ((disappear %= 2) == 0) {
             mario.getGraphicElement().setSprite(null);
         }

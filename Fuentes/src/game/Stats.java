@@ -17,7 +17,7 @@ public class Stats {
     protected int initialTime;
     protected int initialLives;
 
-    protected List<LevelStatsObserver> observers;
+    protected List<ObserverLevelStats> observers;
     
     public Stats(int initialTime, int initialLives, int numberLevel, int scoreLevel) {
         this.initialTime = initialTime;
@@ -41,22 +41,22 @@ public class Stats {
             public void run() {
                 if (remainingTime > 0 && !timerPaused) {
                     long currentActualization = System.currentTimeMillis();
-                    remainingTime += (lastActualization - currentActualization) / Game.SECOND;
+                    remainingTime += (lastActualization - currentActualization) / SingletonGame.SECOND;
                     lastActualization = currentActualization;
                     notifyObserver();
                 } else if (remainingTime <= 0) {
                     timer.cancel();
                 }
             }
-        }, 0, Game.SECOND);
+        }, 0, SingletonGame.SECOND);
     }
 
-    public void addObserver(LevelStatsObserver observer) {
+    public void addObserver(ObserverLevelStats observer) {
         observers.add(observer);
     }
     
     protected void notifyObserver() {
-        for(LevelStatsObserver observer : observers) {
+        for(ObserverLevelStats observer : observers) {
             observer.onStatsChanged();
         }
     }

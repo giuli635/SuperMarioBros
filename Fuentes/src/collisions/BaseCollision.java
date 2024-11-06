@@ -1,6 +1,6 @@
 package collisions;
 
-public abstract class BaseCollision implements Collision {
+public abstract class BaseCollision implements VisitorCollision {
     protected boolean managed;
 
     public BaseCollision() {

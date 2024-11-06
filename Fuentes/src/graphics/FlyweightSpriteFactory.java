@@ -9,18 +9,18 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import javax.swing.ImageIcon;
 
-public class SpriteFactory {
-    protected static SpriteFactory uniqueInstance;
+public class FlyweightSpriteFactory {
+    protected static FlyweightSpriteFactory uniqueInstance;
     protected static String SPRITES_DIR = "sprites";
     protected Map<String, Map<String, ImageIcon>> sprites;
 
-    private SpriteFactory() {
+    private FlyweightSpriteFactory() {
         sprites = new HashMap<>();
     }
 
-    public static SpriteFactory instance() {
+    public static FlyweightSpriteFactory instance() {
         if (uniqueInstance == null) {
-            uniqueInstance = new SpriteFactory();
+            uniqueInstance = new FlyweightSpriteFactory();
         }
         return uniqueInstance;
     }

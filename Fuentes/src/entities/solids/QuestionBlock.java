@@ -6,14 +6,14 @@ import java.util.List;
 import colliders.solids.QuestionBlockCollider;
 import entities.updateables.MovementAnimator;
 import entities.updateables.Coin;
-import entities.updateables.UpdateableEntity;
+import entities.updateables.ObserverUpdateableEntity;
 import entities.updateables.UpdateableBody;
 import entities.updateables.powerups.GreenMushroom;
 import entities.updateables.powerups.PowerUp;
 import entities.updateables.powerups.Star;
 import graphics.GameGraphicElement;
 import game.LevelReader;
-import game.SoundManager;
+import game.SingletonSoundManager;
 
 public class QuestionBlock extends UpdateableBody {
     protected static String SPRITES_FOLDER = "questionBlock";
@@ -26,7 +26,7 @@ public class QuestionBlock extends UpdateableBody {
     protected GameGraphicElement graphicElement;
     protected boolean depends;
     protected boolean active;
-    protected UpdateableEntity entity;
+    protected ObserverUpdateableEntity entity;
     protected MovementAnimator animator;
 
     public QuestionBlock(char s) {
@@ -73,7 +73,7 @@ public class QuestionBlock extends UpdateableBody {
         entity = null;
         active = false;
         setSprite("questionBlockHit");
-        SoundManager.instance().playSound("powerupAppears.wav");
+        SingletonSoundManager.instance().playSound("powerupAppears.wav");
     }
 
     public boolean getActive() {

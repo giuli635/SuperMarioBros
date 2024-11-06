@@ -8,7 +8,7 @@ import entities.updateables.ColorAnimator;
 import entities.updateables.mario.Mario;
 import utils.BasePrioritizable;
 
-public class ChangeMarioColors extends BasePrioritizable implements MarioAction {
+public class ChangeMarioColors extends BasePrioritizable implements StrategyMarioAction {
     public static final int DEFAULT_PRIORITY = -50;
     protected static final int FRAMES_PER_COLORSCHEME = 5;
     protected ColorAnimator animator;

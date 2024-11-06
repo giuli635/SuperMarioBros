@@ -2,7 +2,7 @@ package graphics;
 
 import javax.swing.*;
 
-import game.GraphicEngine;
+import game.SingletonGraphicEngine;
 import game.LanguageConfiguration;
 
 import java.awt.*;
@@ -22,12 +22,12 @@ public abstract class ScreenOverlay extends BaseGraphicElement {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                Dimension panelSize = GraphicEngine.instance().getPanelSize();
+                Dimension panelSize = SingletonGraphicEngine.instance().getPanelSize();
                 panel.setBounds(0, 0, (int) panelSize.getWidth(), (int) panelSize.getHeight()); 
                 panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
                 panel.setBackground(DEFAULT_BACKGROUND_COLOR); 
 
-                font = GraphicEngine.instance().getFont().deriveFont(60f);
+                font = SingletonGraphicEngine.instance().getFont().deriveFont(60f);
 
                 label = new JLabel(LanguageConfiguration.instance().get(text));
                 label.setFont(font);
@@ -58,12 +58,12 @@ public abstract class ScreenOverlay extends BaseGraphicElement {
 
     @Override
     public void reload() {
-        GraphicEngine.instance().addToRedraw(this);
+        SingletonGraphicEngine.instance().addToRedraw(this);
     }
 
     @Override
     public void add() {
         super.add();
-        GraphicEngine.instance().setDepth(this, GraphicEngine.FRONT_DEPTH + 1);
+        SingletonGraphicEngine.instance().setDepth(this, SingletonGraphicEngine.FRONT_DEPTH + 1);
     }
 }

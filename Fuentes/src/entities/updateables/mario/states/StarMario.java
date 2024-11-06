@@ -8,7 +8,7 @@ import colliders.updateables.mario.StarMarioCollider;
 import entities.updateables.mario.Mario;
 import entities.updateables.mario.actions.ChangeMarioColors;
 
-public class StarMario extends BaseMarioState {
+public class StarMario extends BaseMarioStatus {
     protected static final int PRIORITY = 2;
     protected MarioCollider starCollider;
     protected ChangeMarioColors colorChanger;
@@ -21,7 +21,7 @@ public class StarMario extends BaseMarioState {
     }
 
     @Override
-    public void setState() {
+    public void setStatus() {
         starCollider = new StarMarioCollider(mario, this);
 
         mario.setCollider(starCollider);
@@ -41,7 +41,7 @@ public class StarMario extends BaseMarioState {
     }
 
     @Override
-    public void removeState() {
+    public void removeStatus() {
         timer.cancel();
         timer.purge();
         mario.removeCollider(starCollider);

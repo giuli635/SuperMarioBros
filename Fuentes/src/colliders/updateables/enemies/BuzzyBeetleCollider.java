@@ -2,7 +2,7 @@ package colliders.updateables.enemies;
 
 import java.awt.Rectangle;
 
-import collisions.Collision;
+import collisions.VisitorCollision;
 import collisions.updateables.enemies.BuzzyBeetleCollision;
 import entities.updateables.enemies.BuzzyBeetle;
 import utils.Axis;
@@ -26,7 +26,7 @@ public class BuzzyBeetleCollider extends ShellEnemyCollider {
     }
 
     @Override
-    public void recieveCollision(Collision c, Axis a) {
+    public void recieveCollision(VisitorCollision c, Axis a) {
         c.collide(this, a);
     }
 }

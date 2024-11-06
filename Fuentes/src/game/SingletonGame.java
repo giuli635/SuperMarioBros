@@ -12,17 +12,17 @@ import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
 
-import entities.updateables.UpdateableEntity;
+import entities.updateables.ObserverUpdateableEntity;
 import graphics.RankingScreen;
 import graphics.TemporaryScreenOverlay;
 import utils.KeyStatus;
 
-public class Game implements WindowListener, KeyListener {
+public class SingletonGame implements WindowListener, KeyListener {
     public static final int SECOND = 1000;
     public static final int FPS = 60;
     protected final Object lock = new Object();
-    protected static Game uniqueInstance;
-    protected Set<UpdateableEntity> toUpdateRegistry;
+    protected static SingletonGame uniqueInstance;
+    protected Set<ObserverUpdateableEntity> toUpdateRegistry;
     protected Map<Integer, KeyStatus> keysStatus;
     protected Stats stats;
     protected Queue<Runnable> executionQueue;
@@ -35,12 +35,12 @@ public class Game implements WindowListener, KeyListener {
     protected String[] levels = {"menu.txt", "level1.txt", "level2.txt", "level3.txt"};
     protected long frames = 0;
 
-    protected List<UpdateableEntity> toAddList = new ArrayList<>();
-    protected List<UpdateableEntity> toRemoveList = new ArrayList<>();
+    protected List<ObserverUpdateableEntity> toAddList = new ArrayList<>();
+    protected List<ObserverUpdateableEntity> toRemoveList = new ArrayList<>();
 
     protected RankingManager rankingManager;
 
-    private Game() {
+    private SingletonGame() {
         toUpdateRegistry = new HashSet<>();
         keysStatus = new HashMap<>();
         stats = null;
@@ -51,15 +51,15 @@ public class Game implements WindowListener, KeyListener {
         executionQueue = new LinkedList<>();
     }
 
-    public static Game instance() {
+    public static SingletonGame instance() {
         return uniqueInstance;
     }
 
-    public void registerToUpdate(UpdateableEntity e) {
+    public void registerToUpdate(ObserverUpdateableEntity e) {
         toUpdateRegistry.add(e);
     }
 
-    public void unregisterToUpdate(UpdateableEntity e) {
+    public void unregisterToUpdate(ObserverUpdateableEntity e) {
         toUpdateRegistry.remove(e);
     }
 
@@ -83,12 +83,12 @@ public class Game implements WindowListener, KeyListener {
         while (runGameLoop) {
             debugging = false;
             lastUpdateTime = System.currentTimeMillis();
-            List<UpdateableEntity> list = new ArrayList<>(toUpdateRegistry);
+            List<ObserverUpdateableEntity> list = new ArrayList<>(toUpdateRegistry);
             
-            for (UpdateableEntity entity : list) {
+            for (ObserverUpdateableEntity entity : list) {
                 entity.update();
             }
-            CollisionsEngine.instance().update();
+            SingletonCollisionsEngine.instance().update();
 
             if (!debugging) {
                 try {
@@ -97,7 +97,7 @@ public class Game implements WindowListener, KeyListener {
                     e.printStackTrace();
                 }
             }
-            GraphicEngine.instance().drawFrame();
+            SingletonGraphicEngine.instance().drawFrame();
             frames++;
         }
     }
@@ -114,8 +114,8 @@ public class Game implements WindowListener, KeyListener {
 
                     stats.advanceLevel();
                 } else {
-                    SoundManager.instance().removeAllSounds();
-                    SoundManager.instance().playSound("worldClear.wav");
+                    SingletonSoundManager.instance().removeAllSounds();
+                    SingletonSoundManager.instance().playSound("worldClear.wav");
                     new TemporaryScreenOverlay("gameEnd", 4 * SECOND).add();
                     checkRanking();
                     stats.reset();
@@ -132,7 +132,7 @@ public class Game implements WindowListener, KeyListener {
         executionQueue.add(new Runnable() {
             public void run() {
                 if (stats.getLives() == 0){
-                    SoundManager.instance().playSound("gameover.wav");
+                    SingletonSoundManager.instance().playSound("gameover.wav");
                     new TemporaryScreenOverlay("gameOver", 4 * SECOND).add();
                     checkRanking();
                     stats.reset();
@@ -145,11 +145,11 @@ public class Game implements WindowListener, KeyListener {
 
     public void reloadGameStatus(){
         toUpdateRegistry = new HashSet<>();
-        GraphicEngine.instance().initBackgrounds();
+        SingletonGraphicEngine.instance().initBackgrounds();
         // SoundManager.instance().removeAllSounds();
         LevelReader.instance().loadLevel(levels[stats.getLevelNumber()]);
         LevelReader.instance().loadStats(stats);
-        SoundManager.instance().playLoopingSound("marioBackground.wav");
+        SingletonSoundManager.instance().playLoopingSound("marioBackground.wav");
         resumeLoop();
     }
 
@@ -167,7 +167,7 @@ public class Game implements WindowListener, KeyListener {
     }
 
     public static void main(String[] args) {
-        uniqueInstance = new Game();
+        uniqueInstance = new SingletonGame();
         uniqueInstance.runGame();
     }
 
@@ -198,15 +198,15 @@ public class Game implements WindowListener, KeyListener {
             }
 
             stats.resumeTimer();
-            SoundManager.instance().resumeAllSounds();
+            SingletonSoundManager.instance().resumeAllSounds();
             pause = false;
         }
     }
 
     public void pause() {
         stats.pauseTimer();
-        SoundManager.instance().playSound("pause.wav");
-        SoundManager.instance().pauseAllSounds();
+        SingletonSoundManager.instance().playSound("pause.wav");
+        SingletonSoundManager.instance().pauseAllSounds();
         runGameLoop = false;
         pause = true;
 

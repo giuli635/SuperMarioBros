@@ -2,7 +2,7 @@ package entities.updateables;
 
 import java.util.List;
 
-import game.Game;
+import game.SingletonGame;
 
 public class CyclicIterator<E> {
     protected List<E> list;
@@ -16,7 +16,7 @@ public class CyclicIterator<E> {
     }
 
     public E next() {
-        currentIndex += (Game.instance().getFrames() % delay) == 0 ? 1 : 0;
+        currentIndex += (SingletonGame.instance().getFrames() % delay) == 0 ? 1 : 0;
         currentIndex %= list.size();
         return list.get(currentIndex);
     }

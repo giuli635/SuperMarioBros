@@ -15,8 +15,8 @@ import collisions.updateables.mario.SuperMarioCollision;
 import entities.updateables.enemies.BaseEnemy;
 import entities.updateables.enemies.Enemy;
 import entities.updateables.mario.Mario;
-import entities.updateables.mario.states.InvulnerableState;
-import game.SoundManager;
+import entities.updateables.mario.states.Invulnerable;
+import game.SingletonSoundManager;
 import utils.Direction;
 
 public abstract class EnemyCollider extends BaseCollider implements MovableEntityCollider {
@@ -35,7 +35,7 @@ public abstract class EnemyCollider extends BaseCollider implements MovableEntit
 
     protected void getKilled(Mario mario, String sound) {
         getEntity().recieveDamage();
-        SoundManager.instance().playSound(sound);
+        SingletonSoundManager.instance().playSound(sound);
         mario.modifyPoints(getEntity().pointsToAdd());
     }
 
@@ -77,7 +77,7 @@ public abstract class EnemyCollider extends BaseCollider implements MovableEntit
         Mario mario = m.getCollider().getEntity();
 
         mario.removeState(m.getCollider().getAssociatedState());
-        mario.setState(new InvulnerableState(mario));
+        mario.setState(new Invulnerable(mario));
     }
 
     public void handleVerticalCollision(SuperMarioCollision m){
@@ -88,7 +88,7 @@ public abstract class EnemyCollider extends BaseCollider implements MovableEntit
             mario.addSpeed(0, Mario.FIXED_BOUNCE_SPEED);
         } else {
             mario.removeState(m.getCollider().getAssociatedState());
-            mario.setState(new InvulnerableState(mario));
+            mario.setState(new Invulnerable(mario));
         }
     }
     
@@ -134,7 +134,7 @@ public abstract class EnemyCollider extends BaseCollider implements MovableEntit
     public void handleVerticalCollision(ShellEnemyCollision s) {
         if (s.getCollider().getEntity().getShell()) {
             getEntity().recieveDamage();
-            SoundManager.instance().playSound(BaseEnemy.DIE_FIRE_SOUND);
+            SingletonSoundManager.instance().playSound(BaseEnemy.DIE_FIRE_SOUND);
         } else {
             handleVerticalCollision((EnemyCollision) s);
         }
@@ -155,7 +155,7 @@ public abstract class EnemyCollider extends BaseCollider implements MovableEntit
             bounce(s.getCollider());
         } else {
             getEntity().recieveDamage();
-            SoundManager.instance().playSound(BaseEnemy.DIE_FIRE_SOUND);
+            SingletonSoundManager.instance().playSound(BaseEnemy.DIE_FIRE_SOUND);
         }
     }
     

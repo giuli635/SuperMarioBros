@@ -5,7 +5,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import game.Game;
+import game.SingletonGame;
 import game.LanguageConfiguration;
 import game.RankingManager;
 import game.RankingManager.ScoreEntry;
@@ -50,7 +50,7 @@ public class RankingScreen extends ScreenOverlay {
             @Override
             public void actionPerformed(ActionEvent arg0) {
                 remove();
-                Game.instance().resume();
+                SingletonGame.instance().resume();
             }
         });
 

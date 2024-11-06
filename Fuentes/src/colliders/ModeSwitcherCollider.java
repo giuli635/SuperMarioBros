@@ -4,12 +4,12 @@ import java.awt.Rectangle;
 
 import colliders.solids.SolidCollider;
 import colliders.updateables.UpdateableEntityCollider;
-import collisions.Collision;
+import collisions.VisitorCollision;
 import collisions.ModeSwitcherCollision;
 import collisions.updateables.mario.MarioCollision;
 import entities.ConfigurationBlock;
 import entities.updateables.mario.Mario;
-import game.GraphicEngine;
+import game.SingletonGraphicEngine;
 import utils.Axis;
 
 public class ModeSwitcherCollider extends SolidCollider implements UpdateableEntityCollider {
@@ -26,12 +26,12 @@ public class ModeSwitcherCollider extends SolidCollider implements UpdateableEnt
     }
 
     @Override
-    public void recieveCollision(Collision c, Axis a) {
+    public void recieveCollision(VisitorCollision c, Axis a) {
         c.collide(this, a);
     }
 
     @Override
-    public Collision getCollision() {
+    public VisitorCollision getCollision() {
         return new ModeSwitcherCollision(this);
     }
     
@@ -47,7 +47,7 @@ public class ModeSwitcherCollider extends SolidCollider implements UpdateableEnt
             mario.setSpeedY(0);
             fallBackIntoPlace(displacement);
 
-            GraphicEngine.instance().nextMode();
+            SingletonGraphicEngine.instance().nextMode();
         }
     }
 }

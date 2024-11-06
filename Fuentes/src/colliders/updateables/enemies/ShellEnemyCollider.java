@@ -8,7 +8,7 @@ import collisions.updateables.mario.StarMarioCollision;
 import collisions.updateables.mario.SuperMarioCollision;
 import entities.updateables.enemies.ShellEnemy;
 import entities.updateables.mario.Mario;
-import entities.updateables.mario.states.InvulnerableState;
+import entities.updateables.mario.states.Invulnerable;
 
 public abstract class ShellEnemyCollider extends EnemyCollider {
     public abstract ShellEnemy getEntity();
@@ -42,7 +42,7 @@ public abstract class ShellEnemyCollider extends EnemyCollider {
             getEntity().setSpeedX((int) -Math.signum(displacement) * ShellEnemy.SHELL_SPEED);
         } else {
             mario.removeState(m.getCollider().getAssociatedState());
-            mario.setState(new InvulnerableState(mario));
+            mario.setState(new Invulnerable(mario));
         }
     }
 

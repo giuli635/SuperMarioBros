@@ -3,12 +3,12 @@ package colliders.invisibles;
 import java.awt.Rectangle;
 
 import colliders.BaseCollider;
-import collisions.Collision;
+import collisions.VisitorCollision;
 import collisions.invisibles.ScreenDisplacementCollision;
 import collisions.updateables.mario.MarioCollision;
 import entities.Entity;
-import game.CollisionsEngine;
-import game.GraphicEngine;
+import game.SingletonCollisionsEngine;
+import game.SingletonGraphicEngine;
 import utils.Axis;
 
 public class ScreenDisplacementCollider extends BaseCollider {
@@ -40,7 +40,7 @@ public class ScreenDisplacementCollider extends BaseCollider {
     }
 
     @Override
-    public void recieveCollision(Collision c, Axis a) {
+    public void recieveCollision(VisitorCollision c, Axis a) {
         c.collide(this, a);
     }
 
@@ -48,7 +48,7 @@ public class ScreenDisplacementCollider extends BaseCollider {
         Rectangle collision = getBounds().intersection(m.getCollider().getBounds());
         translate((int) collision.getWidth(), 0);
 
-        CollisionsEngine.instance().addToUpdate(this);
+        SingletonCollisionsEngine.instance().addToUpdate(this);
 
         leftBorder.translate((int) collision.getWidth(), 0);
         rightBorder.translate((int) collision.getWidth(), 0);
@@ -56,6 +56,6 @@ public class ScreenDisplacementCollider extends BaseCollider {
         unloader.translate((int) collision.getWidth(), 0);
         deleter.translate((int) collision.getWidth(), 0);
 
-        GraphicEngine.instance().scrollScreen((int) -collision.getWidth());
+        SingletonGraphicEngine.instance().scrollScreen((int) -collision.getWidth());
     }
 }

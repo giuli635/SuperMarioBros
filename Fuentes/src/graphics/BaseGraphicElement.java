@@ -1,6 +1,6 @@
 package graphics;
 
-import game.GraphicEngine;
+import game.SingletonGraphicEngine;
 
 public abstract class BaseGraphicElement implements GraphicElement {
     protected boolean added;
@@ -12,12 +12,12 @@ public abstract class BaseGraphicElement implements GraphicElement {
 
     @Override
     public void add() {
-        GraphicEngine.instance().add(this);
+        SingletonGraphicEngine.instance().add(this);
     }
 
     @Override
     public void remove() {
-        GraphicEngine.instance().remove(this);
+        SingletonGraphicEngine.instance().remove(this);
     }
 
     @Override

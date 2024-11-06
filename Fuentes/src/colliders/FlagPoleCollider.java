@@ -2,13 +2,13 @@ package colliders;
 
 import java.awt.Rectangle;
 
-import collisions.Collision;
+import collisions.VisitorCollision;
 import collisions.FlagPoleCollision;
 import collisions.updateables.mario.MarioCollision;
 import entities.Entity;
 import entities.FlagPole;
-import game.Game;
-import game.SoundManager;
+import game.SingletonGame;
+import game.SingletonSoundManager;
 import utils.Axis;
 
 public class FlagPoleCollider extends BaseCollider{
@@ -25,17 +25,17 @@ public class FlagPoleCollider extends BaseCollider{
     }
 
     @Override
-    public void recieveCollision(Collision c, Axis a) {
+    public void recieveCollision(VisitorCollision c, Axis a) {
         c.collide(this, a);
     }
 
     @Override
-    public Collision getCollision() {
+    public VisitorCollision getCollision() {
         return new FlagPoleCollision(this);
     }
 
     public void handleHorizontalCollision(MarioCollision m) {
-        Game.instance().advanceLevel();
-        SoundManager.instance().playSound("flagpole.wav");
+        SingletonGame.instance().advanceLevel();
+        SingletonSoundManager.instance().playSound("flagpole.wav");
     }
 }

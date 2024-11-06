@@ -6,7 +6,7 @@ import game.LevelReader;
 import graphics.GameGraphicElement;
 
 import colliders.updateables.enemies.LakituCollider;
-import entities.updateables.UpdateableEntity;
+import entities.updateables.ObserverUpdateableEntity;
 
 public class Lakitu extends BaseEnemy {
     protected static final int THROW_COOLDOWN = 10000;
@@ -62,7 +62,7 @@ public class Lakitu extends BaseEnemy {
     }
 
     @Override
-    public void spawnEntity(UpdateableEntity e, int diffX, int diffY) {
+    public void spawnEntity(ObserverUpdateableEntity e, int diffX, int diffY) {
         super.spawnEntity(e, diffX, diffY);
         e.getGraphicElement().translate(0, - LevelReader.CHUNK/2);
     }

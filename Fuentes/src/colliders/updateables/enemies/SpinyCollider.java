@@ -2,7 +2,7 @@ package colliders.updateables.enemies;
 
 import java.awt.Rectangle;
 
-import collisions.Collision;
+import collisions.VisitorCollision;
 import collisions.updateables.enemies.SpinyCollision;
 import collisions.updateables.mario.MarioCollision;
 import entities.updateables.enemies.Spiny;
@@ -22,7 +22,7 @@ public class SpinyCollider extends EnemyCollider {
     }
 
     @Override
-    public void recieveCollision(Collision c, Axis a) {
+    public void recieveCollision(VisitorCollision c, Axis a) {
         c.collide(this, a);
     }
 

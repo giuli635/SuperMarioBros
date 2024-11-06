@@ -6,7 +6,7 @@ import java.awt.Rectangle;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 
-import game.GraphicEngine;
+import game.SingletonGraphicEngine;
 
 public abstract class BaseTranslatableGraphicElement extends BaseGraphicElement implements TranslatableGraphicElement {
     protected JLabel label;
@@ -24,17 +24,17 @@ public abstract class BaseTranslatableGraphicElement extends BaseGraphicElement 
 
     @Override
     public void add() {
-        GraphicEngine.instance().add(this);
+        SingletonGraphicEngine.instance().add(this);
     }
 
     @Override
     public void remove() {
-        GraphicEngine.instance().remove(this);
+        SingletonGraphicEngine.instance().remove(this);
     }
 
     @Override
     public void translate(int dx, int dy) {
-        GraphicEngine.instance().addToRedraw(this);
+        SingletonGraphicEngine.instance().addToRedraw(this);
         bounds.translate(dx, dy);
     }
 
@@ -45,7 +45,7 @@ public abstract class BaseTranslatableGraphicElement extends BaseGraphicElement 
 
     @Override
     public void setPosition(int x, int y) {
-        GraphicEngine.instance().addToRedraw(this);
+        SingletonGraphicEngine.instance().addToRedraw(this);
         bounds.setLocation(x, y);
     }
     
@@ -54,7 +54,7 @@ public abstract class BaseTranslatableGraphicElement extends BaseGraphicElement 
         Rectangle boundsToDraw = new Rectangle(bounds);
         boundsToDraw.setLocation(
             (int) bounds.getX(),
-            (int) (GraphicEngine.instance().getPanelSize().getHeight() - bounds.getY())
+            (int) (SingletonGraphicEngine.instance().getPanelSize().getHeight() - bounds.getY())
         );
         label.setBounds(boundsToDraw);
     }

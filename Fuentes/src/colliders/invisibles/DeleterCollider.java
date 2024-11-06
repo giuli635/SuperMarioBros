@@ -3,7 +3,7 @@ package colliders.invisibles;
 import java.awt.Rectangle;
 
 import colliders.BaseCollider;
-import collisions.Collision;
+import collisions.VisitorCollision;
 import collisions.invisibles.DeleterCollision;
 import collisions.updateables.UpdateableEntityCollision;
 import entities.Entity;
@@ -20,7 +20,7 @@ public class DeleterCollider extends BaseCollider {
     }
 
     @Override
-    public void recieveCollision(Collision c, Axis a) {
+    public void recieveCollision(VisitorCollision c, Axis a) {
         c.collide(this, a);
     }
 
@@ -29,7 +29,7 @@ public class DeleterCollider extends BaseCollider {
         return new DeleterCollision(this);
     }
 
-    public void delete(Collision c) {
+    public void delete(VisitorCollision c) {
         c.getCollider().deactivate();
     }
 
@@ -38,7 +38,7 @@ public class DeleterCollider extends BaseCollider {
         c.getCollider().getEntity().unload();
     }
 
-    public void handleHorizontalCollision(Collision c) {
+    public void handleHorizontalCollision(VisitorCollision c) {
         delete(c);
     }
 }

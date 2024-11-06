@@ -6,16 +6,16 @@ import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
-import game.GraphicEngine;
+import game.SingletonGraphicEngine;
 import game.LanguageConfiguration;
 import game.Stats;
 import game.StatsPanel;
-import game.LevelStatsObserver;
+import game.ObserverLevelStats;
 
 import java.awt.Font;
 import java.awt.Component;
 
-public class StatsBar extends BaseGraphicElement implements LevelStatsObserver {
+public class StatsBar extends BaseGraphicElement implements ObserverLevelStats {
     protected Font font;
 
     protected StatsPanel timePanel;
@@ -31,7 +31,7 @@ public class StatsBar extends BaseGraphicElement implements LevelStatsObserver {
 
         mainPanel = new JPanel();
 
-        font = GraphicEngine.instance().getFont().deriveFont(38f);
+        font = SingletonGraphicEngine.instance().getFont().deriveFont(38f);
 
         scorePanel = createPanel(font);
         timePanel = createPanel(font);
@@ -41,7 +41,7 @@ public class StatsBar extends BaseGraphicElement implements LevelStatsObserver {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.LINE_AXIS));
-                mainPanel.setBounds(0, 0, (int) GraphicEngine.instance().getPanelSize().getWidth(), 100);
+                mainPanel.setBounds(0, 0, (int) SingletonGraphicEngine.instance().getPanelSize().getWidth(), 100);
                 mainPanel.setOpaque(false);
                 mainPanel.add(Box.createHorizontalGlue());
                 addElement(scorePanel);
@@ -86,12 +86,12 @@ public class StatsBar extends BaseGraphicElement implements LevelStatsObserver {
 
     @Override
     public void onStatsChanged() {
-        GraphicEngine.instance().addToRedraw(this);
+        SingletonGraphicEngine.instance().addToRedraw(this);
     }
 
     @Override
     public void reload() {
-        GraphicEngine.instance().addToRedraw(this);
+        SingletonGraphicEngine.instance().addToRedraw(this);
 
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
