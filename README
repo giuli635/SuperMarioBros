@@ -1,3 +1,7 @@
+Existen algunos errores en las constantes de los diagramas extendidos debido a errores en el script
+
+Dadas ciertas condiciones muy específicas se lanza un NullPointerException al perder un estado, conseguir el estado estrella durante invensible y luego mover frenéticamente a Mario
+
 La interacción vertical entre enemigos presenta un comportamiento "no convencional". Debido a limitaciones de tiempo en el desarrollo, se optó por una implementación simplificada, desplazando al enemigo bruscamente hasta encontrar un espacio libre. Aunque los enemigos no las atraviesen, en ocasiones pueden posicionarse encima de plataformas a las que normalmente no deberían acceder.
 
 Mario puede mostrar movimientos erráticos al interactuar en ciertos ángulos con las plataformas, se trata de un bug meramente visual.
