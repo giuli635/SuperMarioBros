@@ -128,7 +128,9 @@ public class GameGraphicElement extends BaseTranslatableGraphicElement {
         iconUpdated = true;
 
         this.colorRemap = colorRemap;
-        sprite = remapSpriteColor(colorRemap, sprite);
+        if (sprite != null) {
+            sprite = remapSpriteColor(colorRemap, sprite);
+        }
     }
 
     public void removeColorRemap() {

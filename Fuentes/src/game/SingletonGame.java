@@ -146,7 +146,7 @@ public class SingletonGame implements WindowListener, KeyListener {
     public void reloadGameStatus(){
         toUpdateRegistry = new HashSet<>();
         SingletonGraphicEngine.instance().initBackgrounds();
-        // SoundManager.instance().removeAllSounds();
+        SingletonSoundManager.instance().removeAllSounds();
         LevelReader.instance().loadLevel(levels[stats.getLevelNumber()]);
         LevelReader.instance().loadStats(stats);
         SingletonSoundManager.instance().playLoopingSound("marioBackground.wav");
