@@ -79,6 +79,7 @@ public class ScreenBorderCollider extends BaseCollider {
 
     public void handleHorizontalCollision(PiranhaPlantCollision p) {
         horizontalCollision(p);
+        SingletonGraphicEngine.instance().setDepth(p.getCollider().getEntity().getGraphicElement(), SingletonGraphicEngine.DEFAULT_DEPTH);
     }
 
     public void handleVerticalCollision(PiranhaPlantCollision p) {
