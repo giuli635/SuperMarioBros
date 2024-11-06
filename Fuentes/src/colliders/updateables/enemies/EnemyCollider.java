@@ -37,6 +37,10 @@ public abstract class EnemyCollider extends BaseCollider implements MovableEntit
         getEntity().recieveDamage();
         SoundManager.instance().playSound(sound);
         mario.modifyPoints(getEntity().pointsToAdd());
+        Rectangle collision = getBounds().intersection(mario.getCollider().getBounds());
+    
+        int displacement = mario.getCollider().displaceY(collision, 0);
+        mario.getGraphicElement().translate(0, displacement);
     }
 
     public Direction calculateCollisionDirection(MarioCollision m) {

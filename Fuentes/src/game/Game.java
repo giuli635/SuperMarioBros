@@ -146,7 +146,7 @@ public class Game implements WindowListener, KeyListener {
     public void reloadGameStatus(){
         toUpdateRegistry = new HashSet<>();
         GraphicEngine.instance().initBackgrounds();
-        // SoundManager.instance().removeAllSounds();
+        SoundManager.instance().removeAllSounds();
         LevelReader.instance().loadLevel(levels[stats.getLevelNumber()]);
         LevelReader.instance().loadStats(stats);
         SoundManager.instance().playLoopingSound("marioBackground.wav");

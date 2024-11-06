@@ -4,6 +4,7 @@ interface GraphicElement
 interface TranslatableGraphicElement
 interface EntityLoader
 interface UpdateableEntity
+interface LevelStatsObserver
 
 Game .u.|> WindowListener
 Game .u.|> KeyListener
@@ -27,6 +28,8 @@ LevelReader "1" --> "0..*" EntityLoader
 RankingManager "1" --> "0..5" ScoreEntry
 
 SoundManager "1" --> "0..*" Clip
+
+Stats "1" --> "1" Timer
 
 StatsPanel -u-|> JPanel
 StatsPanel "1" --> "2" JLabel
