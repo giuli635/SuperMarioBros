@@ -35,14 +35,12 @@ public class FireFlowerCollider extends PowerUpCollider {
        return f;
     }
 
-    @Override
     public void handleCollision(FireMarioCollision m) {
         super.handleCollision(m);
         Mario mario = m.getCollider().getEntity();
         mario.modifyPoints(FireFlower.POINTS_FIRE_MARIO);
     }
 
-    @Override
     public void handleCollision(SuperMarioCollision m) {
         super.handleCollision(m);
         Mario mario = m.getCollider().getEntity();

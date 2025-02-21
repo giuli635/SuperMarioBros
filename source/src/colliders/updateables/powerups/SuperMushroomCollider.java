@@ -34,7 +34,6 @@ public class SuperMushroomCollider extends PowerUpCollider {
         return new SuperMushroomCollision(this);
     }
 
-    @Override
     public void handleCollision(SuperMarioCollision m) {
         super.handleCollision(m);
         Mario mario = m.getCollider().getEntity();

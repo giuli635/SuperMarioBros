@@ -1,30 +1,24 @@
-# Comisión 2
+# SuperMarioBros clone
 
-## Errores conocidos
+This is a clone (with loooots of divergence from the original game) of Super Mario Bros. from the NES. Was part of an assignment for the university, for those who want to run it, there's absolutely no warranty of working properly in any computer other than the one from it was created.
 
-- Existen algunos errores en las constantes de los diagramas extendidos debido a errores en el script
+The `.jar` is in the `source` folder, run it there and only there, because otherwise it will complain of missing files, we've not solved references to filesystem.
 
-- La interacción vertical entre enemigos presenta un comportamiento "no convencional". Debido a limitaciones de tiempo en el desarrollo, se optó por una implementación simplificada, desplazando al enemigo bruscamente hasta encontrar un espacio libre. Aunque los enemigos no las atraviesen, en ocasiones pueden posicionarse encima de plataformas a las que normalmente no deberían acceder.
+> ***Good luck!!!!***
 
-- Mario puede mostrar movimientos erráticos al interactuar en ciertos ángulos con las plataformas, se trata de un bug meramente visual.
+**Important note for those who dare to read the code:** colliders use the Rectangle class from Java, they **are inverted** with respect to the Y-axis. We did our best to make this the least torturous possible.
 
-- Los coliders se representan usando la clase Rectangle, y están invertidos en el eje Y respecto a su visualización en pantalla. Este detalle debe tenerse en cuenta al revisar el código, ya que las posiciones visibles en el juego no corresponden directamente a las posiciones reales de los coliders, lo que puede ser una fuente de confusión si no se considera esta inversión.
+## Known errors
 
-- No se alcanzó a hacer las breves explicaciones del funcionamiento del sistema
+- There are some errors in the extended diagrams' constants. Mistakes were made during the automation of this, we're sorry guys.
 
-## Mejoras (no son parte de la consigna):
+- Vertical interaction between enemies ended up weird. Due to limitations in development time (oh, yes, that's our excuse), we opted out for a simplified implementation, enemies are teleported out of collision boxes ;). So, if you pack lots of enemies in one place, don't cry if one appears on your side bro.
 
-- Pausa: Puede pausarse el juego en cualquier momento pulsando `p` (debido a un bug el presionar `p` también permite abandonar la pantalla de ranking)
+- Mario can make some really erratic movements while interacting with platforms in some angles.
 
-- Agacharse: SuperMario y todas sus variantes (FireMario, y sus versiones con Estrella) son capaces de agacharse, la implementación se rige por el comportamiento apreciado en la versión web del juego.
+## Other things to note
 
-- Invensible: Se implementó el estado de Mario invensible, el cual se activa al perder un PowerUp y le da un breve momento de invulnerabilidad a Mario para evitar GameOvers abruptos
+- Pause: you can pause the game pressing `p` (activating pause while seeing the ranking makes you leave the ranking, it's a feature not a bug, who knows (?)).
 
-- Compatibilidad de estados: Mario es capaz de recoger PowerUps y ser afectado por los cambios de estados y sus habilidades particulares incluso bajo los efectos del estado Estrella e invensible
-
-- Idiomas: Implementamos el soporte de distintos idiomas en el sistema, actualmente cuenta con inglés, japonés y español. Estos pueden ser intercambiados en el menú
-
-- ConfigurationBlocks: Se implementaron una variante de los QuestionBlocks que llamamos ConfigurationBlocks, estos son usados para el cambio de idioma, modo y desplegar la pantalla con el ranking de manera dinámica en el nivel del menú
-
-- Nivel Menú: En lugar de tener un menú estático con un JPanel y botones para dictaminar el modo (y en nuestro caso el idioma) o mostrar el ranking, decidimos implementar un nivel con bloques especiales (ConfigurationBlocks) que técnicamente permite cambiar estos aspectos en cualquier momento de la ejecución del juego sin afectar el rendimiento o obligar al jugador a cargar desde 0 la experiencia
+- Once into the game, the menu is a level configured just like the other levels, the difference is that colliding with the `ConfigurationBlocks` let you change some settings or access the game ranking.
 
