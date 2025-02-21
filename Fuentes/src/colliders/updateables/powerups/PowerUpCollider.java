@@ -29,14 +29,6 @@ public abstract class PowerUpCollider extends BaseCollider implements MovableEnt
         remove();
     }
 
-    public void handleCollision(SuperMarioCollision m) {
-        remove();
-    }
-
-    public void handleCollision(FireMarioCollision m) {
-        remove();
-    }
-
     public void handleVerticalCollision(MarioCollision m) {
         handleCollision(m);
     }

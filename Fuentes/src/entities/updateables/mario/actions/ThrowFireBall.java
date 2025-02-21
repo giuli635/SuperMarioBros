@@ -45,7 +45,7 @@ public class ThrowFireBall extends BasePrioritizable implements StrategyMarioAct
 
         fireBall.getGraphicElement().translate(
             LevelReader.CHUNK,
-            LevelReader.CHUNK * 3 / 2
+            -LevelReader.CHUNK * 3 / 2
         );
 
         fireBall.getCollider().translate(LevelReader.CHUNK, 0);

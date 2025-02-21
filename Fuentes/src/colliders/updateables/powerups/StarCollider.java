@@ -4,6 +4,7 @@ import java.awt.Rectangle;
 
 import colliders.updateables.BouncerCollider;
 import collisions.VisitorCollision;
+import collisions.updateables.mario.FireMarioCollision;
 import collisions.updateables.mario.MarioCollision;
 import collisions.updateables.mario.StarMarioCollision;
 import collisions.updateables.mario.SuperMarioCollision;
@@ -44,7 +45,6 @@ public class StarCollider extends PowerUpCollider implements BouncerCollider {
         mario.modifyPoints(Star.POINTS_MARIO);
     }
 
-    @Override
     public void handleCollision(SuperMarioCollision m) {
         super.handleCollision(m);
         Mario mario = m.getCollider().getEntity();

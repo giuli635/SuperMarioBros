@@ -38,10 +38,14 @@ public abstract class EnemyCollider extends BaseCollider implements MovableEntit
         getEntity().recieveDamage();
         SingletonSoundManager.instance().playSound(sound);
         mario.modifyPoints(getEntity().pointsToAdd());
+    }
+
+    protected void displace(Mario mario) {
         Rectangle collision = getBounds().intersection(mario.getCollider().getBounds());
     
         int displacement = mario.getCollider().displaceY(collision, 0);
         mario.getGraphicElement().translate(0, displacement);
+        mario.addSpeed(0, Mario.FIXED_BOUNCE_SPEED);
     }
 
     public Direction calculateCollisionDirection(MarioCollision m) {
@@ -72,7 +76,7 @@ public abstract class EnemyCollider extends BaseCollider implements MovableEntit
         Mario mario = m.getCollider().getEntity();
         if (calculateCollisionDirection(m) == Direction.DOWN) {
             getKilled(mario, BaseEnemy.STOMP_SOUND);
-            mario.addSpeed(0, Mario.FIXED_BOUNCE_SPEED);
+            displace(mario);
         } else {
             kill(mario);
         }
@@ -90,7 +94,7 @@ public abstract class EnemyCollider extends BaseCollider implements MovableEntit
 
         if (calculateCollisionDirection(m) == Direction.DOWN) {
             getKilled(mario, BaseEnemy.STOMP_SOUND);
-            mario.addSpeed(0, Mario.FIXED_BOUNCE_SPEED);
+            displace(mario);
         } else {
             mario.removeState(m.getCollider().getAssociatedState());
             mario.setState(new Invulnerable(mario));
@@ -101,7 +105,7 @@ public abstract class EnemyCollider extends BaseCollider implements MovableEntit
         Mario mario = m.getCollider().getEntity();
         if (calculateCollisionDirection(m) == Direction.DOWN) {
             getKilled(mario, BaseEnemy.STOMP_SOUND);
-            mario.addSpeed(0, Mario.FIXED_BOUNCE_SPEED);
+            displace(mario);
         }
     }
 
